@@ -57,7 +57,6 @@ Client software should be able to access a randomly chosen subset of some type o
 
 Show reuse of course materials by third-party software.
 
-1. Create a simple JavaScript library that can be included in a mock course web page that automatically displays a few sample problems of the type currently being used in the class.
-2. Create a very basic version (rough copy) of an existing web-based quiz generator (printed and web-based quizzes) which allows a teacher to reuse educational materials in the repository (e.g., specify a collection of glossary terms) instead of reentering the data.
+1. Create a simple JavaScript library that can be included in a mock course web page that automatically displays a few sample problems or definitions or ... of the type currently being taught in the course.  (That is a very down to earth way to describe to parents what the class is doing.)
+2. Create a very basic version (rough copy) of an existing web-based quiz generator (printed and/or web-based quizzes) which allows a teacher to reuse educational materials in the repository (e.g., specify a collection of glossary terms) instead of reentering the data.
 3. Provide reference Python code for each model illustrating retrieval and use of an item or collection from the repository.
-
