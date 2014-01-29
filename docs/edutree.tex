@@ -1,0 +1,126 @@
+\documentstyle[11pt]{article}
+\begin{document}
+\title{Multi-representation course description}
+\author{Jeff Trawick\\Raleigh, NC}
+\maketitle
+
+\section*{Basic ideas}
+
+The structure or description of a particular class can be represented in several
+different ways:
+
+\begin{itemize}
+\item course standards/objectives
+\item ``I Can'' lists
+\item class syllabus and schedule
+\item etc.
+\end{itemize}
+
+To a great extent these are different views of the same ideas, though
+with different creators and consumers.  Parents and students consume the
+class syllabus and schedule and ``I Can'' lists, but most likely will
+not understand high level standards and objectives.  Teachers consume 
+the course standard/objectives and ``I Can'' lists but create the class
+syllabus and schedule for a specific offering of the class.  
+The higher level information is shared by
+all teachers of a given course within a state (or more) and is created by
+domain experts.
+
+Consider a web site that provides a representation
+of the structure of the course with the ability for different audiences
+to view information appropriate to them.  Because much of the data is
+shared among a large number, possibly many thousands, of teachers/class offerings, it is feasible
+to provide better information about objectives for students and parents.  (Parents may
+currently observe a vast gulf between abstract course standards
+maintained by state boards of education and the minimal course calendar
+provided by teachers to students, and be unable to properly assist their
+child without input from the teacher.  And this input is often needed
+in real time, in the context of a particular assignment.)
+
+Here's a description in terms of a particular user interface:
+
+The teacher provides students and parents with a URL representing
+a particular course (e.g., 8th period common core 1 math for 9th grade).
+View the URL and you see essentially a syllabus and class schedule,
+modified by the teacher as necessary and filled in with more information
+(e.g., test dates) during the term.
+
+The student or parent can see an abbreviated form of the educational objective
+on the schedule (or calendar)
+and follow that to common resources such as ``I Can'' statements
+or even more abstract descriptions.  Creating this reference, or link, to objectives,
+which in turn provides access to shared information, should not require much effort 
+on the part of individual teachers and could make it worthwhile for a relatively small
+group of people to develop and maintain high quality, common resources.
+
+This representation of the structure of the course is amenable to providing access to other
+materials as well.  For teachers and mentors or supervisors, it may be appropriate to 
+store and access lesson plans using this structure.  For all parties,
+the shared representation of the course could be a gateway to a curated index
+to appropriate materials available on the Internet.  More specifically, for a particular objective,
+some classes of users should be able to add pointers to resources elsewhere on the 
+Internet --- videos, worksheets, interactive activities, etc. --- and
+possibly different classes of users may be able to indicate which resources
+were particularly helpful (e.g., by ``up voting'' the most pertinent or
+highest quality materials).
+
+Beyond the ``free'' materials on the Internet, there are also a lot of
+for-fee materials (see http://www.teacherspayteachers.com/).  An opt-in
+view could show materials that aren't free.
+
+The representation and presentation of these additional materials is of
+course very important, and having an appropriate structure which separates them
+by learning style and/or type of material is critical.  For teachers specifically,
+the structure can serve as a prompt, or reminder, of the best pedagogical practices.
+
+\section*{Implementation}
+
+The description so far has implied that there is a web site where domain
+experts create course outlines and supply information at different levels 
+of abstraction, and where teachers can create a view of this specific to
+a particular class and add their syllabus/course calendar and tie it all
+together.
+
+A more likely scenario is that the common information maintained by domain
+experts follows a model for such course descriptions and is stored in a
+repository (see separate document).  As the repository contains an API
+for accessing the information, web sites could reuse the common data for
+different purposes.  E.g., something like Blackboard where a teacher maintains
+schedules and assignments and points to different resources could consume
+the common information via API for integration into that environment.
+Existing web sites which point to educational materials by subject could
+reuse the course structure via API instead of inventing a new one.  But
+note that enabling the consolidation onto fewer, higher quality indexes of
+materials should be a goal of this effort.  This is an example of how the
+data could be reused in existing contexts to avoid duplication.
+
+The class structure and common information will be stored in a common
+repository for consumption in multiple contexts, but a reference view (web
+site) should be provided, with the ability for teachers without existing
+learning environments to create class-specific information which integrates
+with common information about the subject.
+
+\section*{Existing, partial implementations}
+
+But we already have this, right?  Isn't this Blackboard (or your favorite
+web site/software)?
+
+\begin{itemize}
+\item A web site which indexes materials for math teachers may represent the structure
+of the course in terms of the abstract objectives, and for each objective point
+to a few resources that they have curated.
+\item Blackboard can be used to create a lot of this but (wild assertion) the
+material is generally limited to that which is authored or curated by the
+individual teacher.
+\item We don't (wild assertion) have a way for individuals from the large population to maintain and curate
+an index to the many educational resources available.  (We have lots of indexes that
+necessarily recreate representations of class structure of varying quality.)
+\item Almost no states/districts/schools (wild assertion) have a way
+for students and parents to follow a particular class (syllabus/schedule) and
+from there easily access appropriate materials beyond the small amount that the
+teacher might have had time to document.  (It isn't simply a matter of integration
+for ease of use; the teacher must have a way to easily reference the objective in 
+a manner that identifies the relevant resources.)
+\end{itemize}
+
+\end{document}
