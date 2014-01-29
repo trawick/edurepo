@@ -11,7 +11,10 @@ See the docs for more background information.
 
 1. Store models
 2. Store materials for the various models.
-3. Provide queue for additions or replacements, with approval and rejection capabilities.
+
+#### Not required at this stage
+
+1. Provide queue for additions or replacements, with approval and rejection capabilities.
 
 ### Models
 
@@ -21,7 +24,9 @@ The prototype should contain models for a course description as well as models f
 
 *It isn't important that the models be editable at this time, though they should be considered part of what the repository stores rather than something static.*
 
-Include a model that is a generator.  For example, a model for single digit multiplication problems doesn't require actual data to be stored; it can generate the appropriate additional problems dynamically.  Contrast that with a word problem, which requires a human to generate the problems.
+"generator" models should be supported.  For example, a model for single digit multiplication problems doesn't require actual data to be stored, because the repository (or even client software) can generate the appropriate multiplication problems dynamically.  Contrast that with a word problem, which requires a human to generate the problems.
+
+*Note that generators may have very detailed constraints, such as would be required for students learning multiplication facts up through 5, or subtraction of single-digit numbers that __does__ allow negative numbers.*
 
 ### Materials
 
