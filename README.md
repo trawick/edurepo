@@ -24,9 +24,9 @@ E.g., the form of a glossary item, or the form of a course description, or the f
 
 The prototype should contain models for a course description as well as models for several types of educational materials.
 
-*It isn't important that the models be editable at this time, though they should be considered part of what the repository stores rather than something static.*
+*It isn't important that the models be editable at this time, though the models should be considered part of what the repository stores rather than something static.*
 
-"generator" models should be supported.  For example, a model for single digit multiplication problems doesn't require actual data to be stored, because the repository (or even client software) can generate the appropriate multiplication problems dynamically.  Contrast that with a word problem, which requires a human to generate the problems.
+"Generator" models should be supported.  For example, a model for single digit multiplication problems doesn't require actual data to be stored, because the repository (or even client software) can generate the appropriate multiplication problems dynamically.  Contrast that with a word problem, which requires a human to generate the problems.
 
 Note that generators may have very detailed constraints, such as would be required for students learning multiplication facts up through 5, or subtraction of single-digit numbers that __does__ allow negative numbers.  It is very valuable to have the constraints on generated problems stored in the repository.  (Why?  Look at all the math problem generators on the web that require you to respecify those constraints before creating the quiz/worksheet/test/whatever.)
 
@@ -57,8 +57,14 @@ Client software should be able to access a randomly chosen subset of some type o
 
 ### Third-party consumption
 
-Show reuse of course materials by third-party software via REST API.
+Show examples of possible reuse of course materials by third-party software via REST API.
 
 1. Create a simple JavaScript library that can be included in a mock course web page that automatically displays a few sample problems or definitions or ... of the type currently being taught in the course.  (That is a very down to earth way to describe to parents what the class is doing.)
-2. Create a very basic version (rough copy) of an existing web-based quiz generator (printed and/or web-based quizzes) which allows a teacher to reuse educational materials in the repository (e.g., specify a collection of glossary terms) instead of reentering the data.
-3. Provide reference Python code for each model illustrating retrieval and use of an item or collection from the repository.
+2. Create a very basic version (rough hack) of some existing web-based quiz generator (printed and/or web-based quizzes) which allows a teacher to reuse educational materials in the repository (e.g., specify a collection of glossary terms) instead of reentering the data.
+3. If practical, create a simple Android or iOS app which can reuse the materials.
+
+*Showing disparate means of consumption will be important for allowing a wide audience to see the usefulness of the repository.*
+
+### Reference code
+
+Each model should have corresponding *reference* Python code illustrating retrieval and use of an item or collection from the repository.
