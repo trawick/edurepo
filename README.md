@@ -1,7 +1,7 @@
 edurepo
 =======
 
-Project to create a master repository of educational materials, including descriptions and outlines for standard courses as well as a rich set of materials
+Project to create a master repository of educational data, including descriptions and outlines for standard courses as well as a rich set of materials
 
 See docs subdirectory for more background information.
 
