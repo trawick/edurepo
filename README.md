@@ -18,6 +18,13 @@ An initial prototype is required to illustrate the key concepts and allow a grea
 
 1. Provide queue for additions or replacements, with approval and rejection capabilities.
 
+#### Repository users
+
+At this stage, only superusers and anonymous access will be supported.
+
+* Superusers can make any modifications to the repository.
+* Anonymous access is sufficient to retrieve data from the repository.
+
 ### Models
 
 E.g., the form of a glossary item, or the form of a course description, or the form of a certain type of math problem, or ...
