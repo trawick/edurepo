@@ -18,7 +18,7 @@ See the docs for more background information.
 
 ### Models
 
-E.g., the form of a glossary item, or the form of a course description
+E.g., the form of a glossary item, or the form of a course description, or the form of a certain type of math problem, or ...
 
 The prototype should contain models for a course description as well as models for several types of educational materials.
 
@@ -26,7 +26,7 @@ The prototype should contain models for a course description as well as models f
 
 "generator" models should be supported.  For example, a model for single digit multiplication problems doesn't require actual data to be stored, because the repository (or even client software) can generate the appropriate multiplication problems dynamically.  Contrast that with a word problem, which requires a human to generate the problems.
 
-*Note that generators may have very detailed constraints, such as would be required for students learning multiplication facts up through 5, or subtraction of single-digit numbers that __does__ allow negative numbers.*
+Note that generators may have very detailed constraints, such as would be required for students learning multiplication facts up through 5, or subtraction of single-digit numbers that __does__ allow negative numbers.  It is very valuable to have the constraints on generated problems stored in the repository.  (Why?  Look at all the math problem generators on the web that require you to respecify those constraints before creating the quiz/worksheet/test/whatever.)
 
 ### Materials
 
@@ -55,7 +55,7 @@ Client software should be able to access a randomly chosen subset of some type o
 
 ### Third-party consumption
 
-Show reuse of course materials by third-party software.
+Show reuse of course materials by third-party software via REST API.
 
 1. Create a simple JavaScript library that can be included in a mock course web page that automatically displays a few sample problems or definitions or ... of the type currently being taught in the course.  (That is a very down to earth way to describe to parents what the class is doing.)
 2. Create a very basic version (rough copy) of an existing web-based quiz generator (printed and/or web-based quizzes) which allows a teacher to reuse educational materials in the repository (e.g., specify a collection of glossary terms) instead of reentering the data.
