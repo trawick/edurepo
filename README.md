@@ -1,11 +1,13 @@
 edurepo
 =======
 
-Project to create a master repository of educational materials, including descriptions and outlines for standard courses
+Project to create a master repository of educational materials, including descriptions and outlines for standard courses as well as a rich set of materials
 
-See the docs for more background information.
+See docs subdirectory for more background information.
 
 ## Requirements for an initial prototype
+
+An initial prototype is required to illustrate the key concepts and allow a greater number of people to evaluate the usefulness.
 
 ### Repository
 
