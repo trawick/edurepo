@@ -38,13 +38,9 @@ A version control system (e.g., git) gives us the collaboration and history mech
 
 E.g., the form of a glossary item, or the form of a course description, or the form of a certain type of math problem, or ...
 
-The prototype should contain models for a course description as well as models for several types of educational materials.
+The prototype should contain models for a course description as well as models for several types of educational materials.  A couple of "generator" models should be supported as well.
 
 *It isn't important that the models be editable at this time, though the models should be considered part of what the repository stores rather than something static.*
-
-"Generator" models should be supported.  For example, a model for single digit multiplication problems doesn't require actual data to be stored, because the repository (or even client software) can generate the appropriate multiplication problems dynamically.  Contrast that with a word problem, which requires a human to generate the problems.
-
-Note that generators may have very detailed constraints, such as would be required for students learning multiplication facts up through 5, or subtraction of single-digit numbers that __does__ allow negative numbers.  It is very valuable to have the constraints on generated problems stored in the repository.  (Why?  Look at all the math problem generators on the web that require you to respecify those constraints before creating the quiz/worksheet/test/whatever.)
 
 ### Materials
 
