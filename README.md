@@ -10,7 +10,7 @@ See docs subdirectory for more background information.
 An initial prototype is required to illustrate the key concepts and allow a greater number of people to evaluate the usefulness of the idea.  More specifically, the prototype should show that
 
 * Collaboration is possible initially and there are clear paths for making collaboration easy for non-technical users.
-* The data can be stored using existing, trusted technologies.
+* The data can be stored using existing technologies.
 * A wide variety of educational materials can be stored.
 * The data can be accessed easily enough by client software that it can be integrated into existing resources as well as exploited by software specifically designed to rely on the repository for materials.
 
