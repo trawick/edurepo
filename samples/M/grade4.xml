@@ -1,0 +1,19 @@
+<standard>
+  <id>MG4</id>
+  <source>http://www.corestandards.org/assets/CCSSI_Math%20Standards.pdf</source>
+  <objectives>
+    <objective>
+      <id>MG4-FOUROPS</id>
+      <statement>Use the four operations with whole numbers to 
+      solve problems.</statement>
+    </objective>
+    <objective>
+      <id>MG4-FACTMULT</id>
+      <statement>Gain familiarity with factors and multiples.</statement>
+    </objective>
+    <objective>
+      <id>MG4-PATTERNS</id>
+      <statement>Generate and analyze patterns.</statement>
+    </objective>
+  </objectives>
+</standard>
