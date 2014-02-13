@@ -50,7 +50,7 @@
       <file leaf-file-name="settings.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/edurepo/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="0" selection-start="733" selection-end="733" vertical-scroll-proportion="0.0" vertical-offset="810" max-vertical-offset="1602">
+            <state line="35" column="30" selection-start="943" selection-end="943" vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="1602">
               <folding />
             </state>
           </provider>
@@ -103,10 +103,8 @@
       <file leaf-file-name="import.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/repo/import.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="0" selection-start="296" selection-end="296" vertical-scroll-proportion="0.35934663" vertical-offset="0" max-vertical-offset="1116">
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
+            <state line="71" column="0" selection-start="2106" selection-end="2106" vertical-scroll-proportion="0.8366606" vertical-offset="817" max-vertical-offset="1944">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -114,7 +112,7 @@
       <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/repo/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="0" selection-start="983" selection-end="983" vertical-scroll-proportion="0.0" vertical-offset="108" max-vertical-offset="720">
+            <state line="37" column="0" selection-start="1068" selection-end="1068" vertical-scroll-proportion="0.0" vertical-offset="169" max-vertical-offset="774">
               <folding />
             </state>
           </provider>
@@ -136,8 +134,8 @@
         <option value="$PROJECT_DIR$/repo/api.py" />
         <option value="$PROJECT_DIR$/repo/urls.py" />
         <option value="$PROJECT_DIR$/repo/populate.py" />
-        <option value="$PROJECT_DIR$/repo/models.py" />
         <option value="$PROJECT_DIR$/repo/admin.py" />
+        <option value="$PROJECT_DIR$/repo/models.py" />
         <option value="$PROJECT_DIR$/repo/import.py" />
       </list>
     </option>
@@ -511,13 +509,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/edurepo/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="0" selection-start="733" selection-end="733" vertical-scroll-proportion="0.0" vertical-offset="378" max-vertical-offset="1602">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/repo/api.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="0" selection-start="196" selection-end="196" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="288">
@@ -563,19 +554,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/edurepo/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="30" selection-start="943" selection-end="943" vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="1602">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/repo/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="0" selection-start="983" selection-end="983" vertical-scroll-proportion="0.0" vertical-offset="108" max-vertical-offset="720">
+        <state line="37" column="0" selection-start="1068" selection-end="1068" vertical-scroll-proportion="0.0" vertical-offset="169" max-vertical-offset="774">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/repo/import.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="0" selection-start="296" selection-end="296" vertical-scroll-proportion="0.35934663" vertical-offset="0" max-vertical-offset="1116">
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+        <state line="71" column="0" selection-start="2106" selection-end="2106" vertical-scroll-proportion="0.8366606" vertical-offset="817" max-vertical-offset="1944">
+          <folding />
         </state>
       </provider>
     </entry>
