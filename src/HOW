@@ -1,0 +1,4 @@
+virtualenv ../envs/edurepo
+. ../envs/edurepo/bin/activate
+pip install Django==1.6.2
+django-admin.py startproject edurepo
