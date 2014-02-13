@@ -32,3 +32,6 @@ class TrueFalseItem(models.Model):
     learning_objective = models.ForeignKey(LearningObjective)
     statement = models.CharField(max_length=1024)
     answer = models.BooleanField()
+
+    def __unicode__(self):
+        return "%s (%s)" % (self.statement, self.answer)

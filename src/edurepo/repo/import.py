@@ -1,45 +1,91 @@
 import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'edurepo.settings')
+
 import sys
+sys.path.append('.')
+
 from xml.etree.ElementTree import parse
+
+
 from repo.models import Course, LearningObjective, GlossaryItem, TrueFalseItem
 
-def import_course_standard(root):
-    print 'Course standard: %s' % root.get('id')
+perform_import = False
 
-    description = root.find('description')
-    print description.text
+
+def import_course_standard(root):
+    id = root.get('id')
+    description = root.find('description').text
+
+    if perform_import:
+        c = Course(id=id, description=description)
+        c.save()
+
+    print 'Course standard: %s' % id
+    print description
 
     # don't care about <source></source> for now
 
     objectives = root.find('objectives')
 
     for child in objectives:
-        print 'Objective: %s' % child.get('id')
-        print '  %s' % child.find('description').text
+        id = child.get('id')
+        description = child.find('description').text
+        print 'Objective: %s' % id
+        print '  %s' % description
+
+        if perform_import:
+            c.learningobjective_set.create(id=id, formal_description=description)
 
 
 def import_tf_questions(root):
     for obj_group in root.findall('objective-group'):
         obj_id = obj_group.find('objective-id').text
         print 'T-F questions for objective %s:' % obj_id
+        if perform_import:
+            obj = LearningObjective.objects.get(id=obj_id)
+
         for question in obj_group.findall('question'):
-            print '  %s (%s)' % (question.find('statement').text, question.find('answer').text)
+            stmt = question.find('statement').text
+            ans  = True if question.find('answer').text == 'T' else False
+            print '  %s (%s)' % (stmt, ans)
+
+            if perform_import:
+                obj.truefalseitem_set.create(statement=stmt, answer=ans)
 
 
 def import_glossary_items(root):
     for obj_group in root.findall('objective-group'):
         obj_id = obj_group.find('objective-id').text
         print 'Glossary items for objective %s:' % obj_id
-        for item in obj_group.findall('item'):
-            print '  %s: %s' % (item.find('term').text, item.find('definition').text)
 
+        if perform_import:
+            obj = LearningObjective.objects.get(id=obj_id)
+
+        for item in obj_group.findall('item'):
+            term = item.find('term').text
+            definition = item.find('definition').text
+            print '  %s: %s' % (term, definition)
+
+            if perform_import:
+                obj.glossaryitem_set.create(term=term, definition=definition)
 
 top = sys.argv[1]
 
+mode = sys.argv[2]
 assert os.path.exists(top)
+assert mode == 'check' or mode == 'import'
+if mode == 'import':
+    perform_import = True
+
+if perform_import:
+    # drop existing data before we add the current
+    TrueFalseItem.objects.all().delete()
+    GlossaryItem.objects.all().delete()
+    LearningObjective.objects.all().delete()
+    Course.objects.all().delete()
 
 for dirpath, dnames, fnames in os.walk(top):
-    for f in fnames:
+    for f in sorted(fnames, key=lambda fn: fn[:-4]):
         doc_file = os.path.join(dirpath, f)
         doc = parse(doc_file)
         root = doc.getroot()
