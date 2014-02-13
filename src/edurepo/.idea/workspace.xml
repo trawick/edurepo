@@ -54,10 +54,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="admin.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="admin.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/repo/admin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="0" selection-start="200" selection-end="200" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="234">
+            <state line="8" column="0" selection-start="250" selection-end="250" vertical-scroll-proportion="0.25" vertical-offset="0" max-vertical-offset="576">
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -78,10 +78,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/repo/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="0" selection-start="328" selection-end="328" vertical-scroll-proportion="0.41379312" vertical-offset="0" max-vertical-offset="435">
+            <state line="10" column="0" selection-start="328" selection-end="328" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="288">
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
               </folding>
@@ -89,15 +89,20 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="populate.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/repo/populate.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="15" column="0" selection-start="860" selection-end="860" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="378">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/repo/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="27" selection-start="58" selection-end="58" vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="594">
-              <folding>
-                <marker date="1392306445426" expanded="true" signature="58:232" placeholder="..." />
-                <marker date="1392306445426" expanded="true" signature="272:552" placeholder="..." />
-                <marker date="1392306445426" expanded="true" signature="588:797" placeholder="..." />
-              </folding>
+            <state line="34" column="0" selection-start="983" selection-end="983" vertical-scroll-proportion="0.0" vertical-offset="108" max-vertical-offset="720">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -113,19 +118,20 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/edurepo/settings.py" />
-        <option value="$PROJECT_DIR$/repo/admin.py" />
-        <option value="$PROJECT_DIR$/repo/models.py" />
         <option value="$PROJECT_DIR$/edurepo/urls.py" />
         <option value="$PROJECT_DIR$/repo/views.py" />
         <option value="$PROJECT_DIR$/repo/api.py" />
         <option value="$PROJECT_DIR$/repo/urls.py" />
+        <option value="$PROJECT_DIR$/repo/populate.py" />
+        <option value="$PROJECT_DIR$/repo/models.py" />
+        <option value="$PROJECT_DIR$/repo/admin.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1925" />
-    <option name="y" value="26" />
-    <option name="width" value="1590" />
+    <option name="x" value="1938" />
+    <option name="y" value="24" />
+    <option name="width" value="1552" />
     <option name="height" value="1005" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -440,7 +446,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1925" y="26" width="1590" height="1005" extended-state="0" />
+    <frame x="1938" y="24" width="1552" height="1005" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -448,11 +454,11 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24967575" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25598404" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4715909" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31136364" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -480,17 +486,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/repo/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="27" selection-start="58" selection-end="58" vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="594">
-          <folding>
-            <marker date="1392306445426" expanded="true" signature="58:232" placeholder="..." />
-            <marker date="1392306445426" expanded="true" signature="272:552" placeholder="..." />
-            <marker date="1392306445426" expanded="true" signature="588:797" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/repo/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="4" column="0" selection-start="105" selection-end="105" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="342">
@@ -498,15 +493,6 @@
             <element signature="e#0#35#0" expanded="true" />
             <marker date="1392308772422" expanded="true" signature="125:266" placeholder="..." />
             <marker date="1392308772422" expanded="true" signature="299:346" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repo/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="0" selection-start="200" selection-end="200" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="234">
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -538,9 +524,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/repo/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="328" selection-end="328" vertical-scroll-proportion="0.41379312" vertical-offset="0" max-vertical-offset="435">
+        <state line="10" column="0" selection-start="328" selection-end="328" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="288">
           <folding>
             <element signature="e#0#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/populate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="0" selection-start="860" selection-end="860" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="378">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="0" selection-start="983" selection-end="983" vertical-scroll-proportion="0.0" vertical-offset="108" max-vertical-offset="720">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="0" selection-start="250" selection-end="250" vertical-scroll-proportion="0.25" vertical-offset="0" max-vertical-offset="576">
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
           </folding>
         </state>
       </provider>

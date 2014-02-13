@@ -8,6 +8,7 @@ class Course(models.Model):
     def __unicode__(self):
         return self.id
 
+
 class LearningObjective(models.Model):
     id = models.CharField(max_length=40, primary_key=True, unique=True)
     course = models.ForeignKey(Course)
@@ -25,3 +26,9 @@ class GlossaryItem(models.Model):
 
     def __unicode__(self):
         return self.term
+
+
+class TrueFalseItem(models.Model):
+    learning_objective = models.ForeignKey(LearningObjective)
+    statement = models.CharField(max_length=1024)
+    answer = models.BooleanField()
