@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<course-standard id="LIAMSAX01">
+  <description>private tutoring in saxophone from Liam Trawick</description>
+  <objectives>
+    <objective id="LIAMSAX01-0001">
+     <description>how to put it together, how to clean it, how to store it</description>
+    </objective>
+    <objective id="LIAMSAX01-0002">
+     <description>proper embouchure, making a full sound</description>
+    </objective>
+    <objective id="LIAMSAX01-0003">
+     <description>how to read music</description>
+    </objective>
+  </objectives>
+</course-standard>

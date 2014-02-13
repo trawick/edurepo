@@ -1,6 +1,7 @@
-<questions>
-  <model>TF</model>
-  <objective>
+<?xml version="1.0" encoding="utf-8"?>
+
+<tf-questions>
+  <objective-group>
     <objective-id>MG4-FACTMULT</objective-id>
     <question>
       <statement>4 is a multiple of 8.</statement>
@@ -14,5 +15,5 @@
       <statement>39 is a multiple of 13.</statement>
       <answer>T</answer>
     </question>
-  </objective>
-</questions>
+  </objective-group>
+</tf-questions>
