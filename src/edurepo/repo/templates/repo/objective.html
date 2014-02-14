@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+{% if glossary_items %}
+<dl>
+{% for gi in glossary_items %}
+    <dt>{{ gi.term }}</dt>
+    <dd>{{ gi.definition }}</dd>
+{% endfor %}
+</dl>
+{% else %}
+  <p>No glossary items are available.</p>
+{% endif %}
+
+{% if tf_items %}
+<dl>
+{% for tfi in tf_items %}
+    <dt>{{ tfi.statement }}</dt>
+    <dd>{{ tfi.answer }}</dd>
+{% endfor %}
+</dl>
+{% else %}
+  <p>No true-false items are available.</p>
+{% endif %}
+</body>
+</html>

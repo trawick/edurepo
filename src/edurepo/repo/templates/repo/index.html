@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<ul>
+{% for c in course_list %}
+    <li><a href="/repo/{{ c.id }}/">{{ c.description }}</a></li>
+{% endfor %}
+</ul>
+</body>
+</html>
