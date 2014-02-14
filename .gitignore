@@ -5,3 +5,4 @@ db.sqlite3
 README.html
 envs/edurepo/
 src/edurepo/.idea/workspace.xml
+src/edurepo/teachers/migrations/

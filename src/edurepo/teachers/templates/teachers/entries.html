@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+{% if entry_list %}
+{% for e in entry_list %}
+    <li>{{ e.objective }} ({{ e.date }})</li>
+{% endfor %}
+</ul>
+{% else %}
+<p>No calendar entries for teacher {{ teacher_id }}!</p>
+{% endif %}
+</body>
+</html>

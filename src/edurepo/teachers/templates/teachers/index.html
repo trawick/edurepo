@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<ul>
+{% if teacher_list %}
+{% for t in teacher_list %}
+    <li><a href="/teachers/{{ t.email }}/">{{ t.name }}</a></li>
+{% endfor %}
+</ul>
+{% else %}
+<p>No teachers defined!</p>
+{% endif %}
+</body>
+</html>
