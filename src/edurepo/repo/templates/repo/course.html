@@ -4,8 +4,10 @@
     <title></title>
 </head>
 <body>
+<ul>
 {% for lo in objective_list %}
     <li><a href="/repo/{{ course_id }}/{{ lo.id }}/">{{ lo.formal_description }}</a></li>
 {% endfor %}
+</ul>
 </body>
 </html>
