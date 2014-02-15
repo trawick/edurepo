@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+{% if resource_list %}
+    <ul>
+{% for r in resource_list %}
+        <li><a href="/resources/{{ r.id }}/">{{ r.url }}</a></li>
+{% endfor %}
+    </ul>
+{% else %}
+    <p>No resources defined!</p>
+{% endif %}
+</body>
+</html>

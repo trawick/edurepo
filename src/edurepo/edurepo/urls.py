@@ -9,5 +9,6 @@ urlpatterns = patterns('',
 
     url(r'^repo/', include('repo.urls')),
     url(r'^teachers/', include('teachers.urls')),
+    url(r'^resources/', include('resources.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
