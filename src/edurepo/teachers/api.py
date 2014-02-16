@@ -19,11 +19,15 @@ class CourseResource(ModelResource):
     class Meta:
         queryset = Course.objects.all()
         resource_name = 'course'
+        filtering = {
+            'name': ALL,
+        }
 
 
 class EntryResource(ModelResource):
 
     teacher = fields.ForeignKey(TeacherResource, 'teacher')
+    course = fields.ForeignKey(CourseResource, 'course')
 
     class Meta:
         queryset = Entry.objects.all()
