@@ -18,3 +18,9 @@ Next stage
 * TODO add REST API for learning objective to retrieve statement
 * TODO reference client in Python to glue it together
 * TODO web page to take teacher id as input and allow selection of course and date range of interest and retrieve learning objectives and display description of each objective
+
+Blatant bugs, even obvious at this early stage
+==============================================
+
+* before putting on WWW, split up settings.py following "Two Scoops..." to keep deployment secret key out of source code
+* in teachers.models, Course should be renamed to Class and we should have both the name of a standard "course" (from edurepo) as well as what the class is called (e.g., "8th period Common Core Math 1")
