@@ -5,6 +5,7 @@ from teachers.models import Teacher, TeacherClass, Entry
 #### from https://gist.github.com/robhudson/3848832
 
 from django.http import HttpResponse
+from tastypie import http
 from tastypie.exceptions import ImmediateHttpResponse
 
 
