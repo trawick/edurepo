@@ -1,6 +1,6 @@
 from tastypie import fields
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
-from teachers.models import Teacher, Course, Entry
+from teachers.models import Teacher, TeacherClass, Entry
 
 
 class TeacherResource(ModelResource):
@@ -14,27 +14,31 @@ class TeacherResource(ModelResource):
         }
 
 
-class CourseResource(ModelResource):
+class TeacherClassResource(ModelResource):
+
+    teacher = fields.ForeignKey(TeacherResource, 'teacher')
 
     class Meta:
-        queryset = Course.objects.all()
-        resource_name = 'course'
+        queryset = TeacherClass.objects.all()
+        resource_name = 'teacher_class'
         filtering = {
-            'name': ALL,
+            'teacher': ALL_WITH_RELATIONS,
+            'name': ALL_WITH_RELATIONS,
+            'course_id': ALL,
         }
 
 
 class EntryResource(ModelResource):
 
-    teacher = fields.ForeignKey(TeacherResource, 'teacher')
-    course = fields.ForeignKey(CourseResource, 'course')
+    teacher = fields.ForeignKey(TeacherResource, 'teacher', full=True)
+    teacher_class = fields.ForeignKey(TeacherClassResource, 'teacher_class', full=True)
 
     class Meta:
         queryset = Entry.objects.all()
         resource_name = 'entry'
         filtering = {
             'teacher': ALL_WITH_RELATIONS,
-            'course': ALL_WITH_RELATIONS,
+            'teacher_class': ALL_WITH_RELATIONS,
             'date': ALL,
             'teacher_name': ALL_WITH_RELATIONS
         }

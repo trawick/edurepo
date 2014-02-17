@@ -82,6 +82,10 @@ def import_glossary_items(root):
             if perform_import:
                 obj.glossaryitem_set.create(term=term, definition=definition)
 
+if len(sys.argv) != 3:
+    print >> sys.stderr, "Usage: %s filesystem-root check-or-import" % sys.argv[0]
+    sys.exit(1)
+
 top = sys.argv[1]
 
 mode = sys.argv[2]

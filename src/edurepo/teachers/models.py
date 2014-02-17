@@ -9,17 +9,21 @@ class Teacher(models.Model):
         return self.name
 
 
-class Course(models.Model):
-    name = models.CharField(max_length=30)
+class TeacherClass(models.Model):
+    name = models.CharField(max_length=100)  # how this teacher refers to the class
+    course_id = models.CharField(max_length=30)  # the short name of the standard class in the repo
     teacher = models.ForeignKey(Teacher)
 
     def __unicode__(self):
-        return self.name
+        return self.name + '(' + self.course_id + ')'
+
+    class Meta:
+        verbose_name_plural = "classes"
 
 
 class Entry(models.Model):
     teacher = models.ForeignKey(Teacher)
-    course = models.ForeignKey(Course)
+    teacher_class = models.ForeignKey(TeacherClass)
     date = models.DateField(blank=False)
     objective = models.CharField(max_length=40)
 

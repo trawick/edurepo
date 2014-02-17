@@ -5,12 +5,13 @@
 </head>
 <body>
 {% if entry_list %}
+    <p>Calendar entries for {{ class_name }} taught by {{ teacher_email }}:</p>
 {% for e in entry_list %}
     <li>{{ e.objective }} ({{ e.date }})</li>
 {% endfor %}
 </ul>
 {% else %}
-<p>No calendar entries for teacher {{ teacher_id }}!</p>
+<p>No calendar entries for {{ class_name }} taught by {{ teacher_email }}!</p>
 {% endif %}
 </body>
 </html>
