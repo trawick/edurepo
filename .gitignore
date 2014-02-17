@@ -6,3 +6,6 @@ README.html
 envs/edurepo/
 src/edurepo/.idea/workspace.xml
 src/edurepo/teachers/migrations/
+src/webapp/css/bootstrap*.css
+src/webapp/lib/angular
+src/webapp/lib/jquery

@@ -1,0 +1,26 @@
+<html ng-app="ejectiveApp">
+<head>
+  <meta charset="utf-8">
+  <title>Edjective</title>
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <script src="lib/angular/angular.js"></script>
+  <script src="js/controllers.js"></script>
+</head>
+<body>
+
+  <div ng-controller="GetTeacherEmailCtrl">
+    Teacher e-mail address: <input type="text" ng-model="teacherEmail" />
+    <button ng-click="update(teacherEmail)">Update</button>
+  </div>
+
+  <br />
+
+  <div ng-controller="EdjectiveCtrl">
+  <ul>
+      <p>{{edjective.snippet}}</p>
+  </ul>
+  </div>
+
+</body>
+</html>
