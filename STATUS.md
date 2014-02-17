@@ -22,4 +22,5 @@ Next stage
 Blatant bugs, even obvious at this early stage
 ==============================================
 
+* no automated test cases, you moron; create course and objectives with fixed strings and go on from there
 * before putting on WWW, split up settings.py following "Two Scoops..." to keep deployment secret key out of source code
