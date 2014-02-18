@@ -17,8 +17,27 @@ edjectiveApp.controller('GetTeacherEmailCtrl', function ($scope) {
 edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
 
     $scope.objectives = {'data': []};
-
     $scope.teacher_email = '';
+    $scope.baseurl = 'http://127.0.0.1:8000/';
+    $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
+
+    function annotate_objective(data, obj) {
+        return function(data) {
+            obj.objective = data.id + ' ' + data.formal_description;
+        };
+    }
+
+    function lookup_objective_url(obj) {
+        return $scope.lo_baseurl + obj + '/';
+    }
+
+    function lookup_current_objectives_url(teacher_email, start_date, stop_date, class_name) {
+        return $scope.baseurl + 'teachers/api/entry/?teacher__email=' + teacher_email + '&date__lte=' + stop_date + '&date__gte=' + start_date + '&teacher_class__name=' + class_name;
+    }
+
+    function lookup_teacher_classes_url(teacher_email) {
+        return $scope.baseurl + 'teachers/api/teacher_class/?teacher__email=' + teacher_email;
+    }
 
     $scope.classSelection = function(cl) {
         // Key data is cl.name and cl.isSelected
@@ -28,10 +47,11 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
             var weekago = new Date();
             weekago.setDate(weekago.getDate() - 7);
             var weekagostr = $filter('date')(weekago, 'yyyy-MM-dd');
-            $http.get('http://127.0.0.1:8000/teachers/api/entry/?format=json&teacher__email=' + $scope.teacher_email + '&date__lte=' + curdatestr + '&date__gte=' + weekagostr + '&teacher_class__name=' + cl.name).success(function(data) {
+            $http.get(lookup_current_objectives_url($scope.teacher_email, weekagostr, curdatestr, cl.name)).success(function(data) {
                 var newobj = {'text': cl.name, 'objectives': []};
                 for (var i = 0; i < data.meta.total_count; i++) {
                     newobj.objectives.push({'date': data.objects[i].date, 'objective': data.objects[i].objective});
+                    $http.get(lookup_objective_url(data.objects[i].objective)).success(annotate_objective(data, newobj.objectives[newobj.objectives.length - 1]));
                 }
                 $scope.objectives['data'].push(newobj);
             });
@@ -50,7 +70,7 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
         $scope.teacher_email = args;
         $scope.notice = {'text': 'loading ' + args + '...'};
 
-        $http.get('http://127.0.0.1:8000/teachers/api/teacher_class/?format=json&teacher__email=' + args).success(function(data) {
+        $http.get(lookup_teacher_classes_url(args)).success(function(data) {
             if (data.meta.total_count == 0) {
                 $scope.notice = {'text': 'Invalid teacher e-mail address!'};
             }
