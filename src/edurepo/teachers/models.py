@@ -15,7 +15,7 @@ class TeacherClass(models.Model):
     teacher = models.ForeignKey(Teacher)
 
     def __unicode__(self):
-        return self.name + '(' + self.course_id + ')'
+        return self.name + '(' + self.course_id + ') taught by ' + str(self.teacher)
 
     class Meta:
         verbose_name_plural = "classes"
@@ -28,7 +28,7 @@ class Entry(models.Model):
     objective = models.CharField(max_length=40)
 
     def __unicode__(self):
-        return "Objective %s on %s" % (self.objective, self.date)
+        return "Objective %s on %s for %s" % (self.objective, self.date, str(self.teacher_class))
 
     class Meta:
         verbose_name_plural = "entries"
