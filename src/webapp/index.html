@@ -20,7 +20,7 @@
       <p>{{notice.text}}</p>
       <ul>
         <li ng-repeat="class in classes">
-          <input type="checkbox">{{class.name}} ({{class.course_id}})
+          <input type="checkbox" ng-change="classSelection(class)" ng-model="class.isSelected">{{class.name}} ({{class.course_id}})
         </li>
       </ul>
 
@@ -29,7 +29,7 @@
         {{class.text}}
         <ul>
           <li ng-repeat="obj in class.objectives">
-            {{obj}}
+            {{obj.date}} {{obj.objective}}
           </li>
         </ul>
       </li>
