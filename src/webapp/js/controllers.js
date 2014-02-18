@@ -18,7 +18,8 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
 
     $scope.objectives = {'data': []};
     $scope.teacher_email = '';
-    $scope.baseurl = 'http://127.0.0.1:8000/';
+    $scope.host_port = '192.168.1.207:8000';
+    $scope.baseurl = 'http://' + $scope.host_port + '/';
     $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
 
     function annotate_objective(data, obj) {
@@ -75,7 +76,7 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
                 $scope.notice = {'text': 'Invalid teacher e-mail address!'};
             }
             else {
-                $scope.notice = {'text': ''};
+                $scope.notice = {'text': "Select one or more of this teacher's classes:"};
                 $scope.classes = data.objects;
             }
         });

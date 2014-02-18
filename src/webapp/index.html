@@ -1,6 +1,9 @@
+<!DOCTYPE html>
 <html ng-app="edjectiveApp">
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Edjective</title>
   <link rel="stylesheet" href="css/app.css">
   <link rel="stylesheet" href="css/bootstrap.css">
@@ -9,7 +12,7 @@
 </head>
 <body>
 
-  <div ng-controller="GetTeacherEmailCtrl">
+  <div ng-controller="GetTeacherEmailCtrl" class="emailInput">
     Teacher e-mail address: <input type="text" ng-model="teacherEmail" />
     <button ng-click="update(teacherEmail)">Update</button>
   </div>
@@ -17,13 +20,16 @@
   <br />
 
   <div ng-controller="LookupCtrl">
+    <div class="classDisplay">
       <p>{{notice.text}}</p>
       <ul>
         <li ng-repeat="class in classes">
           <input type="checkbox" ng-change="classSelection(class)" ng-model="class.isSelected">{{class.name}} ({{class.course_id}})
         </li>
       </ul>
+    </div>
 
+    <div class="objectiveDisplay">
     <ul>
       <li ng-repeat="class in objectives.data">
         {{class.text}}
@@ -33,7 +39,9 @@
           </li>
         </ul>
       </li>
+    </ul>
+    </div>
   </div>
 
-</body>
+ </body>
 </html>
