@@ -17,11 +17,12 @@ Next stage
 * DONE add REST API for teacher events to retrieve learning objective(s) for class for date
 * DONE add REST API for learning objective to retrieve statement
 * DONE reference client(s) in Python to glue it together
-* TODO web app to take teacher id as input and allow selection of course and date range of interest and retrieve learning objectives and display description of each objective
+* DONE web app to take teacher id as input and allow selection of course and date range of interest and retrieve learning objectives and display description of each objective
 
 Blatant bugs, even obvious at this early stage
 ==============================================
 
+* web app should cache server lookups for better performance
 * resource model needs date-added field to allow sorting by new[+popular]
 * no automated test cases, you moron; create course and objectives with fixed strings and go on from there
 * before putting on WWW, split up settings.py following "Two Scoops..." to keep deployment secret key out of source code
