@@ -1,4 +1,4 @@
-<html ng-app="ejectiveApp">
+<html ng-app="edjectiveApp">
 <head>
   <meta charset="utf-8">
   <title>Edjective</title>
@@ -16,10 +16,23 @@
 
   <br />
 
-  <div ng-controller="EdjectiveCtrl">
-  <ul>
-      <p>{{edjective.snippet}}</p>
-  </ul>
+  <div ng-controller="LookupCtrl">
+      <p>{{notice.text}}</p>
+      <ul>
+        <li ng-repeat="class in classes">
+          <input type="checkbox">{{class.name}} ({{class.course_id}})
+        </li>
+      </ul>
+
+    <ul>
+      <li ng-repeat="class in objectives.data">
+        {{class.text}}
+        <ul>
+          <li ng-repeat="obj in class.objectives">
+            {{obj}}
+          </li>
+        </ul>
+      </li>
   </div>
 
 </body>
