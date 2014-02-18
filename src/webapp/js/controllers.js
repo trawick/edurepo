@@ -1,9 +1,38 @@
-var edjectiveApp = angular.module('edjectiveApp', []);
+var edjectiveApp = angular.module('edjectiveApp', ['ngRoute']);
+
+edjectiveApp.config(function($routeProvider) {
+    $routeProvider
+
+    .when('/', {
+        templateUrl: 'pages/front.html',
+        controller: 'FrontCtrl'
+    })
+
+    .when('/forParents', {
+        templateUrl: 'pages/currentObjectives.html',
+        controller: 'LookupCtrl'
+    })
+
+    .when('/forTeachers', {
+        templateUrl: 'pages/forTeachers.html',
+        controller: 'ForTeachersCtrl'
+    })
+
+    .otherwise({redirectTo: '/', controller: 'LookupCtrl'});
+})
 
 edjectiveApp.run(function($rootScope) {
     $rootScope.$on('updateTeacherEmailEvent', function(event, args) {
         $rootScope.$broadcast('handleTeacherEmailBroadcast', args);
     });
+});
+
+edjectiveApp.controller('FrontCtrl', function ($scope) {
+    // nothing for now
+});
+
+edjectiveApp.controller('ForTeachersCtrl', function ($scope) {
+    // nothing for now
 });
 
 edjectiveApp.controller('GetTeacherEmailCtrl', function ($scope) {

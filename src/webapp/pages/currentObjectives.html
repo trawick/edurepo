@@ -1,0 +1,33 @@
+<div data-ng-controller="GetTeacherEmailCtrl" class="emailInput">
+    Teacher e-mail address: <input type="text" data-ng-model="teacherEmail" />
+    <button data-ng-click="update(teacherEmail)">Lookup</button>
+  </div>
+
+  <br />
+
+  <div data-ng-controller="LookupCtrl">
+    <div class="classDisplay">
+      <p>{{notice.text}}</p>
+      <ul>
+        <li data-ng-repeat="class in classes">
+          <input type="checkbox" data-ng-change="classSelection(class)" data-ng-model="class.isSelected">{{class.name}} ({{class.course_id}})
+        </li>
+      </ul>
+    </div>
+
+    <div class="objectiveDisplay">
+    <ul>
+      <li data-ng-repeat="class in objectives.data">
+        {{class.text}}
+        <ul>
+          <li data-ng-repeat="obj in class.objectives">
+            {{obj.date}} {{obj.objective}}
+          </li>
+        </ul>
+      </li>
+    </ul>
+    </div>
+  </div>
+
+  <a href="#/">Back to top...</a>
+  
