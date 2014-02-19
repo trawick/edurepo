@@ -8,6 +8,11 @@ edjectiveApp.config(function($routeProvider) {
         controller: 'FrontCtrl'
     })
 
+    .when('/keyIdeas', {
+        templateUrl: 'pages/keyIdeas.html',
+        controller: 'FrontCtrl'
+    })
+
     .when('/forParents', {
         templateUrl: 'pages/currentObjectives.html',
         controller: 'LookupCtrl'
