@@ -1,5 +1,5 @@
-<p>Nerds, there's a lot of work to do.  Conceptually there are two
-separate pieces to work on:</p>
+<p>Nerds, there's a lot of work for us to do.  Conceptually there are two
+separate projects:</p>
 
 <ol>
   <li>the software and infrastructure to maintain and enhance the
@@ -7,25 +7,39 @@ separate pieces to work on:</p>
   definitions</li>
 
   <li>the software and infrastructure to serve the educational 
-  materials in the repository as well as extra services such as
+  materials in the repository as well as provide extra services such as
   a teacher database for maintaining current objectives by class</li>
 </ol>
 
 <p>Some older information is available at <a href="https://github.com/trawick/edurepo/tree/master/docs">a docs directory on Github</a>.</p>
 
-<h3>Repository</h3>
+<h3>Repository of materials</h3>
 
-<p>The repository has to be able to be used directly by someone with
-a local copy of the data.  It must be easy to maintain an up to date
-copy.  It must track all changes to the data through history.  For
-this reason it will be made up of directories and files in a DVCS.</p>
+<p>The repository must support direct use by someone with a local copy
+of the data, though not necessarily using end user software.
+It must be easy for a user or institution to maintain an up to date copy.
+It must track all changes to the data through history.  Storage
+as directories and files in a general purpose DVCS is the expected
+solution.</p>
 
 <p>All contributors must be assured that, in the event the machine-
 readable project is cancelled, the educational materials will still be
 available and usable by other projects.</p>
 
-<p>All users must be able to access the materials under simple terms.</p>
+<p>All users must be able to use the materials under simple terms.</p>
 
 <h3>Access to the repository over the web</h3>
 
-yada yada yada
+<p>The repository of materials is imported into a database for quick
+access.  REST APIs are provided for end user software to use.</p>
+
+<p>Additional applications and databases support ease of use of the
+educational materials, including:</p>
+
+<ul>
+  <li>registration of specific classes (e.g., Mrs. Smith's 2nd period
+  freshman biology) with learning objectives recorded by date, to
+  enable tracking by parents of exactly what their kids are studying</li>
+  <li>crowdsourced indexes to resources elsewhere, organized by
+  learning objective and type of material</li>
+</ul>
