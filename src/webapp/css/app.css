@@ -11,6 +11,50 @@ ul {
     margin-left: 0px;
 }
 
+ul.huge {
+    font-size: 36px;
+}
+
+.huge li {
+    margin: 10px;
+    padding: 20px;
+}
+
+.orange {
+    background-color: orangered;
+    color: black;
+}
+
+.red {
+    background-color: red;
+    color: black;
+}
+
+.blue {
+    background-color: darkblue;
+    color: black;
+}
+
+.purple {
+    background-color: mediumpurple;
+    color: black;
+}
+
+.green {
+    background-color: darkgreen;
+    color: black;
+}
+
+.yellow {
+    background-color: yellow;
+    color: black;
+}
+
+.pink {
+    background-color: hotpink;
+    color: black;
+}
+
 li {
     list-style: none;
 }

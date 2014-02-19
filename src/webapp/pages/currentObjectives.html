@@ -1,4 +1,12 @@
-<div data-ng-controller="GetTeacherEmailCtrl" class="emailInput">
+<p>Here's a simple demonstration of access to multiple types
+of materials when teachers maintain a calendar of learning objectives
+(i.e., indicate what objectives they are currently covering).</p>
+
+<p>For the demonstration, enter <strong>trawick@gmail.com</strong>
+as the teacher e-mail address, then press Lookup, then select one
+of the classes which appears.</p>
+
+  <div data-ng-controller="GetTeacherEmailCtrl" class="emailInput">
     Teacher e-mail address: <input type="text" data-ng-model="teacherEmail" />
     <button data-ng-click="update(teacherEmail)">Lookup</button>
   </div>
@@ -28,6 +36,3 @@
     </ul>
     </div>
   </div>
-
-  <a href="#/">Back to top...</a>
-  

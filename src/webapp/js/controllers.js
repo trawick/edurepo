@@ -18,6 +18,30 @@ edjectiveApp.config(function($routeProvider) {
         controller: 'ForTeachersCtrl'
     })
 
+    .when('/forCreatorsOfMaterials', {
+        templateUrl: 'pages/forCreatorsOfMaterials.html',
+        controller: 'FrontCtrl'
+    })
+
+    .when('/forCurriculumDesigners', {
+        templateUrl: 'pages/forCurriculumDesigners.html',
+        controller: 'FrontCtrl'
+    })
+
+    .when('/forSoftwareVendors', {
+        templateUrl: 'pages/forSoftwareVendors.html',
+        controller: 'FrontCtrl'
+    })
+    .when('/forEducationVendors', {
+        templateUrl: 'pages/forEducationVendors.html',
+        controller: 'FrontCtrl'
+    })
+
+    .when('/forNerds', {
+        templateUrl: 'pages/forNerds.html',
+        controller: 'FrontCtrl'
+    })
+
     .otherwise({redirectTo: '/', controller: 'LookupCtrl'});
 })
 
