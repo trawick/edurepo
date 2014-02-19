@@ -9,3 +9,5 @@ src/edurepo/teachers/migrations/
 src/webapp/css/bootstrap*.css
 src/webapp/lib/angular
 src/webapp/lib/jquery
+src/edurepo/dev_settings.cfg
+src/edurepo/settings.cfg

@@ -12,20 +12,21 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+import ConfigParser
+config = ConfigParser.ConfigParser()
+config.readfp(open('settings.cfg'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'e!%n8r_po^2$cxzh(h7a&+^ccuwaf$x!gpz8d^-(%0f85w+)8p'
+
+SECRET_KEY = config.get('secret', 'key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-TEMPLATE_DEBUG = True
-
-ALLOWED_HOSTS = []
-
+DEBUG = config.get('debugging', 'DEBUG') == 'True'
+TEMPLATE_DEBUG = config.get('debugging', 'TEMPLATE_DEBUG') == 'True'
+ALLOWED_HOSTS = [x for x in config.get('deployment', 'ALLOWED_HOSTS') if x != '']
 
 # Application definition
 
@@ -61,8 +62,13 @@ WSGI_APPLICATION = 'edurepo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': config.get('database', 'NAME'),
+        'USER': config.get('database', 'USER'),
+        'PASSWORD': config.get('database', 'PASSWORD'),
+        'HOST': 'localhost'
     }
 }
 

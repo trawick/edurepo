@@ -3,8 +3,8 @@ Current stage
 
 Deploy what is working now on edjective.org.
 
-* TODO Split up settings.py following "Two Scoops..." to keep deployment secret key out of source code
-* TODO Switch to Postgresql on dev system
+* DONE Split up settings.py following "Two Scoops..." to keep deployment secret key out of source code (did it differently!)
+* DONE Switch to Postgresql on dev system
 * TODO Set up Postgresql on server
 * TODO Have settings for API endpoint in webapp
 * TODO Have settings for API endpoint in sample clients
@@ -15,6 +15,7 @@ Deploy what is working now on edjective.org.
 Blatant bugs, even obvious at this early stage
 ==============================================
 
+* need ASL in source files
 * web app should cache server lookups for better performance
 * resource model needs date-added field to allow sorting by new[+popular]
 * no automated test cases, you moron; create course and objectives with fixed strings and go on from there
