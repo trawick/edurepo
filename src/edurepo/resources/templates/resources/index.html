@@ -7,7 +7,7 @@
 {% if resource_list %}
     <ul>
 {% for r in resource_list %}
-        <li><a href="/resources/{{ r.id }}/">{{ r.url }}</a></li>
+        <li><a href="{{ r.id }}/">{{ r.url }}</a></li>
 {% endfor %}
     </ul>
 {% else %}

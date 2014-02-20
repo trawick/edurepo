@@ -7,7 +7,7 @@
 <ul>
 {% if teacher_list %}
 {% for t in teacher_list %}
-    <li><a href="/teachers/{{ t.email }}/">{{ t.name }}</a></li>
+    <li><a href="{{ t.email }}/">{{ t.name }}</a></li>
 {% endfor %}
 </ul>
 {% else %}
