@@ -90,3 +90,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+if config.get('deployment', 'set_static_root') == 'True':
+    STATIC_ROOT = config.get('deployment', 'STATIC_ROOT')
