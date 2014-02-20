@@ -7,7 +7,7 @@
 <ul>
 {% if course_list %}
 {% for c in course_list %}
-    <li><a href="/repo/{{ c.id }}/">{{ c.description }}</a></li>
+    <li><a href="{{ c.id }}/">{{ c.description }}</a></li>
 {% endfor %}
 </ul>
 {% else %}
