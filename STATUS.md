@@ -1,16 +1,22 @@
-Current stage
-=============
+Current stage (by Feb 21)
+=========================
 
-Deploy what is working now on edjective.org.
+Better demo webapp...
 
-* DONE Split up settings.py following "Two Scoops..." to keep deployment secret key out of source code (did it differently!)
-* DONE Switch to Postgresql on dev system
-* DONE Set up Postgresql on server
-* DONE Have settings for API endpoint in webapp
-* DONE Have settings for API endpoint in sample clients
-* DONE git checkout on server
-* DONE Set up SSL on server (self-signed cert is okay)
-* DONE Deploy Django app via mod_wsgi; httpd: /admin requires SSL, which in turn requires client auth; everything else is okay but allows only GET/HEAD/OPTIONS, / redirects to /webapp/ for now
+* TODO small image as replacement for "Front page" link
+* TODO get Ksenija to choose better colors for bars on front page
+* TODO clean up and simplify text everywhere
+* TODO on parent demo, load resources for current learning objective
+* TODO on parent demo, load sample problems for current learning objective
+* TODO create demo on curiculum designer page showing traversal of different types of information
+* TODO fix overlap of text on small screen
+* TODO find out why text color isn't black
+
+Possible themes for upcoming stages
+===================================
+
+* add "I can" model, linked to learning objective, then add demo of traversing a course description to the curiculum page
+
 
 Blatant bugs, even obvious at this early stage
 ==============================================
