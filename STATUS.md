@@ -6,7 +6,7 @@ Deploy what is working now on edjective.org.
 * DONE Split up settings.py following "Two Scoops..." to keep deployment secret key out of source code (did it differently!)
 * DONE Switch to Postgresql on dev system
 * DONE Set up Postgresql on server
-* TODO Have settings for API endpoint in webapp
+* DONE Have settings for API endpoint in webapp
 * DONE Have settings for API endpoint in sample clients
 * DONE git checkout on server
 * DONE Set up SSL on server (self-signed cert is okay)

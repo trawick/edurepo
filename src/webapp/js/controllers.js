@@ -76,9 +76,11 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
 
     $scope.objectives = {'data': []};
     $scope.teacher_email = '';
-    $scope.host_port = '192.168.1.207:8000';
-    $scope.baseurl = 'http://' + $scope.host_port + '/';
-    $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
+
+    function setBaseURL(u) {
+        $scope.baseurl = u;
+        $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
+    }
 
     function annotate_objective(data, obj) {
         return function(data) {
@@ -129,14 +131,20 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
         $scope.teacher_email = args;
         $scope.notice = {'text': 'loading ' + args + '...'};
 
-        $http.get(lookup_teacher_classes_url(args)).success(function(data) {
-            if (data.meta.total_count == 0) {
-                $scope.notice = {'text': 'Invalid teacher e-mail address!'};
-            }
-            else {
-                $scope.notice = {'text': "Select one or more of this teacher's classes:"};
-                $scope.classes = data.objects;
-            }
+        $http.get("resources/config.json").success(function(data) {
+
+            setBaseURL(data.base_api_url);
+
+            $http.get(lookup_teacher_classes_url(args)).success(function(data) {
+                if (data.meta.total_count == 0) {
+                    $scope.notice = {'text': 'Invalid teacher e-mail address!'};
+                }
+                else {
+                    $scope.notice = {'text': "Select one or more of this teacher's classes:"};
+                    $scope.classes = data.objects;
+                }
+            });
+
         });
     });
 });
