@@ -5,9 +5,13 @@
 </head>
 <body>
 <ul>
+{% if course_list %}
 {% for c in course_list %}
     <li><a href="/repo/{{ c.id }}/">{{ c.description }}</a></li>
 {% endfor %}
 </ul>
+{% else %}
+<p>No courses defined!</p>
+{% endif %}
 </body>
 </html>
