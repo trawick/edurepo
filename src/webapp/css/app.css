@@ -20,39 +20,41 @@ ul.huge {
     line-height: 1;
 }
 
-.orange {
-    background-color: orangered;
+.forparents > a:visited, .forteachers > a:visited, .forcreators > a:visited, .forisvs > a:visited, .forpublishers > a:visited, .keyideas > a:visited, .fornerds > a:visited  {
     color: black;
 }
 
-.red {
-    background-color: red;
+.forparents > a:link, .forteachers > a:link, .forcreators > a:link, .forisvs > a:link, .forpublishers > a:link, .keyideas > a:link, .fornerds > a:link  {
     color: black;
 }
 
-.blue {
-    background-color: darkblue;
+.forpublishers {
+    background-color: #ff9558;
     color: black;
 }
 
-.purple {
-    background-color: mediumpurple;
-    color: black;
+.keyideas {
+    background-color: #ff665f;
 }
 
-.green {
-    background-color: darkgreen;
-    color: black;
+.fornerds {
+    background-color: #849fe2;
 }
 
-.yellow {
+.forcreators {
+    background-color: #ac8cdb;
+}
+
+.forparents {
+    background-color: #87ce50;
+}
+
+.forteachers {
     background-color: yellow;
-    color: black;
 }
 
-.pink {
-    background-color: hotpink;
-    color: black;
+.forisvs {
+    background-color: #c5a830;
 }
 
 li {
