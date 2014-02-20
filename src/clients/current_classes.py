@@ -3,13 +3,19 @@ import json
 import urllib2
 import sys
 
-if len(sys.argv) != 2:
-    print >> sys.stderr, "Usage: %s teacher-email" % sys.argv[0]
+if len(sys.argv) != 3:
+    print >> sys.stderr, "Usage: %s base-url teacher-email" % sys.argv[0]
     sys.exit(1)
 
-teacher_email = sys.argv[1]
+teacher_email = sys.argv[2]
 
-server_base = 'http://127.0.0.1:8000/'
+if sys.argv[1] == 'dev':
+    server_base = 'http://127.0.0.1:8000/'
+elif sys.argv[1] == 'prod':
+    server_base = 'http://edjective.org/ed/'
+else:
+    server_base = sys.argv[1]
+
 base_teacher_url = '%steachers/api/teacher_' % server_base
 base_course_url = '%srepo/api/course/' % server_base
 
