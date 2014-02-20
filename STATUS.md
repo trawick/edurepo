@@ -9,7 +9,7 @@ Better demo webapp...
 * TODO on parent demo, load resources for current learning objective
 * TODO on parent demo, load sample problems for current learning objective
 * TODO create demo on curiculum designer page showing traversal of different types of information
-* TODO fix overlap of text on small screen
+* DONE fix overlap of text on small screen
 * TODO find out why text color isn't black
 
 Possible themes for upcoming stages

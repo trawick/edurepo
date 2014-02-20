@@ -17,6 +17,7 @@ ul.huge {
 .huge li {
     margin: 10px;
     padding: 20px;
+    line-height: 1;
 }
 
 .orange {
