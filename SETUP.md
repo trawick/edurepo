@@ -1,6 +1,10 @@
+Configuration and setup for the Django app
+==========================================
 
 PostgreSQL on Ubuntu:
 
+
+```
 sudo apt-get install postgresql libpq-dev
 sudo su - postgres
   createdb djangoedurepo
@@ -9,25 +13,12 @@ sudo su - postgres
   psql
     grant all privileges on database djangoedurepo to NEWUSER;
     \q
-    
+```
 
-Angular for webapp:
-
-cd edurepo/src/webapp/
-mkdir lib
-cd lib
-unzip /path/to/angular-1.2.13.zip
-ln -s angular-1.2.13 angular
-
-Bootstrap for webapp:
-
-cd /scratch
-unzip /path/to/bootstrap.zip (2.3.2)
-cd bootstrap/css
-cp bootstrap* /path/to/edurepo/src/webapp/css/
 
 Create settings.cfg for Django app in src/edurepo directory
 
+```
 # generate a new secret:
 #   >>> from django.utils.crypto import get_random_string
 #   >>> chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
@@ -49,21 +40,27 @@ ALLOWED_HOSTS=edjective.org
 NAME=djangoedurepo
 USER=   (whatever)
 PASSWORD=   (whatever)
+```
 
 Python environment:
 
 System python: 
+
+```
   sudo apt-get install python-pip
   sudo pip install virtualenv
+```
 
 Local python environment:
 
+```
   cd edurepo (root of git checkout)
   mkdir envs
   virtualenv envs/edurepo
   . envs/edurepo/bin/activate
   cd src
   pip install -r requirements.txt
+```
 
 ---
 
@@ -73,9 +70,38 @@ look through httpd config in detail for all the crap
 
 ---
 
-configuring webapp:
+Configuration and setup of the AngularJS web app
+================================================
 
-create file src/webapp/resources/config.json with something like the following
+Create file src/webapp/resources/config.json with something like the following
 to configure the API endpoint:
 
-{"base\_api\_url" : "http://edjective.org/ed/"}
+```
+{"base_api_url" : "http://edjective.org/ed/"}
+```
+
+On a development system, the setting would typically be:
+
+```
+{"base_api_url" : "http://127.0.0.1:8000/"}
+```
+
+Angular for webapp:
+
+```
+cd edurepo/src/webapp/
+mkdir lib
+cd lib
+unzip /path/to/angular-1.2.13.zip
+ln -s angular-1.2.13 angular
+```
+
+Bootstrap for webapp:
+
+```
+cd /scratch
+unzip /path/to/bootstrap.zip (2.3.2)
+cd bootstrap/css
+cp bootstrap* /path/to/edurepo/src/webapp/css/
+```
+
