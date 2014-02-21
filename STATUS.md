@@ -1,4 +1,4 @@
-Current stage (by Feb 21)
+Current stage (by Feb ~~21~~23)
 =========================
 
 Better demo webapp...
@@ -8,7 +8,7 @@ Better demo webapp...
 * TODO clean up and simplify text everywhere
 * TODO on parent demo, load resources for current learning objective
 * TODO on parent demo, load sample problems for current learning objective
-* TODO create demo on curiculum designer page showing traversal of different types of information
+* ~~TODO create demo on curiculum designer page showing traversal of different types of information~~
 * DONE fix overlap of text on small screen
 * DONE find out why text color isn't black
 
