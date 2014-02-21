@@ -32,11 +32,11 @@ ul.huge {
     line-height: 1;
 }
 
-.forparents > a:visited, .forteachers > a:visited, .forcreators > a:visited, .forisvs > a:visited, .forpublishers > a:visited, .keyideas > a:visited, .fornerds > a:visited  {
+.forparents > a:visited, .forteachers > a:visited, .forauthors > a:visited, .forisvs > a:visited, .forpublishers > a:visited, .keyideas > a:visited, .fornerds > a:visited  {
     color: black;
 }
 
-.forparents > a:link, .forteachers > a:link, .forcreators > a:link, .forisvs > a:link, .forpublishers > a:link, .keyideas > a:link, .fornerds > a:link  {
+.forparents > a:link, .forteachers > a:link, .forauthors > a:link, .forisvs > a:link, .forpublishers > a:link, .keyideas > a:link, .fornerds > a:link  {
     color: black;
 }
 
@@ -53,7 +53,7 @@ ul.huge {
     background-color: #849fe2;
 }
 
-.forcreators {
+.forauthors {
     background-color: #ac8cdb;
 }
 

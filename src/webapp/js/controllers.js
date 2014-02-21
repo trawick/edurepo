@@ -23,13 +23,8 @@ edjectiveApp.config(function($routeProvider) {
         controller: 'ForTeachersCtrl'
     })
 
-    .when('/forCreatorsOfMaterials', {
-        templateUrl: 'pages/forCreatorsOfMaterials.html',
-        controller: 'FrontCtrl'
-    })
-
-    .when('/forCurriculumDesigners', {
-        templateUrl: 'pages/forCurriculumDesigners.html',
+    .when('/forAuthors', {
+        templateUrl: 'pages/forAuthors.html',
         controller: 'FrontCtrl'
     })
 
