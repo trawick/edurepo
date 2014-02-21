@@ -3,7 +3,7 @@ Current stage (by Feb 21)
 
 Better demo webapp...
 
-* TODO small image as replacement for "Front page" link
+* DONE small image as replacement for "Front page" link
 * DONE get Ksenija to choose better colors for bars on front page
 * TODO clean up and simplify text everywhere
 * TODO on parent demo, load resources for current learning objective

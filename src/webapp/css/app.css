@@ -6,6 +6,18 @@ body {
     font-family: Arial, Verdana, sans-serif;
 }
 
+#folder-image {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+#folder-image > a > img {
+    width: 100%;
+    max-width: 300px;
+    margin: auto;
+}
+
 ul {
     margin-left: 0px;
 }
