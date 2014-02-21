@@ -28,12 +28,13 @@ edjectiveApp.config(function($routeProvider) {
         controller: 'FrontCtrl'
     })
 
-    .when('/forSoftwareVendors', {
-        templateUrl: 'pages/forSoftwareVendors.html',
+    .when('/forVendors', {
+        templateUrl: 'pages/forVendors.html',
         controller: 'FrontCtrl'
     })
-    .when('/forEducationVendors', {
-        templateUrl: 'pages/forEducationVendors.html',
+
+    .when('/QandA', {
+        templateUrl: 'pages/qanda.html',
         controller: 'FrontCtrl'
     })
 
