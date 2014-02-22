@@ -105,3 +105,10 @@ cd bootstrap/css
 cp bootstrap* /path/to/edurepo/src/webapp/css/
 ```
 
+When picking up software updates
+================================
+
+* Restart httpd
+* manage.py syncdb
+* manage.py that-staticfile-thingie
+
