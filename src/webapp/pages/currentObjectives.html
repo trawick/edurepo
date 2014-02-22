@@ -30,6 +30,12 @@ of the classes which appears.</p>
         <ul>
           <li data-ng-repeat="obj in class.objectives">
             {{obj.date}} {{obj.objective}}
+
+            <ul>
+              <li data-ng-repeat="res in obj.resources">
+                {{res.url}}
+              </li>
+            </ul>
           </li>
         </ul>
       </li>

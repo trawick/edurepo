@@ -76,16 +76,22 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
     function setBaseURL(u) {
         $scope.baseurl = u;
         $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
+        $scope.res_baseurl = $scope.baseurl + 'resources/api/resource/';
     }
 
     function annotate_objective(data, obj) {
         return function(data) {
             obj.objective = data.id + ' ' + data.formal_description;
+            obj.resources = [{'url': 'http://abc/'}, {'url': 'http://def/'}];
         };
     }
 
     function lookup_objective_url(obj) {
         return $scope.lo_baseurl + obj + '/';
+    }
+
+    function lookup_resource_url(obj) {
+        return $scope.res_baseurl + obj + '/';
     }
 
     function lookup_current_objectives_url(teacher_email, start_date, stop_date, class_name) {
