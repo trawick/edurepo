@@ -40,6 +40,12 @@ of the classes which appears.</p>
                 Comments from submitter: {{res.notes}}
               </li>
             </ul>
+
+            <ul>
+              <li data-ng-repeat="glossitem in obj.glossitems">
+                {{glossitem.term}}: {{glossitem.definition}}
+              </li>
+            </ul>
           </li>
         </ul>
       </li>

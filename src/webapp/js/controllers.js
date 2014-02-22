@@ -83,8 +83,12 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
         return function(data) {
             obj.objective = data.id + ' ' + data.formal_description;
             obj.resources = [];
+            obj.glossitems = [];
             $http.get(lookup_resources_url(data.id)).success(function(data) {
                 obj.resources = data.objects;
+            });
+            $http.get(lookup_glossary_items_by_objective(data.id)).success(function(data) {
+                obj.glossitems = data.objects;
             });
         };
     }
@@ -100,6 +104,10 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
 
     function lookup_current_objectives_url(teacher_email, start_date, stop_date, class_name) {
         return $scope.baseurl + 'teachers/api/entry/?teacher__email=' + teacher_email + '&date__lte=' + stop_date + '&date__gte=' + start_date + '&teacher_class__name=' + class_name;
+    }
+
+    function lookup_glossary_items_by_objective(obj) {
+        return $scope.baseurl + 'repo/api/glossary_item/?learning_objective__id=' + obj;
     }
 
     function lookup_teacher_classes_url(teacher_email) {
