@@ -79,10 +79,13 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
         $scope.res_baseurl = $scope.baseurl + 'resources/api/resource/';
     }
 
-    function annotate_objective(data, obj) {
+    function annotate_objective($http, data, obj) {
         return function(data) {
             obj.objective = data.id + ' ' + data.formal_description;
-            obj.resources = [{'url': 'http://abc/'}, {'url': 'http://def/'}];
+            obj.resources = [];
+            $http.get(lookup_resources_url(data.id)).success(function(data) {
+                obj.resources = data.objects;
+            });
         };
     }
 
@@ -90,8 +93,9 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
         return $scope.lo_baseurl + obj + '/';
     }
 
-    function lookup_resource_url(obj) {
-        return $scope.res_baseurl + obj + '/';
+    // /resources/api/resource/?format=json&resource_objective=MG4-FACTMULT
+    function lookup_resources_url(obj) {
+        return $scope.res_baseurl + '?resource_objective=' + obj;
     }
 
     function lookup_current_objectives_url(teacher_email, start_date, stop_date, class_name) {
@@ -114,7 +118,7 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
                 var newobj = {'text': cl.name, 'objectives': []};
                 for (var i = 0; i < data.meta.total_count; i++) {
                     newobj.objectives.push({'date': data.objects[i].date, 'objective': data.objects[i].objective});
-                    $http.get(lookup_objective_url(data.objects[i].objective)).success(annotate_objective(data, newobj.objectives[newobj.objectives.length - 1]));
+                    $http.get(lookup_objective_url(data.objects[i].objective)).success(annotate_objective($http, data, newobj.objectives[newobj.objectives.length - 1]));
                 }
                 $scope.objectives['data'].push(newobj);
             });

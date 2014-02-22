@@ -6,7 +6,7 @@ Better demo webapp...
 * DONE small image as replacement for "Front page" link
 * DONE get Ksenija to choose better colors for bars on front page
 * TODO clean up and simplify text everywhere
-* TODO on parent demo, load resources for current learning objective
+* DONE on parent demo, load resources for current learning objective
 * TODO on parent demo, load sample problems for current learning objective
 * ~~TODO create demo on curiculum designer page showing traversal of different types of information~~
 * DONE fix overlap of text on small screen
