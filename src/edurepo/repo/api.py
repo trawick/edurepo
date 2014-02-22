@@ -1,7 +1,8 @@
 __author__ = 'trawick'
 
-from tastypie.resources import ModelResource
-from repo.models import Course, LearningObjective
+from tastypie import fields
+from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
+from repo.models import Course, LearningObjective, GlossaryItem
 
 #### from https://gist.github.com/robhudson/3848832
 
@@ -53,5 +54,23 @@ class CourseResource(CORSResource, ModelResource):
 class LearningObjectiveResource(CORSResource, ModelResource):
     class Meta:
         queryset = LearningObjective.objects.all()
+        filtering = {
+            'id': ALL,
+        }
+        list_allowed_methods = ['get']
+        detail_allowed_methods = ['get']
+
+
+class GlossaryItemResource(CORSResource, ModelResource):
+    learning_objective = fields.ForeignKey(LearningObjectiveResource, 'learning_objective', full=False)
+
+    class Meta:
+        queryset = GlossaryItem.objects.all()
+        resource_name = 'glossary_item'
+        filtering = {
+            'learning_objective': ALL_WITH_RELATIONS,
+            'term': ALL,
+            'definition': ALL,
+        }
         list_allowed_methods = ['get']
         detail_allowed_methods = ['get']
