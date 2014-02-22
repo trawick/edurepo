@@ -90,6 +90,9 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
             $http.get(lookup_glossary_items_by_objective(data.id)).success(function(data) {
                 obj.glossitems = data.objects;
             });
+            $http.get(lookup_true_false_items_by_objective(data.id)).success(function(data) {
+                obj.tfitems = data.objects;
+            });
         };
     }
 
@@ -108,6 +111,10 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
 
     function lookup_glossary_items_by_objective(obj) {
         return $scope.baseurl + 'repo/api/glossary_item/?learning_objective__id=' + obj;
+    }
+
+    function lookup_true_false_items_by_objective(obj) {
+        return $scope.baseurl + 'repo/api/true_false_item/?learning_objective__id=' + obj;
     }
 
     function lookup_teacher_classes_url(teacher_email) {

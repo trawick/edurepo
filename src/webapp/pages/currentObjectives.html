@@ -41,11 +41,24 @@ of the classes which appears.</p>
               </li>
             </ul>
 
+            <br />
+            <p>Glossary entries (if any):</p>
+
             <ul>
               <li data-ng-repeat="glossitem in obj.glossitems">
                 {{glossitem.term}}: {{glossitem.definition}}
               </li>
             </ul>
+
+            <br />
+            <p>True/False questions (if any):</p>
+
+            <ul>
+              <li data-ng-repeat="tfitem in obj.tfitems">
+                {{tfitem.statement}} ({{tfitem.answer}})
+              </li>
+            </ul>
+
           </li>
         </ul>
       </li>
