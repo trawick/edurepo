@@ -31,6 +31,18 @@ of the classes which appears.</p>
           <li data-ng-repeat="obj in class.objectives">
             {{obj.date}} {{obj.objective}}
 
+            <br />
+            <p>Related "I Can" statements (if any):</p>
+
+            <ul>
+              <li data-ng-repeat="ican in obj.icans">
+                {{ican.statement}}
+              </li>
+            </ul>
+
+            <br />
+            <p>Resources on the web (if any):</p>
+
             <ul>
               <li data-ng-repeat="res in obj.resources">
                 <a href="{{res.url}}">{{res.url}}</a>

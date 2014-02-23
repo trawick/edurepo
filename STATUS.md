@@ -9,7 +9,7 @@ Model fixes, implement demo of traversing a course description (access from auth
 * DONE Resource model needs date-added field to allow sorting by new[+popular]
 * DONE add "I can" model, linked to learning objective
 * DONE courses in samples provide "I Can" statements
-* TODO Parent demo finds applicable "I can" statements.
+* DONE Parent demo finds applicable "I can" statements.
 * TODO create demo on curriculum designer page showing traversal of different types of information
 * TODO parent demo and sample code should use repo provider URL from class model
 

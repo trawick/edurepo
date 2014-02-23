@@ -84,6 +84,10 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
             obj.objective = data.id + ' ' + data.formal_description;
             obj.resources = [];
             obj.glossitems = [];
+            obj.icans = [];
+            $http.get(lookup_icans_by_objective(data.id)).success(function(data) {
+                obj.icans = data.objects;
+            });
             $http.get(lookup_resources_url(data.id)).success(function(data) {
                 obj.resources = data.objects;
             });
@@ -111,6 +115,10 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
 
     function lookup_glossary_items_by_objective(obj) {
         return $scope.baseurl + 'repo/api/glossary_item/?learning_objective__id=' + obj;
+    }
+
+    function lookup_icans_by_objective(obj) {
+        return $scope.baseurl + 'repo/api/ican/?learning_objective__id=' + obj;
     }
 
     function lookup_true_false_items_by_objective(obj) {
