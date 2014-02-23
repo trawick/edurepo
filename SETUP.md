@@ -130,9 +130,7 @@ Starting over with new data
 ===========================
 
 ```
-python manage.py sqlclear resources | python manage.py dbshell
-python manage.py sqlclear repo      | python manage.py dbshell
-                          ...
+python manage.py sqlclear teachers resources repo | python manage.py dbshell
 python manage.py syncdb
 python repo/import.py ../../samples/ import
 ```
