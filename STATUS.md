@@ -16,6 +16,8 @@ Model fixes, implement demo of traversing a course description (access from auth
 Possible themes for upcoming stages
 ===================================
 
+* Customize Django admin for easier use
+* Create reference views of repo data
 * XML scheme/validation for repo data
 * Model for multiple choice questions (exploit in demo)
 * Add Spanish version of some "I Can" statements or other materials, with means of retrieval
