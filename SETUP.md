@@ -125,3 +125,12 @@ drop table south_migrationhistory;
 DROP TABLE
 djangoedurepo=# \q
 ```
+
+Starting over with new data
+===========================
+
+```
+python manage.py flush
+python manage.py syncdb
+python repo/import.py ../../samples/ import
+```
