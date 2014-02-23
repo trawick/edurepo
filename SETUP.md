@@ -110,7 +110,7 @@ When picking up software updates
 
 * Restart httpd
 * manage.py syncdb
-* manage.py that-staticfile-thingie
+* manage.py collectstatic
 
 When dropping tables
 ====================
