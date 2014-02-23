@@ -109,8 +109,8 @@ When picking up software updates
 ================================
 
 * Restart httpd
-* manage.py syncdb
 * manage.py collectstatic
+* manage.py syncdb   OR POSSIBLY starting over with new data (below)
 
 When dropping tables
 ====================
@@ -133,4 +133,7 @@ Starting over with new data
 python manage.py sqlclear teachers resources repo | python manage.py dbshell
 python manage.py syncdb
 python repo/import.py ../../samples/ import
+(edit teachers/fixtures/sample.json to fix URL)
+python manage.py loaddata teachers/fixtures/sample.json
+python manage.py loaddata resources/fixtures/sample.json
 ```
