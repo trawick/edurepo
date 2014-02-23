@@ -112,3 +112,16 @@ When picking up software updates
 * manage.py syncdb
 * manage.py that-staticfile-thingie
 
+When dropping tables
+====================
+
+E.g., table south_migrationhistory...
+
+```
+sudo su - postgres
+psql
+\c djangoedurepo
+drop table south_migrationhistory;
+DROP TABLE
+djangoedurepo=# \q
+```
