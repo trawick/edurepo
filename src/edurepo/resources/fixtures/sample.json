@@ -1,0 +1,6 @@
+[
+ {
+  "pk": 1, "model": "resources.resource",
+  "fields": {"objective": "MG4-FACTMULT", "url": "https://www.khanacademy.org/math/cc-fourth-grade-math/cc-4th-fact-mult-topic/cc-4th-factors-multiples/v/finding-factors-of-a-number", "votes": 4, "notes": "", "when_added": "2014-02-23T20:55:22.511Z"}
+ }
+]

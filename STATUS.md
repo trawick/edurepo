@@ -3,12 +3,15 @@ Current stage (by Feb 24)
 
 Model fixes, implement demo of traversing a course description (access from author page)
 
-* TODO Teacher class def should have a place for non-default api providers urls
-* TODO Materials in repo must be labelled by language (or universal for some).
-* TODO Resource model needs date-added field to allow sorting by new[+popular]
-* TODO add "I can" model, linked to learning objective
-* TODO script to populate teacher and resource db with a few entries
-* TODO create demo on curiculum designer page showing traversal of different types of information
+* DONE Teacher class def should have a place for non-default api providers urls
+* DONE Materials in repo have optional language label
+* DONE script to populate teacher and resource db with a few entries
+* DONE Resource model needs date-added field to allow sorting by new[+popular]
+* DONE add "I can" model, linked to learning objective
+* TODO courses in samples provide "I Can" statements
+* TODO parent demo and sample code should use repo provider URL from class model
+* TODO Parent demo finds applicable "I can" statements.
+* TODO create demo on curriculum designer page showing traversal of different types of information
 
 Possible themes for upcoming stages
 ===================================
