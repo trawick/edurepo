@@ -1,28 +1,25 @@
-Current stage (by Feb ~~21~~23)
+Current stage (by Feb 24)
 =========================
 
-Better demo webapp...
+Model fixes, implement demo of traversing a course description (access from author page)
 
-* DONE small image as replacement for "Front page" link
-* DONE get Ksenija to choose better colors for bars on front page
-* TODO clean up and simplify text everywhere
-* DONE on parent demo, load resources for current learning objective
-* DONE on parent demo, load sample problems for current learning objective
-* ~~TODO create demo on curiculum designer page showing traversal of different types of information~~
-* DONE fix overlap of text on small screen
-* DONE find out why text color isn't black
+* TODO Teacher class def should have a place for non-default api providers urls
+* TODO Materials in repo must be labelled by language (or universal for some).
+* TODO Resource model needs date-added field to allow sorting by new[+popular]
+* TODO add "I can" model, linked to learning objective
+* TODO script to populate teacher and resource db with a few entries
+* TODO create demo on curiculum designer page showing traversal of different types of information
 
 Possible themes for upcoming stages
 ===================================
 
-* add "I can" model, linked to learning objective, then add demo of traversing a course description to the curiculum page
-
+* XML scheme for course definition
+* Model for multiple choice questions (exploit in demo)
 
 Blatant bugs, even obvious at this early stage
 ==============================================
 
 * need ASL in source files
 * web app should cache server lookups for better performance
-* resource model needs date-added field to allow sorting by new[+popular]
 * individual items have ids for reuse with multiple objectives?  I dunno...  seems to imply performance hit, when the materials could be reused by some definitional mechanism
 * no automated test cases, you moron; create course and objectives with fixed strings and go on from there
