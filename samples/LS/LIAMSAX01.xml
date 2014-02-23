@@ -5,12 +5,20 @@
   <objectives>
     <objective id="LIAMSAX01-0001">
      <description>how to put it together, how to clean it, how to store it</description>
+     <icans>
+       <ican>I can identify the reed, ligature, mouthpiece, neck, and body of the horn.</ican>
+       <ican>I can remove the reed and properly store it.</ican>
+     </icans>
     </objective>
     <objective id="LIAMSAX01-0002">
      <description>proper embouchure, making a full sound</description>
     </objective>
     <objective id="LIAMSAX01-0003">
      <description>how to read music</description>
+     <icans>
+       <ican>I can identify the symbol for treble clef.</ican>
+       <ican>I can identify the notes for the lines and spaces on the treble staff.</ican>
+     </icans>
     </objective>
   </objectives>
 </course-standard>

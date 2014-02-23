@@ -7,7 +7,7 @@ sys.path.append('.')
 from xml.etree.ElementTree import parse
 
 
-from repo.models import Course, LearningObjective, GlossaryItem, TrueFalseItem
+from repo.models import Course, LearningObjective, ICan, GlossaryItem, TrueFalseItem
 
 perform_import = False
 noisy = False
@@ -23,7 +23,8 @@ def import_course_standard(root):
 
     if noisy:
         print 'Course standard: %s' % id
-        print description
+        print '                 %s' % description
+        print
 
     # don't care about <source></source> for now
 
@@ -35,10 +36,20 @@ def import_course_standard(root):
 
         if noisy:
             print 'Objective: %s' % id
-            print '  %s' % description
+            print '           %s' % description
 
         if perform_import:
             c.learningobjective_set.create(id=id, formal_description=description)
+
+        icans = child.find('icans')
+        if icans is not None:
+            for ican in icans:
+                if noisy:
+                    print '  ICan: ' + ican.text
+
+                if perform_import:
+                    obj = LearningObjective.objects.get(id=id)
+                    obj.ican_set.create(statement=ican.text)
 
 
 def import_tf_questions(root):
@@ -102,6 +113,7 @@ if perform_import:
     GlossaryItem.objects.all().delete()
     LearningObjective.objects.all().delete()
     Course.objects.all().delete()
+    ICan.objects.all().delete()
 
 for dirpath, dnames, fnames in os.walk(top):
     for f in sorted(fnames, key=lambda fn: fn[:-4]):

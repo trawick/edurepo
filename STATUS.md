@@ -8,16 +8,17 @@ Model fixes, implement demo of traversing a course description (access from auth
 * DONE script to populate teacher and resource db with a few entries
 * DONE Resource model needs date-added field to allow sorting by new[+popular]
 * DONE add "I can" model, linked to learning objective
-* TODO courses in samples provide "I Can" statements
-* TODO parent demo and sample code should use repo provider URL from class model
+* DONE courses in samples provide "I Can" statements
 * TODO Parent demo finds applicable "I can" statements.
 * TODO create demo on curriculum designer page showing traversal of different types of information
+* TODO parent demo and sample code should use repo provider URL from class model
 
 Possible themes for upcoming stages
 ===================================
 
-* XML scheme for course definition
+* XML scheme/validation for repo data
 * Model for multiple choice questions (exploit in demo)
+* Add Spanish version of some "I Can" statements or other materials, with means of retrieval
 
 Blatant bugs, even obvious at this early stage
 ==============================================

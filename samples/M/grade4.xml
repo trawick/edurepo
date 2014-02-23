@@ -9,6 +9,11 @@
     </objective>
     <objective id="MG4-FACTMULT">
       <description>Gain familiarity with factors and multiples.</description>
+      <icans>
+        <ican>I can define factor and multiple.</ican>
+        <ican>I can find multiples of one and two-digit numbers.</ican>
+        <ican>I can find factors of numbers up to 25.</ican>
+      </icans>
     </objective>
     <objective id="MG4-PATTERNS">
       <description>Generate and analyze patterns.</description>
