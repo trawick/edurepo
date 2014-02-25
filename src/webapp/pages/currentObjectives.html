@@ -37,18 +37,14 @@ class activity for your children automatically.)</p>
           <li data-ng-repeat="obj in class.objectives">
             {{obj.date}} {{obj.objective}}
 
-            <br />
-            <p>Related "I Can" statements (if any):</p>
-
+            <p ng-show="obj.icans.length">I Can statements:</p>
             <ul>
               <li data-ng-repeat="ican in obj.icans">
                 {{ican.statement}}
               </li>
             </ul>
 
-            <br />
-            <p>Resources on the web (if any):</p>
-
+            <p ng-show="obj.resources.length">External resources:</p>
             <ul>
               <li data-ng-repeat="res in obj.resources">
                 <a href="{{res.url}}">{{res.url}}</a>
@@ -59,18 +55,14 @@ class activity for your children automatically.)</p>
               </li>
             </ul>
 
-            <br />
-            <p>Glossary entries (if any):</p>
-
+            <p ng-show="obj.glossitems.length">Glossary items:</p>
             <ul>
               <li data-ng-repeat="glossitem in obj.glossitems">
                 {{glossitem.term}}: {{glossitem.definition}}
               </li>
             </ul>
 
-            <br />
-            <p>True/False questions (if any):</p>
-
+            <p ng-show="obj.tfitems.length">True/False questions:</p>
             <ul>
               <li data-ng-repeat="tfitem in obj.tfitems">
                 {{tfitem.statement}} ({{tfitem.answer}})
