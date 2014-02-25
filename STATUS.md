@@ -7,6 +7,7 @@ Possible themes for upcoming stages
 ===================================
 
 * Read "Effective JavaScript", finish Django tutorial, finish Angular tutorial, read tastypie docs :)
+* Add "Reference View" and "Quick and Dirty Demonstration" tags to different screens where appropriate to rationalize the ugliness.
 * Add Spanish version of some "I Can" statements or other materials, with means of retrieval
 * Testcases
 * Resource model: need inappropriate-flag-counter field and exploitation in clients
