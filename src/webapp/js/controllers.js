@@ -71,12 +71,24 @@ edjectiveApp.controller('GetTeacherEmailCtrl', function ($scope) {
 edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
     $scope.courseId = 'MG4';
     $scope.objectives = [];
-    $scope.baseurl = 'http://127.0.0.1:8000/';
-    $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
-    $scope.res_baseurl = $scope.baseurl + 'resources/api/resource/';
+    $scope.baseurl = '';
+    $scope.lo_baseurl = '';
+    $scope.res_baseurl = '';
+
+    function setBaseURL(u) {
+        $scope.baseurl = u;
+        $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
+        $scope.res_baseurl = $scope.baseurl + 'resources/api/resource/';
+    }
+
+    $http.get("resources/config.json").success(function(data) {
+        setBaseURL(data.base_api_url);
+    });
 
     $scope.update = function(courseId) {
-        updateCourse(courseId);
+        if ($scope.baseurl != '') {
+            updateCourse(courseId);
+        }
     };
 
     function lookup_objectives_by_course(course_id) {

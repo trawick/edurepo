@@ -1,20 +1,12 @@
-Current stage (by Feb 24)
+Current stage (by Feb ??)
 =========================
 
-Model fixes, implement demo of traversing a course description (access from author page)
-
-* DONE Teacher class def should have a place for non-default api providers urls
-* DONE Materials in repo have optional language label
-* DONE script to populate teacher and resource db with a few entries
-* DONE Resource model needs date-added field to allow sorting by new[+popular]
-* DONE add "I can" model, linked to learning objective
-* DONE courses in samples provide "I Can" statements
-* DONE Parent demo finds applicable "I can" statements.
-* TODO create demo on curriculum designer page showing traversal of different types of information
+???
 
 Possible themes for upcoming stages
 ===================================
 
+* Refactor controllers.js
 * Customize Django admin for easier use
 * Create reference views of repo data
 * XML scheme/validation for repo data
