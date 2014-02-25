@@ -80,6 +80,7 @@ edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
         $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
         $scope.res_baseurl = $scope.baseurl + 'resources/api/resource/';
         $scope.reference_baseurl = $scope.baseurl + 'repo/api/referencetext/';
+        $scope.multiplechoice_baseurl = $scope.baseurl + 'repo/api/multiplechoiceitem/';
     }
 
     $http.get("resources/config.json").success(function(data) {
@@ -106,6 +107,10 @@ edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
 
     function lookup_referencetext_by_objective(obj) {
         return $scope.reference_baseurl + '?learning_objective=' + obj;
+    }
+
+    function lookup_multiple_choice_items_by_objective(obj) {
+        return $scope.multiplechoice_baseurl + '?learning_objective__id=' + obj;
     }
 
     function lookup_true_false_items_by_objective(obj) {
@@ -136,6 +141,9 @@ edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
         $http.get(lookup_true_false_items_by_objective(obj.id)).success(function(data) {
             obj.tfitems = data.objects;
         });
+        $http.get(lookup_multiple_choice_items_by_objective(obj.id)).success(function(data) {
+            obj.mcitems = data.objects;
+        });
     }
 
     function updateCourse(courseId) {
@@ -160,6 +168,7 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
         $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
         $scope.res_baseurl = $scope.baseurl + 'resources/api/resource/';
         $scope.reference_baseurl = $scope.baseurl + 'repo/api/referencetext/';
+        $scope.multiplechoice_baseurl = $scope.baseurl + 'repo/api/multiplechoiceitem/';
     }
 
     function annotate_objective($http, data, obj) {
@@ -182,6 +191,9 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
             });
             $http.get(lookup_true_false_items_by_objective(data.id)).success(function(data) {
                 obj.tfitems = data.objects;
+            });
+            $http.get(lookup_multiple_choice_items_by_objective(data.id)).success(function(data) {
+                obj.mcitems = data.objects;
             });
         };
     }
@@ -209,6 +221,10 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
 
     function lookup_referencetext_by_objective(obj) {
         return $scope.reference_baseurl + '?learning_objective=' + obj;
+    }
+
+    function lookup_multiple_choice_items_by_objective(obj) {
+        return $scope.multiplechoice_baseurl + '?learning_objective__id=' + obj;
     }
 
     function lookup_true_false_items_by_objective(obj) {

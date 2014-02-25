@@ -74,6 +74,21 @@ id, then press Lookup.</p>
           {{tfitem.statement}} ({{tfitem.answer}})
         </li>
       </ul>
+
+      <p ng-show="obj.mcitems.length">Multiple choice questions:</p>
+      <ul>
+        <li data-ng-repeat="mcitem in obj.mcitems">
+          {{mcitem.question}}
+          <ol>
+            <li>{{mcitem.choice1}}</li>
+            <li>{{mcitem.choice2}}</li>
+            <li ng-show="mcitem.choice3">{{mcitem.choice3}}</li>
+            <li ng-show="mcitem.choice4">{{mcitem.choice4}}</li>
+            <li ng-show="mcitem.choice5">{{mcitem.choice5}}</li>
+          </ol>
+          (Correct answer: #{{mcitem.ans}})
+        </li>
+      </ul>
     </li>
   </ul>
 

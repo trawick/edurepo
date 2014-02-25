@@ -1,7 +1,7 @@
-Current stage (by Feb 25)
+Current stage (by Feb ??)
 =========================
 
-Models for multiple choice questions and reference text (exploit in demos)
+???
 
 Possible themes for upcoming stages
 ===================================
