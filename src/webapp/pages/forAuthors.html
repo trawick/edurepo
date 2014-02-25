@@ -39,6 +39,7 @@ id, then press Lookup.</p>
   Course id: <input type="text" data-mg-model="courseId" />
   <button data-ng-click="update(courseId)">Lookup course</button>
 
+  <p ng-show="objectives.length">Course objectives:</p>
   <ul>
     <li data-ng-repeat="obj in objectives">
       {{obj.id}} {{obj.formal_description}}
