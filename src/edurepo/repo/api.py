@@ -2,7 +2,7 @@ __author__ = 'trawick'
 
 from tastypie import fields
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
-from repo.models import Course, ICan, LearningObjective, GlossaryItem, TrueFalseItem
+from repo.models import Course, ICan, LearningObjective, GlossaryItem, MultipleChoiceItem, ReferenceText, TrueFalseItem
 
 #### from https://gist.github.com/robhudson/3848832
 
@@ -64,6 +64,18 @@ class LearningObjectiveResource(CORSResource, ModelResource):
         detail_allowed_methods = ['get']
 
 
+class ReferenceTextResource(CORSResource, ModelResource):
+    learning_objective = fields.ForeignKey(LearningObjectiveResource, 'learning_objective', full=False)
+
+    class Meta:
+        queryset = ReferenceText.objects.all()
+        filtering = {
+            'learning_objective': ALL_WITH_RELATIONS,
+        }
+        list_allowed_methods = ['get']
+        detail_allowed_methods = ['get']
+
+
 class ICanResource(CORSResource, ModelResource):
     learning_objective = fields.ForeignKey(LearningObjectiveResource, 'learning_objective', full=False)
 
@@ -88,6 +100,18 @@ class GlossaryItemResource(CORSResource, ModelResource):
             'learning_objective': ALL_WITH_RELATIONS,
             'term': ALL,
             'definition': ALL,
+        }
+        list_allowed_methods = ['get']
+        detail_allowed_methods = ['get']
+
+
+class MultipleChoiceItemResource(CORSResource, ModelResource):
+    learning_objective = fields.ForeignKey(LearningObjectiveResource, 'learning_objective', full=False)
+
+    class Meta:
+        queryset = MultipleChoiceItem.objects.all()
+        filtering = {
+            'learning_objective': ALL_WITH_RELATIONS,
         }
         list_allowed_methods = ['get']
         detail_allowed_methods = ['get']
