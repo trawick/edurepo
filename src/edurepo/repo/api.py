@@ -52,10 +52,13 @@ class CourseResource(CORSResource, ModelResource):
 
 
 class LearningObjectiveResource(CORSResource, ModelResource):
+    course = fields.ForeignKey(CourseResource, 'course', full=False)
+
     class Meta:
         queryset = LearningObjective.objects.all()
         filtering = {
             'id': ALL,
+            'course': ALL_WITH_RELATIONS,
         }
         list_allowed_methods = ['get']
         detail_allowed_methods = ['get']
