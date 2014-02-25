@@ -25,3 +25,52 @@
   repository, but an index to outside resources can be used to relate
   the materials to specific objectives.</li>
 </ul>
+
+<h2>Demonstration</h2>
+
+<p>Here's a simple demonstration of access to multiple types of
+materials, starting with the course id.</p>
+
+<p>For the demonstration, enter <strong>MG4</strong> as the course
+id, then press Lookup.</p>
+
+<div data-ng-controller="CourseLookupCtrl">
+
+  Course id: <input type="text" data-mg-model="courseId" />
+  <button data-ng-click="update(courseId)">Lookup course</button>
+
+  <ul>
+    <li data-ng-repeat="obj in objectives">
+      {{obj.id}} {{obj.formal_description}}
+
+      <p ng-show="obj.icans.length">I Can statements:</p>
+      <ul>
+        <li data-ng-repeat="ican in obj.icans">
+          {{ican.statement}}
+        </li>
+      </ul>
+
+      <p ng-show="obj.resources.length">External resources:</p>
+      <ul>
+        <li data-ng-repeat="res in obj.resources">
+          <a href="{{res.url}}">{{res.url}}</a>
+        </li>
+      </ul>
+
+      <p ng-show="obj.glossitems.length">Glossary items:</p>
+      <ul>
+        <li data-ng-repeat="glossitem in obj.glossitems">
+          {{glossitem.term}}: {{glossitem.definition}}
+        </li>
+      </ul>
+
+      <p ng-show="obj.tfitems.length">True/False questions:</p>
+      <ul>
+        <li data-ng-repeat="tfitem in obj.tfitems">
+          {{tfitem.statement}} ({{tfitem.answer}})
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+</div>

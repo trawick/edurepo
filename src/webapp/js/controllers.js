@@ -25,7 +25,7 @@ edjectiveApp.config(function($routeProvider) {
 
     .when('/forAuthors', {
         templateUrl: 'pages/forAuthors.html',
-        controller: 'FrontCtrl'
+        controller: 'CourseLookupCtrl'
     })
 
     .when('/forVendors', {
@@ -66,6 +66,68 @@ edjectiveApp.controller('GetTeacherEmailCtrl', function ($scope) {
         $scope.$emit('updateTeacherEmailEvent', teacherEmail);
     };
 
+});
+
+edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
+    $scope.courseId = 'MG4';
+    $scope.objectives = [];
+    $scope.baseurl = 'http://127.0.0.1:8000/';
+    $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
+    $scope.res_baseurl = $scope.baseurl + 'resources/api/resource/';
+
+    $scope.update = function(courseId) {
+        updateCourse(courseId);
+    };
+
+    function lookup_objectives_by_course(course_id) {
+        return $scope.lo_baseurl + '?course=' + course_id;
+    }
+
+    function lookup_glossary_items_by_objective(obj) {
+        return $scope.baseurl + 'repo/api/glossary_item/?learning_objective__id=' + obj;
+    }
+
+    function lookup_icans_by_objective(obj) {
+        return $scope.baseurl + 'repo/api/ican/?learning_objective__id=' + obj;
+    }
+
+    function lookup_true_false_items_by_objective(obj) {
+        return $scope.baseurl + 'repo/api/true_false_item/?learning_objective__id=' + obj;
+    }
+
+    function lookup_resources_url(obj) {
+        return $scope.res_baseurl + '?objective=' + obj;
+    }
+
+    function annotate_objective($http, obj) {
+        obj.objective = obj.id + ' ' + obj.formal_description;
+        obj.resources = [];
+        obj.glossitems = [];
+        obj.icans = [];
+        $http.get(lookup_icans_by_objective(obj.id)).success(function(data) {
+            obj.icans = data.objects;
+        });
+        $http.get(lookup_resources_url(obj.id)).success(function(data) {
+            obj.resources = data.objects;
+        });
+        $http.get(lookup_glossary_items_by_objective(obj.id)).success(function(data) {
+            obj.glossitems = data.objects;
+        });
+        $http.get(lookup_true_false_items_by_objective(obj.id)).success(function(data) {
+            obj.tfitems = data.objects;
+        });
+    }
+
+    function updateCourse(courseId) {
+        $scope.courseId = courseId;
+
+        $http.get(lookup_objectives_by_course(courseId)).success(function (data) {
+            $scope.objectives = data.objects;
+            for (var i = 0; i < data.meta.total_count; i++) {
+                annotate_objective($http, data.objects[i]);
+            }
+        });
+    }
 });
 
 edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
