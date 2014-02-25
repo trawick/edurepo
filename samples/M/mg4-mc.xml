@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<mc-questions>
+  <objective-group>
+    <objective-id>MG4-FACTMULT</objective-id>
+    <mc-question>
+      <question>What are the factors of 6 other than 1 and 6?</question>
+      <choice1>3 and 4</choice1>
+      <choice2>2 and 3</choice2>
+      <choice3>6 and 2</choice3>
+      <type>1</type>
+      <answer>2</answer>
+    </mc-question>
+  </objective-group>
+</mc-questions>

@@ -39,6 +39,15 @@ class LearningObjective(models.Model):
         return self.id
 
 
+class ReferenceText(models.Model):
+    learning_objective = models.ForeignKey(LearningObjective)
+    text = models.CharField(max_length=4000)
+    language = RepoLanguageField()
+
+    def __unicode__(self):
+        return self.text[:60]
+
+
 class ICan(models.Model):
     learning_objective = models.ForeignKey(LearningObjective)
     statement = models.CharField(max_length=200)
@@ -46,6 +55,34 @@ class ICan(models.Model):
 
     def __unicode__(self):
         return self.statement
+
+
+class MultipleChoiceItem(models.Model):
+    learning_objective = models.ForeignKey(LearningObjective)
+    question = models.CharField(max_length=400)
+    language = RepoLanguageField()
+    choice1 = models.CharField(max_length=200)
+    choice2 = models.CharField(max_length=200)
+    choice3 = models.CharField(max_length=200, blank=True)
+    choice4 = models.CharField(max_length=200, blank=True)
+    choice5 = models.CharField(max_length=200, blank=True)
+    MC_TYPE_CHOICES = (
+        ('1', 'One of the provided answers is the only correct answer in the universe.'),
+        ('2', 'Only one of the provided answers is correct, but there may be more correct answers in the universe.'),
+        ('3', 'None of the provided answers is correct.'),
+    )
+    type = models.CharField(max_length=1, choices=MC_TYPE_CHOICES)
+    ANS_CHOICES = (
+        (1, 'The 1st answer is the correct choice.'),
+        (2, 'The 2nd answer is the correct choice.'),
+        (3, 'The 3rd answer is the correct choice.'),
+        (4, 'The 4th answer is the correct choice.'),
+        (5, 'The 5th answer is the correct choice.'),
+    )
+    ans = models.PositiveSmallIntegerField(choices=ANS_CHOICES)
+
+    def __unicode__(self):
+        return self.question
 
 
 class GlossaryItem(models.Model):

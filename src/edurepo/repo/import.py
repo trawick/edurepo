@@ -7,7 +7,7 @@ sys.path.append('.')
 from xml.etree.ElementTree import parse
 
 
-from repo.models import Course, LearningObjective, ICan, GlossaryItem, TrueFalseItem
+from repo.models import Course, LearningObjective, ICan, GlossaryItem, MultipleChoiceItem, ReferenceText, TrueFalseItem
 
 perform_import = False
 noisy = False
@@ -51,6 +51,15 @@ def import_course_standard(root):
                     obj = LearningObjective.objects.get(id=id)
                     obj.ican_set.create(statement=ican.text)
 
+        reference = child.find('reference')
+        if reference is not None:
+            if noisy:
+                print '  Reference: ' + reference.text
+
+            if perform_import:
+                obj = LearningObjective.objects.get(id=id)
+                obj.referencetext_set.create(text=reference.text)
+
 
 def import_tf_questions(root):
     for obj_group in root.findall('objective-group'):
@@ -71,6 +80,52 @@ def import_tf_questions(root):
 
             if perform_import:
                 obj.truefalseitem_set.create(statement=stmt, answer=ans)
+
+
+def import_mc_questions(root):
+    for obj_group in root.findall('objective-group'):
+        obj_id = obj_group.find('objective-id').text
+
+        if noisy:
+            print 'Multiple choice questions for objective %s:' % obj_id
+
+        if perform_import:
+            obj = LearningObjective.objects.get(id=obj_id)
+
+        for mc_question in obj_group.findall('mc-question'):
+            question = mc_question.find('question').text
+            choice1 = mc_question.find('choice1').text
+            choice2 = mc_question.find('choice2').text
+            choice3 = mc_question.find('choice3')
+            if choice3 is not None:
+                choice3 = choice3.text
+            choice4 = mc_question.find('choice4')
+            if choice4:
+                choice4 = choice4.text
+            choice5 = mc_question.find('choice5')
+            if choice5:
+                choice5 = choice5.text
+            q_type = mc_question.find('type').text
+            answer = mc_question.find('answer').text
+
+            if noisy:
+                print '  %s/%s/%s/%s/%s/%s/%s/%s' % (question, choice1, choice2, choice3, choice4, choice5, q_type, answer)
+
+            if perform_import:
+                kw = dict()
+                kw['question'] = question
+                kw['choice1'] = choice1
+                kw['choice2'] = choice2
+                if choice3:
+                    kw['choice3'] = choice3
+                if choice4:
+                    kw['choice4'] = choice4
+                if choice5:
+                    kw['choice5'] = choice5
+                kw['type'] = q_type
+                kw['ans'] = int(answer)
+
+                obj.multiplechoiceitem_set.create(**kw)
 
 
 def import_glossary_items(root):
@@ -114,6 +169,8 @@ if perform_import:
     LearningObjective.objects.all().delete()
     Course.objects.all().delete()
     ICan.objects.all().delete()
+    MultipleChoiceItem.objects.all().delete()
+    ReferenceText.objects.all().delete()
 
 for dirpath, dnames, fnames in os.walk(top):
     for f in sorted(fnames, key=lambda fn: fn[:-4]):
@@ -125,6 +182,8 @@ for dirpath, dnames, fnames in os.walk(top):
             import_course_standard(root)
         elif root.tag == 'tf-questions':
             import_tf_questions(root)
+        elif root.tag == 'mc-questions':
+            import_mc_questions(root)
         elif root.tag == 'glossary-items':
             import_glossary_items(root)
         else:
