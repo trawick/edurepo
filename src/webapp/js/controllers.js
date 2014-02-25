@@ -79,6 +79,7 @@ edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
         $scope.baseurl = u;
         $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
         $scope.res_baseurl = $scope.baseurl + 'resources/api/resource/';
+        $scope.reference_baseurl = $scope.baseurl + 'repo/api/referencetext/';
     }
 
     $http.get("resources/config.json").success(function(data) {
@@ -103,6 +104,10 @@ edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
         return $scope.baseurl + 'repo/api/ican/?learning_objective__id=' + obj;
     }
 
+    function lookup_referencetext_by_objective(obj) {
+        return $scope.reference_baseurl + '?learning_objective=' + obj;
+    }
+
     function lookup_true_false_items_by_objective(obj) {
         return $scope.baseurl + 'repo/api/true_false_item/?learning_objective__id=' + obj;
     }
@@ -118,6 +123,9 @@ edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
         obj.icans = [];
         $http.get(lookup_icans_by_objective(obj.id)).success(function(data) {
             obj.icans = data.objects;
+        });
+        $http.get(lookup_referencetext_by_objective(obj.id)).success(function(data) {
+            obj.referencetext = data.objects[0];
         });
         $http.get(lookup_resources_url(obj.id)).success(function(data) {
             obj.resources = data.objects;
@@ -151,6 +159,7 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
         $scope.baseurl = u;
         $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
         $scope.res_baseurl = $scope.baseurl + 'resources/api/resource/';
+        $scope.reference_baseurl = $scope.baseurl + 'repo/api/referencetext/';
     }
 
     function annotate_objective($http, data, obj) {
@@ -161,6 +170,9 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
             obj.icans = [];
             $http.get(lookup_icans_by_objective(data.id)).success(function(data) {
                 obj.icans = data.objects;
+            });
+            $http.get(lookup_referencetext_by_objective(data.id)).success(function(data) {
+                obj.referencetext = data.objects[0];
             });
             $http.get(lookup_resources_url(data.id)).success(function(data) {
                 obj.resources = data.objects;
@@ -193,6 +205,10 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
 
     function lookup_icans_by_objective(obj) {
         return $scope.baseurl + 'repo/api/ican/?learning_objective__id=' + obj;
+    }
+
+    function lookup_referencetext_by_objective(obj) {
+        return $scope.reference_baseurl + '?learning_objective=' + obj;
     }
 
     function lookup_true_false_items_by_objective(obj) {

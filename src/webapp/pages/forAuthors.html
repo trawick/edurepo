@@ -51,6 +51,9 @@ id, then press Lookup.</p>
         </li>
       </ul>
 
+      <p ng-show="obj.referencetext">Reference text:</p>
+      <p>{{obj.referencetext.text}}</p>
+
       <p ng-show="obj.resources.length">External resources:</p>
       <ul>
         <li data-ng-repeat="res in obj.resources">
