@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>Course listing</title>
 </head>
 <body>
-<ul>
 {% if course_list %}
+    <h1>List of courses</h1>
+    <table border="1">
+        <tr><th>Course id</th><th>Course description</th><th>Language</th></tr>
 {% for c in course_list %}
-    <li><a href="{{ c.id }}/">{{ c.description }}</a></li>
+        <tr><td><a href="{{ c.id }}/">{{ c.id }}</a></td><td>{{ c.description }}</td><td>{{ c.language }}</td></tr>
 {% endfor %}
-</ul>
+    </table>
 {% else %}
-<p>No courses defined!</p>
+    <p>No courses are defined!</p>
 {% endif %}
 </body>
 </html>

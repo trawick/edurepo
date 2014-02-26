@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>Objective listing for course {{ course_id }}</title>
 </head>
 <body>
-<ul>
+{% if objective_list %}
+    <h1>List of objectives for course {{ course_id }}</h1>
+    <table border="1">
+        <tr><th>Objective id</th><th>Objective description</th><th>Language</th></tr>
 {% for lo in objective_list %}
-    <li><a href="{{ lo.id }}/">{{ lo.formal_description }}</a></li>
+        <tr><td><a href="{{ lo.id }}/">{{ lo.id }}</a></td><td>{{ lo.formal_description }}</td><td>{{ lo.language }}</td></tr>
 {% endfor %}
-</ul>
+    </table>
+{% else %}
+    <p>No objectives are defined for course {{ course_id }}!</p>
+{% endif %}
 </body>
 </html>

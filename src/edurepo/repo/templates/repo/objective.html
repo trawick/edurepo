@@ -1,29 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>Objective {{ objective_id }}</title>
 </head>
 <body>
-{% if glossary_items %}
-<dl>
-{% for gi in glossary_items %}
-    <dt>{{ gi.term }}</dt>
-    <dd>{{ gi.definition }}</dd>
-{% endfor %}
-</dl>
-{% else %}
-  <p>No glossary items are available.</p>
-{% endif %}
+    <h1>Course {{ course_id }}, objective {{ objective_id }}</h1>
 
-{% if tf_items %}
-<dl>
-{% for tfi in tf_items %}
-    <dt>{{ tfi.statement }}</dt>
-    <dd>{{ tfi.answer }}</dd>
-{% endfor %}
-</dl>
-{% else %}
-  <p>No true-false items are available.</p>
-{% endif %}
+    <p>{{ objective.formal_description }}</p>
+
+    {% if objective.simple_description %}
+    <p>Simple description: {{ objective.simple_description }}</p>
+    {%  endif %}
+
+    {% if reference_text %}
+    <h2>Reference text</h2>
+    <p>{{ reference_text.text }}</p>
+    {% endif %}
+
+    <h2>I Can statements</h2>
+    {% if ican_items %}
+    <ul>
+    {% for ican in ican_items %}
+        <li>{{ ican.statement }}</li>
+    {% endfor %}
+    </ul>
+    {% else %}
+    <p>No I Can statements are available.</p>
+    {% endif %}
+
+    <h2>Glossary items</h2>
+    {% if glossary_items %}
+    <dl>
+    {% for gi in glossary_items %}
+        <dt>{{ gi.term }}</dt>
+        <dd>{{ gi.definition }}</dd>
+    {% endfor %}
+    </dl>
+    {% else %}
+    <p>No glossary items are available.</p>
+    {% endif %}
+
+    <h2>True/False questions</h2>
+
+    {% if tf_items %}
+    <dl>
+    {% for tfi in tf_items %}
+        <dt>{{ tfi.statement }}</dt>
+        <dd>{{ tfi.answer }}</dd>
+    {% endfor %}
+    </dl>
+    {% else %}
+    <p>No true/false questions are available.</p>
+    {% endif %}
+
+    <h2>Multiple choice questions</h2>
+
+    {% if multiple_choice_items %}
+    <ul>
+    {% for mci in multiple_choice_items %}
+        <li>{{ mci.question }}
+            <ol>
+                <li>{{ mci.choice1 }}</li>
+                <li>{{ mci.choice2 }}</li>
+                {% if mci.choice3 %}
+                <li>{{ mci.choice3 }}</li>
+                {% endif %}
+                {% if mci.choice4 %}
+                <li>{{ mci.choice4 }}</li>
+                {% endif %}
+                {% if mci.choice5 %}
+                <li>{{ mci.choice5 }}</li>
+                {% endif %}
+            </ol>
+            <p>Answer: #{{ mci.ans }}, Question type: {{ mci.type }}</p>
+        </li>
+    {% endfor %}
+    </ul>
+    {% else %}
+    <p>No true/false questions are available.</p>
+    {% endif %}
 </body>
 </html>
