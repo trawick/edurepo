@@ -5,8 +5,8 @@ Easy odds and ends:
 
 * TODO Add "Reference View" and "Quick and Dirty Demonstration" tags to different screens where appropriate to rationalize the ugliness.
 * TODO Resource model: need inappropriate-flag-counter field and exploitation in clients
-* TODO Customize Django admin for easier use
-* TODO Create reference views of repo data
+* DONE Customize Django admin for easier use
+* DONE ~~Create~~ Improve reference views of repo data
 
 Possible themes for upcoming stages
 ===================================
