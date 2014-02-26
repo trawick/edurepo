@@ -6,7 +6,7 @@ class Teacher(models.Model):
     name = models.CharField(max_length=100)
 
     def __unicode__(self):
-        return self.name
+        return self.name + '-' + self.email
 
 
 class TeacherClass(models.Model):

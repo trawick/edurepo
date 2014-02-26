@@ -25,7 +25,7 @@ class Course(models.Model):
     language = RepoLanguageField()
 
     def __unicode__(self):
-        return self.id
+        return self.id + '-' + self.description
 
 
 class LearningObjective(models.Model):
@@ -36,7 +36,7 @@ class LearningObjective(models.Model):
     language = RepoLanguageField()
 
     def __unicode__(self):
-        return self.id
+        return self.id + '-' + self.formal_description[:60]
 
 
 class ReferenceText(models.Model):
@@ -92,7 +92,7 @@ class GlossaryItem(models.Model):
     language = RepoLanguageField()
 
     def __unicode__(self):
-        return self.term
+        return self.term + ' (' + self.definition[:60] + ')'
 
 
 class TrueFalseItem(models.Model):
