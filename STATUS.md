@@ -1,21 +1,22 @@
-Current stage (by Feb ??)
+Current stage (by Feb 26)
 =========================
 
-???
+Easy odds and ends:
+
+* TODO Add "Reference View" and "Quick and Dirty Demonstration" tags to different screens where appropriate to rationalize the ugliness.
+* TODO Resource model: need inappropriate-flag-counter field and exploitation in clients
+* TODO Customize Django admin for easier use
+* TODO Create reference views of repo data
 
 Possible themes for upcoming stages
 ===================================
 
 * Read "Effective JavaScript", finish Django tutorial, finish Angular tutorial, read tastypie docs :)
-* Add "Reference View" and "Quick and Dirty Demonstration" tags to different screens where appropriate to rationalize the ugliness.
 * Add Spanish version of some "I Can" statements or other materials, with means of retrieval
 * Testcases
-* Resource model: need inappropriate-flag-counter field and exploitation in clients
 * Get Sonya to translate "I Can" statements into Spanish; support language preference on API
-* New Django app: Interface for submitting materials for a LO (moves to repo after review/rework)
+* New Django app: Interface for submitting materials for a LO (moves to repo after review/rework by approver) (needs social sign-in)
 * Refactor controllers.js
-* Customize Django admin for easier use
-* Create reference views of repo data
 * Social sign-in for submitting/voting/flagging resources
 * Interface for submitting resources for a LO (needs social sign-in)
 * Resource model: need creator id field (needs social sign-in)
