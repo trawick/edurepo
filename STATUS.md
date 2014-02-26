@@ -3,7 +3,7 @@ Current stage (by Feb 26)
 
 Easy odds and ends:
 
-* TODO Add "Reference View" and "Quick and Dirty Demonstration" tags to different screens where appropriate to rationalize the ugliness.
+* DONE Add "Reference View" and "Quick and Dirty Demonstration" tags to different screens where appropriate to rationalize the ugliness.
 * TODO Resource model: need inappropriate-flag-counter field and exploitation in clients
 * DONE Customize Django admin for easier use
 * DONE ~~Create~~ Improve reference views of repo data

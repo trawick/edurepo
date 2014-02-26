@@ -80,3 +80,12 @@ ul.huge {
 .objectiveDisplay {
     background-color: rgb(12, 226, 219);
 }
+
+.ui-warning {
+            background-color: darkgoldenrod;
+            margin: 20px;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-top: 1px;
+            padding-bottom: 1px;
+        }

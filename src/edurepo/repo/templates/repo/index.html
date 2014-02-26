@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Course listing</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
 </head>
 <body>
 {% if course_list %}
@@ -15,5 +16,10 @@
 {% else %}
     <p>No courses are defined!</p>
 {% endif %}
+
+    <div class="ui-warning">
+        <p>Important: These pages are <q>reference views</q> for verifying data in the
+        system; they are not intended for end users.</p>
+    </div>
 </body>
 </html>

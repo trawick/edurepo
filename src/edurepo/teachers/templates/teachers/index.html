@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>Teachers</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
 </head>
 <body>
     {% if teacher_list %}
@@ -14,5 +15,10 @@
 {% else %}
     <p>No teachers have registered!</p>
 {% endif %}
+
+    <div class="ui-warning">
+        <p>Important: These pages are <q>reference views</q> for verifying data in the
+        system; they are not intended for end users.</p>
+    </div>
 </body>
 </html>
