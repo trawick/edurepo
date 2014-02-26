@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>{{ teacher.name }}'s Classes</title>
 </head>
 <body>
 {% if teacher_class_list %}
-    <p>Classes for teacher {{ teacher_email }}:</p>
+    <p>Classes for {{ teacher }}:</p>
     <ul>
 {% for c in teacher_class_list %}
         <li><a href="{{ c.name }}/">{{ c.name }}</a></li>
 {% endfor %}
     </ul>
 {% else %}
-    <p>No classes defined for teacher {{ teacher_email }}!</p>
+    <p>No classes defined for {{ teacher}}!</p>
 {% endif %}
 </body>
 </html>

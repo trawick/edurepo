@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>{{ resource.objective }} resource</title>
 </head>
 <body>
-{{ resource }}
+    <h1>External resource for {{ resource.objective }}</h1>
+
+    <table border="1">
+        <tr><td><a href="{{ resource.url }}">{{ resource.url }}</a></td></tr>
+        <tr><td>Added at {{ resource.when_added }}</td></tr>
+        {% if resource.notes %}
+        <tr><td>Notes: {{ resource.notes }}</td></tr>
+        {% endif %}
+        <tr><td>Votes in favor: {{ resource.votes }}</td></tr>
+    </table>
+
 </body>
 </html>

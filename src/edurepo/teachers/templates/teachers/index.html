@@ -4,14 +4,15 @@
     <title></title>
 </head>
 <body>
-<ul>
-{% if teacher_list %}
-{% for t in teacher_list %}
-    <li><a href="{{ t.email }}/">{{ t.name }}</a></li>
-{% endfor %}
-</ul>
+    {% if teacher_list %}
+    <h1>List of teachers</h1>
+    <ul>
+    {% for t in teacher_list %}
+        <li><a href="{{ t.email }}/">{{ t.name }} ({{ t.email }})</a></li>
+    {% endfor %}
+    </ul>
 {% else %}
-<p>No teachers defined!</p>
+    <p>No teachers have registered!</p>
 {% endif %}
 </body>
 </html>

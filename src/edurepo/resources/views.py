@@ -10,6 +10,6 @@ def index(request):
 
 
 def detail(request, resource_id):
-    resource = Resource.objects.filter(id=resource_id)
+    resource = Resource.objects.get(id=resource_id)
     context = RequestContext(request, {'resource': resource})
     return render(request, 'resources/resource.html', context)

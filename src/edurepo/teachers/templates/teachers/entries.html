@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>{{ class_name }} objectives</title>
 </head>
 <body>
 {% if entry_list %}
-    <p>Calendar entries for {{ class_name }} taught by {{ teacher_email }}:</p>
+    <p>Calendar entries for {{ class_name }} taught by {{ teacher }}:</p>
+    <dl>
 {% for e in entry_list %}
-    <li>{{ e.objective }} ({{ e.date }})</li>
+        <dt>{{ e.date }}</dt><dd>{{ e.objective }}</dd>
 {% endfor %}
-</ul>
+    </dl>
 {% else %}
-<p>No calendar entries for {{ class_name }} taught by {{ teacher_email }}!</p>
+<p>No calendar entries for {{ class_name }} taught by {{ teacher }}!</p>
 {% endif %}
 </body>
 </html>

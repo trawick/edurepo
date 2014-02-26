@@ -11,14 +11,16 @@ def index(request):
 
 def detail(request, teacher_email):
     teacher_class_list = TeacherClass.objects.filter(teacher=teacher_email)
+    teacher = Teacher.objects.get(email=teacher_email)
     context = RequestContext(request, {'teacher_class_list': teacher_class_list,
-                                       'teacher_email': teacher_email})
+                                       'teacher': teacher})
     return render(request, 'teachers/classes.html', context)
 
 
 def events(request, teacher_email, class_name):
+    teacher = Teacher.objects.get(email=teacher_email)
     entry_list = Entry.objects.filter(teacher=teacher_email, teacher_class__name=class_name)
     context = RequestContext(request, {'entry_list': entry_list,
-                                       'teacher_email': teacher_email,
+                                       'teacher': teacher,
                                        'class_name': class_name})
     return render(request, 'teachers/entries.html', context)
