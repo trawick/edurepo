@@ -39,4 +39,7 @@ def by_objective(request, course_id, objective_id):
 
 def logout(request):
     auth_logout(request)
+    if 'next' in request.GET:
+        return redirect(request.GET['next'])
+    # XXX This is probably wrong (this app mounted on "/"???)
     return redirect('/')
