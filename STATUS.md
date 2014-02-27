@@ -1,4 +1,4 @@
-Current stage (by Feb ??)
+Current stage (by Feb/March ??)
 =========================
 
 * ??
@@ -7,14 +7,12 @@ Possible themes for upcoming stages
 ===================================
 
 * Read "Effective JavaScript", finish Django tutorial, finish Angular tutorial, read tastypie docs :)
-* Add Spanish version of some "I Can" statements or other materials, with means of retrieval
+* Add Spanish version of "I Can" statements (from Sonya), with means of retrieval
 * Testcases
-* Get Sonya to translate "I Can" statements into Spanish; support language preference on API
-* New Django app: Interface for submitting materials for a LO (moves to repo after review/rework by approver) (needs social sign-in)
+* New Django app: Interface for submitting materials for a LO (moves to repo after review/rework by approver)
 * Refactor controllers.js
-* Social sign-in for submitting/voting/flagging resources
-* Interface for submitting resources for a LO (needs social sign-in)
-* Resource model: need creator id field (needs social sign-in)
+* Interface for submitting resources for a LO as well as voting up or flagging
+* Resource model: need creator id field
 * XML scheme/validation for repo data
 * should teacher models specify separate base URLs for contributed resources vs. the repo? (TODO parent demo and sample code should use repo provider URL from class model)
 
