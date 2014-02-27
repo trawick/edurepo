@@ -113,9 +113,8 @@ STATIC_URL = '/static/'
 if config.get('deployment', 'set_static_root') == 'True':
     STATIC_ROOT = config.get('deployment', 'STATIC_ROOT')
 
-if DEBUG:
-    STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, "static"),
-    )
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
