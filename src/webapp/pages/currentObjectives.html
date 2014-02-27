@@ -52,7 +52,7 @@ class activity for your children automatically.)</p>
               <li data-ng-repeat="res in obj.resources">
                 <a href="{{res.url}}">{{res.url}}</a>
                 <br />
-                Votes: {{res.votes}}
+                Votes: {{res.votes}} (Flagged as inappropriate {{res.inappropriate_flags}} times)
                 <br />
                 Comments from submitter: {{res.notes}}
               </li>
