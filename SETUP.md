@@ -109,6 +109,7 @@ When picking up software updates
 ================================
 
 * Restart httpd
+* pip install -r requirements.txt
 * manage.py collectstatic
 * manage.py syncdb   OR POSSIBLY starting over with new data (below)
 
