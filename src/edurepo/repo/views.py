@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template import RequestContext
+from django.contrib.auth import logout as auth_logout
 from repo.models import Course, ICan, LearningObjective, MultipleChoiceItem, GlossaryItem, ReferenceText, TrueFalseItem
 
 
@@ -34,3 +35,8 @@ def by_objective(request, course_id, objective_id):
                                        'multiple_choice_items': multiple_choice_items,
                                        'tf_items': tf_items})
     return render(request, 'repo/objective.html', context)
+
+
+def logout(request):
+    auth_logout(request)
+    return redirect('/')

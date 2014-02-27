@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social.apps.django_app.default',
     'repo',
     'resources',
     'teachers',
@@ -51,10 +52,29 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect',
+    'django.contrib.auth.context_processors.auth',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'social.backends.google.GoogleOpenId',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 ROOT_URLCONF = 'edurepo.urls'
 
 WSGI_APPLICATION = 'edurepo.wsgi.application'
 
+SOCIAL_AUTH_LOGIN_URL = '/login/'
+# SOCIAL_AUTH_LOGIN_REDIRECT_URL = <TBD>
+# SOCIAL_AUTH_LOGIN_ERROR_URL = <TBD>
+SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
+SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
+SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = False
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
