@@ -5,13 +5,14 @@
     <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
 </head>
 <body>
+    {% url 'index' as root_url %}
     {% if not user.is_authenticated %}
-    <p><a href="login/google/?next=/">Login with a Google account</a></p>
+    <p><a href="login/google/?next={{ root_url }}">Login with a Google account</a></p>
     {% endif %}
     {% if user %}
     {% for assoc in backends.associated %}
     <p>You are logged in as <strong>{{ user.username}}</strong> via <strong>{{ assoc.provider }}</strong>.
-        (<a href="logout/?next=/">Logout</a>)</p>
+        (<a href="logout/?next={{ root_url }}">Logout</a>)</p>
     {% endfor %}
     {% endif %}
 
