@@ -11,3 +11,5 @@ src/webapp/lib/angular
 src/webapp/lib/jquery
 src/edurepo/dev_settings.cfg
 src/edurepo/settings.cfg
+src/edurepo/.coverage
+src/edurepo/htmlcov/
