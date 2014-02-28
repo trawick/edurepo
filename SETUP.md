@@ -15,6 +15,12 @@ sudo su - postgres
     \q
 ```
 
+In order to run tests, run this additional command under psql so that the test version of the database can be created by the PostgreSQL user:
+
+```
+alter user NEWUSER createdb;
+```
+
 
 Create settings.cfg for Django app in src/edurepo directory
 
