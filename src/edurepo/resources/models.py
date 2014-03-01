@@ -11,3 +11,17 @@ class Resource(models.Model):
 
     def __unicode__(self):
         return "Resource for %s: %s" % (self.objective, self.url)
+
+
+class ResourceSubmission(models.Model):
+    email = models.EmailField(unique=False)
+    resource = models.ForeignKey(Resource)
+    RS_TYPE_CHOICES = (
+        ('c', 'Creator'),
+        ('v', 'Voter'),
+        ('f', 'Flagger'),
+    )
+    type = models.CharField(max_length=1, choices=RS_TYPE_CHOICES)
+
+    def __unicode__(self):
+        return "%s/%s/%s" % (self.email, self.resource, self.type)

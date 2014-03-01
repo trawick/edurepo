@@ -12,7 +12,6 @@ Possible themes for upcoming stages
 * New Django app: Interface for submitting materials for a LO (moves to repo after review/rework by approver)
 * Refactor controllers.js
 * Interface for submitting resources for a LO as well as voting up or flagging
-* Resource model: need creator id field
 * XML scheme/validation for repo data
 * should teacher models specify separate base URLs for contributed resources vs. the repo? (TODO parent demo and sample code should use repo provider URL from class model)
 
