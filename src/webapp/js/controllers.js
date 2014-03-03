@@ -77,6 +77,7 @@ edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
 
     function setBaseURL(u) {
         $scope.baseurl = u;
+        $scope.course_baseurl = $scope.baseurl + 'repo/api/course/';
         $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
         $scope.res_baseurl = $scope.baseurl + 'resources/api/resource/';
         $scope.reference_baseurl = $scope.baseurl + 'repo/api/referencetext/';
@@ -92,6 +93,10 @@ edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
             updateCourse(courseId);
         }
     };
+
+    function lookup_course(courseId) {
+        return $scope.course_baseurl + courseId + '/';
+    }
 
     function lookup_objectives_by_course(course_id) {
         return $scope.lo_baseurl + '?course=' + course_id + '&limit=100';
@@ -148,6 +153,11 @@ edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
 
     function updateCourse(courseId) {
         $scope.courseId = courseId;
+        $scope.course = null;
+
+        $http.get(lookup_course(courseId)).success(function (data) {
+            $scope.course = data;
+        });
 
         $http.get(lookup_objectives_by_course(courseId)).success(function (data) {
             $scope.objectives = data.objects;
