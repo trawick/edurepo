@@ -6,7 +6,9 @@
 </head>
 <body>
 {% if objective_list %}
-    <h1>List of objectives for course {{ course_id }}</h1>
+    <h1>Course {{ course_id }}</h1>
+    <p>{{ course.description }}</p>
+    <h2>List of objectives</h2>
     <table border="1">
         <tr><th>Objective id</th><th>Objective description</th><th>Language</th></tr>
 {% for lo in objective_list %}
