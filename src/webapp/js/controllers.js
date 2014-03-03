@@ -69,7 +69,7 @@ edjectiveApp.controller('GetTeacherEmailCtrl', function ($scope) {
 });
 
 edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
-    $scope.courseId = 'MG4';
+    $scope.courseId = '';
     $scope.objectives = [];
     $scope.baseurl = '';
     $scope.lo_baseurl = '';
@@ -94,7 +94,7 @@ edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
     };
 
     function lookup_objectives_by_course(course_id) {
-        return $scope.lo_baseurl + '?course=' + course_id;
+        return $scope.lo_baseurl + '?course=' + course_id + '&limit=100';
     }
 
     function lookup_glossary_items_by_objective(obj) {
@@ -152,7 +152,9 @@ edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
         $http.get(lookup_objectives_by_course(courseId)).success(function (data) {
             $scope.objectives = data.objects;
             for (var i = 0; i < data.meta.total_count; i++) {
-                annotate_objective($http, data.objects[i]);
+                if (data.objects[i]) { // may have hit limit
+                    annotate_objective($http, data.objects[i]);
+                }
             }
         });
     }
