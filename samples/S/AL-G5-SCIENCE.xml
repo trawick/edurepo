@@ -7,17 +7,18 @@
 
   <objectives>
     <objective id="AL-G5-SCIENCE-1">
-      <description>Identify evidence of physical changes, in which no new substance
-is formed; identify evidence of chemical changes through color, gas formation, solid formation,
-and temperature change.  Example: A nail being hammered into a piece of wood;
-combining vinegar and baking soda to produce a gas.
+      <description>Identify evidence of physical changes (changes in which no
+new substance is formed).  Identify evidence of chemical changes through color,
+gas formation, solid formation, and temperature change.  Examples of physical 
+and chemical changes: A nail being hammered into a piece of wood; combining 
+vinegar and baking soda to produce a gas.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-2A">
-      <description>Describe matter; identify the six states of matter &#x2014; solids, liquids,
-gases, colloids, plasma, Bose-Einstein condensates.  Identifies atoms and molecules.
- Identifying the atom as the basic building block of matter.
+      <description>Describe matter.  Identify the six states of matter &#x2014; 
+solids, liquids, gases, colloids, plasma, Bose-Einstein condensates.  Identify
+atoms and molecules.  Identify the atom as the basic building block of matter.
 Understand that partical motion is related to temperature.
 </description>
     </objective>
@@ -33,61 +34,51 @@ Understand that partical motion is related to temperature.
     </objective>
 
     <objective id="AL-G5-SCIENCE-2D">
-      <description>Describe density.
-Relating density to the sinking or floating of an object in a liquid.
+      <description>Describe density.  Relate density to the sinking or floating
+of an object in a liquid.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-3">
-      <description>Use everyday indicators such as red cabbage juice, black tea or coffee, litmus
-paper, and grape juice to identify common acids and bases.
-Examples: using grape juice to determine that vinegar is an acid, using juice from boiled red cabbage to determine that baking soda is a base.
+      <description>Use everyday indicators such as red cabbage juice, black tea
+or coffee, litmus paper, and grape juice to identify common acids and bases.
+Examples: using grape juice to determine that vinegar is an acid, using juice
+from boiled red cabbage to determine that baking soda is a base.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-4A">
       <description>
-Describe energy, 
-
-•  Identifying types of potential and kinetic energy
-Examples:
-
-- potential—water behind a dam, battery;
-
-- kinetic—water moving across turbine blades
-
+Describe energy and identify types of potential and kinetic energy.
+Examples of potential energy: water behind a dam, battery.
+Example of kinetic energy: water moving across turbine blades.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-4B">
-      <description>Describe forms of energy, including chemical, heat, light, and mechanical.
+      <description>Describe forms of energy, including chemical, heat, light, 
+and mechanical.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-4C">
       <description>
-•  Identifying the transfer of energy by conduction, convection, and radiation
-Examples:
-
-- conduction—hot plate heating a pan,
-
-- convection—space heater heating air,
-
-- radiation—sun heating Earth's surface
+Identify the transfer of energy by conduction, convection, and radiation.
+Example of conduction: hot plate heating a pan.  Example of convection:
+space heater heating air.  Example of radiation: sun heating Earth's surface.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-4D">
       <description>
-•  Describing alternatives to the use of fossil fuels
-Examples: solar energy, geothermal energy, windmill, hydroelectric power, biomass, wave energy
-
+Describe alternatives to the use of fossil fuels.  Examples: solar energy,
+geothermal energy, windmill, hydroelectric power, biomass, and wave energy.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-4E">
-      <description>Conservation of energy, especially non-renewable energy sources, typically
-fossil fuels.
+      <description>Describe conservation of energy, especially of non-renewable
+energy sources, typically fossil fuels.
       </description>
     </objective>
 
@@ -99,168 +90,142 @@ absorption, and refraction (the bending of light).
 
     <objective id="AL-G5-SCIENCE-5B">
       <description>
-Describing how a prism forms a visible spectrum (Roy G. Biv)
-•  Explaining why different objects have different colors
-•  Describing how mirrors reflect light
-Example: discussing differences in the reflection of light by convex and concave mirrors
-
+Describe how a prism forms a visible spectrum (ROYGBIV).  Explain why different
+objects have different colors.  Describe how mirrors reflect light, including
+discussing differences in the reflection of light by convex and concave mirrors.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-5C">
-      <description>Contrast ways in which light rays are bent by concave and convex lenses.
-Identifying the contribution of van Leeuwenhoek to the development of the microscope.
+      <description>Contrast ways in which light rays are bent by concave and
+convex lenses.  Identify the contribution of van Leeuwenhoek to the development
+of the microscope.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-5D">
-      <description>Eye, parts of the eye (cornea, pupil, iris, retina, optic nerve);
-describing the relationship between the structure of the eye and sight.
+      <description>Identify major parts of the eye (cornea, pupil, iris, retina, 
+and optic nerve) and describe the relationship between the structure of the eye
+and sight.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-5E">
-      <description> Identifying types of corrective lenses used to correct different sight problems
-Examples:
-
-- convex—farsightedness,
-
-- concave—nearsightedness
-
-Describe how and why the light rays are bent by these types of corrective lenses.
+      <description>Identify types of corrective lenses used to correct
+different sight problems (convex for farsightedness, and concave for
+nearsightedness).  Describe how and why the light rays are bent by these types
+of corrective lenses.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-6">
-      <description>Compare effects of gravitational force on Earth, on the moon (causes tides), and within space.
-
-•  Identifying contributions of Newton to the study of gravity
-•  Describing how a spring scale is used to measure weight
-•  Explaining friction and how air resistance affects falling objects
-
-
+      <description>Compare effects of gravitational force on Earth, on the moon
+(the cause of tides on Earth), and within space.
+Identify contributions of Newton to the study of gravity.
+Describe how a spring scale is used to measure weight.
+Explain friction and how air resistance affects falling objects.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-7A">
-      <description>Identify common parts of plant and animal cells, including the nucleus, cytoplasm, cell membrane,
-mitochondria, cell wall, chloroplast, vacuole.
-
-•  Comparing plant and animal cells
+      <description>Identify major parts of plant and animal cells, including the
+nucleus, cytoplasm, cell membrane, mitochondria, cell wall, chloroplast, and
+vacuole.  Compare plant and animal cells.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-7B">
-      <description>
-•  Comparing unicellular and multicellular organisms
-
+      <description>Compare unicellular and multicellular organisms.
 Cells to tissues to organs to organ systems.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-8A">
-      <description>
-Identify the digestive system as a major body system including main parts and functions.
+      <description>Identify the digestive system as a major body system,
+including main parts and functions.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-8B">
-      <description>
-Identify the respiratory system as a major body system including main parts and functions.
+      <description>Identify the respiratory system as a major body system,
+including main parts and functions.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-8C">
-      <description>
-Identify the curculatory system as a major body system including main parts and functions.
+      <description>Identify the curculatory system as a major body system,
+including main parts and functions.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-8D">
-      <description>
-Identify the skeletal system as a major body system including main parts and functions.
+      <description>Identify the skeletal system as a major body system,
+including main parts and functions.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-8E">
-      <description>
-Identify the muscular system as a major body system including main parts and functions.
+      <description>Identify the muscular system as a major body system,
+including main parts and functions.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-8F">
-      <description>
-Identify the excretory system as a major body system including main parts and functions.
+      <description>Identify the excretory system as a major body system,
+including main parts and functions.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-8G">
-      <description>
-Identify the reproductory system as a major body system which produces offspring.
+      <description>Identify the reproductory system as a major body system
+which produces offspring.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-9A">
-      <description>
-Describe the relationship of populations within a habitat to various communities and ecosystems.
-Describing the relationship between food chains and food webs
+      <description>Describe the relationship of populations within a habitat to
+various communities and ecosystems.  Describe the relationship between food
+chains and food webs.
 </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-9B">
-      <description>
-•  Describing symbiotic relationships &#x2014; commensalism (one benefits, the other
-is not harmed), mutualism (both benefit), and parasitism (one benefits and the other
-is harmed)
+      <description>Describe these symbiotic relationships: commensalism
+(one benefits, the other is not harmed), mutualism (both benefit), and
+parasitism (one benefits and the other is harmed).
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-10A">
-      <description>
- Identify the geosphere
-
-Describing the layers of the earth
-•  Describing the rock cycle
-
-Describing technology used to investigate the geosphere, including a
-seismograph
-
+      <description>Identify the geosphere.  Describe the layers of the earth and
+the rock cycle.  Describe technology used to investigate the geosphere, 
+including seismographs.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-10B">
-      <description>
-Identify atmosphere
-
-Layers of the atmosphere
-Technology used to investigate the atmosphere, such as radar, satellites, and weather balloons
-
+      <description>Identify the atmosphere.  Describe the layers of the
+atmosphere.  Describe technology used to investigate the atmosphere, such as
+radar, satellites, and weather balloons.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-10C">
-      <description>
-Identify the hydrosphere, including the water cycle
-
-•  Describing technology used to investigate the hydrosphere, including
-sonar
-
+      <description>Identify the hydrosphere, including the water cycle.
+Describe technology used to investigate the hydrosphere, including sonar.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-11A">
-      <description>
-Identify the eight planets, in order from the sun, and compare distances from 
-the sun to planets in our solar system.
-
-•  Relating the size of Earth to the size of other planets in our solar system
+      <description>Identify the eight planets in order from the sun, and compare
+distances from the sun to planets in our solar system.  Relate the size of Earth
+to the size of other planets in our solar system.
       </description>
     </objective>
 
     <objective id="AL-G5-SCIENCE-11B">
-      <description>
-•  Identifying technology used to study planets
-Examples: Hubble telescope, space probes, Mars Exploration Rover, lunar rovers
+      <description>Identify technology used to study planets, such as the Hubble
+telescope, space probes, Mars Exploration Rover, and lunar rovers.
       </description>
     </objective>
   </objectives>
