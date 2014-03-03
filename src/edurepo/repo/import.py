@@ -36,7 +36,7 @@ def import_course_standard(root):
 
         if noisy:
             print 'Objective: %s' % id
-            print '           %s' % description
+            print '           %s' % description.encode('utf-8')
 
         if perform_import:
             c.learningobjective_set.create(id=id, formal_description=description)
