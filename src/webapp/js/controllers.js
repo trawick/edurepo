@@ -258,7 +258,8 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
             $http.get(lookup_current_objectives_url($scope.teacher_email, weekagostr, curdatestr, cl.name)).success(function(data) {
                 var newobj = {'text': cl.name, 'objectives': []};
                 for (var i = 0; i < data.meta.total_count; i++) {
-                    newobj.objectives.push({'date': data.objects[i].date, 'objective': data.objects[i].objective});
+                    newobj.objectives.push({'date': data.objects[i].date, 'objective': data.objects[i].objective,
+                                            'comments': data.objects[i].comments});
                     $http.get(lookup_objective_url(data.objects[i].objective)).success(annotate_objective($http, data, newobj.objectives[newobj.objectives.length - 1]));
                 }
                 $scope.objectives['data'].push(newobj);

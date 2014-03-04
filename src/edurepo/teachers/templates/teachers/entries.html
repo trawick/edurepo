@@ -9,7 +9,12 @@
     <p>Calendar entries for {{ class_name }} taught by {{ teacher }}:</p>
     <dl>
 {% for e in entry_list %}
-        <dt>{{ e.date }}</dt><dd>{{ e.objective }}</dd>
+        <dt>{{ e.date }}</dt><dd>{{ e.objective }}
+{% if e.comments %}
+        <br />
+        {{ e.comments }}
+{% endif %}
+        </dd>
 {% endfor %}
     </dl>
 {% else %}

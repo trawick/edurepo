@@ -27,6 +27,7 @@ class Entry(models.Model):
     teacher_class = models.ForeignKey(TeacherClass)
     date = models.DateField(blank=False)
     objective = models.CharField(max_length=40)
+    comments = models.CharField(max_length=300, blank=True)
 
     def __unicode__(self):
         return "Objective %s on %s for %s" % (self.objective, self.date, str(self.teacher_class))

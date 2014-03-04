@@ -37,6 +37,10 @@ class activity for your children automatically.)</p>
           <li data-ng-repeat="obj in class.objectives">
             {{obj.date}} {{obj.objective}}
 
+            <p data-ng-show="obj.comments.length">Comments from the teacher:
+            {{obj.comments}}
+            </p>
+
             <p ng-show="obj.icans.length">I Can statements:</p>
             <ul>
               <li data-ng-repeat="ican in obj.icans">
