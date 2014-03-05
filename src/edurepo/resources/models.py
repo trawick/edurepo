@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Resource(models.Model):
@@ -14,7 +15,7 @@ class Resource(models.Model):
 
 
 class ResourceSubmission(models.Model):
-    email = models.EmailField(unique=False)
+    user = models.ForeignKey(User)
     resource = models.ForeignKey(Resource)
     RS_TYPE_CHOICES = (
         ('c', 'Creator'),
@@ -24,4 +25,4 @@ class ResourceSubmission(models.Model):
     type = models.CharField(max_length=1, choices=RS_TYPE_CHOICES)
 
     def __unicode__(self):
-        return "%s/%s/%s" % (self.email, self.resource, self.type)
+        return "%s/%s/%s" % (self.user, self.resource, self.type)
