@@ -22,7 +22,7 @@ class RepoLanguageField(models.CharField):
 
 class Course(models.Model):
     id = models.CharField(max_length=30, primary_key=True, unique=True)
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=4000)
     language = RepoLanguageField()
 
     def __unicode__(self):
