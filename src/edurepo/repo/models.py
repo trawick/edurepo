@@ -16,6 +16,7 @@ class RepoLanguageField(models.CharField):
         kwargs['choices'] = self.LANGUAGE_CHOICES
         kwargs['max_length'] = 8  # from HTTP
         kwargs['blank'] = True
+        kwargs['default'] = 'en'
         super(RepoLanguageField, self).__init__(*args, **kwargs)
 
 

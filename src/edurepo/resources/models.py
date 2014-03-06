@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 
 class Resource(models.Model):
     objective = models.CharField(max_length=40)
-    votes = models.IntegerField()
-    inappropriate_flags = models.IntegerField()
+    votes = models.IntegerField(default=0)
+    inappropriate_flags = models.IntegerField(default=0)
     url = models.CharField(max_length=250)
     notes = models.CharField(max_length=1000, blank=True)
     when_added = models.DateTimeField(auto_now_add=True)
@@ -22,7 +22,7 @@ class ResourceSubmission(models.Model):
         ('v', 'Voter'),
         ('f', 'Flagger'),
     )
-    type = models.CharField(max_length=1, choices=RS_TYPE_CHOICES)
+    type = models.CharField(max_length=1, choices=RS_TYPE_CHOICES, default='c')
 
     def __unicode__(self):
         return "%s/%s/%s" % (self.user, self.resource, self.type)
