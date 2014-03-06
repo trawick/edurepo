@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <course-standard id="AL-G5-SCIENCE">
-  <description>Alabama Science, Grade 5, 2005, expanded by Melissa Bryan</description>
+  <description>Alabama Science, Grade 5, 2005 standard expanded by Melissa 
+Bryan to cover objectives which are not part of the standard but which
+are part of the year-end test, and to provide an example breakdown of
+some of the broader objectives in the standard into smaller objectives
+</description>
 
   <source>http://alex.state.al.us/standardAll.php?grade=5&amp;subject=S1&amp;summary=2</source>
 
