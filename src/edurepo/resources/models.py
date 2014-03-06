@@ -13,6 +13,9 @@ class Resource(models.Model):
     def __unicode__(self):
         return "Resource for %s: %s" % (self.objective, self.url)
 
+    class Meta:
+        unique_together = ('objective', 'url')
+
 
 class ResourceSubmission(models.Model):
     user = models.ForeignKey(User)
