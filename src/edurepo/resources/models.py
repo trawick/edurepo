@@ -39,5 +39,15 @@ class ResourceSubmission(models.Model):
     )
     type = models.CharField(max_length=1, choices=RS_TYPE_CHOICES, default='c')
 
+    def clean(self):
+        super(ResourceSubmission, self).clean()
+        if self.type is 'v':
+            created = ResourceSubmission.objects.get(user=self.user, resource=self.resource, type='c')
+            if created:
+                raise ValidationError('You cannot vote on a resource you submitted.')
+
     def __unicode__(self):
         return "%s/%s/%s" % (self.user, self.resource, self.type)
+
+    class Meta:
+        unique_together = ('user', 'resource', 'type')

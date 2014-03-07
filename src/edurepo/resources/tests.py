@@ -2,10 +2,14 @@ import datetime
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.test import TestCase
-from models import Resource
+from django.contrib.auth.models import User
+from models import Resource, ResourceSubmission
 
 
 class BasicTests(TestCase):
+
+    def setUp(self):
+        self.u1 = User.objects.create_user(username='user1', email='user1@example.com')
 
     def test_1(self):
         """Basic creation of Resource, disallowing same URL+objective combination"""
@@ -30,3 +34,25 @@ class BasicTests(TestCase):
         for (bad_url, i) in zip(bad_urls, range(len(bad_urls))):
             r = Resource(objective='TBUObj' + str(i), url=bad_url)
             self.assertRaises(ValidationError, lambda: r.full_clean())
+
+    def test_duplicate_submission(self):
+        lo1 = 'TDSlo1'
+        url = 'http://www.google.com/'
+        r = Resource(objective=lo1, url=url)
+        r.full_clean()
+        r.save()
+
+        rs = ResourceSubmission(user=self.u1, resource=r, type='c')
+        rs.full_clean()
+        rs.save()
+
+        rs = ResourceSubmission(user=self.u1, resource=r, type='c')
+        self.assertRaises(ValidationError, lambda: rs.full_clean())
+
+        # can't vote on a resource you submitted
+        rs = ResourceSubmission(user=self.u1, resource=r, type='v')
+
+        with self.assertRaisesRegexp(ValidationError, 'cannot vote.*submitted'):
+            rs.full_clean()
+
+        # okay to flag a resource you submitted as inappropriate
