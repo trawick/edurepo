@@ -1,4 +1,5 @@
 import datetime
+from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.test import TestCase
 from models import Resource
@@ -21,3 +22,11 @@ class BasicTests(TestCase):
 
         r2 = Resource(objective=lo1, url=url1)
         self.assertRaises(IntegrityError, lambda: r2.save())
+
+    def test_bad_url(self):
+        bad_urls = ('ftp://trawick:private@example.com/',
+                    'http://trawick:private@example.com/',
+                    )
+        for (bad_url, i) in zip(bad_urls, range(len(bad_urls))):
+            r = Resource(objective='TBUObj' + str(i), url=bad_url)
+            self.assertRaises(ValidationError, lambda: r.full_clean())
