@@ -154,18 +154,27 @@ edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
     function updateCourse(courseId) {
         $scope.courseId = courseId;
         $scope.course = null;
+        $scope.courseLookupError = '';
 
         $http.get(lookup_course(courseId)).success(function (data) {
             $scope.course = data;
         });
 
         $http.get(lookup_objectives_by_course(courseId)).success(function (data) {
-            $scope.objectives = data.objects;
-            for (var i = 0; i < data.meta.total_count; i++) {
-                if (data.objects[i]) { // may have hit limit
-                    annotate_objective($http, data.objects[i]);
+            console.log(data);
+            if (data.meta.total_count == 0) {
+                $scope.courseLookupError = 'The course id is not valid.';
+            }
+            else {
+                $scope.objectives = data.objects;
+                for (var i = 0; i < data.meta.total_count; i++) {
+                    if (data.objects[i]) { // may have hit limit
+                        annotate_objective($http, data.objects[i]);
+                    }
                 }
             }
+        }).error(function () {
+            $scope.courseLookupError = 'The server could not be contacted.';
         });
     }
 });
@@ -277,7 +286,7 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
 
     $scope.$on('handleTeacherEmailBroadcast', function(event, args) {
         $scope.teacher_email = args;
-        $scope.notice = {'text': 'loading ' + args + '...'};
+        $scope.notice = {'text': 'Loading ' + args + '...'};
 
         $http.get("resources/config.json").success(function(data) {
 
@@ -285,14 +294,18 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
 
             $http.get(lookup_teacher_classes_url(args)).success(function(data) {
                 if (data.meta.total_count == 0) {
-                    $scope.notice = {'text': 'Invalid teacher e-mail address!'};
+                    $scope.notice = {'text': 'The teacher e-mail address is invalid.'};
                 }
                 else {
                     $scope.notice = {'text': "Select one or more of this teacher's classes:"};
                     $scope.classes = data.objects;
                 }
-            });
+            }).error(function () {
+                $scope.notice.text = 'The server could not be contacted.';
+            });;
 
+        }).error(function () {
+            $scope.notice.text = 'The server could not be contacted.';
         });
     });
 });

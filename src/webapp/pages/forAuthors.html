@@ -39,6 +39,8 @@ id, then press Lookup.</p>
   Course id: <input type="text" data-ng-model="courseId" />
   <button data-ng-click="update(courseId)">Lookup course</button>
 
+  <p data-ng-show="courseLookupError">{{courseLookupError}}</p>
+
   <p data-ng-show="course.description">{{course.description}}</p>
 
   <p data-ng-show="objectives.length">Course objectives:</p>
