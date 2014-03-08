@@ -1,4 +1,5 @@
 from django.db import models
+from core.utils import ellipsis
 
 
 class RepoLanguageField(models.CharField):
@@ -26,7 +27,7 @@ class Course(models.Model):
     language = RepoLanguageField()
 
     def __unicode__(self):
-        return self.id + '-' + self.description
+        return self.id + '-' + ellipsis(self.description, 80)
 
 
 class LearningObjective(models.Model):
@@ -37,7 +38,7 @@ class LearningObjective(models.Model):
     language = RepoLanguageField()
 
     def __unicode__(self):
-        return self.id + '-' + self.formal_description[:60]
+        return self.id + '-' + ellipsis(self.formal_description, 60)
 
 
 class ReferenceText(models.Model):
@@ -46,7 +47,7 @@ class ReferenceText(models.Model):
     language = RepoLanguageField()
 
     def __unicode__(self):
-        return self.text[:60]
+        return ellipsis(self.text, 60)
 
 
 class ICan(models.Model):
@@ -93,7 +94,7 @@ class GlossaryItem(models.Model):
     language = RepoLanguageField()
 
     def __unicode__(self):
-        return self.term + ' (' + self.definition[:60] + ')'
+        return self.term + ' (' + ellipsis(self.definition, 60) + ')'
 
 
 class TrueFalseItem(models.Model):

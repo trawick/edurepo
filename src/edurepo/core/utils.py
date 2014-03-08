@@ -36,3 +36,9 @@ class CORSResource(object):
 
         return request_method
 #### end gist
+
+
+def ellipsis(input_str, max_output_len):
+    if len(input_str) > max_output_len:
+        return input_str[:max_output_len - 3] + '...'
+    return input_str
