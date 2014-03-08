@@ -1,9 +1,12 @@
 Current stage (by March 10)
 =========================
 
-* Prototype of resource submission
-** TODO Browse categories, then courses, then objectives
-** TODO Submit resource for objective
+* Resource submission
+  * TODO Browse categories, then courses, then objectives
+  * TODO Submit resource for objective
+  * TODO Use user's browser to validate URL
+  * TODO Implement server-side script to validate URLs in database
+  * TODO websnapr or similar
 
 Possible themes for upcoming stages
 ===================================
