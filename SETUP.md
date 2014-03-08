@@ -40,7 +40,10 @@ TEMPLATE_DEBUG=False
 
 [deployment]
 # should be comma-delimited list of acceptable hostnames
-ALLOWED_HOSTS=edjective.org
+ALLOWED_HOSTS=*
+set_static_root=True
+# set this to location where /static from Django app will be copied
+STATIC_ROOT=/home/whatever/edurepo-static/
 
 [database]
 NAME=djangoedurepo
@@ -72,9 +75,69 @@ Local python environment:
 
 bunch of crap with /home/trawick/edurepo-static and django command to put stuff there
 
-look through httpd config in detail for all the crap
+* python manage.py collectstatic
 
----
+httpd.conf
+==========
+
+```
+WSGIDaemonProcess edurepo \
+    home=/home/trawick/git/edurepo/src/edurepo \
+    python-path=/home/trawick/git/edurepo/src/edurepo:/home/trawick/git/edurepo/envs/edurepo/lib/python2.6/site-packages
+
+<VirtualHost *:80>
+  WSGIProcessGroup edurepo
+  include conf/conf.d/foo.include
+</VirtualHost>
+
+<VirtualHost *:443>
+  WSGIProcessGroup edurepo
+  (SSL configuration)
+  include conf/conf.d/foo.include
+</VirtualHost>
+```
+
+foo.include
+===========
+
+```
+# included in SSL and non-SSL vhosts
+
+ErrorLog logs/edjective.org.errors
+LogLevel info
+
+ServerName edjective.org
+DocumentRoot /home/trawick/git/edurepo/src/webapp/
+
+<Directory />
+    Require all denied
+    AllowOverride None
+</Directory>
+
+<Directory /home/trawick/git/edurepo/src/webapp/>
+    Options Indexes FollowSymlinks
+    AllowOverride None
+    Require all granted
+</Directory>
+
+WSGIScriptAlias /ed/ /home/trawick/git/edurepo/src/edurepo/edurepo/wsgi.py/
+
+Alias /static/ /home/trawick/edurepo-static/
+
+<Directory /home/trawick/git/edurepo/src/edurepo>
+    <Files wsgi.py>
+        Require all granted
+    </Files>
+</Directory>
+
+<Location /ed/admin/>
+    Require ssl
+</Location>
+
+<Directory /home/trawick/edurepo-static>
+    Require all granted
+</Directory>
+```
 
 Configuration and setup of the AngularJS web app
 ================================================
