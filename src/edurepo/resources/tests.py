@@ -10,6 +10,7 @@ class BasicTests(TestCase):
 
     def setUp(self):
         self.u1 = User.objects.create_user(username='user1', email='user1@example.com')
+        self.u2 = User.objects.create_user(username='user2', email='user2@example.com')
 
     def test_1(self):
         """Basic creation of Resource, disallowing same URL+objective combination"""
@@ -56,3 +57,28 @@ class BasicTests(TestCase):
             rs.full_clean()
 
         # okay to flag a resource you submitted as inappropriate
+
+    def test_strings(self):
+        lo2 = 'TSlo1'
+        url = 'http://www.google.com/'
+        r = Resource(objective=lo2, url=url)
+        r.full_clean()
+        r.save()
+
+        rs = ResourceSubmission(user=self.u1, resource=r, type='c')
+        rs.full_clean()
+        rs.save()
+
+        self.assertTrue(' created ' in str(rs))
+
+        rs = ResourceSubmission(user=self.u1, resource=r, type='f')
+        rs.full_clean()
+        rs.save()
+
+        self.assertTrue(' flagged ' in str(rs))
+
+        rs = ResourceSubmission(user=self.u2, resource=r, type='v')
+        rs.full_clean()
+        rs.save()
+
+        self.assertTrue(' voted on ' in str(rs))

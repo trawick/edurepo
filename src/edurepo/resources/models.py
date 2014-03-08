@@ -38,16 +38,17 @@ class ResourceSubmission(models.Model):
         ('f', 'Flagger'),
     )
     type = models.CharField(max_length=1, choices=RS_TYPE_CHOICES, default='c')
+    verbs = {'c': 'created', 'v': 'voted on', 'f': 'flagged'}
 
     def clean(self):
         super(ResourceSubmission, self).clean()
         if self.type is 'v':
-            created = ResourceSubmission.objects.get(user=self.user, resource=self.resource, type='c')
-            if created:
+            created = ResourceSubmission.objects.filter(user=self.user, resource=self.resource, type='c')
+            if len(created) > 0:  # should be 1
                 raise ValidationError('You cannot vote on a resource you submitted.')
 
     def __unicode__(self):
-        return "%s/%s/%s" % (self.user, self.resource, self.type)
+        return "%s %s %s" % (self.user, ResourceSubmission.verbs[str(self.type)], self.resource)
 
     class Meta:
         unique_together = ('user', 'resource', 'type')
