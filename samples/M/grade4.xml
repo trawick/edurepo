@@ -3,6 +3,7 @@
 <course-standard id="MG4">
   <description>4th grade math</description>
   <source>http://www.corestandards.org/assets/CCSSI_Math%20Standards.pdf</source>
+  <category>K12-M</category>
   <objectives>
     <objective id="MG4-FOUROPS">
       <description>Use the four operations with whole numbers to solve problems.</description>

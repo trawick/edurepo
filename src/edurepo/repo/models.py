@@ -21,8 +21,20 @@ class RepoLanguageField(models.CharField):
         super(RepoLanguageField, self).__init__(*args, **kwargs)
 
 
+class CourseCategory(models.Model):
+    id = models.CharField(max_length=8, primary_key=True, unique=True)
+    description = models.CharField(max_length=4000)
+
+    def __unicode__(self):
+        return self.id + ' - ' + self.description
+
+    class Meta:
+        verbose_name_plural = "course categories"
+
+
 class Course(models.Model):
     id = models.CharField(max_length=30, primary_key=True, unique=True)
+    cat = models.ForeignKey(CourseCategory)
     description = models.CharField(max_length=4000)
     language = RepoLanguageField()
 

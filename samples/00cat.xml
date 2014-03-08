@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<course-categories>
+  <category id="K12-S">
+    <description>Courses in Science for K-12</description>
+  </category>
+  <category id="K12-A">
+    <description>Courses in the Arts for K-12</description>
+  </category>
+  <category id="K12-WL">
+    <description>Courses in World Languages for K-12</description>
+  </category>
+  <category id="K12-M">
+    <description>Courses in Mathematics for K-12</description>
+  </category>
+  <category id="K12-SS">
+    <description>Courses in Social Studies for K-12</description>
+  </category>
+  <category id="NA">
+    <description>Various non-academic courses</description>
+  </category>
+</course-categories>

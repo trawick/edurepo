@@ -1,12 +1,14 @@
 from django.db import IntegrityError
 from django.test import TestCase
-from models import Course, GlossaryItem, LearningObjective
+from models import Course, CourseCategory, GlossaryItem, LearningObjective
 
 
 class BasicTests(TestCase):
 
     def setUp(self):
-        self.c0 = Course(id='Class00', description='Class00Desc')
+        self.cc0 = CourseCategory(id='TESTNA', description='Test Non-Academic')
+        self.cc0.save()
+        self.c0 = Course(id='Class00', cat=self.cc0, description='Class00Desc')
         self.c0.save()
         self.lo0 = LearningObjective(id='C00LO00', course=self.c0)
         self.lo0.save()
@@ -16,12 +18,12 @@ class BasicTests(TestCase):
     def test_1(self):
         """Basic creation/update of Course and default language"""
         class_id = 'Class01'
-        c1 = Course(id=class_id, description='desc1')
+        c1 = Course(id=class_id, cat=self.cc0, description='desc1')
         self.assertEquals(c1.language, 'en')
         c1.save()
 
         desc2 = 'desc2'
-        c2 = Course(id=class_id, description=desc2)
+        c2 = Course(id=class_id, cat=self.cc0, description=desc2)
         c2.save()
 
         obj = Course.objects.get(id=class_id)

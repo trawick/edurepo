@@ -7,18 +7,44 @@ sys.path.append('.')
 from xml.etree.ElementTree import parse
 
 
-from repo.models import Course, LearningObjective, ICan, GlossaryItem, MultipleChoiceItem, ReferenceText, TrueFalseItem
+from repo.models import Course, CourseCategory, LearningObjective, ICan, \
+    GlossaryItem, MultipleChoiceItem, ReferenceText, TrueFalseItem
 
 perform_import = False
 noisy = False
+
+
+def import_course_categories(root):
+    categories = root.findall('category')
+    for category in categories:
+        id = category.get('id')
+        description = category.find('description').text
+
+        if perform_import:
+            cat = CourseCategory(id=id, description=description)
+            cat.save()
 
 
 def import_course_standard(root):
     id = root.get('id')
     description = root.find('description').text
 
+    # Blow up if the category is not declared.
+    cat = root.find('category')
+    assert cat is not None, 'Course category is not defined for course %s' % id
+    cat_id = root.find('category').text
+
+    try:
+        # Blow up if the category id is not known.
+        cat = CourseCategory.objects.get(id=cat_id)
+    except CourseCategory.DoesNotExist:
+        if perform_import:
+            assert False, 'Category %s is not valid (course %s).' % (cat_id, id)
+        else:
+            print "Warning: Category %s is unknown" % cat_id
+
     if perform_import:
-        c = Course(id=id, description=description)
+        c = Course(id=id, cat=cat, description=description)
         c.save()
 
     if noisy:
@@ -168,6 +194,7 @@ if perform_import:
     GlossaryItem.objects.all().delete()
     LearningObjective.objects.all().delete()
     Course.objects.all().delete()
+    CourseCategory.objects.all().delete()
     ICan.objects.all().delete()
     MultipleChoiceItem.objects.all().delete()
     ReferenceText.objects.all().delete()
@@ -178,7 +205,9 @@ for dirpath, dnames, fnames in os.walk(top):
         doc = parse(doc_file)
         root = doc.getroot()
 
-        if root.tag == 'course-standard':
+        if root.tag == 'course-categories':
+            import_course_categories(root)
+        elif root.tag == 'course-standard':
             import_course_standard(root)
         elif root.tag == 'tf-questions':
             import_tf_questions(root)
@@ -187,7 +216,7 @@ for dirpath, dnames, fnames in os.walk(top):
         elif root.tag == 'glossary-items':
             import_glossary_items(root)
         else:
-            assert False
+            assert False, 'Document tag "%s" is not recognized.' % root.tag
 
         if noisy:
             print
