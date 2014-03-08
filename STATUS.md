@@ -1,7 +1,9 @@
-Current stage (by Feb/March ??)
+Current stage (by March 10)
 =========================
 
-* ??
+* Prototype of resource submission
+** TODO Browse categories, then courses, then objectives
+** TODO Submit resource for objective
 
 Possible themes for upcoming stages
 ===================================
