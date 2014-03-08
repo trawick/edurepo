@@ -42,7 +42,7 @@ class LearningObjective(models.Model):
 
 
 class ReferenceText(models.Model):
-    learning_objective = models.ForeignKey(LearningObjective)
+    learning_objective = models.ForeignKey(LearningObjective, primary_key=True, unique=True)
     text = models.CharField(max_length=4000)
     language = RepoLanguageField()
 
@@ -95,6 +95,9 @@ class GlossaryItem(models.Model):
 
     def __unicode__(self):
         return self.term + ' (' + ellipsis(self.definition, 60) + ')'
+
+    class Meta:
+        unique_together = ('term', 'learning_objective')
 
 
 class TrueFalseItem(models.Model):
