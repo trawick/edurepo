@@ -56,9 +56,13 @@ class activity for your children automatically.)</p>
               <li data-ng-repeat="res in obj.resources">
                 <a href="{{res.url}}">{{res.url}}</a>
                 <br />
-                Votes: {{res.votes}} (Flagged as inappropriate {{res.inappropriate_flags}} times)
-                <br />
+                <span data-ng-show="res.votes">
+                Votes: {{res.votes}}
+                </span>
+                <span data-ng-show="res.inappropriate_flags">(Flagged as inappropriate {{res.inappropriate_flags}} times)</span>
+                <div data-ng-show="res.notes.length">
                 Comments from submitter: {{res.notes}}
+                </div>
               </li>
             </ul>
 
