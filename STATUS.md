@@ -7,6 +7,7 @@ Possible themes for upcoming stages
 ===================================
 
 * @login_required doesn't redirect to the proper URL
+* handle API failures in Angular webapp
 * Read "Effective JavaScript", finish Django tutorial, finish Angular tutorial, read tastypie docs :)
 * Add Spanish version of "I Can" statements (from Sonya), with means of retrieval
 * Testcases
