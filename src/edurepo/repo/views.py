@@ -5,7 +5,7 @@ from repo.models import Course, ICan, LearningObjective, MultipleChoiceItem, Glo
 
 
 def index(request):
-    course_list = Course.objects.order_by('id')
+    course_list = Course.objects.order_by('cat__id', 'id')
     context = RequestContext(request, {'course_list': course_list})
     return render(request, 'repo/index.html', context)
 
