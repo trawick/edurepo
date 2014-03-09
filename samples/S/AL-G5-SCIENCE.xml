@@ -12,7 +12,7 @@ some of the broader objectives in the standard into smaller objectives
   <category>K12-S</category>
 
   <objectives>
-    <objective id="AL-G5-SCIENCE-1">
+    <objective id="AL-G5-SCIENCE-01">
       <description>Identify evidence of physical changes (changes in which no
 new substance is formed).  Identify evidence of chemical changes through color,
 gas formation, solid formation, and temperature change.  Examples of physical 
@@ -21,7 +21,7 @@ vinegar and baking soda to produce a gas.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-2A">
+    <objective id="AL-G5-SCIENCE-02A">
       <description>Describe matter.  Identify the six states of matter &#x2014; 
 solids, liquids, gases, colloids, plasma, Bose-Einstein condensates.  Identify
 atoms and molecules.  Identify the atom as the basic building block of matter.
@@ -29,23 +29,23 @@ Understand that partical motion is related to temperature.
 </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-2B">
+    <objective id="AL-G5-SCIENCE-02B">
       <description>Describe mass.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-2C">
+    <objective id="AL-G5-SCIENCE-02C">
       <description>Describe volume.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-2D">
+    <objective id="AL-G5-SCIENCE-02D">
       <description>Describe density.  Relate density to the sinking or floating
 of an object in a liquid.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-3">
+    <objective id="AL-G5-SCIENCE-03">
       <description>Use everyday indicators such as red cabbage juice, black tea
 or coffee, litmus paper, and grape juice to identify common acids and bases.
 Examples: using grape juice to determine that vinegar is an acid, using juice
@@ -53,7 +53,7 @@ from boiled red cabbage to determine that baking soda is a base.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-4A">
+    <objective id="AL-G5-SCIENCE-04A">
       <description>
 Describe energy and identify types of potential and kinetic energy.
 Examples of potential energy: water behind a dam, battery.
@@ -61,13 +61,13 @@ Example of kinetic energy: water moving across turbine blades.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-4B">
+    <objective id="AL-G5-SCIENCE-04B">
       <description>Describe forms of energy, including chemical, heat, light, 
 and mechanical.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-4C">
+    <objective id="AL-G5-SCIENCE-04C">
       <description>
 Identify the transfer of energy by conduction, convection, and radiation.
 Example of conduction: hot plate heating a pan.  Example of convection:
@@ -75,26 +75,26 @@ space heater heating air.  Example of radiation: sun heating Earth's surface.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-4D">
+    <objective id="AL-G5-SCIENCE-04D">
       <description>
 Describe alternatives to the use of fossil fuels.  Examples: solar energy,
 geothermal energy, windmill, hydroelectric power, biomass, and wave energy.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-4E">
+    <objective id="AL-G5-SCIENCE-04E">
       <description>Describe conservation of energy, especially of non-renewable
 energy sources, typically fossil fuels.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-5A">
+    <objective id="AL-G5-SCIENCE-05A">
       <description>Describe light and the 3 ways it travels &#x2014; reflection,
 absorption, and refraction (the bending of light).
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-5B">
+    <objective id="AL-G5-SCIENCE-05B">
       <description>
 Describe how a prism forms a visible spectrum (ROYGBIV).  Explain why different
 objects have different colors.  Describe how mirrors reflect light, including
@@ -102,21 +102,21 @@ discussing differences in the reflection of light by convex and concave mirrors.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-5C">
+    <objective id="AL-G5-SCIENCE-05C">
       <description>Contrast ways in which light rays are bent by concave and
 convex lenses.  Identify the contribution of van Leeuwenhoek to the development
 of the microscope.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-5D">
+    <objective id="AL-G5-SCIENCE-05D">
       <description>Identify major parts of the eye (cornea, pupil, iris, retina, 
 and optic nerve) and describe the relationship between the structure of the eye
 and sight.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-5E">
+    <objective id="AL-G5-SCIENCE-05E">
       <description>Identify types of corrective lenses used to correct
 different sight problems (convex for farsightedness, and concave for
 nearsightedness).  Describe how and why the light rays are bent by these types
@@ -124,7 +124,7 @@ of corrective lenses.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-6">
+    <objective id="AL-G5-SCIENCE-06">
       <description>Compare effects of gravitational force on Earth, on the moon
 (the cause of tides on Earth), and within space.
 Identify contributions of Newton to the study of gravity.
@@ -133,69 +133,69 @@ Explain friction and how air resistance affects falling objects.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-7A">
+    <objective id="AL-G5-SCIENCE-07A">
       <description>Identify major parts of plant and animal cells, including the
 nucleus, cytoplasm, cell membrane, mitochondria, cell wall, chloroplast, and
 vacuole.  Compare plant and animal cells.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-7B">
+    <objective id="AL-G5-SCIENCE-07B">
       <description>Compare unicellular and multicellular organisms.
 Cells to tissues to organs to organ systems.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-8A">
+    <objective id="AL-G5-SCIENCE-08A">
       <description>Identify the digestive system as a major body system,
 including main parts and functions.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-8B">
+    <objective id="AL-G5-SCIENCE-08B">
       <description>Identify the respiratory system as a major body system,
 including main parts and functions.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-8C">
+    <objective id="AL-G5-SCIENCE-08C">
       <description>Identify the curculatory system as a major body system,
 including main parts and functions.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-8D">
+    <objective id="AL-G5-SCIENCE-08D">
       <description>Identify the skeletal system as a major body system,
 including main parts and functions.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-8E">
+    <objective id="AL-G5-SCIENCE-08E">
       <description>Identify the muscular system as a major body system,
 including main parts and functions.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-8F">
+    <objective id="AL-G5-SCIENCE-08F">
       <description>Identify the excretory system as a major body system,
 including main parts and functions.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-8G">
+    <objective id="AL-G5-SCIENCE-08G">
       <description>Identify the reproductory system as a major body system
 which produces offspring.
       </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-9A">
+    <objective id="AL-G5-SCIENCE-09A">
       <description>Describe the relationship of populations within a habitat to
 various communities and ecosystems.  Describe the relationship between food
 chains and food webs.
 </description>
     </objective>
 
-    <objective id="AL-G5-SCIENCE-9B">
+    <objective id="AL-G5-SCIENCE-09B">
       <description>Describe these symbiotic relationships: commensalism
 (one benefits, the other is not harmed), mutualism (both benefit), and
 parasitism (one benefits and the other is harmed).

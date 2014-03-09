@@ -12,7 +12,7 @@ def index(request):
 
 def detail(request, course_id):
     course = Course.objects.get(id=course_id)
-    objective_list = LearningObjective.objects.filter(course=course_id)
+    objective_list = LearningObjective.objects.filter(course=course_id).order_by('id')
     context = RequestContext(request, {'objective_list': objective_list,
                                        'course': course,
                                        'course_id': course_id})
