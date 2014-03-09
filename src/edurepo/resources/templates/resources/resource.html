@@ -17,6 +17,15 @@
         <tr><td>Flagged as inappropriate {{ resource.inappropriate_flags }} times</td></tr>
     </table>
 
+    {% if comments %}
+    <p>Comments on this resource:</p>
+    <ul>
+        {% for comment in comments %}
+            <li>{{ comment.comment }} ({{ comment.when|date:"F j, Y" }})</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
     <div class="ui-warning">
         <p>Important: These pages are <q>reference views</q> for verifying data in the
         system; they are not intended for end users.</p>

@@ -38,6 +38,9 @@ class ResourceSubmission(models.Model):
         ('f', 'Flagger'),
     )
     type = models.CharField(max_length=1, choices=RS_TYPE_CHOICES, default='c')
+    comment = models.CharField(max_length=160, blank=True)
+    when = models.DateTimeField(auto_now_add=True)
+
     verbs = {'c': 'created', 'v': 'voted on', 'f': 'flagged'}
 
     def clean(self):

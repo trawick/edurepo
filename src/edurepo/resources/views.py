@@ -2,7 +2,7 @@ from django.core.context_processors import csrf
 from django.shortcuts import render, redirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-from resources.models import Resource
+from resources.models import Resource, ResourceSubmission
 from resources.forms import ResourceForm
 
 
@@ -14,7 +14,8 @@ def index(request):
 
 def detail(request, resource_id):
     resource = Resource.objects.get(id=resource_id)
-    context = RequestContext(request, {'resource': resource})
+    comments = ResourceSubmission.objects.filter(resource=resource).exclude(comment='')
+    context = RequestContext(request, {'resource': resource, 'comments': comments})
     return render(request, 'resources/resource.html', context)
 
 
