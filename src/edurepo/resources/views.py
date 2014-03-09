@@ -26,7 +26,11 @@ def create_resource(request):
             form.save()
             return redirect('/resources')
     else:
-        form = ResourceForm()
+        if request.GET and 'objective' in request.GET:
+            initial = {'objective': request.GET['objective']}
+        else:
+            initial = {}
+        form = ResourceForm(initial=initial)
 
     args = {}
     args.update(csrf(request))
