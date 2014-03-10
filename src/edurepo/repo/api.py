@@ -9,13 +9,21 @@ from core.utils import CORSResource
 class CourseCategoryResource(CORSResource, ModelResource):
     class Meta:
         queryset = CourseCategory.objects.all()
+        filtering = {
+            'id': ALL,
+        }
         list_allowed_methods = ['get']
         detail_allowed_methods = ['get']
 
 
 class CourseResource(CORSResource, ModelResource):
+    cat = fields.ForeignKey(CourseCategoryResource, 'cat', full=False)
+
     class Meta:
         queryset = Course.objects.all()
+        filtering = {
+            'cat': ALL_WITH_RELATIONS,
+        }
         list_allowed_methods = ['get']
         detail_allowed_methods = ['get']
 
