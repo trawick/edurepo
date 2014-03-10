@@ -23,6 +23,7 @@ class CourseResource(CORSResource, ModelResource):
         queryset = Course.objects.all()
         filtering = {
             'cat': ALL_WITH_RELATIONS,
+            'id': ALL,
         }
         list_allowed_methods = ['get']
         detail_allowed_methods = ['get']
@@ -32,7 +33,7 @@ class LearningObjectiveResource(CORSResource, ModelResource):
     course = fields.ForeignKey(CourseResource, 'course', full=False)
 
     class Meta:
-        queryset = LearningObjective.objects.all()
+        queryset = LearningObjective.objects.all().order_by('id')
         filtering = {
             'id': ALL,
             'course': ALL_WITH_RELATIONS,
