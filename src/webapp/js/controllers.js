@@ -75,11 +75,11 @@ edjectiveApp.controller('GetTeacherEmailCtrl', function ($scope) {
 
 edjectiveApp.controller('BrowseCtrl', function ($scope, $http) {
     $scope.baseurl = '';
-    $scope.categories = '';
+    $scope.categories = null;
     $scope.selectedCategory = null;
-    $scope.courses = '';
+    $scope.courses = null;
     $scope.selectedCourse = null;
-    $scope.objectives = '';
+    $scope.objectives = null;
 
     function setBaseURL(u) {
         $scope.baseurl = u;
@@ -92,6 +92,8 @@ edjectiveApp.controller('BrowseCtrl', function ($scope, $http) {
     }
 
     $scope.updateSelectedCategory = function() {
+        $scope.courses = null;
+        $scope.objectives = null;
         $http.get($scope.course_baseurl + '?cat__id=' + $scope.selectedCategory.id).success(function(data) {
             $scope.courses = data.objects;
         });
