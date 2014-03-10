@@ -12,6 +12,7 @@ Current stage (by March 12)
 Possible themes for upcoming stages
 ===================================
 
+* Course needs short form of description
 * command-line "reference" clients:
   * test these automatically
   * current\_learning\_objectives.py: indicate when the specified class name is invalid
