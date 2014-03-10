@@ -1,13 +1,13 @@
 from django import forms
+from django.utils.translation import gettext as _
 from models import Resource
 
 
 class ResourceForm(forms.ModelForm):
 
-    objective = forms.CharField(label="Learning objective")
-    url = forms.URLField(label="URL of resource")
-    notes = forms.CharField(widget=forms.Textarea)
-
     class Meta:
         model = Resource
         fields = ('objective', 'url', 'notes')
+        labels = {'objective': _('Learning objective'),
+                  'url': _('URL of resource')}
+        widgets = {'notes': forms.Textarea(attrs={'cols': 80, 'rows': 2})}
