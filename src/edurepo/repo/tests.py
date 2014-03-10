@@ -1,4 +1,5 @@
-from django.db import IntegrityError
+from django.core.exceptions import ValidationError
+from django.db import DataError, IntegrityError, transaction
 from django.test import TestCase
 from models import Course, CourseCategory, GlossaryItem, LearningObjective
 
@@ -37,3 +38,24 @@ class BasicTests(TestCase):
 
         gi2 = GlossaryItem(term='term01', learning_objective=self.lo0)
         self.assertRaises(IntegrityError, lambda: gi2.save())
+
+    def test_id_syntax(self):
+        with self.assertRaises(DataError):
+            with transaction.atomic():
+                tis_cc0 = CourseCategory(id='123456789', description='too long')
+                tis_cc0.save()
+
+        with self.assertRaises(ValidationError):
+            with transaction.atomic():
+                tis_cc1 = CourseCategory(id='has spc', description='will not work')
+                tis_cc1.full_clean()
+
+        with self.assertRaises(ValidationError):
+            with transaction.atomic():
+                tis_c0 = Course(id='has space', cat=self.cc0, description='who cares')
+                tis_c0.full_clean()
+
+        with self.assertRaises(ValidationError):
+            with transaction.atomic():
+                tis_lo0 = LearningObjective(id='has space', course=self.c0, formal_description='foobar')
+                tis_lo0.full_clean()

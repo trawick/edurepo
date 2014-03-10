@@ -1,5 +1,8 @@
+from django.core.validators import RegexValidator
 from django.db import models
 from core.utils import ellipsis
+
+id_regex = '^[A-Za-z0-9-]*$'
 
 
 class RepoLanguageField(models.CharField):
@@ -22,8 +25,12 @@ class RepoLanguageField(models.CharField):
 
 
 class CourseCategory(models.Model):
-    id = models.CharField(max_length=8, primary_key=True, unique=True)
-    description = models.CharField(max_length=4000)
+    """Broad category of courses, such as K-12 Science, K-12 Mathematics,
+    etc."""
+    id_desc = 'Course category ids may contain only letters, numbers, and hyphens.'
+    id = models.CharField(max_length=8, primary_key=True, unique=True,
+                          validators=[RegexValidator(regex=id_regex, message=id_desc)])
+    description = models.CharField(max_length=100)
 
     def __unicode__(self):
         return self.id + ' - ' + self.description
@@ -33,7 +40,9 @@ class CourseCategory(models.Model):
 
 
 class Course(models.Model):
-    id = models.CharField(max_length=30, primary_key=True, unique=True)
+    id_desc = 'Course ids may contain only letters, numbers, and hyphens.'
+    id = models.CharField(max_length=30, primary_key=True, unique=True,
+                          validators=[RegexValidator(regex=id_regex, message=id_desc)])
     cat = models.ForeignKey(CourseCategory)
     description = models.CharField(max_length=4000)
     language = RepoLanguageField()
@@ -43,7 +52,9 @@ class Course(models.Model):
 
 
 class LearningObjective(models.Model):
-    id = models.CharField(max_length=40, primary_key=True, unique=True)
+    id_desc = 'Learning objective ids may contain only letters, numbers, and hyphens.'
+    id = models.CharField(max_length=40, primary_key=True, unique=True,
+                          validators=[RegexValidator(regex=id_regex, message=id_desc)])
     course = models.ForeignKey(Course)
     formal_description = models.CharField(max_length=4096)
     simple_description = models.CharField(max_length=4096)
