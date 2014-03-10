@@ -1,9 +1,10 @@
 from django.conf.urls import patterns, include, url
 from repo import views
-from repo.api import CourseResource, GlossaryItemResource, ICanResource, LearningObjectiveResource, \
+from repo.api import CourseResource, CourseCategoryResource, GlossaryItemResource, ICanResource, LearningObjectiveResource, \
     MultipleChoiceItemResource, ReferenceTextResource, TrueFalseItemResource
 
 course_resource = CourseResource()
+course_category_resource = CourseCategoryResource()
 ican_resource = ICanResource()
 objective_resource = LearningObjectiveResource()
 glossary_item_resource = GlossaryItemResource()
@@ -14,6 +15,7 @@ true_false_item_resource = TrueFalseItemResource()
 urlpatterns = patterns('',
                        url(r'^$', views.index, name='index'),
                        (r'^api/', include(course_resource.urls)),
+                       (r'^api/', include(course_category_resource.urls)),
                        (r'^api/', include(glossary_item_resource.urls)),
                        (r'^api/', include(ican_resource.urls)),
                        (r'^api/', include(multiple_choice_item_resource.urls)),
