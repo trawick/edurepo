@@ -8,6 +8,11 @@ edjectiveApp.config(function($routeProvider) {
         controller: 'FrontCtrl'
     })
 
+    .when('/browse', {
+        templateUrl: 'pages/browse.html',
+        controller: 'BrowseCtrl'
+     })
+
     .when('/keyIdeas', {
         templateUrl: 'pages/keyIdeas.html',
         controller: 'FrontCtrl'
@@ -65,6 +70,47 @@ edjectiveApp.controller('GetTeacherEmailCtrl', function ($scope) {
     $scope.update = function(teacherEmail) {
         $scope.$emit('updateTeacherEmailEvent', teacherEmail);
     };
+
+});
+
+edjectiveApp.controller('BrowseCtrl', function ($scope, $http) {
+    $scope.baseurl = '';
+    $scope.categories = '';
+    $scope.selectedCategory = null;
+    $scope.courses = '';
+    $scope.selectedCourse = null;
+    $scope.objectives = '';
+
+    function setBaseURL(u) {
+        $scope.baseurl = u;
+        $scope.coursecat_baseurl = $scope.baseurl + 'repo/api/coursecategory/';
+        $scope.course_baseurl = $scope.baseurl + 'repo/api/course/';
+        $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
+        $scope.res_baseurl = $scope.baseurl + 'resources/api/resource/';
+        $scope.reference_baseurl = $scope.baseurl + 'repo/api/referencetext/';
+        $scope.multiplechoice_baseurl = $scope.baseurl + 'repo/api/multiplechoiceitem/';
+    }
+
+    $scope.updateSelectedCategory = function() {
+        $http.get($scope.course_baseurl + '?cat__id=' + $scope.selectedCategory.id).success(function(data) {
+            $scope.courses = data.objects;
+        });
+    };
+
+    $scope.updateSelectedCourse = function() {
+        $http.get($scope.lo_baseurl + '?course__id=' + $scope.selectedCourse.id).success(function(data) {
+            $scope.objectives = data.objects;
+        });
+    };
+
+    // Kick everything off once we retrieve the API configuration.
+    $http.get("resources/config.json").success(function(data) {
+        setBaseURL(data.base_api_url);
+
+        $http.get($scope.coursecat_baseurl).success(function(data) {
+            $scope.categories = data.objects;
+        });
+    });
 
 });
 

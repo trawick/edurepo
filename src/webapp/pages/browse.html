@@ -1,0 +1,33 @@
+<div data-ng-controller="BrowseCtrl">
+
+    <p>Select course category:</p>
+
+    <form>
+        <select data-ng-model="selectedCategory"
+                data-ng-options="category as category.description for category in categories"
+                data-ng-click="updateSelectedCategory()">
+        </select>
+    </form>
+
+    <span data-ng-show="courses">
+    <p>Select course:</p>
+
+    <form>
+        <select data-ng-model="selectedCourse"
+                data-ng-options="course as course.description for course in courses"
+                data-ng-click="updateSelectedCourse()">
+        </select>
+    </form>
+    </span>
+
+    <span data-ng-show="objectives">
+    <ul>
+        <li data-ng-repeat="objective in objectives">
+            {{objective.id}}
+            <br />
+            {{objective.description}}
+        </li>
+    </ul>
+    </span>
+
+</div>
