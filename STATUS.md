@@ -3,7 +3,7 @@ Current stage (by March 12)
 
 * Resource submission
   * DONE Glue Resource to LearningObjective
-  * TODO Browse categories, then courses, then objectives
+  * DONE Browse categories, then courses, then objectives
   * TODO Submit resource for objective
   * TODO Use user's browser to validate URL
   * TODO Implement server-side script to validate URLs in database

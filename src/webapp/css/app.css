@@ -32,12 +32,16 @@ ul.huge {
     list-style: none;
 }
 
-.forparents > a:visited, .forteachers > a:visited, .forauthors > a:visited, .forvendors > a:visited, .qanda > a:visited, .keyideas > a:visited, .fornerds > a:visited  {
+.browse > a:visited, .forparents > a:visited, .forteachers > a:visited, .forauthors > a:visited, .forvendors > a:visited, .qanda > a:visited, .keyideas > a:visited, .fornerds > a:visited  {
     color: black;
 }
 
-.forparents > a:link, .forteachers > a:link, .forauthors > a:link, .forvendors > a:link, .qands > a:link, .keyideas > a:link, .fornerds > a:link  {
+.browse > a:link, .forparents > a:link, .forteachers > a:link, .forauthors > a:link, .forvendors > a:link, .qands > a:link, .keyideas > a:link, .fornerds > a:link  {
     color: black;
+}
+
+.browse {
+    background-color: #3B653D;
 }
 
 .forvendors {
