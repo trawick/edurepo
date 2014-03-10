@@ -33,6 +33,7 @@ class LearningObjectiveResource(CORSResource, ModelResource):
     course = fields.ForeignKey(CourseResource, 'course', full=False)
 
     class Meta:
+        limit = 70
         queryset = LearningObjective.objects.all().order_by('id')
         filtering = {
             'id': ALL,

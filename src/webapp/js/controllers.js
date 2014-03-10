@@ -145,7 +145,7 @@ edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
     }
 
     function lookup_objectives_by_course(course_id) {
-        return $scope.lo_baseurl + '?course=' + course_id + '&limit=100';
+        return $scope.lo_baseurl + '?course=' + course_id;
     }
 
     function lookup_glossary_items_by_objective(obj) {
