@@ -2,7 +2,7 @@ Current stage (by March 12)
 =========================
 
 * Resource submission
-  * TODO Glue Resource to LearningObjective
+  * DONE Glue Resource to LearningObjective
   * TODO Browse categories, then courses, then objectives
   * TODO Submit resource for objective
   * TODO Use user's browser to validate URL
@@ -25,8 +25,6 @@ Possible themes for upcoming stages
 * Improve interface for submitting resources for a LO
 * Allow voting up or flagging a resource
 * XML scheme/validation for repo data
-* should teacher models specify separate base URLs for contributed resources vs. the repo? (TODO parent demo and sample code should use repo provider URL from class model)
-  * this is a pain...  forgetting about teachers for a moment, when you submit an external resource to an instance of the resources app it must know what instance of the repo app contains the learning objectives; why not just require that external resources for an objective are necessarily maintained together with the repo, so Resource::objective is ForeignKey and everything is simplified; getting back to teachers, one base API URL stored with the teacher is sufficient for accessing both the repo and submitted external resources
 
 Blatant bugs, even obvious at this early stage
 ==============================================

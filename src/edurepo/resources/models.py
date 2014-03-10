@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User
 from urlparse import urlparse
+from repo.models import LearningObjective
 
 
 def validate_resource_url(u):
@@ -15,7 +16,7 @@ def validate_resource_url(u):
 
 
 class Resource(models.Model):
-    objective = models.CharField(max_length=40)
+    objective = models.ForeignKey(LearningObjective)
     votes = models.IntegerField(default=0)
     inappropriate_flags = models.IntegerField(default=0)
     url = models.URLField(validators=[validate_resource_url])

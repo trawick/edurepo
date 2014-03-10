@@ -4,6 +4,7 @@ from django.db import IntegrityError
 from django.test import TestCase
 from django.contrib.auth.models import User
 from models import Resource, ResourceSubmission
+from repo.models import Course, CourseCategory, LearningObjective
 
 
 class BasicTests(TestCase):
@@ -11,10 +12,16 @@ class BasicTests(TestCase):
     def setUp(self):
         self.u1 = User.objects.create_user(username='user1', email='user1@example.com')
         self.u2 = User.objects.create_user(username='user2', email='user2@example.com')
+        self.cc0 = CourseCategory(id='TESTNA', description='Test Non-Academic')
+        self.cc0.save()
+        self.c0 = Course(id='Class00', cat=self.cc0, description='Class00Desc')
+        self.c0.save()
+        self.lo0 = LearningObjective(id='C00LO00', course=self.c0)
+        self.lo0.save()
 
     def test_1(self):
         """Basic creation of Resource, disallowing same URL+objective combination"""
-        lo1 = 'Obj01'
+        lo1 = self.lo0
         url1 = 'http://127.0.0.1/foo.html'
         r1 = Resource(objective=lo1, url=url1)
         self.assertEquals(r1.votes, 0)
@@ -33,11 +40,11 @@ class BasicTests(TestCase):
                     'http://trawick:private@example.com/',
                     )
         for (bad_url, i) in zip(bad_urls, range(len(bad_urls))):
-            r = Resource(objective='TBUObj' + str(i), url=bad_url)
+            r = Resource(objective=self.lo0, url=bad_url)
             self.assertRaises(ValidationError, lambda: r.full_clean())
 
     def test_duplicate_submission(self):
-        lo1 = 'TDSlo1'
+        lo1 = self.lo0
         url = 'http://www.google.com/'
         r = Resource(objective=lo1, url=url)
         r.full_clean()
@@ -59,7 +66,7 @@ class BasicTests(TestCase):
         # okay to flag a resource you submitted as inappropriate
 
     def test_strings(self):
-        lo2 = 'TSlo1'
+        lo2 = self.lo0
         url = 'http://www.google.com/'
         r = Resource(objective=lo2, url=url)
         r.full_clean()
