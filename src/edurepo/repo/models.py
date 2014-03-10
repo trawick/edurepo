@@ -56,12 +56,11 @@ class LearningObjective(models.Model):
     id = models.CharField(max_length=40, primary_key=True, unique=True,
                           validators=[RegexValidator(regex=id_regex, message=id_desc)])
     course = models.ForeignKey(Course)
-    formal_description = models.CharField(max_length=4096)
-    simple_description = models.CharField(max_length=4096)
+    description = models.CharField(max_length=4096)
     language = RepoLanguageField()
 
     def __unicode__(self):
-        return self.id + '-' + ellipsis(self.formal_description, 60)
+        return self.id + '-' + ellipsis(self.description, 60)
 
 
 class ReferenceText(models.Model):

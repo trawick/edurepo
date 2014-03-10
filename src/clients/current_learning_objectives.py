@@ -58,4 +58,4 @@ for obj in objs:
     response = urllib2.urlopen(url)
     body = response.read()
     json_body = json.loads(body)
-    print '    %s' % (json_body['formal_description'])
+    print '    %s' % (json_body['description'])

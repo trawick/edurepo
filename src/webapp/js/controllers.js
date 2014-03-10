@@ -127,7 +127,7 @@ edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
     }
 
     function annotate_objective($http, obj) {
-        obj.objective = obj.id + ' ' + obj.formal_description;
+        obj.objective = obj.id + ' ' + obj.description;
         obj.resources = [];
         obj.glossitems = [];
         obj.icans = [];
@@ -194,7 +194,7 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
 
     function annotate_objective($http, data, obj) {
         return function(data) {
-            obj.objective = data.id + ' ' + data.formal_description;
+            obj.objective = data.id + ' ' + data.description;
             obj.resources = [];
             obj.glossitems = [];
             obj.icans = [];

@@ -57,5 +57,5 @@ class BasicTests(TestCase):
 
         with self.assertRaises(ValidationError):
             with transaction.atomic():
-                tis_lo0 = LearningObjective(id='has space', course=self.c0, formal_description='foobar')
+                tis_lo0 = LearningObjective(id='has space', course=self.c0, description='foobar')
                 tis_lo0.full_clean()

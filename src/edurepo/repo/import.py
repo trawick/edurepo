@@ -65,7 +65,7 @@ def import_course_standard(root):
             print '           %s' % description.encode('utf-8')
 
         if perform_import:
-            c.learningobjective_set.create(id=id, formal_description=description)
+            c.learningobjective_set.create(id=id, description=description)
 
         icans = child.find('icans')
         if icans is not None:

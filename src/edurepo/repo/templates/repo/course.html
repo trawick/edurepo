@@ -12,7 +12,7 @@
     <table border="1">
         <tr><th>Objective id</th><th>Objective description</th><th>Language</th></tr>
 {% for lo in objective_list %}
-        <tr><td><a href="{{ lo.id }}/">{{ lo.id }}</a></td><td>{{ lo.formal_description }}</td><td>{{ lo.language }}</td></tr>
+        <tr><td><a href="{{ lo.id }}/">{{ lo.id }}</a></td><td>{{ lo.description }}</td><td>{{ lo.language }}</td></tr>
 {% endfor %}
     </table>
 {% else %}
