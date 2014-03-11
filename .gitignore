@@ -14,3 +14,4 @@ src/edurepo/settings.cfg
 src/edurepo/.coverage
 src/edurepo/htmlcov/
 src/edurepo/.idea/dictionaries/
+src/webapp/.idea/
