@@ -8,6 +8,11 @@ edjectiveApp.config(function($routeProvider) {
         controller: 'FrontCtrl'
     })
 
+    .when('/browse/:objective', {
+        templateUrl: 'pages/browseObjective.html',
+        controller: 'BrowseObjectiveCtrl'
+    })
+
     .when('/browse', {
         templateUrl: 'pages/browse.html',
         controller: 'BrowseCtrl'
@@ -70,6 +75,32 @@ edjectiveApp.controller('GetTeacherEmailCtrl', function ($scope) {
     $scope.update = function(teacherEmail) {
         $scope.$emit('updateTeacherEmailEvent', teacherEmail);
     };
+
+});
+
+edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routeParams) {
+    $scope.baseurl = null;
+    $scope.objective_name = $routeParams.objective;
+    $scope.objective = null;
+
+    function setBaseURL(u) {
+        $scope.baseurl = u;
+        $scope.coursecat_baseurl = $scope.baseurl + 'repo/api/coursecategory/';
+        $scope.course_baseurl = $scope.baseurl + 'repo/api/course/';
+        $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
+        $scope.res_baseurl = $scope.baseurl + 'resources/api/resource/';
+        $scope.reference_baseurl = $scope.baseurl + 'repo/api/referencetext/';
+        $scope.multiplechoice_baseurl = $scope.baseurl + 'repo/api/multiplechoiceitem/';
+    }
+
+    // Kick everything off once we retrieve the API configuration.
+    $http.get("resources/config.json").success(function(data) {
+        setBaseURL(data.base_api_url);
+
+        $http.get($scope.lo_baseurl + '?id=' + $scope.objective_name).success(function(data) {
+            $scope.objective = data.objects[0];
+        });
+    });
 
 });
 
