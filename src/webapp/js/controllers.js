@@ -1,5 +1,17 @@
 var edjectiveApp = angular.module('edjectiveApp', ['ngRoute']);
 
+edjectiveApp.factory('CurrentObjectives', function() {
+    var c_o = null;
+    return {
+        get: function () {
+            return c_o;
+        },
+        set: function (new_c_o) {
+            c_o = new_c_o;
+        }
+    };
+});
+
 edjectiveApp.config(function($routeProvider) {
     $routeProvider
 
@@ -78,10 +90,13 @@ edjectiveApp.controller('GetTeacherEmailCtrl', function ($scope) {
 
 });
 
-edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routeParams) {
+edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routeParams, CurrentObjectives) {
     $scope.baseurl = null;
     $scope.objective_name = $routeParams.objective;
     $scope.objective = null;
+    $scope.all_objectives = CurrentObjectives.get();
+    $scope.previous_objective = null;
+    $scope.next_objective = null;
     $scope.resources = null;
 
     function setBaseURL(u) {
@@ -100,7 +115,6 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
     }
 
     $scope.submitResource = function(objective_id) {
-        console.log(objective_id);
         window.location.replace($scope.res_create_form + '?objective=' + objective_id);
     };
 
@@ -110,6 +124,22 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
 
         $http.get($scope.lo_baseurl + '?id=' + $scope.objective_name).success(function(data) {
             $scope.objective = data.objects[0];
+
+            if ($scope.all_objectives) {
+                for (var i = 0; i < $scope.all_objectives.length; i++) {
+                    this_objective = $scope.all_objectives[i];
+                    if (this_objective.id == $scope.objective.id) {
+                        if (i > 0) {
+                            $scope.previous_objective = $scope.all_objectives[i - 1];
+                        }
+                        if (i + 1 < $scope.all_objectives.length) {
+                            $scope.next_objective = $scope.all_objectives[i + 1];
+                        }
+                        break;
+                    }
+                }
+            }
+
         });
 
         $http.get(lookup_resources_url($scope.objective_name)).success(function(data) {
@@ -119,7 +149,7 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
 
 });
 
-edjectiveApp.controller('BrowseCtrl', function ($scope, $http) {
+edjectiveApp.controller('BrowseCtrl', function ($scope, $http, CurrentObjectives) {
     $scope.baseurl = '';
     $scope.categories = null;
     $scope.selectedCategory = null;
@@ -149,6 +179,7 @@ edjectiveApp.controller('BrowseCtrl', function ($scope, $http) {
     $scope.updateSelectedCourse = function() {
         $http.get($scope.lo_baseurl + '?course__id=' + $scope.selectedCourse.id).success(function(data) {
             $scope.objectives = data.objects;
+            CurrentObjectives.set(data.objects);
         });
     };
 
@@ -260,7 +291,6 @@ edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
         });
 
         $http.get(lookup_objectives_by_course(courseId)).success(function (data) {
-            console.log(data);
             if (data.meta.total_count == 0) {
                 $scope.courseLookupError = 'The course id is not valid.';
             }

@@ -1,8 +1,18 @@
 <div class="browse-page" data-ng-controller="BrowseObjectiveCtrl">
 
     <div data-ng-show="objective">
-    <span class="objective-list-entry-id">{{objective.id}}</span>
-    <span class="objective-list-entry-description">{{objective.description}}</span>
+        <span data-ng-show="previous_objective">
+        <a href="#/browse/{{previous_objective.id}}">
+            <span class="previous-next-objective">previous</span>
+        </a>
+        </span>
+        <span class="objective-list-entry-id">{{objective.id}}</span>
+        <span data-ng-show="next_objective">
+        <a href="#/browse/{{next_objective.id}}">
+            <span class="previous-next-objective">next</span>
+        </a>
+        </span>
+        <span class="objective-list-entry-description">{{objective.description}}</span>
     </div>
 
     <br />
