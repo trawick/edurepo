@@ -5,4 +5,20 @@
     <span class="objective-list-entry-description">{{objective.description}}</span>
     </div>
 
+    <div data-ng-show="resources">
+        <h2>Learning resources for this objective:</h2>
+        <ul>
+            <li data-ng-repeat="resource in resources">
+                <a href="{{resource.url}}">
+                    {{resource.url}}
+                </a>
+                <div data-ng-show="resource.votes">
+                    {{resource.votes}} votes
+                </div>
+                <div data-ng-show="resource.inappropriate_flags">
+                    Tagged as inappropriate {{resource.inappropriate_flags}} times
+                </div>
+            </li>
+        </ul>
+    </div>
 </div>

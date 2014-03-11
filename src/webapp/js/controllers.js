@@ -82,6 +82,7 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
     $scope.baseurl = null;
     $scope.objective_name = $routeParams.objective;
     $scope.objective = null;
+    $scope.resources = null;
 
     function setBaseURL(u) {
         $scope.baseurl = u;
@@ -93,12 +94,20 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
         $scope.multiplechoice_baseurl = $scope.baseurl + 'repo/api/multiplechoiceitem/';
     }
 
+    function lookup_resources_url(obj) {
+        return $scope.res_baseurl + '?objective__id=' + obj;
+    }
+
     // Kick everything off once we retrieve the API configuration.
     $http.get("resources/config.json").success(function(data) {
         setBaseURL(data.base_api_url);
 
         $http.get($scope.lo_baseurl + '?id=' + $scope.objective_name).success(function(data) {
             $scope.objective = data.objects[0];
+        });
+
+        $http.get(lookup_resources_url($scope.objective_name)).success(function(data) {
+            $scope.resources = data.objects;
         });
     });
 
