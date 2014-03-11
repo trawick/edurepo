@@ -24,7 +24,9 @@
     <span data-ng-show="objectives">
     <ul class="objective-list">
         <li data-ng-repeat="objective in objectives">
+            <a href="#/browse/{{objective.id}}">
             <span class="objective-list-entry-id">{{objective.id}}</span>
+            </a>
             <span class="objective-list-entry-description">{{objective.description}}</span>
         </li>
     </ul>
