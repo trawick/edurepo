@@ -10,4 +10,5 @@ class ResourceForm(forms.ModelForm):
         fields = ('objective', 'url', 'notes')
         labels = {'objective': _('Learning objective'),
                   'url': _('URL of resource')}
-        widgets = {'notes': forms.Textarea(attrs={'cols': 80, 'rows': 2})}
+        widgets = {'notes': forms.Textarea(attrs={'cols': 80, 'rows': 2}),
+                   'url': forms.TextInput(attrs={'size': 80})}
