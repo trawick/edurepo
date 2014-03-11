@@ -4,7 +4,7 @@ Current stage (by March 12)
 * Resource submission
   * DONE Glue Resource to LearningObjective
   * DONE Browse categories, then courses, then objectives
-  * TODO Submit resource for objective
+  * DONE Submit resource for objective
   * TODO Use user's browser to validate URL
   * TODO Implement server-side script to validate URLs in database
   * TODO websnapr or similar

@@ -92,11 +92,17 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
         $scope.res_baseurl = $scope.baseurl + 'resources/api/resource/';
         $scope.reference_baseurl = $scope.baseurl + 'repo/api/referencetext/';
         $scope.multiplechoice_baseurl = $scope.baseurl + 'repo/api/multiplechoiceitem/';
+        $scope.res_create_form = $scope.baseurl + 'resources/create/';
     }
 
     function lookup_resources_url(obj) {
         return $scope.res_baseurl + '?objective__id=' + obj;
     }
+
+    $scope.submitResource = function(objective_id) {
+        console.log(objective_id);
+        window.location.replace($scope.res_create_form + '?objective=' + objective_id);
+    };
 
     // Kick everything off once we retrieve the API configuration.
     $http.get("resources/config.json").success(function(data) {

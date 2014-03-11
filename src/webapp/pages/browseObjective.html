@@ -5,6 +5,10 @@
     <span class="objective-list-entry-description">{{objective.description}}</span>
     </div>
 
+    <br />
+    <div data-ng-hide="resources">
+        <h2>No educational resources have been submitted.</h2>
+    </div>
     <div data-ng-show="resources">
         <h2>Learning resources for this objective:</h2>
         <ul>
@@ -21,4 +25,8 @@
             </li>
         </ul>
     </div>
+
+    <br />
+    <input type="button" value="Add a resource..." data-ng-click="submitResource(objective.id)">
+
 </div>
