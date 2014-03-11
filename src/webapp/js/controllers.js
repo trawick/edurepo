@@ -118,6 +118,21 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
         window.location.replace($scope.res_create_form + '?objective=' + objective_id);
     };
 
+    $scope.calcPrevNext = function() {
+        for (var i = 0; i < $scope.all_objectives.length; i++) {
+            this_objective = $scope.all_objectives[i];
+            if (this_objective.id == $scope.objective.id) {
+                if (i > 0) {
+                    $scope.previous_objective = $scope.all_objectives[i - 1];
+                }
+                if (i + 1 < $scope.all_objectives.length) {
+                    $scope.next_objective = $scope.all_objectives[i + 1];
+                }
+                break;
+            }
+        }
+    };
+
     // Kick everything off once we retrieve the API configuration.
     $http.get("resources/config.json").success(function(data) {
         setBaseURL(data.base_api_url);
@@ -126,20 +141,16 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
             $scope.objective = data.objects[0];
 
             if ($scope.all_objectives) {
-                for (var i = 0; i < $scope.all_objectives.length; i++) {
-                    this_objective = $scope.all_objectives[i];
-                    if (this_objective.id == $scope.objective.id) {
-                        if (i > 0) {
-                            $scope.previous_objective = $scope.all_objectives[i - 1];
-                        }
-                        if (i + 1 < $scope.all_objectives.length) {
-                            $scope.next_objective = $scope.all_objectives[i + 1];
-                        }
-                        break;
-                    }
-                }
+                $scope.calcPrevNext();
             }
-
+            else {
+                // Load all objectives since we somehow got here without it.
+                $http.get($scope.lo_baseurl + '?course__id=' + $scope.objective.course_id).success(function(data) {
+                    $scope.all_objectives = data.objects;
+                    CurrentObjectives.set(data.objects);
+                    $scope.calcPrevNext();
+                });
+            }
         });
 
         $http.get(lookup_resources_url($scope.objective_name)).success(function(data) {
