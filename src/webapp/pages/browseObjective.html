@@ -26,6 +26,9 @@
                 <a href="{{resource.url}}">
                     {{resource.url}}
                 </a>
+                <div data-ng-show="resource.notes">
+                    ({{resource.notes}})
+                </div>
                 <div data-ng-show="resource.votes">
                     {{resource.votes}} votes
                 </div>
