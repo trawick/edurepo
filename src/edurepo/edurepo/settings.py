@@ -69,6 +69,8 @@ ROOT_URLCONF = 'edurepo.urls'
 
 WSGI_APPLICATION = 'edurepo.wsgi.application'
 
+LOGIN_URL = '/login/google/'
+
 SOCIAL_AUTH_LOGIN_URL = '/login/'
 # SOCIAL_AUTH_LOGIN_REDIRECT_URL = <TBD>
 # SOCIAL_AUTH_LOGIN_ERROR_URL = <TBD>
