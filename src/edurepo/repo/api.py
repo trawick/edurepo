@@ -32,6 +32,10 @@ class CourseResource(CORSResource, ModelResource):
 class LearningObjectiveResource(CORSResource, ModelResource):
     course = fields.ForeignKey(CourseResource, 'course', full=False)
 
+    def dehydrate(self, bundle):
+        bundle.data['course_id'] = bundle.obj.course.id
+        return bundle
+
     class Meta:
         limit = 70
         queryset = LearningObjective.objects.all().order_by('id')
