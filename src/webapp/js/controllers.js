@@ -120,6 +120,7 @@ edjectiveApp.controller('BrowseCtrl', function ($scope, $http) {
     $scope.courses = null;
     $scope.selectedCourse = null;
     $scope.objectives = null;
+    $scope.serverUnreachable = null;
 
     function setBaseURL(u) {
         $scope.baseurl = u;
@@ -151,7 +152,11 @@ edjectiveApp.controller('BrowseCtrl', function ($scope, $http) {
 
         $http.get($scope.coursecat_baseurl).success(function(data) {
             $scope.categories = data.objects;
+        }).error(function(data) {
+            $scope.serverUnreachable = "The server cannot be reached.";
         });
+    }).error(function(data) {
+        $scope.serverUnreachable = "The server cannot be reached.";
     });
 
 });

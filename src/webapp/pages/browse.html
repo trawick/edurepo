@@ -1,5 +1,9 @@
 <div class="browse-page" data-ng-controller="BrowseCtrl">
 
+    <div data-ng-show="serverUnreachable">
+        <p>{{serverUnreachable}}</p>
+    </div>
+    <div data-ng-hide="serverUnreachable">
     <p>Select course category:</p>
 
     <form>
@@ -31,5 +35,5 @@
         </li>
     </ul>
     </span>
-
+    </div>
 </div>
