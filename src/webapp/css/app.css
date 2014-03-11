@@ -93,3 +93,35 @@ ul.huge {
             padding-top: 1px;
             padding-bottom: 1px;
         }
+
+.browse-page {
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+}
+
+ul.objective-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+ul.objective-list > li {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.objective-list-entry-id {
+    border-radius: 5px;
+    background-color: #3B653D;
+    color: white;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 120%;
+    padding: 4px;
+}
+
+.objective-list-entry-description {
+    display: block;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    font-size: 120%;
+    padding-top: 5px;
+    margin-top: 5px;
+}

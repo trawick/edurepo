@@ -1,4 +1,4 @@
-<div data-ng-controller="BrowseCtrl">
+<div class="browse-page" data-ng-controller="BrowseCtrl">
 
     <p>Select course category:</p>
 
@@ -22,11 +22,10 @@
     </span>
 
     <span data-ng-show="objectives">
-    <ul>
+    <ul class="objective-list">
         <li data-ng-repeat="objective in objectives">
-            {{objective.id}}
-            <br />
-            {{objective.description}}
+            <span class="objective-list-entry-id">{{objective.id}}</span>
+            <span class="objective-list-entry-description">{{objective.description}}</span>
         </li>
     </ul>
     </span>
