@@ -12,7 +12,7 @@ Current stage (by March 12)
     * Use table for URL verification/ban with last-verified date?
     * Same URL could be used for multiple objectives and/or courses
   * TODO websnapr or similar
-    * Have preview for YouTube videos now, but it needs to be fixed to correctly choose http/https...
+    * Have preview for YouTube videos now
     * At least grab title, possibly store in URL verification table
 
 Possible themes for upcoming stages

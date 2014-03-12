@@ -159,11 +159,15 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
 
         $http.get(lookup_resources_url($scope.objective_name)).success(function(data) {
             $scope.resources = data.objects;
+            var is_secure = /^https:/.exec(window.location);
+            var youtube_scheme = is_secure ? "https" : "http";
             var regex = /youtube.com.*v=(.*)/;
             for (var i = 0; i < $scope.resources.length; i++) {
                 var match = regex.exec($scope.resources[i].url);
                 if (match) {
-                    $scope.resources[i].embed = '<iframe title="YouTube Video" type="text/html" src="http://youtube.com/embed/' + match[1] + '" />';
+                    $scope.resources[i].embed =
+                        '<iframe title="YouTube Video" type="text/html" src="'
+                        + youtube_scheme + '://youtube.com/embed/' + match[1] + '" />';
                 }
             }
         });
