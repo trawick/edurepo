@@ -201,6 +201,8 @@ djangoedurepo=# \q
 Starting over with new data
 ===========================
 
+**Yo!  Save/restore teachers and resources data first!**
+
 ```
 python manage.py sqlclear teachers resources repo | python manage.py dbshell
 python manage.py syncdb
