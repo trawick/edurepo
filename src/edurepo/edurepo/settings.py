@@ -69,7 +69,9 @@ ROOT_URLCONF = 'edurepo.urls'
 
 WSGI_APPLICATION = 'edurepo.wsgi.application'
 
-LOGIN_URL = '/login/google/'
+MOUNTED_AT = config.get('deployment', 'MOUNTED_AT')
+
+LOGIN_URL = MOUNTED_AT + '/login/google/'
 
 SOCIAL_AUTH_LOGIN_URL = '/login/'
 # SOCIAL_AUTH_LOGIN_REDIRECT_URL = <TBD>
