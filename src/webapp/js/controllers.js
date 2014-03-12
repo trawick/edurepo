@@ -90,7 +90,7 @@ edjectiveApp.controller('GetTeacherEmailCtrl', function ($scope) {
 
 });
 
-edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routeParams, CurrentObjectives) {
+edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routeParams, $sce, CurrentObjectives) {
     $scope.baseurl = null;
     $scope.objective_name = $routeParams.objective;
     $scope.objective = null;
@@ -117,6 +117,10 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
     $scope.submitResource = function(objective_id) {
         window.location.replace($scope.res_create_form + '?objective=' + objective_id);
     };
+
+    $scope.toTrusted = function(html) {
+        return $sce.trustAsHtml(html);
+    }
 
     $scope.calcPrevNext = function() {
         for (var i = 0; i < $scope.all_objectives.length; i++) {
@@ -155,6 +159,13 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
 
         $http.get(lookup_resources_url($scope.objective_name)).success(function(data) {
             $scope.resources = data.objects;
+            var regex = /youtube.com.*v=(.*)/;
+            for (var i = 0; i < $scope.resources.length; i++) {
+                var match = regex.exec($scope.resources[i].url);
+                if (match) {
+                    $scope.resources[i].embed = '<iframe title="YouTube Video" type="text/html" src="http://youtube.com/embed/' + match[1] + '" />';
+                }
+            }
         });
     });
 

@@ -23,6 +23,11 @@
         <h2>Learning resources for this objective:</h2>
         <ul>
             <li data-ng-repeat="resource in resources">
+
+                <span data-ng-show="resource.embed">
+                <div ng-bind-html="toTrusted(resource.embed)"></div>
+                </span>
+
                 <a href="{{resource.url}}">
                     {{resource.url}}
                 </a>
