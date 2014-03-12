@@ -44,6 +44,8 @@ ALLOWED_HOSTS=*
 set_static_root=True
 # set this to location where /static from Django app will be copied
 STATIC_ROOT=/home/whatever/edurepo-static/
+# set this to location where Django app is mounted (blank for /)
+MOUNTED_AT=
 
 [database]
 NAME=djangoedurepo
