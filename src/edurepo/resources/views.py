@@ -1,4 +1,5 @@
 from django.core.context_processors import csrf
+from django.db import transaction
 from django.shortcuts import render, redirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
@@ -24,7 +25,12 @@ def create_resource(request):
     if request.POST:
         form = ResourceForm(request.POST)
         if form.is_valid():
-            form.save()
+            with transaction.atomic():
+                resource = form.save()
+                submit = ResourceSubmission(user=request.user,
+                                            resource=resource,
+                                            type='c')
+                submit.save()
             return redirect('/resources')
     else:
         if request.GET and 'objective' in request.GET:

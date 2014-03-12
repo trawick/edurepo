@@ -5,7 +5,7 @@ Current stage (by March 12)
   * DONE Glue Resource to LearningObjective
   * DONE Browse categories, then courses, then objectives
   * DONE Submit resource for objective
-  * TODO Create ResourceSubmission records as appropriate
+  * DONE Create ResourceSubmission records as appropriate
   * TODO Use user's browser to validate URL
     * Is this really practical?
   * TODO Implement server-side script to validate URLs in database
