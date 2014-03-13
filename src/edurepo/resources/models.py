@@ -63,6 +63,8 @@ class ResourceVerification(models.Model):
     last_success = models.DateTimeField(blank=True, null=True)
     last_failure = models.DateTimeField(blank=True, null=True)
     document_title = models.CharField(max_length=120, blank=True)
+    # just the type, not the charset
+    content_type = models.CharField(max_length=127, blank=True)
 
     def __unicode__(self):
         valid = 'Valid'

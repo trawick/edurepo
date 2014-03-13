@@ -16,39 +16,61 @@ def now():
     return datetime.utcnow().replace(tzinfo=utc)
 
 
+def get_content_type(debug, rsp):
+    """Return content-type in lower case with anything else (e.g., charset)
+    stripped off.  Return empty string if no content-type is available."""
+    ct_hdr = rsp.info().getheader('Content-Type')
+    if not ct_hdr:
+        return ''
+    fields = ct_hdr.split(';')
+    if not fields:
+        return ''
+    return fields[0].strip().lower()
+
+
 def create_verification(debug, url):
     if debug:
         print url
     try:
         rsp = urllib2.urlopen(url, None, 10)
     except:
+        print 'Failed now: ' + url
         verification = ResourceVerification(url=url,
                                             last_failure=now())
         verification.save()
         return
 
+    ct = get_content_type(debug, rsp)
+
     if debug:
         print rsp.getcode()
-    contents = rsp.read()
-    soup = BeautifulSoup(contents)
-    if soup.title:
-        title = soup.title.string
-        title = title.strip()
-        title = title.replace('\r', '')
-        if title.count('\n') > 1:
-            # assume the worst and set the title to the text up through the 1st \n
-            title = title.split('\n')[0]
+        print rsp.info().getheader('Content-Type') + ' => ' + ct
+
+    if ct == 'text/html':
+        contents = rsp.read()
+        soup = BeautifulSoup(contents)
+        if soup.title:
+            title = soup.title.string
+            title = title.strip()
+            title = title.replace('\r', '')
+            if title.count('\n') > 1:
+                # assume the worst and set the title to the text up through the 1st \n
+                title = title.split('\n')[0]
+            else:
+                title = title.replace('\n', ' ')
+            if debug:
+                print ' ', title.encode("utf8")
         else:
-            title = title.replace('\n', ' ')
-        if debug:
-            print ' ', title.encode("utf8")
+            title = ''
+            if debug:
+                print "  (no title)"
     else:
         title = ''
-        if debug:
-            print "  (no title)"
+
     verification = ResourceVerification(url=url,
                                         last_success=now(),
-                                        document_title=title)
+                                        document_title=title,
+                                        content_type=ct)
     verification.save()
 
 
