@@ -15,3 +15,5 @@ src/edurepo/.coverage
 src/edurepo/htmlcov/
 src/edurepo/.idea/dictionaries/
 src/webapp/.idea/
+src/edurepo/.idea/dataSources.ids
+src/edurepo/.idea/dataSources.xml
