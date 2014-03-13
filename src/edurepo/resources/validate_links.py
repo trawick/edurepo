@@ -60,8 +60,14 @@ def create_verification(debug, url):
 
     if ct == 'text/html':
         contents = rsp.read()
-        soup = BeautifulSoup(contents)
-        if soup.title:
+        try:
+            soup = BeautifulSoup(contents)
+        except:
+            print 'Failed to parse: ' + url
+            print sys.exc_info()
+            soup = None
+
+        if soup and soup.title:
             title = soup.title.string
             title = title.strip()
             title = title.replace('\r', '')
