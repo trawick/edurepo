@@ -4,7 +4,7 @@ Current stage (by March 13)
 * DONE Get server-side script running at intervals on edjective.org with reporting going somewhere useful
 * DONE Fix redirect issue with http://www.livescience.com/22367-digestive-system.html
 * TODO Purge resources that have not been retrievable for a while
-* TODO Annotate resource display in browse app with hints from ResourceVerification table, such as title, link status, and hints based on content-type
+* DONE Annotate resource display in browse app with hints from ResourceVerification table, such as title, link status, and hints based on content-type
 * TODO Put notice on resource submission form that resources can be removed later based on availability and appropriateness
 
 Possible themes for upcoming stages

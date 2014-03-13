@@ -169,6 +169,19 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
                         '<iframe title="YouTube Video" type="text/html" src="'
                         + youtube_scheme + '://youtube.com/embed/' + match[1] + '" />';
                 }
+
+                if ($scope.resources[i].status != 'V') {
+                    $scope.resources[i].warning = 'This resource may not be accessible.';
+                }
+                else if ($scope.resources[i].inappropriate_flags != 0) {
+                    $scope.resources[i].warning = 'This resource may not be appropriate.';
+                }
+                else if ($scope.resources[i].content_type != 'text/html') {
+                    $scope.resources[i].warning = 'This resource might not be viewable in the browser.';
+                }
+                else {
+                    $scope.resources[i].warning = '';
+                }
             }
         });
     });
