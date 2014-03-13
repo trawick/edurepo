@@ -1,6 +1,6 @@
 from tastypie import fields
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
-from resources.models import Resource
+from resources.models import Resource, ResourceVerification
 from core.utils import CORSResource
 from repo.api import LearningObjectiveResource
 
@@ -8,6 +8,23 @@ from repo.api import LearningObjectiveResource
 class ResourceResource(CORSResource, ModelResource):
 
     objective = fields.ForeignKey(LearningObjectiveResource, 'objective', full=False)
+
+    def dehydrate(self, bundle):
+        url = bundle.data['url']
+        verification = ResourceVerification.objects.filter(url=url)
+
+        extra_data = {'content_type': '',
+                      'title': '',
+                      'status': ''}
+        if len(verification):
+            # should be zero or one, but that's not our concern here
+            verification = verification[0]
+            extra_data['content_type'] = verification.content_type
+            extra_data['title'] = verification.document_title
+            extra_data['status'] = verification.status_char()
+
+        bundle.data = dict(bundle.data.items() + extra_data.items())
+        return bundle
 
     class Meta:
         queryset = Resource.objects.all()

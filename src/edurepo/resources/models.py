@@ -66,9 +66,9 @@ class ResourceVerification(models.Model):
     # just the type, not the charset
     content_type = models.CharField(max_length=127, blank=True)
 
-    def __unicode__(self):
-        valid = 'Valid'
-        invalid = 'Invalid'
+    def status_char(self):
+        valid = 'V'
+        invalid = 'I'
         if not self.last_success:
             status = invalid
         elif not self.last_failure:
@@ -77,4 +77,14 @@ class ResourceVerification(models.Model):
             status = valid
         else:
             status = invalid
-        return status + ':' + self.url
+        return status
+
+    def status_str(self):
+        s = self.status_char()
+        if s == 'V':
+            return 'Valid'
+        else:
+            return 'Invalid'
+
+    def __unicode__(self):
+        return self.status_str() + ':' + self.url
