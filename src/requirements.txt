@@ -9,6 +9,7 @@ python-dateutil==2.2
 python-mimeparse==0.1.4
 python-openid==2.2.5
 python-social-auth==0.1.21
+pytz==2013.9
 requests==2.2.1
 requests-oauthlib==0.4.0
 six==1.5.2

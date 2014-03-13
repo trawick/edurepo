@@ -1,18 +1,19 @@
-# TODO: Fix the TZ crap
-#       We should only care about UTC, picking that up from the settings module.
-#       But I'm getting the naive time errors here and there.
-
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'edurepo.settings')
 
 import sys
 sys.path.append('.')
 
+from django.utils.timezone import utc
 import urllib2
 from datetime import datetime, timedelta
 from optparse import OptionParser
 from bs4 import BeautifulSoup
 from resources.models import Resource, ResourceVerification
+
+
+def now():
+    return datetime.utcnow().replace(tzinfo=utc)
 
 
 def create_verification(debug, url):
@@ -22,7 +23,7 @@ def create_verification(debug, url):
         rsp = urllib2.urlopen(url, None, 10)
     except:
         verification = ResourceVerification(url=url,
-                                            last_failure=datetime.now())
+                                            last_failure=now())
         verification.save()
         return
 
@@ -46,7 +47,7 @@ def create_verification(debug, url):
         if debug:
             print "  (no title)"
     verification = ResourceVerification(url=url,
-                                        last_success=datetime.now(),
+                                        last_success=now(),
                                         document_title=title)
     verification.save()
 
@@ -73,7 +74,7 @@ def re_verify(debug, oldest_valid_success):
             if debug:
                 print "most recently failed: " + verification.url
             create_verification(debug, verification.url)
-        elif verification.last_success.replace(tzinfo=None) < oldest_valid_success.replace(tzinfo=None):
+        elif verification.last_success < oldest_valid_success:
             if debug:
                 print "not tested in a while: " + verification.url
             create_verification(debug, verification.url)
@@ -91,4 +92,4 @@ verify_all_resources(options.debug)
 
 # Re-verify as necessary
 max_success_age = timedelta(days=14)
-re_verify(options.debug, datetime.now() - max_success_age)
+re_verify(options.debug, now() - max_success_age)
