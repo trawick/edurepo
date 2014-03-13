@@ -1,14 +1,14 @@
-Current stage (by March ??)
-=========================
+Current stage (by March 15)
+===========================
 
-* ??
+* Implement resource upvoting/flagging
+* Display any ResourceSubmission comments with the resource
 
 Possible themes for upcoming stages
 ===================================
 
 * Minimize data transfer by link validator (e.g., grab just first 4-8K of document)
 * edjective.org issue parsing some resources: Upgrade Python or use external HTML parser or just wait until setting up dedicated server with newer Ubuntu release
-* Implement resource upvoting/flagging
 * websnapr or similar for more previews
 * Course needs short form of description
 * command-line "reference" clients:
@@ -21,7 +21,6 @@ Possible themes for upcoming stages
 * New Django app: Interface for submitting materials for a LO (moves to repo after review/rework by approver)
 * Refactor controllers.js
 * Improve interface for submitting resources for a LO
-* Allow voting up or flagging a resource
 * XML scheme/validation for repo data
 
 Blatant bugs, even obvious at this early stage
