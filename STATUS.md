@@ -10,6 +10,8 @@ Current stage (by March 13)
 Possible themes for upcoming stages
 ===================================
 
+* Minimize data transfer by link validator (e.g., grab just first 4-8K of document)
+* edjective.org issue parsing some resources: Upgrade Python or use external HTML parser or just wait until setting up dedicated server with newer Ubuntu release
 * Implement resource upvoting/flagging
 * websnapr or similar for more previews
 * Course needs short form of description
