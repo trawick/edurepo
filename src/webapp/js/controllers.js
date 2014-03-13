@@ -177,7 +177,7 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
                     $scope.resources[i].warning = 'This resource may not be appropriate.';
                 }
                 else if ($scope.resources[i].content_type != 'text/html') {
-                    $scope.resources[i].warning = 'This resource might not be viewable in the browser.';
+                    $scope.resources[i].warning = 'This resource might not be viewable in your web browser.';
                 }
                 else {
                     $scope.resources[i].warning = '';
