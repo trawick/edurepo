@@ -66,7 +66,7 @@ edjectiveApp.config(function($routeProvider) {
     })
 
     .otherwise({redirectTo: '/', controller: 'LookupCtrl'});
-})
+});
 
 edjectiveApp.run(function($rootScope) {
     $rootScope.$on('updateTeacherEmailEvent', function(event, args) {
@@ -120,11 +120,11 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
 
     $scope.toTrusted = function(html) {
         return $sce.trustAsHtml(html);
-    }
+    };
 
     $scope.calcPrevNext = function() {
         for (var i = 0; i < $scope.all_objectives.length; i++) {
-            this_objective = $scope.all_objectives[i];
+            var this_objective = $scope.all_objectives[i];
             if (this_objective.id == $scope.objective.id) {
                 if (i > 0) {
                     $scope.previous_objective = $scope.all_objectives[i - 1];
@@ -457,7 +457,7 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
                 }
             }).error(function () {
                 $scope.notice.text = 'The server could not be contacted.';
-            });;
+            });
 
         }).error(function () {
             $scope.notice.text = 'The server could not be contacted.';
