@@ -31,11 +31,19 @@ def purge_unreachable_resources(debug, min_success_time):
             resources = Resource.objects.filter(url=verification.url)
             for resource in resources:
                 print '  %s' % resource
+        else:
+            resource_count = Resource.objects.filter(url=verification.url).count()
+            if debug:
+                print '  Used by %d resources...' % resource_count
+            if resource_count == 0:
+                print 'Purge stranded verification record %s' % verification
 
 
 def purge_inappropriate_resources(debug):
     resources = Resource.objects.all().exclude(inappropriate_flags=0)
     for resource in resources:
+        if debug:
+            print 'Checking %s...' % resource
         print 'Purge inappropriate resource %s (%d)' % (resource, resource.inappropriate_flags)
 
 parser = OptionParser()
