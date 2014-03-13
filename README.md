@@ -1,6 +1,10 @@
 edurepo
 =======
 
+**See the text at http://edjective.org/ for a better song and dance.  There are a number of use cases of the system
+and I change my mind from time to time about which use cases are more valuable or should be stressed to a particular
+audience.**
+
 # Project to create a master repository of educational data, including descriptions and outlines for standard courses as well as a rich set of materials
 
 See docs subdirectory for more background information.
