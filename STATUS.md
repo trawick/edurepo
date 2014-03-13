@@ -1,10 +1,10 @@
 Current stage (by March 13)
 =========================
 
-* Get server-side script running at intervals on edjective.org with reporting going somewhere useful
-* Fix multiple-redirect issue with http://www.livescience.com/22367-digestive-system.html
-* Purge resources that haven't been retrievable for a while
-* Annotate resource display in browse app with hints from ResourceVerification table, such as title, link status, and hints based on content-type
+* TODO Get server-side script running at intervals on edjective.org with reporting going somewhere useful
+* DONE Fix redirect issue with http://www.livescience.com/22367-digestive-system.html
+* TODO Purge resources that haven't been retrievable for a while
+* TODO Annotate resource display in browse app with hints from ResourceVerification table, such as title, link status, and hints based on content-type
 
 Possible themes for upcoming stages
 ===================================

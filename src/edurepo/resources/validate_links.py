@@ -31,10 +31,22 @@ def get_content_type(debug, rsp):
 def create_verification(debug, url):
     if debug:
         print url
+    # www.livescience.com does a permanent redirect to a mobile site
+    # when using the default urllib2 user-agent string.
+    headers = {"User-Agent": "Mozilla/5.0 (edurepo link validity checker"}
     try:
-        rsp = urllib2.urlopen(url, None, 10)
+        req = urllib2.Request(url=url, headers=headers)
+        rsp = urllib2.urlopen(req, timeout=10)
+    except urllib2.HTTPError as e:
+        print 'Failed now: ' + url
+        print e.code
+        print e.read()
+        verification = ResourceVerification(url=url,
+                                            last_failure=now())
+        verification.save()
     except:
         print 'Failed now: ' + url
+        print sys.exc_info()
         verification = ResourceVerification(url=url,
                                             last_failure=now())
         verification.save()
