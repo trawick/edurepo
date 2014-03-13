@@ -56,3 +56,23 @@ class ResourceSubmission(models.Model):
 
     class Meta:
         unique_together = ('user', 'resource', 'type')
+
+
+class ResourceVerification(models.Model):
+    url = models.URLField(primary_key=True, unique=True)
+    last_success = models.DateTimeField(blank=True, null=True)
+    last_failure = models.DateTimeField(blank=True, null=True)
+    document_title = models.CharField(max_length=120, blank=True)
+
+    def __unicode__(self):
+        valid = 'Valid'
+        invalid = 'Invalid'
+        if not self.last_success:
+            status = invalid
+        elif not self.last_failure:
+            status = valid
+        elif self.last_success > self.last_failure:
+            status = valid
+        else:
+            status = invalid
+        return status + ':' + self.url
