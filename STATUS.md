@@ -1,9 +1,8 @@
-Current stage (by March 15)
+Current stage (by March ???)
 ===========================
 
-* DONE Implement resource upvoting/flagging
-* TODO Display any ResourceSubmission comments with the resource
-
+* ?
+* 
 Possible themes for upcoming stages
 ===================================
 
