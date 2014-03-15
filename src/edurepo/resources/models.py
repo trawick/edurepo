@@ -44,6 +44,15 @@ class ResourceSubmission(models.Model):
 
     verbs = {'c': 'created', 'v': 'voted on', 'f': 'flagged'}
 
+    def type_str(self):
+        if self.type == 'c':
+            return 'Created'
+        if self.type == 'v':
+            return 'Up-voted'
+        if self.type == 'f':
+            return 'Inappropriate'
+        return 'unknown-type'
+
     def clean(self):
         super(ResourceSubmission, self).clean()
         if self.type is 'v':

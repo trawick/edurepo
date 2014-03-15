@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comment on a resource</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+</head>
+<body>
+    <h1>Comment on a resource</h1>
+    <form action="{% url 'resources.views.comment_on_resource' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" name="submit" value="Submit">
+    </form>
+
+    <p class="ui-warning">Important note: Resources which are flagged as
+    inappropriate will be visible until they can be reviewed.</p>
+</body>
+</html>
