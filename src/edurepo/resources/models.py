@@ -24,7 +24,7 @@ class Resource(models.Model):
     when_added = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
-        return "Resource for %s: %s" % (self.objective.id, self.url)
+        return "Resource %d for %s: %s" % (self.id, self.objective.id, self.url)
 
     class Meta:
         unique_together = ('objective', 'url')
