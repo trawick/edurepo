@@ -60,6 +60,7 @@ def comment_on_resource(request):
                 if obj.type == 'v':
                     resource.votes = F('votes') + 1
                 else:
+                    assert obj.type == 'f'
                     resource.inappropriate_flags = F('inappropriate_flags') + 1
                 resource.save()
             return redirect('/resources')
