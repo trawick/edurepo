@@ -1,8 +1,8 @@
 Current stage (by March 15)
 ===========================
 
-* Implement resource upvoting/flagging
-* Display any ResourceSubmission comments with the resource
+* DONE Implement resource upvoting/flagging
+* TODO Display any ResourceSubmission comments with the resource
 
 Possible themes for upcoming stages
 ===================================
