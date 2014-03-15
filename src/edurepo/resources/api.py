@@ -1,6 +1,6 @@
 from tastypie import fields
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
-from resources.models import Resource, ResourceVerification
+from resources.models import Resource, ResourceSubmission, ResourceVerification
 from core.utils import CORSResource
 from repo.api import LearningObjectiveResource
 
@@ -35,3 +35,20 @@ class ResourceResource(CORSResource, ModelResource):
         list_allowed_methods = ['get']
         detail_allowed_methods = ['get']
 
+
+class ResourceSubmissionResource(CORSResource, ModelResource):
+
+    resource = fields.ForeignKey(ResourceResource, 'resource', full=False)
+
+    def dehydrate(self, bundle):
+        bundle.data['resource_id'] = bundle.obj.resource.id
+        return bundle
+
+    class Meta:
+        queryset = ResourceSubmission.objects.all().exclude(type='c')
+        resource_name = 'resourcesubmission'
+        filtering = {
+            'resource': ALL_WITH_RELATIONS,
+        }
+        list_allowed_methods = ['get']
+        detail_allowed_methods = ['get']
