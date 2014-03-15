@@ -105,6 +105,7 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
         $scope.course_baseurl = $scope.baseurl + 'repo/api/course/';
         $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
         $scope.res_baseurl = $scope.baseurl + 'resources/api/resource/';
+        $scope.comments_baseurl = $scope.baseurl + 'resources/api/resourcesubmission/';
         $scope.reference_baseurl = $scope.baseurl + 'repo/api/referencetext/';
         $scope.multiplechoice_baseurl = $scope.baseurl + 'repo/api/multiplechoiceitem/';
         $scope.res_create_form = $scope.baseurl + 'resources/create/';
@@ -113,6 +114,10 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
 
     function lookup_resources_url(obj) {
         return $scope.res_baseurl + '?objective__id=' + obj;
+    }
+
+    function lookup_comments_url(obj) {
+        return $scope.comments_baseurl + '?resource=' + obj;
     }
 
     $scope.submitResource = function(objective_id) {
@@ -162,6 +167,21 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
             }
         });
 
+        function annotate_resource(resource) {
+            return function(data) {
+                resource.upvotes = [];
+                resource.flags = [];
+                for (var i = 0; i < data.objects.length; i++) {
+                    if (data.objects[i].type == "f") {
+                        resource.flags.push(data.objects[i]);
+                    }
+                    else {
+                        resource.upvotes.push(data.objects[i]);
+                    }
+                }
+            }
+        }
+
         $http.get(lookup_resources_url($scope.objective_name)).success(function(data) {
             $scope.resources = data.objects;
             var is_secure = /^https:/.exec(window.location);
@@ -187,6 +207,7 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
                 else {
                     $scope.resources[i].warning = '';
                 }
+                $http.get(lookup_comments_url($scope.resources[i].id)).success(annotate_resource($scope.resources[i]));
             }
         });
     });
