@@ -113,7 +113,7 @@ ul.objective-list > li {
     border-radius: 2px;
     background-color: #3B653D;
     color: white;
-    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-family: "Comic Sans MS", "Marker Felt", sans-serif;
     font-size: 75%;
     padding: 2px;
 }
@@ -122,7 +122,7 @@ ul.objective-list > li {
     border-radius: 5px;
     background-color: #3B653D;
     color: white;
-    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-family: "Comic Sans MS", "Marker Felt", sans-serif;
     font-size: 120%;
     padding: 4px;
 }
