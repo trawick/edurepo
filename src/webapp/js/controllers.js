@@ -108,6 +108,7 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
         $scope.reference_baseurl = $scope.baseurl + 'repo/api/referencetext/';
         $scope.multiplechoice_baseurl = $scope.baseurl + 'repo/api/multiplechoiceitem/';
         $scope.res_create_form = $scope.baseurl + 'resources/create/';
+        $scope.res_comment_form = $scope.baseurl + 'resources/comment/';
     }
 
     function lookup_resources_url(obj) {
@@ -117,6 +118,10 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
     $scope.submitResource = function(objective_id) {
         window.location.replace($scope.res_create_form + '?objective=' + objective_id);
     };
+
+    $scope.commentOnResource = function(resource_id) {
+        window.location.replace($scope.res_comment_form + '?resource=' + resource_id);
+    }
 
     $scope.toTrusted = function(html) {
         return $sce.trustAsHtml(html);

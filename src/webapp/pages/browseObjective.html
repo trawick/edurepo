@@ -44,7 +44,11 @@
                     {{resource.votes}} votes
                 </div>
                 <div data-ng-show="resource.inappropriate_flags">
-                    Tagged as inappropriate {{resource.inappropriate_flags}} times
+                    Flagged as inappropriate {{resource.inappropriate_flags}} times
+                </div>
+                <div>
+                <input type="button" value="Up-vote or flag resource..."
+                       data-ng-click="commentOnResource(resource.id)">
                 </div>
             </li>
         </ul>
