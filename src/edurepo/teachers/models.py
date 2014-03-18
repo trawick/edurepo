@@ -1,12 +1,19 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Teacher(models.Model):
+    """ A teacher must be linked to a registered user.  The separate
+    e-mail field here is how the public gets access to this teacher's
+    classes, which may be a different e-mail address than is associated
+    with the teacher's login (e.g., google id).
+    """
     email = models.EmailField(primary_key=True, unique=True)
+    user = models.ForeignKey(User)
     name = models.CharField(max_length=100)
 
     def __unicode__(self):
-        return self.name + ' (' + self.email + ')'
+        return self.name + ' (public e-mail ' + self.email + ')'
 
 
 class TeacherClass(models.Model):
