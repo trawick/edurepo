@@ -1,11 +1,13 @@
-Current stage (by March ???)
+Current stage (by March 20)
 ===========================
 
-* ?
-* 
+* Teacher defines a class they are teaching
+
 Possible themes for upcoming stages
 ===================================
 
+* Teacher maintains the learning objective calendar for a class
+* Improve user interface for resource browsing and commenting
 * Course needs short form of description
 * Add Spanish version of "I Can" statements (from Sonya), with means of retrieval
 * New Django app: Interface for submitting materials for a LO (moves to repo after review/rework by approver)
