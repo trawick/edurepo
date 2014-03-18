@@ -9,6 +9,8 @@ class Teacher(models.Model):
     with the teacher's login (e.g., google id).
     """
     email = models.EmailField(primary_key=True, unique=True)
+    # Why doesn't user have to be unique?  Same teacher with different
+    # contact e-mails for different classes...
     user = models.ForeignKey(User)
     name = models.CharField(max_length=100)
 

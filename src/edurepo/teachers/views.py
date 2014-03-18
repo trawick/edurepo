@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from django.core.context_processors import csrf
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 from django.template import RequestContext
 from teachers.models import Teacher, TeacherClass, Entry
+from teachers.forms import TeacherForm
 
 
 def index(request):
@@ -24,3 +27,23 @@ def events(request, teacher_email, class_name):
                                        'teacher': teacher,
                                        'class_name': class_name})
     return render(request, 'teachers/entries.html', context)
+
+
+@login_required
+def register_teacher(request):
+    if request.POST:
+        form = TeacherForm(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.user = request.user
+            obj.save()
+            return redirect('/teachers')
+    else:
+        initial = {}
+        form = TeacherForm(initial=initial)
+
+    args = {}
+    args.update(csrf(request))
+
+    args['form'] = form
+    return render(request, 'teachers/register_teacher.html', args)
