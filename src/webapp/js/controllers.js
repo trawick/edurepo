@@ -121,11 +121,13 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
     }
 
     $scope.submitResource = function(objective_id) {
-        window.location.replace($scope.res_create_form + '?objective=' + objective_id);
+        window.open($scope.res_create_form + '?objective=' + objective_id,
+                    "Resource for " + objective_id);
     };
 
     $scope.commentOnResource = function(resource_id) {
-        window.location.replace($scope.res_comment_form + '?resource=' + resource_id);
+        window.open($scope.res_comment_form + '?resource=' + resource_id,
+                    "Comment on resource");
     }
 
     $scope.toTrusted = function(html) {
@@ -199,7 +201,7 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
                     $scope.resources[i].warning = 'This resource may not be accessible.';
                 }
                 else if ($scope.resources[i].inappropriate_flags != 0) {
-                    $scope.resources[i].warning = 'This resource may not be appropriate.';
+                    $scope.resources[i].warning = 'This resource has been flagged as inappropriate.';
                 }
                 else if ($scope.resources[i].content_type != 'text/html') {
                     $scope.resources[i].warning = 'This resource might not be viewable in your web browser.';
