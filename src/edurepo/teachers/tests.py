@@ -64,3 +64,18 @@ class BasicTests(LiveServerTestCase):
                           course_id=self.good_course, teacher=self.t1,
                           repo_provider=self.bad_provider)
         self.assertRaises(ValidationError, lambda: tc.full_clean())
+
+    @unittest.skipIf(not 'TEST_PROVIDER' in os.environ,
+                     "Test case can't work without TEST_PROVIDER pointing to API provider")
+    def test_duplicate_class(self):
+        name = '1st period math (TDC)'
+        teacher = self.t1
+        tc1 = TeacherClass(name=name, teacher=teacher,
+                           course_id=self.good_course,
+                           repo_provider=self.good_provider)
+        tc1.full_clean()
+        tc1.save()
+        tc2 = TeacherClass(name=name, teacher=teacher,
+                           course_id=self.good_course,
+                           repo_provider=self.good_provider)
+        self.assertRaises(ValidationError, lambda: tc2.full_clean())

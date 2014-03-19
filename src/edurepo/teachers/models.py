@@ -54,6 +54,7 @@ class TeacherClass(models.Model):
 
     class Meta:
         verbose_name_plural = "classes"
+        unique_together = ('name', 'teacher')
 
 
 class Entry(models.Model):
