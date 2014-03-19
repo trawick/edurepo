@@ -1,11 +1,15 @@
 Current stage (by March 20)
 ===========================
 
-* Teacher defines a class they are teaching
+* DONE Teacher defines a class they are teaching
+* TODO unit tests for new code
+* TODO set up on edjective.org
+* TODO save/restore code
 
 Possible themes for upcoming stages
 ===================================
 
+* Navigation for Django views/forms showing login status
 * Teacher maintains the learning objective calendar for a class
 * Improve user interface for resource browsing and commenting
 * Course needs short form of description
