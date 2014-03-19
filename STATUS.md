@@ -2,7 +2,7 @@ Current stage (by March 20)
 ===========================
 
 * DONE Teacher defines a class they are teaching
-* TODO unit tests for new code
+* DONE unit tests for new code
 * TODO set up on edjective.org
 * TODO save/restore code
 
@@ -20,6 +20,7 @@ Possible themes for upcoming stages
 Bugs of interest
 ================
 
+* teacher test for good repo URL/good class id is disabled as the repo is unreachable under test; research and fix
 * Minimize data transfer by link validator (e.g., grab just first 4-8K of document)
 * edjective.org issue parsing some resources: Upgrade Python or use external HTML parser or just wait until setting up dedicated server with newer Ubuntu release
 * websnapr or similar for more previews
