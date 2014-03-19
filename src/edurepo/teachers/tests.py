@@ -1,3 +1,6 @@
+import os
+import unittest
+
 from django.core.exceptions import ValidationError
 from django.test import LiveServerTestCase
 from django.contrib.auth.models import User
@@ -14,7 +17,12 @@ class BasicTests(LiveServerTestCase):
         self.t1 = Teacher(email=self.email1, name=self.name1, user=self.u1)
         self.t1.save()
 
-        self.good_provider = 'http://localhost:8081/'  # default
+        if 'TEST_PROVIDER' in os.environ:
+            self.good_provider = os.environ['TEST_PROVIDER']
+        else:
+            # This is the default server thread started by django test,
+            # but it only works for this app.
+            self.good_provider = 'http://localhost:8081/'  # default
         self.bad_provider = 'http://127.0.0.1:65535/'
 
         self.good_course = 'MG4'
@@ -33,7 +41,12 @@ class BasicTests(LiveServerTestCase):
         obj = Teacher.objects.get(email=email)
         self.assertEquals(obj.name, name2)
 
-    def DO_NOT_test_good_repo_and_course_id(self):
+    # This test case requires a working API provider, including
+    # the repo API.  That won't work when using the server thread
+    # started by django test.
+    @unittest.skipIf(not 'TEST_PROVIDER' in os.environ,
+                     "Test case can't work without TEST_PROVIDER pointing to API provider")
+    def test_good_repo_and_course_id(self):
         tc = TeacherClass(name='1st period math (TGRC)',
                           course_id=self.good_course, teacher=self.t1,
                           repo_provider=self.good_provider)
