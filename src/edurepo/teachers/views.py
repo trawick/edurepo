@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.template import RequestContext
 from teachers.models import Teacher, TeacherClass, Entry
-from teachers.forms import TeacherForm
+from teachers.forms import TeacherForm, TeacherClassForm
 
 
 def index(request):
@@ -47,3 +47,24 @@ def register_teacher(request):
 
     args['form'] = form
     return render(request, 'teachers/register_teacher.html', args)
+
+
+@login_required
+def add_class(request, teacher_email):
+    if request.POST:
+        form = TeacherClassForm(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            teacher = Teacher.objects.get(email=teacher_email)
+            obj.teacher = teacher
+            obj.save()
+            return redirect('/teachers')
+    else:
+        initial = {}
+        form = TeacherClassForm(initial=initial)
+
+    args = {'teacher_email': teacher_email}
+    args.update(csrf(request))
+
+    args['form'] = form
+    return render(request, 'teachers/add_class.html', args)
