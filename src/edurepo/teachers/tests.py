@@ -1,10 +1,11 @@
+import datetime
 import os
 import unittest
 
 from django.core.exceptions import ValidationError
 from django.test import LiveServerTestCase
 from django.contrib.auth.models import User
-from models import Teacher, TeacherClass
+from models import Entry, Teacher, TeacherClass
 
 
 class BasicTests(LiveServerTestCase):
@@ -79,3 +80,23 @@ class BasicTests(LiveServerTestCase):
                            course_id=self.good_course,
                            repo_provider=self.good_provider)
         self.assertRaises(ValidationError, lambda: tc2.full_clean())
+
+    @unittest.skipIf(not 'TEST_PROVIDER' in os.environ,
+                     "Test case can't work without TEST_PROVIDER pointing to API provider")
+    def test_duplicate_class_objective(self):
+        tc = TeacherClass(name='1st period math (TDCO)',
+                          course_id=self.good_course, teacher=self.t1,
+                          repo_provider=self.good_provider)
+        tc.full_clean()
+        tc.save()
+
+        same_class = tc
+        same_day = datetime.date.today()
+        same_objective = 'MG4-FACTMULT'
+        e1 = Entry(teacher=self.t1, teacher_class=same_class, date=same_day,
+                   objective=same_objective)
+        e1.full_clean()
+        e1.save()
+        e2 = Entry(teacher=self.t1, teacher_class=same_class, date=same_day,
+                   objective=same_objective)
+        self.assertRaises(ValidationError, lambda: e2.full_clean())

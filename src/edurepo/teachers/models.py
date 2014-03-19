@@ -69,3 +69,4 @@ class Entry(models.Model):
 
     class Meta:
         verbose_name_plural = "entries"
+        unique_together = ('teacher_class', 'date', 'objective')
