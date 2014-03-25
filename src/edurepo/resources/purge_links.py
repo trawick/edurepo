@@ -54,7 +54,11 @@ parser.add_option("-d", "--debug", dest="debug",
 (options, args) = parser.parse_args()
 
 # Identify resources for removal based on failed verification.
-purge_unreachable_resources(options.debug, now() - timedelta(days=7))
+#
+# The time delta needs to be in sync with validate_links, or
+# we'll identify resources for purge that haven't been tried
+# recently.
+purge_unreachable_resources(options.debug, now() - timedelta(days=14))
 
 # Identify resources for removal based on inappropriate flags.
 purge_inappropriate_resources(options.debug)

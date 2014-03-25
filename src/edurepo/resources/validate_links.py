@@ -131,5 +131,5 @@ parser.add_option("-d", "--debug", dest="debug",
 verify_all_resources(options.debug)
 
 # Re-verify as necessary
-max_success_age = timedelta(days=14)
+max_success_age = timedelta(days=12)
 re_verify(options.debug, now() - max_success_age)
