@@ -38,7 +38,7 @@ def register_teacher(request):
             obj = form.save(commit=False)
             obj.user = request.user
             obj.save()
-            return redirect('/teachers')
+            return redirect('../..')
     else:
         initial = {}
         form = TeacherForm(initial=initial)
@@ -51,12 +51,8 @@ def register_teacher(request):
 
 
 def request_to_provider(request):
-    if settings.MOUNTED_AT:
-        root = settings.MOUNTED_AT
-    else:
-        root = '/'
-    uri = request.build_absolute_uri(root)
-    return uri
+    root = settings.MOUNTED_AT + '/'
+    return request.build_absolute_uri(root)
 
 
 @login_required
@@ -68,7 +64,7 @@ def add_class(request, teacher_email):
             teacher = Teacher.objects.get(email=teacher_email)
             obj.teacher = teacher
             obj.save()
-            return redirect('/teachers')
+            return redirect('../..')
     else:
         initial = {'repo_provider': request_to_provider(request)}
         form = TeacherClassForm(initial=initial)
