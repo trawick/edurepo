@@ -1,10 +1,9 @@
-Current stage (by March 20)
+Current stage (by March 26)
 ===========================
 
 * DONE Teacher defines a class they are teaching
 * DONE unit tests for new code
 * TODO set up on edjective.org
-* TODO save/restore code
 
 Possible themes for upcoming stages
 ===================================
@@ -20,8 +19,8 @@ Possible themes for upcoming stages
 Bugs of interest
 ================
 
-* teacher test for good repo URL/good class id is disabled as the repo is unreachable under test; research and fix
 * Minimize data transfer by link validator (e.g., grab just first 4-8K of document)
+* Fix or hide noise from link validator cron job (e.g., invalid characters in some pages)
 * edjective.org issue parsing some resources: Upgrade Python or use external HTML parser or just wait until setting up dedicated server with newer Ubuntu release
 * websnapr or similar for more previews
 * command-line "reference" clients:
