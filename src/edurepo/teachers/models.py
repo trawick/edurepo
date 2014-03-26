@@ -25,7 +25,7 @@ class TeacherClass(models.Model):
     name = models.CharField(max_length=100)  # how this teacher refers to the class
     course_id = models.CharField(max_length=30)  # the short name of the standard class in the repo
     teacher = models.ForeignKey(Teacher)
-    # XXX let the next field default to how we are currently running?
+    # A default for this is provided in the add_class form
     repo_provider = models.CharField(max_length=250)
 
     def clean(self):

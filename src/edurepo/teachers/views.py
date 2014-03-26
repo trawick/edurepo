@@ -2,6 +2,7 @@ from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.template import RequestContext
+from edurepo import settings
 from teachers.models import Teacher, TeacherClass, Entry
 from teachers.forms import TeacherForm, TeacherClassForm
 
@@ -49,6 +50,14 @@ def register_teacher(request):
     return render(request, 'teachers/register_teacher.html', args)
 
 
+def request_to_provider(request):
+    if settings.MOUNTED_AT:
+        root = settings.MOUNTED_AT
+    else:
+        root = '/'
+    uri = request.build_absolute_uri(root)
+    return uri
+
 @login_required
 def add_class(request, teacher_email):
     if request.POST:
@@ -60,7 +69,7 @@ def add_class(request, teacher_email):
             obj.save()
             return redirect('/teachers')
     else:
-        initial = {}
+        initial = {'repo_provider': request_to_provider(request)}
         form = TeacherClassForm(initial=initial)
 
     args = {'teacher_email': teacher_email}
