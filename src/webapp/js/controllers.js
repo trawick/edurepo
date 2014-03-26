@@ -105,18 +105,30 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
         $scope.course_baseurl = $scope.baseurl + 'repo/api/course/';
         $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
         $scope.res_baseurl = $scope.baseurl + 'resources/api/resource/';
+        $scope.comments_baseurl = $scope.baseurl + 'resources/api/resourcesubmission/';
         $scope.reference_baseurl = $scope.baseurl + 'repo/api/referencetext/';
         $scope.multiplechoice_baseurl = $scope.baseurl + 'repo/api/multiplechoiceitem/';
         $scope.res_create_form = $scope.baseurl + 'resources/create/';
+        $scope.res_comment_form = $scope.baseurl + 'resources/comment/';
     }
 
     function lookup_resources_url(obj) {
         return $scope.res_baseurl + '?objective__id=' + obj;
     }
 
+    function lookup_comments_url(obj) {
+        return $scope.comments_baseurl + '?resource=' + obj;
+    }
+
     $scope.submitResource = function(objective_id) {
-        window.location.replace($scope.res_create_form + '?objective=' + objective_id);
+        window.open($scope.res_create_form + '?objective=' + objective_id,
+                    "Resource for " + objective_id);
     };
+
+    $scope.commentOnResource = function(resource_id) {
+        window.open($scope.res_comment_form + '?resource=' + resource_id,
+                    "Comment on resource");
+    }
 
     $scope.toTrusted = function(html) {
         return $sce.trustAsHtml(html);
@@ -157,6 +169,21 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
             }
         });
 
+        function annotate_resource(resource) {
+            return function(data) {
+                resource.upvotes = [];
+                resource.flags = [];
+                for (var i = 0; i < data.objects.length; i++) {
+                    if (data.objects[i].type == "f") {
+                        resource.flags.push(data.objects[i]);
+                    }
+                    else {
+                        resource.upvotes.push(data.objects[i]);
+                    }
+                }
+            }
+        }
+
         $http.get(lookup_resources_url($scope.objective_name)).success(function(data) {
             $scope.resources = data.objects;
             var is_secure = /^https:/.exec(window.location);
@@ -174,14 +201,15 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
                     $scope.resources[i].warning = 'This resource may not be accessible.';
                 }
                 else if ($scope.resources[i].inappropriate_flags != 0) {
-                    $scope.resources[i].warning = 'This resource may not be appropriate.';
+                    $scope.resources[i].warning = 'This resource has been flagged as inappropriate.';
                 }
                 else if ($scope.resources[i].content_type != 'text/html') {
-                    $scope.resources[i].warning = 'This resource might not be viewable in the browser.';
+                    $scope.resources[i].warning = 'This resource might not be viewable in your web browser.';
                 }
                 else {
                     $scope.resources[i].warning = '';
                 }
+                $http.get(lookup_comments_url($scope.resources[i].id)).success(annotate_resource($scope.resources[i]));
             }
         });
     });

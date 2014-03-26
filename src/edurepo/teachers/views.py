@@ -1,6 +1,10 @@
-from django.shortcuts import render
+from django.core.context_processors import csrf
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 from django.template import RequestContext
+from edurepo import settings
 from teachers.models import Teacher, TeacherClass, Entry
+from teachers.forms import TeacherForm, TeacherClassForm
 
 
 def index(request):
@@ -24,3 +28,53 @@ def events(request, teacher_email, class_name):
                                        'teacher': teacher,
                                        'class_name': class_name})
     return render(request, 'teachers/entries.html', context)
+
+
+@login_required
+def register_teacher(request):
+    if request.POST:
+        form = TeacherForm(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.user = request.user
+            obj.save()
+            return redirect('/teachers')
+    else:
+        initial = {}
+        form = TeacherForm(initial=initial)
+
+    args = {}
+    args.update(csrf(request))
+
+    args['form'] = form
+    return render(request, 'teachers/register_teacher.html', args)
+
+
+def request_to_provider(request):
+    if settings.MOUNTED_AT:
+        root = settings.MOUNTED_AT
+    else:
+        root = '/'
+    uri = request.build_absolute_uri(root)
+    return uri
+
+
+@login_required
+def add_class(request, teacher_email):
+    if request.POST:
+        form = TeacherClassForm(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            teacher = Teacher.objects.get(email=teacher_email)
+            obj.teacher = teacher
+            obj.save()
+            return redirect('/teachers')
+    else:
+        initial = {'repo_provider': request_to_provider(request)}
+        form = TeacherClassForm(initial=initial)
+
+    args = {'teacher_email': teacher_email}
+    args.update(csrf(request))
+
+    args['form'] = form
+    return render(request, 'teachers/add_class.html', args)

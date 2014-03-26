@@ -11,6 +11,8 @@ urlpatterns = patterns('',
                        (r'^api/', include(entry_resource.urls)),
                        (r'^api/', include(teacher_class_resource.urls)),
                        (r'^api/', include(teacher_resource.urls)),
+                       url(r'^register/$', 'teachers.views.register_teacher'),
                        url(r'^(?P<teacher_email>[^/]+)/$', views.detail, name='detail'),
+                       url(r'^(?P<teacher_email>[^/]+)/add$', 'teachers.views.add_class'),
                        url(r'^(?P<teacher_email>[^/]+)/(?P<class_name>[^/]+)/$', views.events, name='events'),
                        )

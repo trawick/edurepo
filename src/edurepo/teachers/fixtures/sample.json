@@ -1,10 +1,1 @@
-[
- {"pk": "trawick@gmail.com", "model": "teachers.teacher", "fields": {"name": "Mr. Trawick"}
- },
- {"pk": 1, "model": "teachers.teacherclass",
-  "fields": {"course_id": "MG4", "repo_provider": "http://127.0.0.1:8000/", "name": "3rd period math", "teacher": "trawick@gmail.com"}
- },
- {"pk": 1, "model": "teachers.entry",
-  "fields": {"date": "2014-02-23", "objective": "MG4-FACTMULT", "teacher_class": 1, "teacher": "trawick@gmail.com"}
- }
-]
+[{"pk": "trawick@gmail.com", "model": "teachers.teacher", "fields": {"user": 1, "name": "Mr. Trawick"}}, {"pk": 1, "model": "teachers.teacherclass", "fields": {"course_id": "MG4", "repo_provider": "http://127.0.0.1:8000/", "name": "3rd period math", "teacher": "trawick@gmail.com"}}, {"pk": 1, "model": "teachers.entry", "fields": {"date": "2014-03-18", "objective": "MG4-FACTMULT", "teacher_class": 1, "teacher": "trawick@gmail.com", "comments": ""}}]

@@ -21,7 +21,7 @@
     <p>Comments on this resource:</p>
     <ul>
         {% for comment in comments %}
-            <li>{{ comment.comment }} ({{ comment.when|date:"F j, Y" }})</li>
+            <li>{{ comment.type_str }}: {{ comment.comment }} ({{ comment.when|date:"F j, Y" }})</li>
         {% endfor %}
     </ul>
     {% endif %}

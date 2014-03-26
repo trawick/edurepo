@@ -24,7 +24,7 @@ class Resource(models.Model):
     when_added = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
-        return "Resource for %s: %s" % (self.objective.id, self.url)
+        return "Resource %d for %s: %s" % (self.id, self.objective.id, self.url)
 
     class Meta:
         unique_together = ('objective', 'url')
@@ -43,6 +43,15 @@ class ResourceSubmission(models.Model):
     when = models.DateTimeField(auto_now_add=True)
 
     verbs = {'c': 'created', 'v': 'voted on', 'f': 'flagged'}
+
+    def type_str(self):
+        if self.type == 'c':
+            return 'Created'
+        if self.type == 'v':
+            return 'Up-voted'
+        if self.type == 'f':
+            return 'Inappropriate'
+        return 'unknown-type'
 
     def clean(self):
         super(ResourceSubmission, self).clean()

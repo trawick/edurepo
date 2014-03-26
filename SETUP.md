@@ -211,3 +211,17 @@ python repo/import.py ../../samples/ import
 python manage.py loaddata teachers/fixtures/sample.json
 python manage.py loaddata resources/fixtures/sample.json
 ```
+
+Fixing the admin password
+=========================
+
+```
+./manage.py changepassword <admin-user-id>
+```
+
+Dumping current data
+====================
+
+```
+./manage.py dumpdata --indent=4 > ~/edurepo-2014-MM-DD.json
+```
