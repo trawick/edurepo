@@ -1,17 +1,7 @@
-{% load bootstrap3 %}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ resource.objective }} resource</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-</head>
-<body>
-    <h1>External resource for {{ resource.objective }}</h1>
+{% extends "base.html" %}
+{% block title %}{{ resource.objective }} resource{% endblock %}
+{% block content %}
+    <h1>Web resource for {{ resource.objective }}</h1>
 
     <table border="1">
         <tr><td><a href="{{ resource.url }}">{{ resource.url }}</a></td></tr>
@@ -36,5 +26,4 @@
         <p>Important: These pages are <q>reference views</q> for verifying data in the
         system; they are not intended for end users.</p>
     </div>
-</body>
-</html>
+{% endblock %}

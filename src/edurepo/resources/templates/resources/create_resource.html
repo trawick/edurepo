@@ -1,16 +1,7 @@
+{% extends "base.html" %}
 {% load bootstrap3 %}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Submit a resource</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-</head>
-<body>
+{% block title %}Submit a resource{% endblock %}
+{% block content %}
     <h1>Submit a resource</h1>
     <form action="{% url 'resources.views.create_resource' %}" method="post">
         {% csrf_token %}
@@ -25,5 +16,4 @@
     <p class="ui-warning">Important note: Resources are subject to removal
     later if they are unreachable for a period of time or are judged to be
     inappropriate.</p>
-</body>
-</html>
+{% endblock %}

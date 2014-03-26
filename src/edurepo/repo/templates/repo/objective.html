@@ -1,17 +1,7 @@
-{% load bootstrap3 %}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Objective {{ objective_id }}</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-</head>
-<body>
-    <h1>Course {{ course_id }}, objective {{ objective_id }}</h1>
+{% extends "base.html" %}
+{% block title %}Objective {{ objective_id }}{% endblock %}
+{% block content %}
+<h1>Course {{ course_id }}, objective {{ objective_id }}</h1>
 
     <p>{{ objective.description }}</p>
 
@@ -87,5 +77,4 @@
         <p>Important: These pages are <q>reference views</q> for verifying data in the
         system; they are not intended for end users.</p>
     </div>
-</body>
-</html>
+{% endblock %}

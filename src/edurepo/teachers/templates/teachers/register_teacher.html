@@ -1,16 +1,7 @@
+{% extends "base.html" %}
 {% load bootstrap3 %}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Register as a teacher</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-</head>
-<body>
+{% block title %}Register as a teacher{% endblock %}
+{% block content %}
     <h1>Register as a teacher</h1>
     <form action="{% url 'teachers.views.register_teacher' %}" method="post">
         {% csrf_token %}
@@ -21,5 +12,4 @@
             </button>
         {% endbuttons %}
     </form>
-</body>
-</html>
+{% endblock %}
