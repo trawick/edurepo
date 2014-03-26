@@ -211,3 +211,10 @@ python repo/import.py ../../samples/ import
 python manage.py loaddata teachers/fixtures/sample.json
 python manage.py loaddata resources/fixtures/sample.json
 ```
+
+Fixing the admin password
+=========================
+
+```
+./manage.py changepassword <admin-user-id>
+```
