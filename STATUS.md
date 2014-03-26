@@ -6,7 +6,6 @@ Current stage (by March ??)
 Possible themes for upcoming stages
 ===================================
 
-* Navigation for Django views/forms showing login status
 * Teacher maintains the learning objective calendar for a class
 * Improve user interface for resource browsing and commenting
 * Course needs short form of description
