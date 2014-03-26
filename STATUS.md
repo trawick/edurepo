@@ -1,9 +1,7 @@
-Current stage (by March 26)
+Current stage (by March ??)
 ===========================
 
-* DONE Teacher defines a class they are teaching
-* DONE unit tests for new code
-* TODO set up on edjective.org
+* ??
 
 Possible themes for upcoming stages
 ===================================
