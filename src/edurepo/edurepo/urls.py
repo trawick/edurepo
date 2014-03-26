@@ -13,7 +13,7 @@ urlpatterns = patterns('',
     url(r'^teachers/', include('teachers.urls')),
     url(r'^resources/', include('resources.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^logout/', repo_views.logout),
+    url(r'^logout/', repo_views.logout, name='logout'),
     url('', include('social.apps.django_app.urls', namespace='social')),
-    url(r'^$',TemplateView.as_view(template_name='index.html'), name='index')
+    url(r'^$', TemplateView.as_view(template_name='index.html'), name='top.index')
 )

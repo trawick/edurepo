@@ -7,7 +7,7 @@ entry_resource = EntryResource()
 teacher_class_resource = TeacherClassResource()
 
 urlpatterns = patterns('',
-                       url(r'^$', views.index, name='teachers/index'),
+                       url(r'^$', views.index, name='teachers.index'),
                        (r'^api/', include(entry_resource.urls)),
                        (r'^api/', include(teacher_class_resource.urls)),
                        (r'^api/', include(teacher_resource.urls)),

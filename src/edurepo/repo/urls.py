@@ -13,7 +13,7 @@ reference_text_resource = ReferenceTextResource()
 true_false_item_resource = TrueFalseItemResource()
 
 urlpatterns = patterns('',
-                       url(r'^$', views.index, name='index'),
+                       url(r'^$', views.index, name='repo.index'),
                        (r'^api/', include(course_resource.urls)),
                        (r'^api/', include(course_category_resource.urls)),
                        (r'^api/', include(glossary_item_resource.urls)),

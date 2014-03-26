@@ -11,6 +11,24 @@
     {% bootstrap_javascript %}
 </head>
 <body>
+    {% url 'index' as root_url %}
+    <div class="container">
+        <div class="navbar navbar-default" data-role="navigation">
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'top.index' %}">Home</a></li>
+                <li><a href="{% url 'repo.index' %}">Course and objective definitions</a></li>
+                <li><a href="{% url 'resources.index' %}">Web resources</a></li>
+                <li><a href="{% url 'teachers.index' %}">Teachers and classes</a></li>
+                {% if not user.is_authenticated %}
+                <li><a href="{% url 'social:begin' 'google' %}?next={% url 'top.index' %}">Login with a Google account</a></li>
+                {% endif %}
+                {% if user %}
+                {% for assoc in backends.associated %}
+                <li><a href="{% url 'logout' %}?next={% url 'top.index' %}">Logout <strong>{{ user.username}}</strong> via <strong>{{ assoc.provider }}</strong></a></li>
+                {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
 {% if course_list %}
     <h1>List of courses</h1>
     <table border="1">
@@ -26,6 +44,7 @@
     <div class="ui-warning">
         <p>Important: These pages are <q>reference views</q> for verifying data in the
         system; they are not intended for end users.</p>
+    </div>
     </div>
 </body>
 </html>
