@@ -218,3 +218,10 @@ Fixing the admin password
 ```
 ./manage.py changepassword <admin-user-id>
 ```
+
+Dumping current data
+====================
+
+```
+./manage.py dumpdata --indent=4 > ~/edurepo-2014-MM-DD.json
+```
