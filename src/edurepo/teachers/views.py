@@ -58,6 +58,7 @@ def request_to_provider(request):
     uri = request.build_absolute_uri(root)
     return uri
 
+
 @login_required
 def add_class(request, teacher_email):
     if request.POST:
