@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.template import RequestContext
 from django.contrib.auth import logout as auth_logout
+from edurepo import settings
 from repo.models import Course, ICan, LearningObjective, MultipleChoiceItem, GlossaryItem, ReferenceText, TrueFalseItem
 
 
@@ -43,5 +44,4 @@ def logout(request):
     auth_logout(request)
     if 'next' in request.GET:
         return redirect(request.GET['next'])
-    # XXX This is probably wrong (this app mounted on "/"???)
-    return redirect('/')
+    return redirect(settings.MOUNTED_AT + '/')
