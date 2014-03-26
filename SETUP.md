@@ -112,12 +112,12 @@ ServerName edjective.org
 DocumentRoot /home/trawick/git/edurepo/src/webapp/
 
 <Directory />
+    Options FollowSymlinks
     Require all denied
     AllowOverride None
 </Directory>
 
 <Directory /home/trawick/git/edurepo/src/webapp/>
-    Options Indexes FollowSymlinks
     AllowOverride None
     Require all granted
 </Directory>
