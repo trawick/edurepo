@@ -1,13 +1,17 @@
 {% extends "base.html" %}
 {% block title %}Objective {{ objective_id }}{% endblock %}
 {% block content %}
-<h1>Course {{ course_id }}, objective {{ objective_id }}</h1>
+    <div class="jumbotron">
+        <h1>{{ course_id }}</h1>
+        <h2>Objective {{ objective_id }}</h2>
+        <p>{{ objective.description }}</p>
+    </div>
 
-    <p>{{ objective.description }}</p>
-
-    {% if reference_text %}
     <h2>Reference text</h2>
+    {% if reference_text %}
     <p>{{ reference_text.text }}</p>
+    {% else %}
+    <p>No reference text is available.</p>
     {% endif %}
 
     <h2>I Can statements</h2>

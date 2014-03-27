@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% block title %}Objective listing for course {{ course_id }}{% endblock %}
 {% block content %}
-{% if objective_list %}
+    <div class="jumbotron">
     <h1>Course {{ course_id }}</h1>
     <p>{{ course.description }}</p>
+    </div>
+{% if objective_list %}
     <h2>List of objectives</h2>
     <table class="table table-striped">
         <tr><th>Objective id</th><th>Objective description</th><th>Language</th></tr>
@@ -12,7 +14,7 @@
 {% endfor %}
     </table>
 {% else %}
-    <p>No objectives are defined for course {{ course_id }}!</p>
+    <h2>No objectives are defined for course {{ course_id }}!</h2>
 {% endif %}
 
     <div class="text-warning">
