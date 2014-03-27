@@ -6,6 +6,7 @@ Current stage (by March 31)
 Possible themes for upcoming stages
 ===================================
 
+* Bootstrap-ify Angular app
 * Get social login working for Angular app
 * Improve user interface for resource browsing and commenting
 * Course needs short form of description
