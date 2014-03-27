@@ -74,3 +74,12 @@ def add_class(request, teacher_email):
 
     args['form'] = form
     return render(request, 'teachers/add_class.html', args)
+
+
+@login_required
+def dashboard(request, teacher_email):
+    teacher_class_list = TeacherClass.objects.filter(teacher=teacher_email)
+    teacher = Teacher.objects.get(email=teacher_email)
+    context = RequestContext(request, {'teacher_class_list': teacher_class_list,
+                                       'teacher': teacher})
+    return render(request, 'teachers/dashboard.html', context)
