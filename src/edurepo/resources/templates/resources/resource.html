@@ -15,9 +15,15 @@
 
     {% if comments %}
     <p>Comments on this resource:</p>
-    <ul>
         {% for comment in comments %}
-            <li>{{ comment.type_str }}: {{ comment.comment }} ({{ comment.when|date:"F j, Y" }})</li>
+            <blockquote>
+            {% if comment.type == 'v' %}
+            <p class="bg-success">{{ comment.comment }}</p>
+            {% else %}
+            <p class="bg-danger">{{ comment.comment }}</p>
+            {% endif %}
+            <small>{{ comment.when|date:"F j, Y" }}</small>
+            </blockquote>
         {% endfor %}
     </ul>
     {% endif %}
