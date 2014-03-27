@@ -1,12 +1,12 @@
-Current stage (by March ??)
+Current stage (by March 31)
 ===========================
 
-* ??
+* Teacher maintains the learning objective calendar for a class (not part of Angular app at this stage)
 
 Possible themes for upcoming stages
 ===================================
 
-* Teacher maintains the learning objective calendar for a class
+* Get social login working for Angular app
 * Improve user interface for resource browsing and commenting
 * Course needs short form of description
 * Add Spanish version of "I Can" statements (from Sonya), with means of retrieval
@@ -16,6 +16,7 @@ Possible themes for upcoming stages
 Bugs of interest
 ================
 
+* Improve formatting of resource view
 * Minimize data transfer by link validator (e.g., grab just first 4-8K of document)
 * Fix or hide noise from link validator cron job (e.g., invalid characters in some pages)
 * edjective.org issue parsing some resources: Upgrade Python or use external HTML parser or just wait until setting up dedicated server with newer Ubuntu release
