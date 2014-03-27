@@ -5,7 +5,7 @@
     <h1>Course {{ course_id }}</h1>
     <p>{{ course.description }}</p>
     <h2>List of objectives</h2>
-    <table border="1">
+    <table class="table table-striped">
         <tr><th>Objective id</th><th>Objective description</th><th>Language</th></tr>
 {% for lo in objective_list %}
         <tr><td><a href="{{ lo.id }}/">{{ lo.id }}</a></td><td>{{ lo.description }}</td><td>{{ lo.language }}</td></tr>
@@ -15,7 +15,7 @@
     <p>No objectives are defined for course {{ course_id }}!</p>
 {% endif %}
 
-    <div class="ui-warning">
+    <div class="text-warning">
         <p>Important: These pages are <q>reference views</q> for verifying data in the
         system; they are not intended for end users.</p>
     </div>

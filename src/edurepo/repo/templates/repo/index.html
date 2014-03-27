@@ -3,7 +3,7 @@
 {% block content %}
     {% if course_list %}
         <h1>List of courses</h1>
-        <table border="1">
+        <table class="table table-striped">
             <tr><th>Category</th><th>Course id</th><th>Course description</th><th>Language</th></tr>
     {% for c in course_list %}
             <tr><td>{{ c.cat.id }}</td><td><a href="{{ c.id }}/">{{ c.id }}</a></td><td>{{ c.description }}</td><td>{{ c.language }}</td></tr>
@@ -13,7 +13,7 @@
         <p>No courses are defined!</p>
     {% endif %}
 
-    <div class="ui-warning">
+    <div class="text-warning">
         <p>Important: These pages are <q>reference views</q> for verifying data in the
         system; they are not intended for end users.</p>
     </div>
