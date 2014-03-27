@@ -22,9 +22,13 @@
                     <li><a href="{% url 'social:begin' 'google' %}?next={% url 'top.index' %}">Login with a Google account</a></li>
                     {% endif %}
                     {% if user %}
+                    {% if backends.associated %}
                     {% for assoc in backends.associated %}
                     <li><a href="{% url 'logout' %}?next={% url 'top.index' %}">Logout <strong>{{ user.username}}</strong> via <strong>{{ assoc.provider }}</strong></a></li>
                     {% endfor %}
+                    {% else %}
+                    <li><a href="{% url 'logout' %}?next={% url 'top.index' %}">Logout <strong>{{ user.username}}</strong></a></li>
+                    {% endif %}
                     {% endif %}
                 </ul>
             </div>
