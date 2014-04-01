@@ -14,6 +14,6 @@ urlpatterns = patterns('',
                        url(r'^register/$', 'teachers.views.register_teacher'),
                        url(r'^(?P<teacher_email>[^/]+)/$', views.detail, name='detail'),
                        url(r'^(?P<teacher_email>[^/]+)/add$', 'teachers.views.add_class'),
-                       url(r'^(?P<teacher_email>[^/]+)/dashboard$', views.dashboard, name='teachers.dashboard'),
+                       url(r'^(?P<teacher_email>[^/]+)/dashboard$', views.dashboard, name='teachers.views.dashboard'),
                        url(r'^(?P<teacher_email>[^/]+)/(?P<class_name>[^/]+)/$', views.events, name='events'),
                        )
