@@ -11,7 +11,7 @@ from teachers.forms import TeacherForm, TeacherClassForm
 def get_dashboard_emails(request):
     """does request.user refer to a teacher with a dashboard?
     return link if so"""
-    if not request.user:
+    if not request.user or not request.user.is_authenticated():
         return None
     user = User.objects.get(username=request.user)
     try:
