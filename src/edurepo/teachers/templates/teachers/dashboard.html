@@ -18,60 +18,73 @@
     </div>
     </div>
 
+    {% if not teacher_class_list %}
+        <div class="col">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="well">
+                    <h5>No classes are defined.</h5>
+                </div>
+            </div>
+        </div>
+        </div>
+    {% endif %}
+    {% if teacher_class_list %}
     <div class="col">
         <div class="col-md-8">
             <div class="row">
                 <div class="well">
-                    <p>Monday</p>
+                    <p>Monday, {{ teacher_class_list.0.dates.M }}</p>
                     <ul>
-                        <li>x</li>
-                        <li>y</li>
-                        <li>z</li>
+                        {% for obj in teacher_class_list.0.days.M %}
+                        <li>{{ obj }}</li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
             <div class="row">
                 <div class="well">
-                    <p>Tuesday</p>
+                    <p>Tuesday, {{ teacher_class_list.0.dates.T }}</p>
                     <ul>
-                        <li>a</li>
-                        <li>b</li>
-                        <li>c</li>
+                        {% for obj in teacher_class_list.0.days.T %}
+                        <li>{{ obj }}</li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
             <div class="row">
                 <div class="well">
-                    <p>Wednesday</p>
+                    <p>Wednesday, {{ teacher_class_list.0.dates.W }}</p>
                     <ul>
-                        <li>a</li>
-                        <li>b</li>
-                        <li>c</li>
+                        {% for obj in teacher_class_list.0.days.W %}
+                        <li>{{ obj }}</li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
             <div class="row">
                 <div class="well">
-                    <p>Thursday</p>
+                    <p>Thursday, {{ teacher_class_list.0.dates.R }}</p>
                     <ul>
-                        <li>a</li>
-                        <li>b</li>
-                        <li>c</li>
+                        {% for obj in teacher_class_list.0.days.R %}
+                        <li>{{ obj }}</li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
             <div class="row">
                 <div class="well">
-                    <p>Friday</p>
+                    <p>Friday, {{ teacher_class_list.0.dates.F }}</p>
                     <ul>
-                        <li>a</li>
-                        <li>b</li>
-                        <li>c</li>
+                        {% for obj in teacher_class_list.0.days.F %}
+                        <li>{{ obj }}</li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
         </div>
     </div>
+    {% endif %}
 
     <script type="text/javascript">
         window.onload = function() {

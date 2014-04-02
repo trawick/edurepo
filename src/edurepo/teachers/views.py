@@ -1,3 +1,4 @@
+import datetime
 from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -97,6 +98,15 @@ def add_class(request, teacher_email):
 def dashboard(request, teacher_email):
     teacher_class_list = TeacherClass.objects.filter(teacher=teacher_email)
     teacher = Teacher.objects.get(email=teacher_email)
+    today = datetime.date.today()
+    for c in teacher_class_list:
+        c.days = dict()
+        c.dates = dict()
+        cur_day = today - datetime.timedelta(days=today.weekday())
+        for day in 'M', 'T', 'W', 'R', 'F':
+            c.dates[day] = cur_day
+            c.days[day] = Entry.objects.filter(teacher=teacher).filter(date=cur_day)
+            cur_day += datetime.timedelta(days=1)
     context = RequestContext(request, {'teacher_class_list': teacher_class_list,
                                        'teacher': teacher,
                                        'dashboard_emails': get_dashboard_emails(request)})
