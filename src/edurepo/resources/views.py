@@ -54,15 +54,18 @@ def create_resource(request):
 
 
 @login_required
-def comment_on_resource(request):
+def comment_on_resource(request, resource_id):
     if request.POST:
         form = ResourceSubmissionForm(request.POST)
         if form.is_valid():
             with transaction.atomic():
                 obj = form.save(commit=False)
+                # The user could have changed the resource in the form.
+                # Pick up the selected value.
+                resource_id = form.cleaned_data['resource'].id
                 obj.user = request.user
                 obj.save()
-                resource = Resource.objects.get(id=request.POST['resource'])
+                resource = Resource.objects.get(id=resource_id)
                 if obj.type == 'v':
                     resource.votes = F('votes') + 1
                 else:
@@ -71,14 +74,12 @@ def comment_on_resource(request):
                 resource.save()
             return redirect('/resources')
     else:
-        if request.GET and 'resource' in request.GET:
-            initial = {'resource': request.GET['resource']}
-        else:
-            initial = {}
+        initial = {'resource': resource_id}
         form = ResourceSubmissionForm(initial=initial)
 
     args = {}
     args.update(csrf(request))
 
     args['form'] = form
+    args['resource_id'] = resource_id
     return render(request, 'resources/comment.html', args)

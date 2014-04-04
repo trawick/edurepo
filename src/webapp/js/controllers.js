@@ -109,7 +109,8 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
         $scope.reference_baseurl = $scope.baseurl + 'repo/api/referencetext/';
         $scope.multiplechoice_baseurl = $scope.baseurl + 'repo/api/multiplechoiceitem/';
         $scope.res_create_form = $scope.baseurl + 'resources/create/';
-        $scope.res_comment_form = $scope.baseurl + 'resources/comment/';
+        // No, JavaScript doesn't have string formatting:
+        $scope.res_comment_form_fmt = $scope.baseurl + 'resources/%s/comment/';
     }
 
     function lookup_resources_url(obj) {
@@ -126,8 +127,8 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
     };
 
     $scope.commentOnResource = function(resource_id) {
-        window.open($scope.res_comment_form + '?resource=' + resource_id,
-                    "Comment on resource");
+        var new_location = $scope.res_comment_form_fmt.replace('%s', resource_id);
+        window.open(new_location, "Comment on resource");
     }
 
     $scope.toTrusted = function(html) {
