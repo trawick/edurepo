@@ -7,75 +7,93 @@
         <p>{{ objective.description }}</p>
     </div>
 
-    <h2>Reference text</h2>
-    {% if reference_text %}
-    <p>{{ reference_text.text }}</p>
-    {% else %}
-    <p>No reference text is available.</p>
-    {% endif %}
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3 class="panel-title">Reference text</h3></div>
+        <div class="panel-body">
+        {% if reference_text %}
+            <p>{{ reference_text.text }}</p>
+        {% else %}
+            <p><em>No reference text is available.</em></p>
+        {% endif %}
+        </div>
+    </div>
 
-    <h2>I Can statements</h2>
-    {% if ican_items %}
-    <ul>
-    {% for ican in ican_items %}
-        <li>{{ ican.statement }}</li>
-    {% endfor %}
-    </ul>
-    {% else %}
-    <p>No I Can statements are available.</p>
-    {% endif %}
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3 class="panel-title"><q>I Can</q> statements</h3></div>
+        <div class="panel-body">
+        {% if ican_items %}
+        <ul>
+        {% for ican in ican_items %}
+            <li>{{ ican.statement }}</li>
+        {% endfor %}
+        </ul>
+        {% else %}
+        <p><em>No <q>I Can</q> statements are available.</em></p>
+        {% endif %}
+        </div>
+    </div>
 
-    <h2>Glossary items</h2>
-    {% if glossary_items %}
-    <dl>
-    {% for gi in glossary_items %}
-        <dt>{{ gi.term }}</dt>
-        <dd>{{ gi.definition }}</dd>
-    {% endfor %}
-    </dl>
-    {% else %}
-    <p>No glossary items are available.</p>
-    {% endif %}
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3 class="panel-title">Glossary items</h3></div>
+        <div class="panel-body">
+            {% if glossary_items %}
+            <dl>
+            {% for gi in glossary_items %}
+                <dt>{{ gi.term }}</dt>
+                <dd>{{ gi.definition }}</dd>
+            {% endfor %}
+            </dl>
+            {% else %}
+            <p><em>No glossary items are available.</em></p>
+            {% endif %}
+        </div>
+    </div>
 
-    <h2>True/False questions</h2>
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3 class="panel-title">True/False questions</h3></div>
+        <div class="panel-body">
+            {% if tf_items %}
+            <dl>
+            {% for tfi in tf_items %}
+                <dt>{{ tfi.statement }}</dt>
+                <dd>{{ tfi.answer }}</dd>
+            {% endfor %}
+            </dl>
+            {% else %}
+            <p><em>No true/false questions are available.</em></p>
+            {% endif %}
+        </div>
+    </div>
 
-    {% if tf_items %}
-    <dl>
-    {% for tfi in tf_items %}
-        <dt>{{ tfi.statement }}</dt>
-        <dd>{{ tfi.answer }}</dd>
-    {% endfor %}
-    </dl>
-    {% else %}
-    <p>No true/false questions are available.</p>
-    {% endif %}
-
-    <h2>Multiple choice questions</h2>
-
-    {% if multiple_choice_items %}
-    <ul>
-    {% for mci in multiple_choice_items %}
-        <li>{{ mci.question }}
-            <ol>
-                <li>{{ mci.choice1 }}</li>
-                <li>{{ mci.choice2 }}</li>
-                {% if mci.choice3 %}
-                <li>{{ mci.choice3 }}</li>
-                {% endif %}
-                {% if mci.choice4 %}
-                <li>{{ mci.choice4 }}</li>
-                {% endif %}
-                {% if mci.choice5 %}
-                <li>{{ mci.choice5 }}</li>
-                {% endif %}
-            </ol>
-            <p>Answer: #{{ mci.ans }}, Question type: {{ mci.type }}</p>
-        </li>
-    {% endfor %}
-    </ul>
-    {% else %}
-    <p>No true/false questions are available.</p>
-    {% endif %}
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3 class="panel-title">Multiple choice questions</h3></div>
+        <div class="panel-body">
+            {% if multiple_choice_items %}
+            <ul>
+            {% for mci in multiple_choice_items %}
+                <li>{{ mci.question }}
+                    <ol>
+                        <li>{{ mci.choice1 }}</li>
+                        <li>{{ mci.choice2 }}</li>
+                        {% if mci.choice3 %}
+                        <li>{{ mci.choice3 }}</li>
+                        {% endif %}
+                        {% if mci.choice4 %}
+                        <li>{{ mci.choice4 }}</li>
+                        {% endif %}
+                        {% if mci.choice5 %}
+                        <li>{{ mci.choice5 }}</li>
+                        {% endif %}
+                    </ol>
+                    <p>Answer: #{{ mci.ans }}, Question type: {{ mci.type }}</p>
+                </li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            <p><em>No true/false questions are available.</em></p>
+            {% endif %}
+        </div>
+    </div>
 
     <div class="text-warning">
         <p>Important: These pages are <q>reference views</q> for verifying data in the
