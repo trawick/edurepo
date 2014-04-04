@@ -5,7 +5,7 @@
     {% if resource_list %}
     <ul>
         {% for r in resource_list %}
-        <li><a href="{{ r.id }}/">{{ r.url }}</a> ({{ r.objective }})</li>
+        <li><a href="{{ r.id }}/">{{ r.url }}</a><br />{{ r.objective }}</li>
         {% endfor %}
     </ul>
     {% else %}

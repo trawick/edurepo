@@ -4,7 +4,7 @@ from django.db.models import F
 from django.shortcuts import render, redirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-from resources.models import Resource, ResourceSubmission
+from resources.models import Resource, ResourceSubmission, ResourceVerification
 from resources.forms import ResourceForm, ResourceSubmissionForm
 
 
@@ -16,8 +16,14 @@ def index(request):
 
 def detail(request, resource_id):
     resource = Resource.objects.get(id=resource_id)
+    try:
+        rv = ResourceVerification.objects.get(url=resource.url)
+    except ResourceVerification.DoesNotExist:
+        rv = None
     comments = ResourceSubmission.objects.filter(resource=resource).exclude(comment='')
-    context = RequestContext(request, {'resource': resource, 'comments': comments})
+    context = RequestContext(request, {'resource': resource,
+                                       'comments': comments,
+                                       'verification': rv})
     return render(request, 'resources/resource.html', context)
 
 
