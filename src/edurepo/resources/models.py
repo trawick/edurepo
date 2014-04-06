@@ -41,6 +41,7 @@ class ResourceSubmission(models.Model):
     type = models.CharField(max_length=1, choices=RS_TYPE_CHOICES, default='c')
     comment = models.CharField(max_length=160, blank=True)
     when = models.DateTimeField(auto_now_add=True)
+    when.editable = True
 
     verbs = {'c': 'created', 'v': 'voted on', 'f': 'flagged'}
 
@@ -59,6 +60,18 @@ class ResourceSubmission(models.Model):
             created = ResourceSubmission.objects.filter(user=self.user, resource=self.resource, type='c')
             if len(created) > 0:  # should be 1
                 raise ValidationError('You cannot vote on a resource you submitted.')
+        # The unique_together constraint is enforced at the database layer,
+        # but not at the form layer (since user is not part of the form).
+        # Check that manually so that we get an error message on the form.
+        #duplicate = ResourceSubmission.objects.filter(user=self.user, resource=self.resource, type=self.type)
+        #if len(duplicate) > 0:
+        #    if self.type is 'v':
+        #        raise ValidationError('You already voted once for this resource.')
+        #    elif self.type is 'f':
+        #        raise ValidationError('You already flagged this resource once.')
+        #    else:
+        #        # should-not-occur; let it blow up at the database layer
+        #        pass
 
     def __unicode__(self):
         return "%s %s %s" % (self.user, ResourceSubmission.verbs[str(self.type)], self.resource)
