@@ -1,5 +1,5 @@
 from django.core.context_processors import csrf
-from django.db import transaction
+from django.db import IntegrityError, transaction
 from django.db.models import F
 from django.shortcuts import render, redirect
 from django.template import RequestContext
@@ -59,21 +59,25 @@ def comment_on_resource(request, resource_id):
     if request.POST:
         form = ResourceSubmissionForm(request.POST)
         if form.is_valid():
-            with transaction.atomic():
-                obj = form.save(commit=False)
-                # The user could have changed the resource in the form.
-                # Pick up the selected value.
-                resource_id = form.cleaned_data['resource'].id
-                obj.user = request.user
-                obj.save()
-                resource = Resource.objects.get(id=resource_id)
-                if obj.type == 'v':
-                    resource.votes = F('votes') + 1
-                else:
-                    assert obj.type == 'f'
-                    resource.inappropriate_flags = F('inappropriate_flags') + 1
-                resource.save()
-            return redirect(settings.MOUNTED_AT + '/resources')
+            try:
+                with transaction.atomic():
+                    obj = form.save(commit=False)
+                    # The user could have changed the resource in the form.
+                    # Pick up the selected value.
+                    resource_id = form.cleaned_data['resource'].id
+                    obj.user = request.user
+                    obj.save()
+                    resource = Resource.objects.get(id=resource_id)
+                    if obj.type == 'v':
+                        resource.votes = F('votes') + 1
+                    else:
+                        assert obj.type == 'f'
+                        resource.inappropriate_flags = F('inappropriate_flags') + 1
+                    resource.save()
+                return redirect(settings.MOUNTED_AT + '/resources')
+            except IntegrityError as e:
+                # User will have to guess what the problem is.
+                pass
     else:
         initial = {'resource': resource_id}
         form = ResourceSubmissionForm(initial=initial)
