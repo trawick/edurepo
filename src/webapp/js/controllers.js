@@ -98,6 +98,7 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
     $scope.previous_objective = null;
     $scope.next_objective = null;
     $scope.resources = null;
+    $scope.no_resources_msg = ''; // No educational resources have been submitted.
 
     function setBaseURL(u) {
         $scope.baseurl = u;
@@ -190,6 +191,9 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
             var is_secure = /^https:/.exec(window.location);
             var youtube_scheme = is_secure ? "https" : "http";
             var regex = /youtube.com.*v=(.*)/;
+            if ($scope.resources.length == 0) {
+                $scope.no_resources_msg = 'No educational resources have been submitted.';
+            }
             for (var i = 0; i < $scope.resources.length; i++) {
                 var match = regex.exec($scope.resources[i].url);
                 if (match) {
