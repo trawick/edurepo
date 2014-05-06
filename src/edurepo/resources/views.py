@@ -4,6 +4,7 @@ from django.db.models import F
 from django.shortcuts import render, redirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
+from edurepo import settings
 from resources.models import Resource, ResourceSubmission, ResourceVerification
 from resources.forms import ResourceForm, ResourceSubmissionForm
 
@@ -38,7 +39,7 @@ def create_resource(request):
                                             resource=resource,
                                             type='c')
                 submit.save()
-            return redirect('/resources')
+            return redirect(settings.MOUNTED_AT + '/resources')
     else:
         if request.GET and 'objective' in request.GET:
             initial = {'objective': request.GET['objective']}
@@ -72,7 +73,7 @@ def comment_on_resource(request, resource_id):
                     assert obj.type == 'f'
                     resource.inappropriate_flags = F('inappropriate_flags') + 1
                 resource.save()
-            return redirect('/resources')
+            return redirect(settings.MOUNTED_AT + '/resources')
     else:
         initial = {'resource': resource_id}
         form = ResourceSubmissionForm(initial=initial)
