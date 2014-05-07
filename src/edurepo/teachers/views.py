@@ -117,7 +117,8 @@ def dashboard(request, teacher_email, teacher_class_id=None):
                 c.dates[day] = cur_day
                 c.days[day] = Entry.objects.filter(teacher=teacher, teacher_class=c).filter(date=cur_day)
                 cur_day += datetime.timedelta(days=1)
-    assert selected_class
+    if teacher_class_list:
+        assert selected_class
     context = RequestContext(request, {'teacher_class_list': teacher_class_list,
                                        'selected_class': selected_class,
                                        'teacher': teacher,
