@@ -100,14 +100,14 @@ def dashboard(request, teacher_email, teacher_class_id=None):
     teacher = Teacher.objects.get(email=teacher_email)
     today = datetime.date.today()
     if not teacher_class_id:
-        return redirect('teachers.views.dashboard', teacher_email=teacher_email, teacher_class_id=teacher_class_list[0].id)
+        # if the teacher has no classes, we won't redirect here, and the
+        # user will get a dashboard with appropriate text
+        if teacher_class_list:
+            return redirect('teachers.views.dashboard', teacher_email=teacher_email, teacher_class_id=teacher_class_list[0].id)
     selected_class = None
     for c in teacher_class_list:
         c.active_class = ''
-        print teacher_class_id
-        print c.id
         if int(teacher_class_id) == c.id:
-            print 'found selected class!'
             c.active_class = 'active'
             selected_class = c
             c.days = dict()
@@ -115,8 +115,9 @@ def dashboard(request, teacher_email, teacher_class_id=None):
             cur_day = today - datetime.timedelta(days=today.weekday())
             for day in 'M', 'T', 'W', 'R', 'F':
                 c.dates[day] = cur_day
-                c.days[day] = Entry.objects.filter(teacher=teacher).filter(date=cur_day)
+                c.days[day] = Entry.objects.filter(teacher=teacher, teacher_class=c).filter(date=cur_day)
                 cur_day += datetime.timedelta(days=1)
+    assert selected_class
     context = RequestContext(request, {'teacher_class_list': teacher_class_list,
                                        'selected_class': selected_class,
                                        'teacher': teacher,
