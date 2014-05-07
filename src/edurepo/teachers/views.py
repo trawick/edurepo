@@ -2,6 +2,7 @@ import datetime
 from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template import RequestContext
 from edurepo import settings
@@ -93,6 +94,15 @@ def add_class(request, teacher_email):
     args['form'] = form
     return render(request, 'teachers/add_class.html', args)
 
+
+@login_required
+def add_objective(request, teacher_email, teacher_class_id, date):
+    return HttpResponse("let teacher " + teacher_email + " add objective for " + date)
+
+
+@login_required
+def remove_objective(request, teacher_email, teacher_class_id, date):
+    return HttpResponse("let teacher remove existing objective for " + date)
 
 @login_required
 def dashboard(request, teacher_email, teacher_class_id=None):

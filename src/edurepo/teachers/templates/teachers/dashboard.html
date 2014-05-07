@@ -40,6 +40,10 @@
                         <li>{{ obj }}</li>
                         {% endfor %}
                     </ul>
+                    <a href="{{ selected_class.dates.M }}/add_objective"><span class="glyphicon glyphicon-plus-sign"></span></a>
+                    {% if selected_class.days.M %}
+                    <a href="{{ selected_class.dates.M }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
+                    {% endif %}
                 </div>
             </div>
             <div class="row">
@@ -50,6 +54,10 @@
                         <li>{{ obj }}</li>
                         {% endfor %}
                     </ul>
+                    <a href="{{ selected_class.dates.T }}/add_objective"><span class="glyphicon glyphicon-plus-sign"></span></a>
+                    {% if selected_class.days.T %}
+                    <a href="{{ selected_class.dates.T }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
+                    {% endif %}
                 </div>
             </div>
             <div class="row">
@@ -60,6 +68,10 @@
                         <li>{{ obj }}</li>
                         {% endfor %}
                     </ul>
+                    <a href="{{ selected_class.dates.W }}/add_objective"><span class="glyphicon glyphicon-plus-sign"></span></a>
+                    {% if selected_class.days.W %}
+                    <a href="{{ selected_class.dates.W }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
+                    {% endif %}
                 </div>
             </div>
             <div class="row">
@@ -70,6 +82,10 @@
                         <li>{{ obj }}</li>
                         {% endfor %}
                     </ul>
+                    <a href="{{ selected_class.dates.R }}/add_objective"><span class="glyphicon glyphicon-plus-sign"></span></a>
+                    {% if selected_class.days.R %}
+                    <a href="{{ selected_class.dates.R }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
+                    {% endif %}
                 </div>
             </div>
             <div class="row">
@@ -80,6 +96,10 @@
                         <li>{{ obj }}</li>
                         {% endfor %}
                     </ul>
+                    <a href="{{ selected_class.dates.M }}/add_objective"><span class="glyphicon glyphicon-plus-sign"></span></a>
+                    {% if selected_class.days.F %}
+                    <a href="{{ selected_class.dates.F }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
+                    {% endif %}
                 </div>
             </div>
         </div>
