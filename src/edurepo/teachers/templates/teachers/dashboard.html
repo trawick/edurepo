@@ -35,7 +35,7 @@
             <div class="row">
                 <div class="well">
                     <p>Monday, {{ selected_class.dates.M }}</p>
-                    <ul>
+                    <ul class="list-unstyled">
                         {% for obj in selected_class.days.M %}
                         <li>{{ obj }}</li>
                         {% endfor %}
@@ -45,7 +45,7 @@
             <div class="row">
                 <div class="well">
                     <p>Tuesday, {{ selected_class.dates.T }}</p>
-                    <ul>
+                    <ul class="list-unstyled">
                         {% for obj in selected_class.days.T %}
                         <li>{{ obj }}</li>
                         {% endfor %}
@@ -55,7 +55,7 @@
             <div class="row">
                 <div class="well">
                     <p>Wednesday, {{ selected_class.dates.W }}</p>
-                    <ul>
+                    <ul class="list-unstyled">
                         {% for obj in selected_class.days.W %}
                         <li>{{ obj }}</li>
                         {% endfor %}
@@ -65,7 +65,7 @@
             <div class="row">
                 <div class="well">
                     <p>Thursday, {{ selected_class.dates.R }}</p>
-                    <ul>
+                    <ul class="list-unstyled">
                         {% for obj in selected_class.days.R %}
                         <li>{{ obj }}</li>
                         {% endfor %}
@@ -75,7 +75,7 @@
             <div class="row">
                 <div class="well">
                     <p>Friday, {{ selected_class.dates.F }}</p>
-                    <ul>
+                    <ul class="list-unstyled">
                         {% for obj in selected_class.days.F %}
                         <li>{{ obj }}</li>
                         {% endfor %}
