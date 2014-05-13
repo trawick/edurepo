@@ -10,6 +10,9 @@ from teachers.models import Teacher, TeacherClass, Entry
 from teachers.forms import TeacherForm, TeacherClassForm
 
 
+day_names = {'M': 'Monday', 'T': 'Tuesday', 'W': 'Wednesday', 'R': 'Thursday', 'F': 'Friday'}
+
+
 def get_dashboard_emails(request):
     """does request.user refer to a teacher with a dashboard?
     return link if so"""
@@ -104,6 +107,7 @@ def add_objective(request, teacher_email, teacher_class_id, date):
 def remove_objective(request, teacher_email, teacher_class_id, date):
     return HttpResponse("let teacher remove existing objective for " + date)
 
+
 @login_required
 def dashboard(request, teacher_email, teacher_class_id=None):
     teacher_class_list = TeacherClass.objects.filter(teacher=teacher_email)
@@ -131,6 +135,7 @@ def dashboard(request, teacher_email, teacher_class_id=None):
         assert selected_class
     context = RequestContext(request, {'teacher_class_list': teacher_class_list,
                                        'selected_class': selected_class,
+                                       'day_names': day_names,
                                        'teacher': teacher,
                                        'dashboard_emails': get_dashboard_emails(request)})
     return render(request, 'teachers/dashboard.html', context)
