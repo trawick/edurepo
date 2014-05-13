@@ -32,6 +32,11 @@
     {% if selected_class %}
     <div class="col">
         <div class="col-md-8">
+            {% comment %}
+            This repetition for each day is nasty, but Django variable resolution
+            doesn't allow a variable for a subscript.  IOW, the "M", "T", "W", etc.
+            in the following similar blocks must be literal strings.
+            {% endcomment %}
             <div class="row">
                 <div class="well">
                     <p>{{ day_names.M }}, {{ selected_class.dates.M }}</p>

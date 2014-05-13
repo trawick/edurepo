@@ -11,6 +11,7 @@ from teachers.forms import TeacherForm, TeacherClassForm
 
 
 day_names = {'M': 'Monday', 'T': 'Tuesday', 'W': 'Wednesday', 'R': 'Thursday', 'F': 'Friday'}
+day_letters = ['M', 'T', 'W', 'R', 'F']
 
 
 def get_dashboard_emails(request):
@@ -127,7 +128,7 @@ def dashboard(request, teacher_email, teacher_class_id=None):
             c.days = dict()
             c.dates = dict()
             cur_day = today - datetime.timedelta(days=today.weekday())
-            for day in 'M', 'T', 'W', 'R', 'F':
+            for day in day_letters:
                 c.dates[day] = cur_day
                 c.days[day] = Entry.objects.filter(teacher=teacher, teacher_class=c).filter(date=cur_day)
                 cur_day += datetime.timedelta(days=1)
