@@ -2,7 +2,7 @@
 {% block title %}{{ class_name }} objectives{% endblock %}
 {% block content %}
 {% if entry_list %}
-    <p>Calendar entries for {{ class_name }} taught by {{ teacher }}:</p>
+    <p>Calendar entries for {{ class_name }} taught by {{ teacher.name }}:</p>
     <dl>
 {% for e in entry_list %}
         <dt>{{ e.date }}</dt><dd>{{ e.objective }}
@@ -14,7 +14,7 @@
 {% endfor %}
     </dl>
 {% else %}
-<p>No calendar entries for {{ class_name }} taught by {{ teacher }}!</p>
+<p>No calendar entries for {{ class_name }} taught by {{ teacher.name }}!</p>
 {% endif %}
 
     <div class="text-warning">

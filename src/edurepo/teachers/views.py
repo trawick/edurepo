@@ -27,7 +27,7 @@ def get_dashboard_emails(request):
 
 
 def index(request):
-    teacher_list = Teacher.objects.order_by('email')
+    teacher_list = Teacher.objects.order_by('name')
     context = RequestContext(request, {'teacher_list': teacher_list,
                                        'dashboard_emails': get_dashboard_emails(request)})
     return render(request, 'teachers/index.html', context)
