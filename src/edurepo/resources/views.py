@@ -7,11 +7,13 @@ from django.contrib.auth.decorators import login_required
 from edurepo import settings
 from resources.models import Resource, ResourceSubmission, ResourceVerification
 from resources.forms import ResourceForm, ResourceSubmissionForm
+from teachers.views import get_dashboard_emails
 
 
 def index(request):
     resource_list = Resource.objects.order_by('id')
-    context = RequestContext(request, {'resource_list': resource_list})
+    context = RequestContext(request, {'resource_list': resource_list,
+                                       'dashboard_emails': get_dashboard_emails(request)})
     return render(request, 'resources/index.html', context)
 
 
@@ -24,7 +26,8 @@ def detail(request, resource_id):
     comments = ResourceSubmission.objects.filter(resource=resource).exclude(comment='')
     context = RequestContext(request, {'resource': resource,
                                        'comments': comments,
-                                       'verification': rv})
+                                       'verification': rv,
+                                       'dashboard_emails': get_dashboard_emails(request)})
     return render(request, 'resources/resource.html', context)
 
 
@@ -47,7 +50,7 @@ def create_resource(request):
             initial = {}
         form = ResourceForm(initial=initial)
 
-    args = {}
+    args = {'dashboard_emails': get_dashboard_emails(request)}
     args.update(csrf(request))
 
     args['form'] = form
@@ -82,7 +85,7 @@ def comment_on_resource(request, resource_id):
         initial = {'resource': resource_id}
         form = ResourceSubmissionForm(initial=initial)
 
-    args = {}
+    args = {'dashboard_emails': get_dashboard_emails(request)}
     args.update(csrf(request))
 
     args['form'] = form

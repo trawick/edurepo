@@ -3,11 +3,13 @@ from django.template import RequestContext
 from django.contrib.auth import logout as auth_logout
 from edurepo import settings
 from repo.models import Course, ICan, LearningObjective, MultipleChoiceItem, GlossaryItem, ReferenceText, TrueFalseItem
+from teachers.views import get_dashboard_emails
 
 
 def index(request):
     course_list = Course.objects.order_by('cat__id', 'id')
-    context = RequestContext(request, {'course_list': course_list})
+    context = RequestContext(request, {'course_list': course_list,
+                                       'dashboard_emails': get_dashboard_emails(request)})
     return render(request, 'repo/index.html', context)
 
 
@@ -16,7 +18,8 @@ def detail(request, course_id):
     objective_list = LearningObjective.objects.filter(course=course_id).order_by('id')
     context = RequestContext(request, {'objective_list': objective_list,
                                        'course': course,
-                                       'course_id': course_id})
+                                       'course_id': course_id,
+                                       'dashboard_emails': get_dashboard_emails(request)})
     return render(request, 'repo/course.html', context)
 
 
@@ -36,7 +39,8 @@ def by_objective(request, course_id, objective_id):
                                        'glossary_items': glossary_items,
                                        'ican_items': ican_items,
                                        'multiple_choice_items': multiple_choice_items,
-                                       'tf_items': tf_items})
+                                       'tf_items': tf_items,
+                                       'dashboard_emails': get_dashboard_emails(request)})
     return render(request, 'repo/objective.html', context)
 
 
