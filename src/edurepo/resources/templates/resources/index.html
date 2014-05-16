@@ -3,9 +3,9 @@
 {% block content %}
     <h1>List of external resources</h1>
     {% if resource_list %}
-    <ul>
+    <ul class="list-group">
         {% for r in resource_list %}
-        <li><a href="{{ r.id }}/">{{ r.url }}</a><br />{{ r.objective }}</li>
+        <li class="list-group-item"><a href="{{ r.id }}/">{{ r.url }}</a><br />{{ r.objective }}</li>
         {% endfor %}
     </ul>
     {% else %}
