@@ -124,7 +124,7 @@ def add_objective(request, teacher_email, teacher_class_id, date):
 
 
 @login_required
-def remove_objective(request, teacher_email, teacher_class_id, date):
+def remove_objective(request, teacher_email, teacher_class_id, date, objective):
     return HttpResponse("let teacher remove existing objective for " + date)
 
 

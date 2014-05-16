@@ -19,7 +19,7 @@ urlpatterns = patterns('',
                            name='teachers.views.dashboard'),
                        url(r'^(?P<teacher_email>[^/]+)/(?P<teacher_class_id>[^/]+)/(?P<date>[^/]+)/add_objective$',
                            views.add_objective),
-                       url(r'^(?P<teacher_email>[^/]+)/(?P<teacher_class_id>[^/]+)/(?P<date>[^/]+)/remove_objective$',
+                       url(r'^(?P<teacher_email>[^/]+)/(?P<teacher_class_id>[^/]+)/(?P<date>[^/]+)/(?P<objective>[^/]+)/remove_objective$',
                            views.remove_objective),
                        url(r'^(?P<teacher_email>[^/]+)/(?P<class_name>[^/]+)/$', views.events, name='events'),
                        )
