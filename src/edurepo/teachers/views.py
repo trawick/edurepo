@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.template import RequestContext
 from edurepo import settings
 from teachers.models import Teacher, TeacherClass, Entry
-from teachers.forms import TeacherForm, TeacherClassForm
+from teachers.forms import EntryForm, TeacherForm, TeacherClassForm
 
 
 day_names = {'M': 'Monday', 'T': 'Tuesday', 'W': 'Wednesday', 'R': 'Thursday', 'F': 'Friday'}
@@ -101,7 +101,26 @@ def add_class(request, teacher_email):
 
 @login_required
 def add_objective(request, teacher_email, teacher_class_id, date):
-    return HttpResponse("let teacher " + teacher_email + " add objective for " + date)
+    if request.POST:
+        form = EntryForm(request.POST)
+        if form.is_valid():
+            entry = form.save(commit=False)
+            teacher = Teacher.objects.get(email=teacher_email)
+            entry.teacher = teacher
+            entry.teacher_class = TeacherClass.objects.get(id=teacher_class_id)
+            entry.date = datetime.datetime.strptime(date, '%B %d, %Y')
+            entry.save()
+            return redirect('teachers.views.dashboard', teacher_email=teacher_email, teacher_class_id=teacher_class_id)
+    else:
+        initial = {}
+        form = EntryForm(initial=initial)
+
+    args = {'teacher_email': teacher_email,
+            'teacher_class_id': teacher_class_id,
+            'date': date}
+    args.update(csrf(request))
+    args['form'] = form
+    return render(request, 'teachers/add_objective.html', args)
 
 
 @login_required
