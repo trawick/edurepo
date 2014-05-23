@@ -6,6 +6,8 @@ Current stage
 Possible themes for upcoming stages
 ===================================
 
+* Import Common Core high school math course definitions
+* Teacher dashboard -- select a week to view/edit
 * Teachers need to see list of objectives and descriptions on dashboard
 * Bootstrap-ify Angular app
 * Get social login working for Angular app
