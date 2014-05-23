@@ -42,7 +42,7 @@
                     <p>{{ day_names.M }}, {{ selected_class.dates.M }}</p>
                     <ul class="list-unstyled">
                         {% for obj in selected_class.days.M %}
-                        <li>{{ obj }}
+                        <li>{{ obj.objective }}
                         <a href="{{ selected_class.dates.M }}/{{ obj.objective }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
                         </li>
                         {% endfor %}
@@ -55,7 +55,7 @@
                     <p>{{ day_names.T }}, {{ selected_class.dates.T }}</p>
                     <ul class="list-unstyled">
                         {% for obj in selected_class.days.T %}
-                        <li>{{ obj }}
+                        <li>{{ obj.objective }}
                         <a href="{{ selected_class.dates.T }}/{{ obj.objective }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
                         </li>
                         {% endfor %}
@@ -68,7 +68,7 @@
                     <p>{{ day_names.W }}, {{ selected_class.dates.W }}</p>
                     <ul class="list-unstyled">
                         {% for obj in selected_class.days.W %}
-                        <li>{{ obj }}
+                        <li>{{ obj.objective }}
                         <a href="{{ selected_class.dates.W }}/{{ obj.objective }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
                         </li>
                         {% endfor %}
@@ -81,7 +81,7 @@
                     <p>{{ day_names.R }}, {{ selected_class.dates.R }}</p>
                     <ul class="list-unstyled">
                         {% for obj in selected_class.days.R %}
-                        <li>{{ obj }}
+                        <li>{{ obj.objective }}
                         <a href="{{ selected_class.dates.R }}/{{ obj.objective }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
                         </li>
                         {% endfor %}
@@ -94,7 +94,7 @@
                     <p>{{ day_names.F }}, {{ selected_class.dates.F }}</p>
                     <ul class="list-unstyled">
                         {% for obj in selected_class.days.F %}
-                        <li>{{ obj }}
+                        <li>{{ obj.objective }}
                         <a href="{{ selected_class.dates.F }}/{{ obj.objective }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
                         </li>
                         {% endfor %}
