@@ -1,11 +1,12 @@
-Current stage (by March 31)
-===========================
+Current stage
+=============
 
-* Teacher maintains the learning objective calendar for a class (not part of Angular app at this stage)
+* ???
 
 Possible themes for upcoming stages
 ===================================
 
+* Teachers need to see list of objectives and descriptions on dashboard
 * Bootstrap-ify Angular app
 * Get social login working for Angular app
 * Improve user interface for resource browsing and commenting
