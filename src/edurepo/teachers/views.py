@@ -65,7 +65,7 @@ def register_teacher(request):
         initial = {}
         form = TeacherForm(initial=initial)
 
-    args = {}
+    args = {'dashboard_emails': get_dashboard_emails(request)}
     args.update(csrf(request))
 
     args['form'] = form
@@ -91,7 +91,8 @@ def add_class(request, teacher_email):
         initial = {'repo_provider': request_to_provider(request)}
         form = TeacherClassForm(initial=initial)
 
-    args = {'teacher_email': teacher_email}
+    args = {'teacher_email': teacher_email,
+            'dashboard_emails': get_dashboard_emails(request)}
     args.update(csrf(request))
 
     args['form'] = form
@@ -116,6 +117,7 @@ def add_objective(request, teacher_email, teacher_class_id, date):
 
     args = {'teacher_email': teacher_email,
             'teacher_class_id': teacher_class_id,
+            'dashboard_emails': get_dashboard_emails(request),
             'date': date}
     args.update(csrf(request))
     args['form'] = form
@@ -133,7 +135,8 @@ def remove_objective(request, teacher_email, teacher_class_id, date, objective):
     args = {'teacher_email': teacher_email,
             'teacher_class_id': teacher_class_id,
             'date': date,
-            'objective': objective}
+            'objective': objective,
+            'dashboard_emails': get_dashboard_emails(request)}
     args.update(csrf(request))
     return render(request, 'teachers/remove_objective.html', args)
 
