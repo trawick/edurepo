@@ -1,5 +1,5 @@
 from tastypie import fields
-from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
+from tastypie.resources import ModelResource, ALL_WITH_RELATIONS
 from resources.models import Resource, ResourceSubmission, ResourceVerification
 from core.utils import CORSResource
 from repo.api import LearningObjectiveResource
