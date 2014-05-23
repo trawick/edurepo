@@ -426,7 +426,7 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
 
     // /resources/api/resource/?format=json&resource_objective=MG4-FACTMULT
     function lookup_resources_url(obj) {
-        return $scope.res_baseurl + '?resource_objective=' + obj;
+        return $scope.res_baseurl + '?objective=' + obj;
     }
 
     function lookup_current_objectives_url(teacher_email, start_date, stop_date, class_name) {
