@@ -184,7 +184,31 @@ def import_glossary_items(root):
                 obj.glossaryitem_set.create(term=term, definition=definition)
 
 
-def go(top):
+def process_file(filename):
+    doc = parse(filename)
+    root = doc.getroot()
+
+    if root.tag == 'course-categories':
+        import_course_categories(root)
+    elif root.tag == 'course-standard':
+        import_course_standard(root)
+    elif root.tag == 'tf-questions':
+        import_tf_questions(root)
+    elif root.tag == 'mc-questions':
+        import_mc_questions(root)
+    elif root.tag == 'glossary-items':
+        import_glossary_items(root)
+    else:
+        assert False, 'Document tag "%s" is not recognized.' % root.tag
+
+    if noisy:
+        print
+
+
+def process(top):
+    if os.path.isfile(top):
+        return process_file(top)
+
     if perform_import:
         # drop existing data before we add the current
         TrueFalseItem.objects.all().delete()
@@ -199,24 +223,7 @@ def go(top):
     for dirpath, _, fnames in os.walk(top):
         for f in sorted(fnames, key=lambda fn: fn[:-4]):
             doc_file = os.path.join(dirpath, f)
-            doc = parse(doc_file)
-            root = doc.getroot()
-
-            if root.tag == 'course-categories':
-                import_course_categories(root)
-            elif root.tag == 'course-standard':
-                import_course_standard(root)
-            elif root.tag == 'tf-questions':
-                import_tf_questions(root)
-            elif root.tag == 'mc-questions':
-                import_mc_questions(root)
-            elif root.tag == 'glossary-items':
-                import_glossary_items(root)
-            else:
-                assert False, 'Document tag "%s" is not recognized.' % root.tag
-
-            if noisy:
-                print
+            process_file(doc_file)
 
 if len(sys.argv) != 3:
     print >> sys.stderr, "Usage: %s filesystem-root check-or-import" % sys.argv[0]
@@ -232,4 +239,4 @@ if x_mode == 'import':
 elif x_mode == 'check':
     noisy = True
 
-go(x_top)
+process(x_top)
