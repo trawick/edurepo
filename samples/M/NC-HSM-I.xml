@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<course-standard id="NC-HSM-I">
+  <description>State of North Carolina High School Math I</description>
+  <source>http://www.corestandards.org/assets/CCSSI_Math%20Standards.pdf</source>
+  <category>K12-M</category>
+  <objectives>
+    <objective id="NC-HSM-I-N-RN.1">
+      <description>Explain how the definition of the meaning of rational exponents follows from extending the properties of integer exponents to those values, allowing for a notation for radicals in terms of rational exponents.</description>
+    </objective>
+    <objective id="NC-HSM-I-N-RN.2">
+      <description>Rewrite expressions involving radicals and rational exponents using the properties of exponents.</description>
+    </objective>
+    <objective id="NC-HSM-I-N-Q.1">
+      <description>Use units as a way to understand problems and to guide the solution of multi-step problems; choose and interpret units consistently in formulas; choose and interpret the scale and the origin in graphs and data displays.</description>
+    </objective>
+    <objective id="NC-HSM-I-N-Q.2">
+      <description>Define appropriate quantities for the purpose of descriptive modeling.</description>
+    </objective>
+    <objective id="NC-HSM-I-N-Q.3">
+      <description>Choose a level of accuracy appropriate to limitations on measurement when reporting quantities.</description>
+    </objective>
+    <objective id="NC-HSM-I-A-SSE.1">
+      <description>Interpret expressions that represent a quantity in terms of its context </description>
+    </objective>
+    <objective id="NC-HSM-I-A-SSE.2">
+      <description>Use the structure of an expression to identify ways to rewrite it.</description>
+    </objective>
+    <objective id="NC-HSM-I-A-SSE.3">
+      <description>Choose and produce an equivalent form of an expression to reveal and explain properties of the quantity represented by the expression.</description>
+    </objective>
+    <objective id="NC-HSM-I-A-APR.1">
+      <description>Understand that polynomials form a system analogous to the integers, namely, they are closed under the operations of addition, subtraction, and multiplication; add, subtract, and multiply polynomials.</description>
+    </objective>
+    <objective id="NC-HSM-I-A-CED.1">
+      <description>Create equations and inequalities in one variable and use them to solve problems. Include equations arising from linear and quadratic functions, and simple rational and exponential functions.</description>
+    </objective>
+    <objective id="NC-HSM-I-A-CED.2">
+      <description>Create equations in two or more variables to represent relationships between quantities; graph equations on coordinate axes with labels and scales.</description>
+    </objective>
+    <objective id="NC-HSM-I-A-CED.3">
+      <description>Represent constraints by equations or inequalities, and by systems of equations and/or inequalities, and interpret solutions as viable or nonviable options in a modeling context.</description>
+    </objective>
+    <objective id="NC-HSM-I-A-CED.4">
+      <description>Rearrange formulas to highlight a quantity of interest, using the same reasoning as in solving equations.</description>
+    </objective>
+    <objective id="NC-HSM-I-A-REI.1">
+      <description>Explain each step in solving a simple equation as following from the equality of numbers asserted at the previous step, starting from the assumption that the original equation has a solution. Construct a viable argument to justify a solution method.</description>
+    </objective>
+    <objective id="NC-HSM-I-A-REI.3">
+      <description>Solve linear equations and inequalities in one variable, including equations with coefficients represented by letters.</description>
+    </objective>
+    <objective id="NC-HSM-I-A-REI.5">
+      <description>Prove that, given a system of two equations in two variables, replacing one equation by the sum of that equation and a multiple of the other produces a system with the same solutions.</description>
+    </objective>
+    <objective id="NC-HSM-I-A-REI.6">
+      <description>Solve systems of linear equations exactly and approximately (e.g., with graphs), focusing on pairs of linear equations in two variables.</description>
+    </objective>
+    <objective id="NC-HSM-I-A-REI.10">
+      <description>10. Understand that the graph of an equation in two variables is the set of all its solutions plotted in the coordinate plane, often forming a curve (which could be a line).</description>
+    </objective>
+    <objective id="NC-HSM-I-A-REI.11">
+      <description>11. Explain why the x-coordinates of the points where the graphs of the equations y = f(x) and y = g(x) intersect are the solutions of the equation f(x) = g(x); find the solutions approximately, e.g., using technology to graph the functions, make tables of values, or find successive approximations. Include cases where f(x) and/or g(x) are linear, polynomial, rational, absolute value, exponential, and logarithmic functions.</description>
+    </objective>
+    <objective id="NC-HSM-I-A-REI.12">
+      <description>12. Graph the solutions to a linear inequality in two variables as a half-plane (excluding the boundary in the case of a strict inequality), and graph the solution set to a system of linear inequalities in two variables as the intersection of the corresponding half-planes.</description>
+    </objective>
+    <objective id="NC-HSM-I-F-IF.1">
+      <description>Understand that a function from one set (called the domain) to another set (called the range) assigns to each element of the domain exactly one element of the range. If f is a function and x is an element of its domain, then f(x) denotes the output of f corresponding to the input x. The graph of f is the graph of the equation y = f(x).</description>
+    </objective>
+    <objective id="NC-HSM-I-F-IF.2">
+      <description>Use function notation, evaluate functions for inputs in their domains, and interpret statements that use function notation in terms of a context.</description>
+    </objective>
+    <objective id="NC-HSM-I-F-IF.3">
+      <description>Recognize that sequences are functions, sometimes defined recursively, whose domain is a subset of the integers.</description>
+    </objective>
+    <objective id="NC-HSM-I-F-IF.4">
+      <description>For a function that models a relationship between two quantities, interpret key features of graphs and tables in terms of the quantities, and sketch graphs showing key features given a verbal description of the relationship.</description>
+    </objective>
+    <objective id="NC-HSM-I-F-IF.5">
+      <description>Relate the domain of a function to its graph and, where applicable, to the quantitative relationship it describes.</description>
+    </objective>
+    <objective id="NC-HSM-I-F-IF.6">
+      <description>Calculate and interpret the average rate of change of a function (presented symbolically or as a table) over a specified interval. Estimate the rate of change from a graph.</description>
+    </objective>
+    <objective id="NC-HSM-I-F-IF.7">
+      <description>Graph functions expressed symbolically and show key features of the graph, by hand in simple cases and using technology for more complicated cases.</description>
+    </objective>
+    <objective id="NC-HSM-I-F-IF.8">
+      <description>Write a function defined by an expression in different but equivalent forms to reveal and explain different properties of the function.</description>
+    </objective>
+    <objective id="NC-HSM-I-F-IF.9">
+      <description>Compare properties of two functions each represented in a different way (algebraically, graphically, numerically in tables, or by verbal descriptions).</description>
+    </objective>
+    <objective id="NC-HSM-I-F-BF.1">
+      <description>Write a function that describes a relationship between two quantities </description>
+    </objective>
+    <objective id="NC-HSM-I-F-BF.2">
+      <description>Write arithmetic and geometric sequences both recursively and with an explicit formula, use them to model situations, and translate between the two forms.</description>
+    </objective>
+    <objective id="NC-HSM-I-F-BF.3">
+      <description>Identify the effect on the graph of replacing f(x) by f(x) + k, k f(x), f(kx), and f(x + k) for specific values of k (both positive and negative); find the value of k given the graphs. Experiment with cases and illustrate an explanation of the effects on the graph using technology. Include recognizing even and odd functions from their graphs and algebraic expressions for them.</description>
+    </objective>
+    <objective id="NC-HSM-I-F-LE.1">
+      <description>Distinguish between situations that can be modeled with linear functions and with exponential functions.</description>
+    </objective>
+    <objective id="NC-HSM-I-F-LE.2">
+      <description>Construct linear and exponential functions, including arithmetic and geometric sequences, given a graph, a description of a relationship, or two input-output pairs (include reading these from a table).</description>
+    </objective>
+    <objective id="NC-HSM-I-F-LE.3">
+      <description>Observe using graphs and tables that a quantity increasing exponentially eventually exceeds a quantity increasing linearly, quadratically, or (more generally) as a polynomial function.</description>
+    </objective>
+    <objective id="NC-HSM-I-F-LE.5">
+      <description>Interpret the parameters in a linear or exponential function in terms of a context.</description>
+    </objective>
+    <objective id="NC-HSM-I-G-CO.1">
+      <description>Know precise definitions of angle, circle, perpendicular line, parallel line, and line segment, based on the undefined notions of point, line, distance along a line, and distance around a circular arc.</description>
+    </objective>
+    <objective id="NC-HSM-I-G-GPE.4">
+      <description>Use coordinates to prove simple geometric theorems algebraically.</description>
+    </objective>
+    <objective id="NC-HSM-I-G-GPE.5">
+      <description>Prove the slope criteria for parallel and perpendicular lines and use them to solve geometric problems (e.g., find the equation of a line parallel or perpendicular to a given line that passes through a given point).</description>
+    </objective>
+    <objective id="NC-HSM-I-G-GPE.6">
+      <description>Find the point on a directed line segment between two given points that partitions the segment in a given ratio.</description>
+    </objective>
+    <objective id="NC-HSM-I-G-GPE.7">
+      <description>Use coordinates to compute perimeters of polygons and areas of triangles and rectangles, e.g., using the distance formula.</description>
+    </objective>
+    <objective id="NC-HSM-I-G-GMD.1">
+      <description>Give an informal argument for the formulas for the circumference of a circle, area of a circle, volume of a cylinder, pyramid, and cone.</description>
+    </objective>
+    <objective id="NC-HSM-I-G-GMD.3">
+      <description>Use volume formulas for cylinders, pyramids, cones, and spheres to solve problems.</description>
+    </objective>
+    <objective id="NC-HSM-I-S-ID.1">
+      <description>Represent data with plots on the real number line (dot plots, histograms, and box plots).</description>
+    </objective>
+    <objective id="NC-HSM-I-S-ID.2">
+      <description>Use statistics appropriate to the shape of the data distribution to compare center (median, mean) and spread (interquartile range, standard deviation) of two or more different data sets.</description>
+    </objective>
+    <objective id="NC-HSM-I-S-ID.3">
+      <description>Interpret differences in shape, center, and spread in the context of the data sets, accounting for possible effects of extreme data points (outliers).</description>
+    </objective>
+    <objective id="NC-HSM-I-S-ID.5">
+      <description>Summarize categorical data for two categories in two-way frequency tables. Interpret relative frequencies in the context of the data (including joint, marginal, and conditional relative frequencies). Recognize possible associations and trends in the data.</description>
+    </objective>
+    <objective id="NC-HSM-I-S-ID.6">
+      <description>Represent data on two quantitative variables on a scatter plot, and describe how the variables are related.</description>
+    </objective>
+    <objective id="NC-HSM-I-S-ID.7">
+      <description>Interpret the slope (rate of change) and the intercept (constant term) of a linear model in the context of the data.</description>
+    </objective>
+    <objective id="NC-HSM-I-S-ID.8">
+      <description>Compute (using technology) and interpret the correlation coefficient of a linear fit.</description>
+    </objective>
+    <objective id="NC-HSM-I-S-ID.9">
+      <description>Distinguish between correlation and causation.</description>
+    </objective>
+  </objectives>
+</course-standard>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<course-standard id="NC-HSM-III">
+  <description>State of North Carolina High School Math III</description>
+  <source>http://www.corestandards.org/assets/CCSSI_Math%20Standards.pdf</source>
+  <category>K12-M</category>
+  <objectives>
+    <objective id="NC-HSM-III-N-RN.3">
+      <description>Explain why the sum or product of two rational numbers is rational; that the sum of a rational number and an irrational number is irrational; and that the product of a nonzero rational number and an irrational number is irrational.</description>
+    </objective>
+    <objective id="NC-HSM-III-N-Q.1">
+      <description>Use units as a way to understand problems and to guide the solution of multi-step problems; choose and interpret units consistently in formulas; choose and interpret the scale and the origin in graphs and data displays.</description>
+    </objective>
+    <objective id="NC-HSM-III-N-Q.2">
+      <description>Define appropriate quantities for the purpose of descriptive modeling.</description>
+    </objective>
+    <objective id="NC-HSM-III-N-Q.3">
+      <description>Choose a level of accuracy appropriate to limitations on measurement when reporting quantities.</description>
+    </objective>
+    <objective id="NC-HSM-III-N-CN.1">
+      <description>Know there is a complex number i such that i__ = ___1, and every complex number has the form a + bi with a and b real.</description>
+    </objective>
+    <objective id="NC-HSM-III-N-CN.2">
+      <description>Use the relation i__ = ___1 and the commutative, associative, and distributive properties to add, subtract, and multiply complex numbers.</description>
+    </objective>
+    <objective id="NC-HSM-III-N-CN.7">
+      <description>Solve quadratic equations with real coefficients that have complex solutions.</description>
+    </objective>
+    <objective id="NC-HSM-III-N-CN.9">
+      <description>(+) Know the Fundamental Theorem of Algebra; show that it is true for quadratic polynomials.</description>
+    </objective>
+    <objective id="NC-HSM-III-A-SSE.1">
+      <description>Interpret expressions that represent a quantity in terms of its context </description>
+    </objective>
+    <objective id="NC-HSM-III-A-SSE.2">
+      <description>Use the structure of an expression to identify ways to rewrite it.</description>
+    </objective>
+    <objective id="NC-HSM-III-A-SSE.3">
+      <description>Choose and produce an equivalent form of an expression to reveal and explain properties of the quantity represented by the expression.</description>
+    </objective>
+    <objective id="NC-HSM-III-A-SSE.4">
+      <description>Derive the formula for the sum of a finite geometric series (when the common ratio is not 1), and use the formula to solve problems.</description>
+    </objective>
+    <objective id="NC-HSM-III-A-APR.1">
+      <description>Understand that polynomials form a system analogous to the integers, namely, they are closed under the operations of addition, subtraction, and multiplication; add, subtract, and multiply polynomials.</description>
+    </objective>
+    <objective id="NC-HSM-III-A-APR.2">
+      <description>Know and apply the Remainder Theorem: For a polynomial p(x) and a number a, the remainder on division by x ___ a is p(a), so p(a) = 0 if and only if (x ___ a) is a factor of p(x).</description>
+    </objective>
+    <objective id="NC-HSM-III-A-APR.3">
+      <description>Identify zeros of polynomials when suitable factorizations are available, and use the zeros to construct a rough graph of the function defined by the polynomial.</description>
+    </objective>
+    <objective id="NC-HSM-III-A-APR.4">
+      <description>Prove polynomial identities and use them to describe numerical relationships.</description>
+    </objective>
+    <objective id="NC-HSM-III-A-APR.6">
+      <description>Rewrite simple rational expressions in different forms; write &lt;sup&gt;a(x &lt;/sup&gt;/&lt;sub&gt;b(x)&lt;/sub&gt; in the form q(x) + &lt;sup&gt;r(x)&lt;/sup&gt;/&lt;sub&gt;b(x)&lt;/sub&gt;, where a(x), b(x), q(x), and r(x) are polynomials with the degree of r(x) less than the degree of b(x), using inspection, long division, or, for the more complicated examples, a computer algebra system.</description>
+    </objective>
+    <objective id="NC-HSM-III-A-APR.7">
+      <description>(+) Understand that rational expressions form a system analogous to the rational numbers, closed under addition, subtraction, multiplication, and division by a nonzero rational expression; add, subtract, multiply, and divide rational expressions.</description>
+    </objective>
+    <objective id="NC-HSM-III-A-CED.1">
+      <description>Create equations and inequalities in one variable and use them to solve problems. Include equations arising from linear and quadratic functions, and simple rational and exponential functions.</description>
+    </objective>
+    <objective id="NC-HSM-III-A-CED.2">
+      <description>Create equations in two or more variables to represent relationships between quantities; graph equations on coordinate axes with labels and scales.</description>
+    </objective>
+    <objective id="NC-HSM-III-A-CED.3">
+      <description>Represent constraints by equations or inequalities, and by systems of equations and/or inequalities, and interpret solutions as viable or nonviable options in a modeling context.</description>
+    </objective>
+    <objective id="NC-HSM-III-A-CED.4">
+      <description>Rearrange formulas to highlight a quantity of interest, using the same reasoning as in solving equations.</description>
+    </objective>
+    <objective id="NC-HSM-III-A-REI.1">
+      <description>Explain each step in solving a simple equation as following from the equality of numbers asserted at the previous step, starting from the assumption that the original equation has a solution. Construct a viable argument to justify a solution method.</description>
+    </objective>
+    <objective id="NC-HSM-III-A-REI.2">
+      <description>Solve simple rational and radical equations in one variable, and give examples showing how extraneous solutions may arise.</description>
+    </objective>
+    <objective id="NC-HSM-III-A-REI.4">
+      <description>Solve quadratic equations in one variable.</description>
+    </objective>
+    <objective id="NC-HSM-III-A-REI.10">
+      <description>10. Understand that the graph of an equation in two variables is the set of all its solutions plotted in the coordinate plane, often forming a curve (which could be a line).</description>
+    </objective>
+    <objective id="NC-HSM-III-A-REI.11">
+      <description>11. Explain why the x-coordinates of the points where the graphs of the equations y = f(x) and y = g(x) intersect are the solutions of the equation f(x) = g(x); find the solutions approximately, e.g., using technology to graph the functions, make tables of values, or find successive approximations. Include cases where f(x) and/or g(x) are linear, polynomial, rational, absolute value, exponential, and logarithmic functions.</description>
+    </objective>
+    <objective id="NC-HSM-III-F-IF.2">
+      <description>Use function notation, evaluate functions for inputs in their domains, and interpret statements that use function notation in terms of a context.</description>
+    </objective>
+    <objective id="NC-HSM-III-F-IF.4">
+      <description>For a function that models a relationship between two quantities, interpret key features of graphs and tables in terms of the quantities, and sketch graphs showing key features given a verbal description of the relationship.</description>
+    </objective>
+    <objective id="NC-HSM-III-F-IF.5">
+      <description>Relate the domain of a function to its graph and, where applicable, to the quantitative relationship it describes.</description>
+    </objective>
+    <objective id="NC-HSM-III-F-IF.7">
+      <description>Graph functions expressed symbolically and show key features of the graph, by hand in simple cases and using technology for more complicated cases.</description>
+    </objective>
+    <objective id="NC-HSM-III-F-IF.8">
+      <description>Write a function defined by an expression in different but equivalent forms to reveal and explain different properties of the function.</description>
+    </objective>
+    <objective id="NC-HSM-III-F-IF.9">
+      <description>Compare properties of two functions each represented in a different way (algebraically, graphically, numerically in tables, or by verbal descriptions).</description>
+    </objective>
+    <objective id="NC-HSM-III-F-BF.1">
+      <description>Write a function that describes a relationship between two quantities </description>
+    </objective>
+    <objective id="NC-HSM-III-F-BF.2">
+      <description>Write arithmetic and geometric sequences both recursively and with an explicit formula, use them to model situations, and translate between the two forms.</description>
+    </objective>
+    <objective id="NC-HSM-III-F-BF.3">
+      <description>Identify the effect on the graph of replacing f(x) by f(x) + k, k f(x), f(kx), and f(x + k) for specific values of k (both positive and negative); find the value of k given the graphs. Experiment with cases and illustrate an explanation of the effects on the graph using technology. Include recognizing even and odd functions from their graphs and algebraic expressions for them.</description>
+    </objective>
+    <objective id="NC-HSM-III-F-BF.4">
+      <description>Find inverse functions.</description>
+    </objective>
+    <objective id="NC-HSM-III-F-LE.3">
+      <description>Observe using graphs and tables that a quantity increasing exponentially eventually exceeds a quantity increasing linearly, quadratically, or (more generally) as a polynomial function.</description>
+    </objective>
+    <objective id="NC-HSM-III-F-LE.4">
+      <description>For exponential models, express as a logarithm the solution to ab&lt;sup&gt;ct&lt;/sup&gt; = d where a, c, and d are numbers and the base b is 2, 10, or e; evaluate the logarithm using technology.</description>
+    </objective>
+    <objective id="NC-HSM-III-F-TF.1">
+      <description>Understand radian measure of an angle as the length of the arc on the unit circle subtended by the angle.</description>
+    </objective>
+    <objective id="NC-HSM-III-F-TF.2">
+      <description>Explain how the unit circle in the coordinate plane enables the extension of trigonometric functions to all real numbers, interpreted as radian measures of angles traversed counterclockwise around the unit circle.</description>
+    </objective>
+    <objective id="NC-HSM-III-F-TF.5">
+      <description>Choose trigonometric functions to model periodic phenomena with specified amplitude, frequency, and midline.</description>
+    </objective>
+    <objective id="NC-HSM-III-F-TF.8">
+      <description>Prove the Pythagorean identity sin__(__) + cos__(__) = 1 and use it to find sin(__), cos(__), or tan(__) given sin(__), cos(__), or tan(__) and the quadrant of the angle.</description>
+    </objective>
+    <objective id="NC-HSM-III-G-CO.1">
+      <description>Know precise definitions of angle, circle, perpendicular line, parallel line, and line segment, based on the undefined notions of point, line, distance along a line, and distance around a circular arc.</description>
+    </objective>
+    <objective id="NC-HSM-III-G-CO.9">
+      <description>Prove theorems about lines and angles.</description>
+    </objective>
+    <objective id="NC-HSM-III-G-CO.10">
+      <description>10. Prove theorems about triangles.</description>
+    </objective>
+    <objective id="NC-HSM-III-G-CO.11">
+      <description>11. Prove theorems about parallelograms.</description>
+    </objective>
+    <objective id="NC-HSM-III-G-CO.12">
+      <description>12. Make formal geometric constructions with a variety of tools and methods (compass and straightedge, string, reflective devices, paper folding, dynamic geometric software, etc.). Copying a segment; copying an angle; bisecting a segment; bisecting an angle; constructing perpendicular lines, including the perpendicular bisector of a line segment; and constructing a line parallel to a given line through a point not on the line.</description>
+    </objective>
+    <objective id="NC-HSM-III-G-SRT.2">
+      <description>Given two figures, use the definition of similarity in terms of similarity transformations to decide if they are similar; explain using similarity transformations the meaning of similarity for triangles as the equality of all corresponding pairs of angles and the proportionality of all corresponding pairs of sides.</description>
+    </objective>
+    <objective id="NC-HSM-III-G-SRT.3">
+      <description>Use the properties of similarity transformations to establish the AA criterion for two triangles to be similar.</description>
+    </objective>
+    <objective id="NC-HSM-III-G-SRT.4">
+      <description>Prove theorems about triangles.</description>
+    </objective>
+    <objective id="NC-HSM-III-G-SRT.5">
+      <description>Use congruence and similarity criteria for triangles to solve problems and to prove relationships in geometric figures.</description>
+    </objective>
+    <objective id="NC-HSM-III-G-C.1">
+      <description>Prove that all circles are similar.</description>
+    </objective>
+    <objective id="NC-HSM-III-G-C.2">
+      <description>Identify and describe relationships among inscribed angles, radii, and chords.</description>
+    </objective>
+    <objective id="NC-HSM-III-G-C.3">
+      <description>Construct the inscribed and circumscribed circles of a triangle, and prove properties of angles for a quadrilateral inscribed in a circle.</description>
+    </objective>
+    <objective id="NC-HSM-III-G-C.5">
+      <description>Derive using similarity the fact that the length of the arc intercepted by an angle is proportional to the radius, and define the radian measure of the angle as the constant of proportionality; derive the formula for the area of a sector.</description>
+    </objective>
+    <objective id="NC-HSM-III-G-GPE.1">
+      <description>Derive the equation of a circle of given center and radius using the Pythagorean Theorem; complete the square to find the center and radius of a circle given by an equation.</description>
+    </objective>
+    <objective id="NC-HSM-III-G-GPE.2">
+      <description>Derive the equation of a parabola given a focus and directrix.</description>
+    </objective>
+    <objective id="NC-HSM-III-G-MG.3">
+      <description>Apply geometric methods to solve design problems (e.g., designing an object or structure to satisfy physical constraints or minimize cost; working with typographic grid systems based on ratios).</description>
+    </objective>
+    <objective id="NC-HSM-III-S-ID.4">
+      <description>Use the mean and standard deviation of a data set to fit it to a normal distribution and to estimate population percentages. Recognize that there are data sets for which such a procedure is not appropriate. Use calculators, spreadsheets, and tables to estimate areas under the normal curve.</description>
+    </objective>
+    <objective id="NC-HSM-III-S-IC.1">
+      <description>Understand statistics as a process for making inferences about population parameters based on a random sample from that population.</description>
+    </objective>
+    <objective id="NC-HSM-III-S-IC.3">
+      <description>Recognize the purposes of and differences among sample surveys, experiments, and observational studies; explain how randomization relates to each.</description>
+    </objective>
+    <objective id="NC-HSM-III-S-IC.4">
+      <description>Use data from a sample survey to estimate a population mean or proportion; develop a margin of error through the use of simulation models for random sampling.</description>
+    </objective>
+    <objective id="NC-HSM-III-S-IC.5">
+      <description>Use data from a randomized experiment to compare two treatments; use simulations to decide if differences between parameters are significant.</description>
+    </objective>
+    <objective id="NC-HSM-III-S-IC.6">
+      <description>Evaluate reports based on data.</description>
+    </objective>
+    <objective id="NC-HSM-III-S-MD.6">
+      <description>(+) Use probabilities to make fair decisions (e.g., drawing by lots, using a random number generator).</description>
+    </objective>
+    <objective id="NC-HSM-III-S-MD.7">
+      <description>(+) Analyze decisions and strategies using probability concepts (e.g., product testing, medical testing, pulling a hockey goalie at the end of a game).</description>
+    </objective>
+  </objectives>
+</course-standard>
