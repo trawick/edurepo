@@ -17,21 +17,21 @@ noisy = False
 def import_course_categories(root):
     categories = root.findall('category')
     for category in categories:
-        id = category.get('id')
+        category_id = category.get('id')
         description = category.find('description').text
 
         if perform_import:
-            cat = CourseCategory(id=id, description=description)
+            cat = CourseCategory(id=category_id, description=description)
             cat.save()
 
 
 def import_course_standard(root):
-    id = root.get('id')
+    course_id = root.get('id')
     description = root.find('description').text
 
     # Blow up if the category is not declared.
     cat = root.find('category')
-    assert cat is not None, 'Course category is not defined for course %s' % id
+    assert cat is not None, 'Course category is not defined for course %s' % course_id
     cat_id = root.find('category').text
 
     try:
@@ -39,16 +39,18 @@ def import_course_standard(root):
         cat = CourseCategory.objects.get(id=cat_id)
     except CourseCategory.DoesNotExist:
         if perform_import:
-            assert False, 'Category %s is not valid (course %s).' % (cat_id, id)
+            assert False, 'Category %s is not valid (course %s).' % (cat_id, course_id)
         else:
             print "Warning: Category %s is unknown" % cat_id
 
     if perform_import:
-        c = Course(id=id, cat=cat, description=description)
+        c = Course(id=course_id, cat=cat, description=description)
         c.save()
+    else:
+        c = None
 
     if noisy:
-        print 'Course standard: %s' % id
+        print 'Course standard: %s' % course_id
         print '                 %s' % description
         print
 
@@ -57,15 +59,15 @@ def import_course_standard(root):
     objectives = root.find('objectives')
 
     for child in objectives:
-        id = child.get('id')
+        objective_id = child.get('id')
         description = child.find('description').text
 
         if noisy:
-            print 'Objective: %s' % id
+            print 'Objective: %s' % objective_id
             print '           %s' % description.encode('utf-8')
 
         if perform_import:
-            c.learningobjective_set.create(id=id, description=description)
+            c.learningobjective_set.create(id=objective_id, description=description)
 
         icans = child.find('icans')
         if icans is not None:
@@ -74,7 +76,7 @@ def import_course_standard(root):
                     print '  ICan: ' + ican.text
 
                 if perform_import:
-                    obj = LearningObjective.objects.get(id=id)
+                    obj = LearningObjective.objects.get(id=objective_id)
                     obj.ican_set.create(statement=ican.text)
 
         reference = child.find('reference')
@@ -83,7 +85,7 @@ def import_course_standard(root):
                 print '  Reference: ' + reference.text
 
             if perform_import:
-                obj = LearningObjective.objects.get(id=id)
+                obj = LearningObjective.objects.get(id=objective_id)
                 obj.referencetext_set.create(text=reference.text)
 
 
@@ -96,10 +98,12 @@ def import_tf_questions(root):
 
         if perform_import:
             obj = LearningObjective.objects.get(id=obj_id)
+        else:
+            obj = None
 
         for question in obj_group.findall('question'):
             stmt = question.find('statement').text
-            ans  = True if question.find('answer').text == 'T' else False
+            ans = True if question.find('answer').text == 'T' else False
 
             if noisy:
                 print '  %s (%s)' % (stmt, ans)
@@ -117,6 +121,8 @@ def import_mc_questions(root):
 
         if perform_import:
             obj = LearningObjective.objects.get(id=obj_id)
+        else:
+            obj = None
 
         for mc_question in obj_group.findall('mc-question'):
             question = mc_question.find('question').text
@@ -135,7 +141,8 @@ def import_mc_questions(root):
             answer = mc_question.find('answer').text
 
             if noisy:
-                print '  %s/%s/%s/%s/%s/%s/%s/%s' % (question, choice1, choice2, choice3, choice4, choice5, q_type, answer)
+                print '  %s/%s/%s/%s/%s/%s/%s/%s' % (question, choice1, choice2, choice3, choice4, choice5, q_type,
+                                                     answer)
 
             if perform_import:
                 kw = dict()
@@ -163,6 +170,8 @@ def import_glossary_items(root):
 
         if perform_import:
             obj = LearningObjective.objects.get(id=obj_id)
+        else:
+            obj = None
 
         for item in obj_group.findall('item'):
             term = item.find('term').text
@@ -174,50 +183,53 @@ def import_glossary_items(root):
             if perform_import:
                 obj.glossaryitem_set.create(term=term, definition=definition)
 
+
+def go(top):
+    if perform_import:
+        # drop existing data before we add the current
+        TrueFalseItem.objects.all().delete()
+        GlossaryItem.objects.all().delete()
+        LearningObjective.objects.all().delete()
+        Course.objects.all().delete()
+        CourseCategory.objects.all().delete()
+        ICan.objects.all().delete()
+        MultipleChoiceItem.objects.all().delete()
+        ReferenceText.objects.all().delete()
+
+    for dirpath, _, fnames in os.walk(top):
+        for f in sorted(fnames, key=lambda fn: fn[:-4]):
+            doc_file = os.path.join(dirpath, f)
+            doc = parse(doc_file)
+            root = doc.getroot()
+
+            if root.tag == 'course-categories':
+                import_course_categories(root)
+            elif root.tag == 'course-standard':
+                import_course_standard(root)
+            elif root.tag == 'tf-questions':
+                import_tf_questions(root)
+            elif root.tag == 'mc-questions':
+                import_mc_questions(root)
+            elif root.tag == 'glossary-items':
+                import_glossary_items(root)
+            else:
+                assert False, 'Document tag "%s" is not recognized.' % root.tag
+
+            if noisy:
+                print
+
 if len(sys.argv) != 3:
     print >> sys.stderr, "Usage: %s filesystem-root check-or-import" % sys.argv[0]
     sys.exit(1)
 
-top = sys.argv[1]
+x_top = sys.argv[1]
 
-mode = sys.argv[2]
-assert os.path.exists(top)
-assert mode == 'check' or mode == 'import'
-if mode == 'import':
+x_mode = sys.argv[2]
+assert os.path.exists(x_top)
+assert x_mode == 'check' or x_mode == 'import'
+if x_mode == 'import':
     perform_import = True
-elif mode == 'check':
+elif x_mode == 'check':
     noisy = True
 
-if perform_import:
-    # drop existing data before we add the current
-    TrueFalseItem.objects.all().delete()
-    GlossaryItem.objects.all().delete()
-    LearningObjective.objects.all().delete()
-    Course.objects.all().delete()
-    CourseCategory.objects.all().delete()
-    ICan.objects.all().delete()
-    MultipleChoiceItem.objects.all().delete()
-    ReferenceText.objects.all().delete()
-
-for dirpath, dnames, fnames in os.walk(top):
-    for f in sorted(fnames, key=lambda fn: fn[:-4]):
-        doc_file = os.path.join(dirpath, f)
-        doc = parse(doc_file)
-        root = doc.getroot()
-
-        if root.tag == 'course-categories':
-            import_course_categories(root)
-        elif root.tag == 'course-standard':
-            import_course_standard(root)
-        elif root.tag == 'tf-questions':
-            import_tf_questions(root)
-        elif root.tag == 'mc-questions':
-            import_mc_questions(root)
-        elif root.tag == 'glossary-items':
-            import_glossary_items(root)
-        else:
-            assert False, 'Document tag "%s" is not recognized.' % root.tag
-
-        if noisy:
-            print
-
+go(x_top)
