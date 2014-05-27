@@ -212,6 +212,17 @@ python manage.py loaddata teachers/fixtures/sample.json
 python manage.py loaddata resources/fixtures/sample.json
 ```
 
+Adding a single course
+======================
+
+In this example, NC-HSM-III is imported:
+
+```
+python repo/import.py ../../samples/M/NC-HSM-III.xml check
+python repo/import.py ../../samples/M/NC-HSM-III.xml import
+```
+
+
 Fixing the admin password
 =========================
 
