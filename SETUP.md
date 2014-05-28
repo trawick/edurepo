@@ -222,6 +222,14 @@ python repo/import.py ../../samples/M/NC-HSM-III.xml check
 python repo/import.py ../../samples/M/NC-HSM-III.xml import
 ```
 
+Removing a single course
+========================
+```
+python repo/remove.py COURSE-ID check
+python repo/delete.py COURSE-ID delete
+```
+
+This will display any objectives that will be removed, but it will also remove related I-Can statements, glossary items, and anything else in the repository.
 
 Fixing the admin password
 =========================
