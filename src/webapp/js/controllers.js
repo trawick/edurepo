@@ -1,5 +1,68 @@
 var edjectiveApp = angular.module('edjectiveApp', ['ngRoute']);
 
+var edjectiveAppUrls = {};
+edjectiveAppUrls['setBase'] = function(base) {
+    edjectiveAppUrls['base'] = base;
+    edjectiveAppUrls['coursecat_baseurl'] = base + 'repo/api/coursecategory/';
+    edjectiveAppUrls['course_baseurl'] = base + 'repo/api/course/';
+    edjectiveAppUrls['lo_baseurl'] = base + 'repo/api/learningobjective/';
+    edjectiveAppUrls['res_baseurl'] = base + 'resources/api/resource/';
+    edjectiveAppUrls['reference_baseurl'] = base + 'repo/api/referencetext/';
+    edjectiveAppUrls['multiplechoice_baseurl'] = base + 'repo/api/multiplechoiceitem/';
+    edjectiveAppUrls['comments_baseurl'] = base + 'resources/api/resourcesubmission/';
+};
+edjectiveAppUrls['getCategories'] = function() {
+    return edjectiveAppUrls.coursecat_baseurl;
+};
+edjectiveAppUrls['getCourse'] = function(course_id) {
+    return edjectiveAppUrls.course_baseurl + course_id + '/';
+};
+edjectiveAppUrls['getObjective'] = function(objective_id) {
+    return edjectiveAppUrls.lo_baseurl + objective_id + '/';
+};
+edjectiveAppUrls['getObjectiveFromName'] = function(objective_name) {
+    return edjectiveAppUrls.lo_baseurl + '?id=' + objective_name;
+};
+edjectiveAppUrls['getCoursesFromCategory'] = function(category_id) {
+    return edjectiveAppUrls.course_baseurl + '?cat__id=' + category_id;
+};
+edjectiveAppUrls['getObjectivesFromCourse'] = function(course_id) {
+    return edjectiveAppUrls.lo_baseurl + '?course__id=' + course_id;
+};
+edjectiveAppUrls['getGlossaryItemsFromObjective'] = function(objective_id) {
+    return edjectiveAppUrls.base + 'repo/api/glossary_item/?learning_objective__id=' + objective_id;
+};
+edjectiveAppUrls['getIcansFromObjective'] = function(objective_id) {
+    return edjectiveAppUrls.base + 'repo/api/ican/?learning_objective__id=' + objective_id;
+};
+edjectiveAppUrls['getReferenceTextFromObjective'] = function(objective_id) {
+    return edjectiveAppUrls.reference_baseurl + '?learning_objective=' + objective_id;
+};
+edjectiveAppUrls['getResourcesFromObjective'] = function(objective_id) {
+    return edjectiveAppUrls.res_baseurl + '?objective__id=' + objective_id;
+};
+edjectiveAppUrls['getMultipleChoiceItemsFromObjective'] = function(objective_id) {
+    return edjectiveAppUrls.multiplechoice_baseurl + '?learning_objective__id=' + objective_id;
+};
+edjectiveAppUrls['getTrueFalseItemsFromObjective'] = function(objective_id) {
+    return edjectiveAppUrls.base + 'repo/api/true_false_item/?learning_objective__id=' + objective_id;
+};
+edjectiveAppUrls['getClassesFromTeacher'] = function(teacher_email) {
+    return edjectiveAppUrls.base + 'teachers/api/teacher_class/?teacher__email=' + teacher_email;
+};
+edjectiveAppUrls['getObjectivesFromTeacherClass'] = function(teacher_email, start_date, stop_date, class_name) {
+    return edjectiveAppUrls.base + 'teachers/api/entry/?teacher__email=' + teacher_email + '&date__lte=' + stop_date + '&date__gte=' + start_date + '&teacher_class__name=' + class_name;
+};
+edjectiveAppUrls['getCommentsFromResource'] = function(resource_id) {
+    return edjectiveAppUrls.comments_baseurl + '?resource=' + resource_id;
+};
+edjectiveAppUrls['getResourceEntryForm'] = function(objective_id) {
+    return edjectiveAppUrls.base + 'resources/create/' + '?objective=' + objective_id;
+};
+edjectiveAppUrls['getResourceCommentForm'] = function(resource_id) {
+    return edjectiveAppUrls.base + 'resources/' + resource_id + '/comment';
+};
+
 edjectiveApp.factory('CurrentObjectives', function() {
     var c_o = null;
     return {
@@ -91,7 +154,6 @@ edjectiveApp.controller('GetTeacherEmailCtrl', function ($scope) {
 });
 
 edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routeParams, $sce, CurrentObjectives) {
-    $scope.baseurl = null;
     $scope.objective_name = $routeParams.objective;
     $scope.objective = null;
     $scope.all_objectives = CurrentObjectives.get();
@@ -100,36 +162,14 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
     $scope.resources = null;
     $scope.no_resources_msg = ''; // No educational resources have been submitted.
 
-    function setBaseURL(u) {
-        $scope.baseurl = u;
-        $scope.coursecat_baseurl = $scope.baseurl + 'repo/api/coursecategory/';
-        $scope.course_baseurl = $scope.baseurl + 'repo/api/course/';
-        $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
-        $scope.res_baseurl = $scope.baseurl + 'resources/api/resource/';
-        $scope.comments_baseurl = $scope.baseurl + 'resources/api/resourcesubmission/';
-        $scope.reference_baseurl = $scope.baseurl + 'repo/api/referencetext/';
-        $scope.multiplechoice_baseurl = $scope.baseurl + 'repo/api/multiplechoiceitem/';
-        $scope.res_create_form = $scope.baseurl + 'resources/create/';
-        // No, JavaScript doesn't have string formatting:
-        $scope.res_comment_form_fmt = $scope.baseurl + 'resources/%s/comment/';
-    }
-
-    function lookup_resources_url(obj) {
-        return $scope.res_baseurl + '?objective__id=' + obj;
-    }
-
-    function lookup_comments_url(obj) {
-        return $scope.comments_baseurl + '?resource=' + obj;
-    }
-
     $scope.submitResource = function(objective_id) {
-        window.open($scope.res_create_form + '?objective=' + objective_id,
+        window.open(edjectiveAppUrls.getResourceEntryForm(objective_id),
                     "Resource for " + objective_id);
     };
 
     $scope.commentOnResource = function(resource_id) {
-        var new_location = $scope.res_comment_form_fmt.replace('%s', resource_id);
-        window.open(new_location, "Comment on resource");
+        window.open(edjectiveAppUrls.getResourceCommentForm(resource_id),
+                    "Comment on resource");
     };
 
     $scope.toTrusted = function(html) {
@@ -153,9 +193,9 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
 
     // Kick everything off once we retrieve the API configuration.
     $http.get("resources/config.json").success(function(data) {
-        setBaseURL(data.base_api_url);
+        edjectiveAppUrls.setBase(data['base_api_url']);
 
-        $http.get($scope.lo_baseurl + '?id=' + $scope.objective_name).success(function(data) {
+        $http.get(edjectiveAppUrls.getObjectiveFromName($scope.objective_name)).success(function(data) {
             $scope.objective = data.objects[0];
 
             if ($scope.all_objectives) {
@@ -163,7 +203,7 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
             }
             else {
                 // Load all objectives since we somehow got here without it.
-                $http.get($scope.lo_baseurl + '?course__id=' + $scope.objective.course_id).success(function(data) {
+                $http.get(edjectiveAppUrls.getObjectivesFromCourse($scope.objective.course_id)).success(function(data) {
                     $scope.all_objectives = data.objects;
                     CurrentObjectives.set(data.objects);
                     $scope.calcPrevNext();
@@ -186,7 +226,7 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
             }
         }
 
-        $http.get(lookup_resources_url($scope.objective_name)).success(function(data) {
+        $http.get(edjectiveAppUrls.getResourcesFromObjective($scope.objective_name)).success(function(data) {
             $scope.resources = data.objects;
             var is_secure = /^https:/.exec(window.location);
             var youtube_scheme = is_secure ? "https" : "http";
@@ -214,7 +254,7 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
                 else {
                     $scope.resources[i].warning = '';
                 }
-                $http.get(lookup_comments_url($scope.resources[i].id)).success(annotate_resource($scope.resources[i]));
+                $http.get(edjectiveAppUrls.getCommentsFromResource($scope.resources[i].id)).success(annotate_resource($scope.resources[i]));
             }
         });
     });
@@ -222,7 +262,6 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
 });
 
 edjectiveApp.controller('BrowseCtrl', function ($scope, $http, CurrentObjectives) {
-    $scope.baseurl = '';
     $scope.categories = null;
     $scope.selectedCategory = null;
     $scope.courses = null;
@@ -230,26 +269,16 @@ edjectiveApp.controller('BrowseCtrl', function ($scope, $http, CurrentObjectives
     $scope.objectives = null;
     $scope.serverUnreachable = null;
 
-    function setBaseURL(u) {
-        $scope.baseurl = u;
-        $scope.coursecat_baseurl = $scope.baseurl + 'repo/api/coursecategory/';
-        $scope.course_baseurl = $scope.baseurl + 'repo/api/course/';
-        $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
-        $scope.res_baseurl = $scope.baseurl + 'resources/api/resource/';
-        $scope.reference_baseurl = $scope.baseurl + 'repo/api/referencetext/';
-        $scope.multiplechoice_baseurl = $scope.baseurl + 'repo/api/multiplechoiceitem/';
-    }
-
     $scope.updateSelectedCategory = function() {
         $scope.courses = null;
         $scope.objectives = null;
-        $http.get($scope.course_baseurl + '?cat__id=' + $scope.selectedCategory.id).success(function(data) {
+        $http.get(edjectiveAppUrls.getCoursesFromCategory($scope.selectedCategory.id)).success(function(data) {
             $scope.courses = data.objects;
         });
     };
 
     $scope.updateSelectedCourse = function() {
-        $http.get($scope.lo_baseurl + '?course__id=' + $scope.selectedCourse.id).success(function(data) {
+        $http.get(edjectiveAppUrls.getObjectivesFromCourse($scope.selectedCourse.id)).success(function(data) {
             $scope.objectives = data.objects;
             CurrentObjectives.set(data.objects);
         });
@@ -257,9 +286,9 @@ edjectiveApp.controller('BrowseCtrl', function ($scope, $http, CurrentObjectives
 
     // Kick everything off once we retrieve the API configuration.
     $http.get("resources/config.json").success(function(data) {
-        setBaseURL(data.base_api_url);
+        edjectiveAppUrls.setBase(data['base_api_url']);
 
-        $http.get($scope.coursecat_baseurl).success(function(data) {
+        $http.get(edjectiveAppUrls.getCategories()).success(function(data) {
             $scope.categories = data.objects;
         }).error(function(data) {
             $scope.serverUnreachable = "The server cannot be reached.";
@@ -273,82 +302,40 @@ edjectiveApp.controller('BrowseCtrl', function ($scope, $http, CurrentObjectives
 edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
     $scope.courseId = '';
     $scope.objectives = [];
-    $scope.baseurl = '';
-    $scope.lo_baseurl = '';
-    $scope.res_baseurl = '';
-
-    function setBaseURL(u) {
-        $scope.baseurl = u;
-        $scope.course_baseurl = $scope.baseurl + 'repo/api/course/';
-        $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
-        $scope.res_baseurl = $scope.baseurl + 'resources/api/resource/';
-        $scope.reference_baseurl = $scope.baseurl + 'repo/api/referencetext/';
-        $scope.multiplechoice_baseurl = $scope.baseurl + 'repo/api/multiplechoiceitem/';
-    }
+    $scope.initialized = 0;
 
     $http.get("resources/config.json").success(function(data) {
-        setBaseURL(data.base_api_url);
+        edjectiveAppUrls.setBase(data['base_api_url']);
+        $scope.initialized = 1;
     });
 
     $scope.update = function(courseId) {
-        if ($scope.baseurl != '') {
+        if ($scope.initialized != 0) {
             updateCourse(courseId);
         }
     };
-
-    function lookup_course(courseId) {
-        return $scope.course_baseurl + courseId + '/';
-    }
-
-    function lookup_objectives_by_course(course_id) {
-        return $scope.lo_baseurl + '?course=' + course_id;
-    }
-
-    function lookup_glossary_items_by_objective(obj) {
-        return $scope.baseurl + 'repo/api/glossary_item/?learning_objective__id=' + obj;
-    }
-
-    function lookup_icans_by_objective(obj) {
-        return $scope.baseurl + 'repo/api/ican/?learning_objective__id=' + obj;
-    }
-
-    function lookup_referencetext_by_objective(obj) {
-        return $scope.reference_baseurl + '?learning_objective=' + obj;
-    }
-
-    function lookup_multiple_choice_items_by_objective(obj) {
-        return $scope.multiplechoice_baseurl + '?learning_objective__id=' + obj;
-    }
-
-    function lookup_true_false_items_by_objective(obj) {
-        return $scope.baseurl + 'repo/api/true_false_item/?learning_objective__id=' + obj;
-    }
-
-    function lookup_resources_url(obj) {
-        return $scope.res_baseurl + '?objective=' + obj;
-    }
 
     function annotate_objective($http, obj) {
         obj.objective = obj.id + ' ' + obj.description;
         obj.resources = [];
         obj.glossitems = [];
         obj.icans = [];
-        $http.get(lookup_icans_by_objective(obj.id)).success(function(data) {
+        $http.get(edjectiveAppUrls.getIcansFromObjective(obj.id)).success(function(data) {
             obj.icans = data.objects;
         });
-        $http.get(lookup_referencetext_by_objective(obj.id)).success(function(data) {
+        $http.get(edjectiveAppUrls.getReferenceTextFromObjective(obj.id)).success(function(data) {
             obj.referencetext = data.objects[0];
         });
-        $http.get(lookup_resources_url(obj.id)).success(function(data) {
+        $http.get(edjectiveAppUrls.getResourcesFromObjective(obj.id)).success(function(data) {
             obj.resources = data.objects;
         });
-        $http.get(lookup_glossary_items_by_objective(obj.id)).success(function(data) {
+        $http.get(edjectiveAppUrls.getGlossaryItemsFromObjective(obj.id)).success(function(data) {
             obj.glossitems = data.objects;
         });
-        $http.get(lookup_true_false_items_by_objective(obj.id)).success(function(data) {
+        $http.get(edjectiveAppUrls.getTrueFalseItemsFromObjective(obj.id)).success(function(data) {
             obj.tfitems = data.objects;
         });
-        $http.get(lookup_multiple_choice_items_by_objective(obj.id)).success(function(data) {
+        $http.get(edjectiveAppUrls.getMultipleChoiceItemsFromObjective(obj.id)).success(function(data) {
             obj.mcitems = data.objects;
         });
     }
@@ -358,11 +345,11 @@ edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
         $scope.course = null;
         $scope.courseLookupError = '';
 
-        $http.get(lookup_course(courseId)).success(function (data) {
+        $http.get(edjectiveAppUrls.getCourse(courseId)).success(function (data) {
             $scope.course = data;
         });
 
-        $http.get(lookup_objectives_by_course(courseId)).success(function (data) {
+        $http.get(edjectiveAppUrls.getObjectivesFromCourse(courseId)).success(function (data) {
             if (data.meta.total_count == 0) {
                 $scope.courseLookupError = 'The course id is not valid.';
             }
@@ -385,76 +372,31 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
     $scope.objectives = {'data': []};
     $scope.teacher_email = '';
 
-    function setBaseURL(u) {
-        $scope.baseurl = u;
-        $scope.lo_baseurl = $scope.baseurl + 'repo/api/learningobjective/';
-        $scope.res_baseurl = $scope.baseurl + 'resources/api/resource/';
-        $scope.reference_baseurl = $scope.baseurl + 'repo/api/referencetext/';
-        $scope.multiplechoice_baseurl = $scope.baseurl + 'repo/api/multiplechoiceitem/';
-    }
-
     function annotate_objective($http, data, obj) {
         return function(data) {
             obj.objective = data.id + ' ' + data.description;
             obj.resources = [];
             obj.glossitems = [];
             obj.icans = [];
-            $http.get(lookup_icans_by_objective(data.id)).success(function(data) {
+            $http.get(edjectiveAppUrls.getIcansFromObjective(data.id)).success(function(data) {
                 obj.icans = data.objects;
             });
-            $http.get(lookup_referencetext_by_objective(data.id)).success(function(data) {
+            $http.get(edjectiveAppUrls.getReferenceTextFromObjective(data.id)).success(function(data) {
                 obj.referencetext = data.objects[0];
             });
-            $http.get(lookup_resources_url(data.id)).success(function(data) {
+            $http.get(edjectiveAppUrls.getResourcesFromObjective(data.id)).success(function(data) {
                 obj.resources = data.objects;
             });
-            $http.get(lookup_glossary_items_by_objective(data.id)).success(function(data) {
+            $http.get(edjectiveAppUrls.getGlossaryItemsFromObjective(data.id)).success(function(data) {
                 obj.glossitems = data.objects;
             });
-            $http.get(lookup_true_false_items_by_objective(data.id)).success(function(data) {
+            $http.get(edjectiveAppUrls.getTrueFalseItemsFromObjective(data.id)).success(function(data) {
                 obj.tfitems = data.objects;
             });
-            $http.get(lookup_multiple_choice_items_by_objective(data.id)).success(function(data) {
+            $http.get(edjectiveAppUrls.getMultipleChoiceItemsFromObjective(data.id)).success(function(data) {
                 obj.mcitems = data.objects;
             });
         };
-    }
-
-    function lookup_objective_url(obj) {
-        return $scope.lo_baseurl + obj + '/';
-    }
-
-    // /resources/api/resource/?format=json&resource_objective=MG4-FACTMULT
-    function lookup_resources_url(obj) {
-        return $scope.res_baseurl + '?objective=' + obj;
-    }
-
-    function lookup_current_objectives_url(teacher_email, start_date, stop_date, class_name) {
-        return $scope.baseurl + 'teachers/api/entry/?teacher__email=' + teacher_email + '&date__lte=' + stop_date + '&date__gte=' + start_date + '&teacher_class__name=' + class_name;
-    }
-
-    function lookup_glossary_items_by_objective(obj) {
-        return $scope.baseurl + 'repo/api/glossary_item/?learning_objective__id=' + obj;
-    }
-
-    function lookup_icans_by_objective(obj) {
-        return $scope.baseurl + 'repo/api/ican/?learning_objective__id=' + obj;
-    }
-
-    function lookup_referencetext_by_objective(obj) {
-        return $scope.reference_baseurl + '?learning_objective=' + obj;
-    }
-
-    function lookup_multiple_choice_items_by_objective(obj) {
-        return $scope.multiplechoice_baseurl + '?learning_objective__id=' + obj;
-    }
-
-    function lookup_true_false_items_by_objective(obj) {
-        return $scope.baseurl + 'repo/api/true_false_item/?learning_objective__id=' + obj;
-    }
-
-    function lookup_teacher_classes_url(teacher_email) {
-        return $scope.baseurl + 'teachers/api/teacher_class/?teacher__email=' + teacher_email;
     }
 
     $scope.classSelection = function(cl) {
@@ -465,12 +407,12 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
             var weekago = new Date();
             weekago.setDate(weekago.getDate() - 7);
             var weekagostr = $filter('date')(weekago, 'yyyy-MM-dd');
-            $http.get(lookup_current_objectives_url($scope.teacher_email, weekagostr, curdatestr, cl.name)).success(function(data) {
+            $http.get(edjectiveAppUrls.getObjectivesFromTeacherClass($scope.teacher_email, weekagostr, curdatestr, cl.name)).success(function(data) {
                 var newobj = {'text': cl.name, 'objectives': []};
                 for (var i = 0; i < data.meta.total_count; i++) {
                     newobj.objectives.push({'date': data.objects[i].date, 'objective': data.objects[i].objective,
                                             'comments': data.objects[i].comments});
-                    $http.get(lookup_objective_url(data.objects[i].objective)).success(annotate_objective($http, data, newobj.objectives[newobj.objectives.length - 1]));
+                    $http.get(edjectiveAppUrls.getObjective(data.objects[i].objective)).success(annotate_objective($http, data, newobj.objectives[newobj.objectives.length - 1]));
                 }
                 $scope.objectives['data'].push(newobj);
             });
@@ -491,9 +433,9 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
 
         $http.get("resources/config.json").success(function(data) {
 
-            setBaseURL(data.base_api_url);
+            edjectiveAppUrls.setBase(data['base_api_url']);
 
-            $http.get(lookup_teacher_classes_url(args)).success(function(data) {
+            $http.get(edjectiveAppUrls.getClassesFromTeacher(args)).success(function(data) {
                 if (data.meta.total_count == 0) {
                     $scope.notice = {'text': 'The teacher e-mail address is invalid.'};
                 }
