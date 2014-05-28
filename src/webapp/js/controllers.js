@@ -130,7 +130,7 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
     $scope.commentOnResource = function(resource_id) {
         var new_location = $scope.res_comment_form_fmt.replace('%s', resource_id);
         window.open(new_location, "Comment on resource");
-    }
+    };
 
     $scope.toTrusted = function(html) {
         return $sce.trustAsHtml(html);
