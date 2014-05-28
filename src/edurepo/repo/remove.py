@@ -4,8 +4,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'edurepo.settings')
 import sys
 sys.path.append('.')
 
-from repo.models import Course, CourseCategory, LearningObjective, ICan, \
-    GlossaryItem, MultipleChoiceItem, ReferenceText, TrueFalseItem
+from repo.models import Course, LearningObjective
 
 
 def delete_learning_objective(lo, delete):
