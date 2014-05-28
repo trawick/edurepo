@@ -14,7 +14,9 @@
         </select>
     </form>
 
+    <span data-ng-show="selectedCategory">
     <p data-ng-hide="courses"><em>This course category does not contain any courses.</em></p>
+    </span>
     <span data-ng-show="courses">
     <p>Select course:</p>
 
