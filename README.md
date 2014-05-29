@@ -3,7 +3,8 @@ edurepo
 
 **See the text at http://edjective.org/ for a better song and dance.  There are a number of use cases of the system
 and I change my mind from time to time about which use cases are more valuable or should be stressed to a particular
-audience.**
+audience.**  (That's not to say that there isn't a very rich future; I simply must work first on the best hooks to
+get people to use it.)
 
 # Educational material repository
 
