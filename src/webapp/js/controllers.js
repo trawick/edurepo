@@ -62,6 +62,9 @@ edjectiveAppUrls['getResourceEntryForm'] = function(objective_id) {
 edjectiveAppUrls['getResourceCommentForm'] = function(resource_id) {
     return edjectiveAppUrls.base + 'resources/' + resource_id + '/comment';
 };
+edjectiveAppUrls['getUserInterface'] = function() {
+    return edjectiveAppUrls.base;
+};
 
 edjectiveApp.factory('CurrentObjectives', function() {
     var c_o = null;
@@ -141,8 +144,12 @@ edjectiveApp.controller('FrontCtrl', function ($scope) {
     // nothing for now
 });
 
-edjectiveApp.controller('ForTeachersCtrl', function ($scope) {
-    // nothing for now
+edjectiveApp.controller('ForTeachersCtrl', function ($scope, $http) {
+    // Kick everything off once we retrieve the API configuration.
+    $http.get("resources/config.json").success(function(data) {
+        edjectiveAppUrls.setBase(data['base_api_url']);
+        $scope.webui = edjectiveAppUrls.getUserInterface();
+    });
 });
 
 edjectiveApp.controller('GetTeacherEmailCtrl', function ($scope) {
