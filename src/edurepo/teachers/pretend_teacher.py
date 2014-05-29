@@ -28,7 +28,6 @@ def process():
     today = datetime.date.today()
     cur_day = today - datetime.timedelta(days=today.weekday())
     for objective in teacher_data[5]:
-        print cur_day
         e = Entry(teacher=t, teacher_class=c, date=cur_day, objective=objective)
         e.save()
         cur_day += datetime.timedelta(days=1)
