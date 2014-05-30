@@ -7,6 +7,7 @@ from django.template import RequestContext
 from edurepo import settings
 from teachers.models import Teacher, TeacherClass, Entry
 from teachers.forms import EntryForm, TeacherForm, TeacherClassForm
+from core.utils import description_for_objective
 
 
 day_names = {'M': 'Monday', 'T': 'Tuesday', 'W': 'Wednesday', 'R': 'Thursday', 'F': 'Friday'}
@@ -44,7 +45,13 @@ def detail(request, teacher_email):
 
 def events(request, teacher_email, class_name):
     teacher = Teacher.objects.get(email=teacher_email)
-    entry_list = Entry.objects.filter(teacher=teacher_email, teacher_class__name=class_name)
+    teacher_class = TeacherClass.objects.get(name=class_name)
+    entry_list = Entry.objects.filter(teacher=teacher_email, teacher_class__name=class_name).order_by('date')
+
+    # remote lookup of objective description
+    for e in entry_list:
+        e.description = description_for_objective(e.objective, teacher_class.repo_provider)
+
     context = RequestContext(request, {'entry_list': entry_list,
                                        'teacher': teacher,
                                        'class_name': class_name,

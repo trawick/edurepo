@@ -1,5 +1,8 @@
 #### from https://gist.github.com/robhudson/3848832
 
+import json
+import urllib2
+
 from django.http import HttpResponse
 from tastypie import http
 from tastypie.exceptions import ImmediateHttpResponse
@@ -42,3 +45,15 @@ def ellipsis(input_str, max_output_len):
     if len(input_str) > max_output_len:
         return input_str[:max_output_len - 3] + '...'
     return input_str
+
+
+def description_for_objective(objective_id, repo_provider):
+    print objective_id
+    print repo_provider
+
+    base_objective_url = '%srepo/api/learningobjective/' % repo_provider
+    url = '%s%s/?format=json' % (base_objective_url, objective_id)
+    response = urllib2.urlopen(url)
+    body = response.read()
+    json_body = json.loads(body)
+    return json_body['description']

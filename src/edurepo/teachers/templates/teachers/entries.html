@@ -3,9 +3,13 @@
 {% block content %}
 {% if entry_list %}
     <p>Calendar entries for {{ class_name }} taught by {{ teacher.name }}:</p>
-    <dl>
+    <dl class="dl-horizontal">
 {% for e in entry_list %}
         <dt>{{ e.date }}</dt><dd>{{ e.objective }}
+{% if e.description %}
+        <br />
+        {{ e.description }}
+{% endif %}
 {% if e.comments %}
         <br />
         {{ e.comments }}
