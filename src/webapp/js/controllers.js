@@ -277,6 +277,9 @@ edjectiveApp.controller('BrowseCtrl', function ($scope, $http, CurrentObjectives
     };
 
     $scope.updateSelectedCourse = function() {
+        if ($scope.selectedCourse == null) {
+            return;
+        }
         $http.get(edjectiveAppUrls.getObjectivesFromCourse($scope.selectedCourse.id)).success(function(data) {
             $scope.objectives = data.objects;
             CurrentObjectives.set(data.objects);
