@@ -3,12 +3,24 @@ Current stage
 
 * ???
 
+Three worst issues in teacher interface
+=======================================
+
+1. Cannot enter objectives for a week other than the current one
+2. Cannot see list of objectives/descriptions when placing an objective on the calendar
+3. Report of objective by date (e.g., http://edjective.org/ed/teachers/ms.teacher@example.edu/5th%20grade%20science/) is in wrong order and poorly formatted.
+
+Three worst issues in demo interface
+====================================
+
+1. Demo teacher/class has objectives that don't have any supporting materials in the repository.
+2. XXX
+3. XXX
+
 Possible themes for upcoming stages
 ===================================
 
 * Import Common Core high school math course definitions
-* Teacher dashboard -- select a week to view/edit
-* Teachers need to see list of objectives and descriptions on dashboard
 * Bootstrap-ify Angular app
 * Get social login working for Angular app
 * Improve user interface for resource browsing and commenting
@@ -31,7 +43,6 @@ Bugs of interest
 * handle API failures in Angular webapp
 * Read "Effective JavaScript", finish Django tutorial, finish Angular tutorial, read tastypie docs :)
 * More testcases
-* Refactor controllers.js
 * Improve interface for submitting resources for a LO
 
 Blatant bugs, even obvious at this early stage
