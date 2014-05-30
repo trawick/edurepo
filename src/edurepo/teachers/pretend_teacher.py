@@ -9,7 +9,13 @@ from django.contrib.auth.models import User
 from teachers.models import Entry, Teacher, TeacherClass
 
 
-def process():
+def process(args):
+    if len(args) != 1:
+        print >> sys.stderr, "one arg required: Base API URL"
+        sys.exit(1)
+
+    base_api_url = args[0]
+
     teacher_data = ('ms.teacher@example.edu', 'testuser', 'Ms. Teacher', 'AL-G5-SCIENCE', '5th grade science',
                     ['AL-G5-SCIENCE-05A', 'AL-G5-SCIENCE-05A', 'AL-G5-SCIENCE-05B', 'AL-G5-SCIENCE-05D',
                      'AL-G5-SCIENCE-05D'])
@@ -22,7 +28,8 @@ def process():
     Teacher.objects.filter(email=teacher_data[0]).delete()
     t = Teacher(email=teacher_data[0], user=u, name=teacher_data[2])
     t.save()
-    c = TeacherClass(teacher=t, course_id=teacher_data[3], name=teacher_data[4])
+    c = TeacherClass(teacher=t, course_id=teacher_data[3], name=teacher_data[4],
+                     repo_provider=base_api_url)
     c.save()
 
     today = datetime.date.today()
@@ -32,4 +39,4 @@ def process():
         e.save()
         cur_day += datetime.timedelta(days=1)
 
-process()
+process(sys.argv[1:])
