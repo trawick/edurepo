@@ -8,7 +8,7 @@ Three worst issues in teacher interface
 
 1. Cannot enter objectives for a week other than the current one
 2. Cannot see list of objectives/descriptions when placing an objective on the calendar
-3. Report of objective by date (e.g., http://edjective.org/ed/teachers/ms.teacher@example.edu/5th%20grade%20science/) is in wrong order and poorly formatted.
+3.XXX
 
 Three worst issues in demo interface
 ====================================
