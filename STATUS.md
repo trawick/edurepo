@@ -7,7 +7,7 @@ Three worst issues in teacher interface
 =======================================
 
 1. Cannot enter objectives for a week other than the current one
-2. Cannot see list of objectives/descriptions when placing an objective on the calendar
+2. XXX
 3. XXX
 
 Three worst issues in demo interface
