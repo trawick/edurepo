@@ -14,7 +14,7 @@ Three worst issues in demo interface
 ====================================
 
 1. Demo teacher/class has objectives that don't have any supporting materials in the repository.
-2. XXX
+2. Ugly; needs to be Bootstrap-ed
 3. XXX
 
 Possible themes for upcoming stages
