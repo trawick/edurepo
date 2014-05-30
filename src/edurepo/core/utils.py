@@ -48,12 +48,21 @@ def ellipsis(input_str, max_output_len):
 
 
 def description_for_objective(objective_id, repo_provider):
-    print objective_id
-    print repo_provider
-
     base_objective_url = '%srepo/api/learningobjective/' % repo_provider
     url = '%s%s/?format=json' % (base_objective_url, objective_id)
     response = urllib2.urlopen(url)
     body = response.read()
     json_body = json.loads(body)
     return json_body['description']
+
+
+def objectives_for_course(course_id, repo_provider):
+    base_course_url = '%srepo/api/learningobjective/' % repo_provider
+    url = '%s?format=json&course__id=%s' % (base_course_url, course_id)
+    response = urllib2.urlopen(url)
+    body = response.read()
+    json_body = json.loads(body)
+    results = []
+    for o in json_body['objects']:
+        results += [(o['id'], o['description'])]
+    return results

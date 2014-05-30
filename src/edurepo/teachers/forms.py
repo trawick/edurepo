@@ -26,3 +26,25 @@ class EntryForm(forms.ModelForm):
     class Meta:
         model = Entry
         fields = ('objective', 'comments')
+
+
+def create_entry_form(objective_list):
+    """Dynamically create a form like EntryForm above, which presents a list of
+    course-specific objectives in a select box, instead of a Textarea."""
+
+    class Meta:
+        pass
+
+    widget_list = []
+    for o in objective_list:
+        widget_list += [(o[0], o[0] + ' - ' + o[1])]
+    setattr(Meta, 'model', Entry)
+    setattr(Meta, 'fields', ('objective', 'comments'))
+    widgets = {'objective': forms.Select(choices=widget_list)}
+    setattr(Meta, 'widgets', widgets)
+    attributes = {'Meta': Meta}
+
+    name = 'DynamicEntryForm'
+    base_classes = (forms.ModelForm,)
+    form = type(name, base_classes, attributes)
+    return form

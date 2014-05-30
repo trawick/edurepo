@@ -6,8 +6,8 @@ from django.shortcuts import render, redirect
 from django.template import RequestContext
 from edurepo import settings
 from teachers.models import Teacher, TeacherClass, Entry
-from teachers.forms import EntryForm, TeacherForm, TeacherClassForm
-from core.utils import description_for_objective
+from teachers.forms import EntryForm, TeacherForm, TeacherClassForm, create_entry_form
+from core.utils import description_for_objective, objectives_for_course
 
 
 day_names = {'M': 'Monday', 'T': 'Tuesday', 'W': 'Wednesday', 'R': 'Thursday', 'F': 'Friday'}
@@ -108,19 +108,23 @@ def add_class(request, teacher_email):
 
 @login_required
 def add_objective(request, teacher_email, teacher_class_id, date):
+    teacher_class = TeacherClass.objects.get(id=teacher_class_id)
+
     if request.POST:
         form = EntryForm(request.POST)
         if form.is_valid():
             entry = form.save(commit=False)
             teacher = Teacher.objects.get(email=teacher_email)
             entry.teacher = teacher
-            entry.teacher_class = TeacherClass.objects.get(id=teacher_class_id)
+            entry.teacher_class = teacher_class
             entry.date = datetime.datetime.strptime(date, '%B %d, %Y')
             entry.save()
             return redirect('teachers.views.dashboard', teacher_email=teacher_email, teacher_class_id=teacher_class_id)
     else:
-        initial = {}
-        form = EntryForm(initial=initial)
+        objectives = objectives_for_course(teacher_class.course_id, teacher_class.repo_provider)
+        # like EntryForm() above, but dynamically created to use a selection
+        # of objectives specific to this course
+        form = create_entry_form(objectives)
 
     args = {'teacher_email': teacher_email,
             'teacher_class_id': teacher_class_id,
