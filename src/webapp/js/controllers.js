@@ -152,14 +152,6 @@ edjectiveApp.controller('ForTeachersCtrl', function ($scope, $http) {
     });
 });
 
-edjectiveApp.controller('GetTeacherEmailCtrl', function ($scope) {
-
-    $scope.update = function(teacherEmail) {
-        $scope.$emit('updateTeacherEmailEvent', teacherEmail);
-    };
-
-});
-
 edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routeParams, $sce, CurrentObjectives) {
     $scope.objective_name = $routeParams.objective;
     $scope.objective = null;
@@ -374,6 +366,13 @@ edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
     }
 });
 
+edjectiveApp.controller('GetTeacherEmailCtrl', function ($scope) {
+    $scope.update = function(teacherEmail) {
+        $scope.$emit('updateTeacherEmailEvent', teacherEmail);
+    };
+
+});
+
 edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
 
     $scope.objectives = {'data': []};
@@ -436,6 +435,7 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
 
     $scope.$on('handleTeacherEmailBroadcast', function(event, args) {
         $scope.teacher_email = args;
+        $scope.objectives = {'data': []};
         $scope.notice = {'text': 'Loading ' + args + '...'};
 
         $http.get("resources/config.json").success(function(data) {
