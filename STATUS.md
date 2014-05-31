@@ -8,7 +8,7 @@ Three worst issues in teacher interface
 
 1. XXX
 2. XXX
-3. XXX
+3. dates in dashboard URLs have different formats than dates in add/remove objective URLs
 
 Three worst issues in demo interface
 ====================================
