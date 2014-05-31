@@ -119,7 +119,11 @@ def add_objective(request, teacher_email, teacher_class_id, date):
             entry.teacher_class = teacher_class
             entry.date = datetime.datetime.strptime(date, '%B %d, %Y')
             entry.save()
-            return redirect('teachers.views.dashboard', teacher_email=teacher_email, teacher_class_id=teacher_class_id)
+            start_of_week_datetime = entry.date - datetime.timedelta(days=entry.date.weekday())
+            start_of_week = datetime.date(start_of_week_datetime.year, start_of_week_datetime.month,
+                                          start_of_week_datetime.day)
+            return redirect('teachers.views.dashboard', teacher_email=teacher_email, teacher_class_id=teacher_class_id,
+                            start_of_week=start_of_week)
     else:
         objectives = objectives_for_course(teacher_class.course_id, teacher_class.repo_provider)
         # like EntryForm() above, but dynamically created to use a selection
@@ -139,9 +143,14 @@ def add_objective(request, teacher_email, teacher_class_id, date):
 def remove_objective(request, teacher_email, teacher_class_id, date, objective):
     if request.POST:
         teacher = Teacher.objects.get(email=teacher_email)
+        date_of_objective = datetime.datetime.strptime(date, '%B %d, %Y')
         Entry.objects.filter(teacher=teacher, teacher_class__id=teacher_class_id,
-                             date=datetime.datetime.strptime(date, '%B %d, %Y'), objective=objective).delete()
-        return redirect('teachers.views.dashboard', teacher_email=teacher_email, teacher_class_id=teacher_class_id)
+                             date=date_of_objective, objective=objective).delete()
+        start_of_week_datetime = date_of_objective - datetime.timedelta(days=date_of_objective.weekday())
+        start_of_week = datetime.date(start_of_week_datetime.year, start_of_week_datetime.month,
+                                      start_of_week_datetime.day)
+        return redirect('teachers.views.dashboard', teacher_email=teacher_email, teacher_class_id=teacher_class_id,
+                        start_of_week=start_of_week)
 
     args = {'teacher_email': teacher_email,
             'teacher_class_id': teacher_class_id,
@@ -153,16 +162,22 @@ def remove_objective(request, teacher_email, teacher_class_id, date, objective):
 
 
 @login_required
-def dashboard(request, teacher_email, teacher_class_id=None):
+def dashboard(request, teacher_email, teacher_class_id=None, start_of_week=None):
     teacher_class_list = TeacherClass.objects.filter(teacher=teacher_email)
     teacher = Teacher.objects.get(email=teacher_email)
-    today = datetime.date.today()
-    if not teacher_class_id:
-        # if the teacher has no classes, we won't redirect here, and the
-        # user will get a dashboard with appropriate text
-        if teacher_class_list:
+
+    if teacher_class_list:
+        if not teacher_class_id:
+            # if the teacher has no classes, we won't redirect here, and the
+            # user will get a dashboard with appropriate text
             return redirect('teachers.views.dashboard', teacher_email=teacher_email,
                             teacher_class_id=teacher_class_list[0].id)
+        if not start_of_week:
+            today = datetime.date.today()
+            return redirect('teachers.views.dashboard', teacher_email=teacher_email,
+                            teacher_class_id=teacher_class_id,
+                            start_of_week=today - datetime.timedelta(days=today.weekday()))
+
     selected_class = None
     for c in teacher_class_list:
         c.active_class = ''
@@ -172,7 +187,18 @@ def dashboard(request, teacher_email, teacher_class_id=None):
             c.days = dict()
             c.dates = dict()
             c.objectives = dict()
-            cur_day = today - datetime.timedelta(days=today.weekday())
+            cur_day_in_datetime = datetime.datetime.strptime(start_of_week, '%Y-%m-%d')
+            cur_day = datetime.date(cur_day_in_datetime.year, cur_day_in_datetime.month, cur_day_in_datetime.day)
+            previous_week = cur_day - datetime.timedelta(days=7)
+            previous_week_redirect = redirect('teachers.views.dashboard', teacher_email=teacher_email,
+                                              teacher_class_id=teacher_class_id,
+                                              start_of_week=previous_week)
+            previous_week_link = previous_week_redirect.url
+            next_week = cur_day + datetime.timedelta(days=7)
+            next_week_redirect = redirect('teachers.views.dashboard', teacher_email=teacher_email,
+                                          teacher_class_id=teacher_class_id,
+                                          start_of_week=next_week)
+            next_week_link = next_week_redirect.url
             for day in day_letters:
                 c.dates[day] = cur_day
                 entries_for_day = Entry.objects.filter(teacher=teacher, teacher_class=c).filter(date=cur_day)
@@ -184,9 +210,14 @@ def dashboard(request, teacher_email, teacher_class_id=None):
                 cur_day += datetime.timedelta(days=1)
     if teacher_class_list:
         assert selected_class
+    else:
+        previous_week_link = None
+        next_week_link = None
     context = RequestContext(request, {'teacher_class_list': teacher_class_list,
                                        'selected_class': selected_class,
                                        'day_names': day_names,
                                        'teacher': teacher,
-                                       'dashboard_emails': get_dashboard_emails(request)})
+                                       'dashboard_emails': get_dashboard_emails(request),
+                                       'previous_week_link': previous_week_link,
+                                       'next_week_link': next_week_link})
     return render(request, 'teachers/dashboard.html', context)

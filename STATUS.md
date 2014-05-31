@@ -6,7 +6,7 @@ Current stage
 Three worst issues in teacher interface
 =======================================
 
-1. Cannot enter objectives for a week other than the current one
+1. XXX
 2. XXX
 3. XXX
 
