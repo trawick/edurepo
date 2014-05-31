@@ -1,14 +1,16 @@
-Current stage
-=============
+Three worst overall viability issues
+====================================
 
-* ???
+1. no end user software (e.g., "My Classes" web app)
+2. dedicated, real deployment (dedicated server, SSL certificate, etc.)
+3. no complete course to use as good example (add reference materials to Alabama Grade 5 Science)
 
 Three worst issues in teacher interface
 =======================================
 
 1. XXX
 2. XXX
-3. dates in dashboard URLs have different formats than dates in add/remove objective URLs
+3. XXX
 
 Three worst issues in demo interface
 ====================================
@@ -22,7 +24,6 @@ Possible themes for upcoming stages
 
 * Import Common Core high school math course definitions
 * Bootstrap-ify Angular app
-* Get social login working for Angular app
 * Improve user interface for resource browsing and commenting
 * Course needs short form of description
 * Add Spanish version of "I Can" statements (from Sonya), with means of retrieval
@@ -32,6 +33,7 @@ Possible themes for upcoming stages
 Bugs of interest
 ================
 
+* dates in dashboard URLs have different formats than dates in add/remove objective URLs
 * Improve formatting of resource view
 * Minimize data transfer by link validator (e.g., grab just first 4-8K of document)
 * Fix or hide noise from link validator cron job (e.g., invalid characters in some pages)
