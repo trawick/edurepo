@@ -161,7 +161,8 @@ def dashboard(request, teacher_email, teacher_class_id=None):
         # if the teacher has no classes, we won't redirect here, and the
         # user will get a dashboard with appropriate text
         if teacher_class_list:
-            return redirect('teachers.views.dashboard', teacher_email=teacher_email, teacher_class_id=teacher_class_list[0].id)
+            return redirect('teachers.views.dashboard', teacher_email=teacher_email,
+                            teacher_class_id=teacher_class_list[0].id)
     selected_class = None
     for c in teacher_class_list:
         c.active_class = ''
@@ -170,10 +171,16 @@ def dashboard(request, teacher_email, teacher_class_id=None):
             selected_class = c
             c.days = dict()
             c.dates = dict()
+            c.objectives = dict()
             cur_day = today - datetime.timedelta(days=today.weekday())
             for day in day_letters:
                 c.dates[day] = cur_day
-                c.days[day] = Entry.objects.filter(teacher=teacher, teacher_class=c).filter(date=cur_day)
+                entries_for_day = Entry.objects.filter(teacher=teacher, teacher_class=c).filter(date=cur_day)
+                objectives_and_descriptions = []
+                for entry in entries_for_day:
+                    description = description_for_objective(entry.objective, c.repo_provider)
+                    objectives_and_descriptions += [(entry.objective, description)]
+                c.objectives[day] = objectives_and_descriptions
                 cur_day += datetime.timedelta(days=1)
     if teacher_class_list:
         assert selected_class

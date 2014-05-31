@@ -42,9 +42,9 @@
                 <div class="well">
                     <p>{{ day_names.M }}, {{ selected_class.dates.M }}</p>
                     <ul class="list-unstyled">
-                        {% for obj in selected_class.days.M %}
-                        <li>{{ obj.objective }}
-                        <a href="{{ selected_class.dates.M }}/{{ obj.objective }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
+                        {% for obj in selected_class.objectives.M %}
+                        <li>{{ obj.0 }} &mdash; {{ obj.1 }}
+                        <a href="{{ selected_class.dates.M }}/{{ obj.0 }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
                         </li>
                         {% endfor %}
                     </ul>
@@ -55,9 +55,9 @@
                 <div class="well">
                     <p>{{ day_names.T }}, {{ selected_class.dates.T }}</p>
                     <ul class="list-unstyled">
-                        {% for obj in selected_class.days.T %}
-                        <li>{{ obj.objective }}
-                        <a href="{{ selected_class.dates.T }}/{{ obj.objective }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
+                        {% for obj in selected_class.objectives.T %}
+                        <li>{{ obj.0 }} &mdash; {{ obj.1 }}
+                        <a href="{{ selected_class.dates.T }}/{{ obj.0 }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
                         </li>
                         {% endfor %}
                     </ul>
@@ -68,9 +68,9 @@
                 <div class="well">
                     <p>{{ day_names.W }}, {{ selected_class.dates.W }}</p>
                     <ul class="list-unstyled">
-                        {% for obj in selected_class.days.W %}
-                        <li>{{ obj.objective }}
-                        <a href="{{ selected_class.dates.W }}/{{ obj.objective }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
+                        {% for obj in selected_class.objectives.W %}
+                        <li>{{ obj.0 }} &mdash; {{ obj.1 }}
+                        <a href="{{ selected_class.dates.W }}/{{ obj.0 }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
                         </li>
                         {% endfor %}
                     </ul>
@@ -81,9 +81,9 @@
                 <div class="well">
                     <p>{{ day_names.R }}, {{ selected_class.dates.R }}</p>
                     <ul class="list-unstyled">
-                        {% for obj in selected_class.days.R %}
-                        <li>{{ obj.objective }}
-                        <a href="{{ selected_class.dates.R }}/{{ obj.objective }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
+                        {% for obj in selected_class.objectives.R %}
+                        <li>{{ obj.0 }} &mdash; {{ obj.1 }}
+                        <a href="{{ selected_class.dates.R }}/{{ obj.0 }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
                         </li>
                         {% endfor %}
                     </ul>
@@ -94,9 +94,9 @@
                 <div class="well">
                     <p>{{ day_names.F }}, {{ selected_class.dates.F }}</p>
                     <ul class="list-unstyled">
-                        {% for obj in selected_class.days.F %}
-                        <li>{{ obj.objective }}
-                        <a href="{{ selected_class.dates.F }}/{{ obj.objective }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
+                        {% for obj in selected_class.objectives.F %}
+                        <li>{{ obj.0 }} &mdash; {{ obj.1 }}
+                        <a href="{{ selected_class.dates.F }}/{{ obj.0 }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
                         </li>
                         {% endfor %}
                     </ul>
