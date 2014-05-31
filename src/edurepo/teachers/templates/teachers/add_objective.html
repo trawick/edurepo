@@ -2,7 +2,7 @@
 {% load bootstrap3 %}
 {% block title %}Add an objective{% endblock %}
 {% block content %}
-    <h1>Add an objective</h1>
+    <h1>Add an objective for {{ date }}</h1>
     <form action="{% url 'teachers.views.add_objective' teacher_email=teacher_email teacher_class_id=teacher_class_id date=date%}" method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
