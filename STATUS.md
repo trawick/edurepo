@@ -7,7 +7,7 @@ Three worst issues in teacher interface
 =======================================
 
 1. Cannot enter objectives for a week other than the current one
-2. Objective description not displayed on dashboard
+2. XXX
 3. XXX
 
 Three worst issues in demo interface
