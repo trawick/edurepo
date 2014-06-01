@@ -8,8 +8,8 @@ Three worst overall viability issues
 Three worst issues in teacher interface
 =======================================
 
-1. a logged in user can manipulate data for another user
-2. no way to delete or edit a course definition
+1. no way to delete or edit a course definition
+2. XXX
 3. XXX
 
 Three worst issues in demo interface

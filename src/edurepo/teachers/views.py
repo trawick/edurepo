@@ -61,6 +61,12 @@ def events(request, teacher_email, class_name):
 
 @login_required
 def register_teacher(request):
+    """
+    register_teacher() always creates the registration using the logged-in
+    User, so no additional security checks are required.
+    :param request:
+    :return:
+    """
     if request.POST:
         form = TeacherForm(request.POST)
         if form.is_valid():
@@ -86,11 +92,22 @@ def request_to_provider(request):
 
 @login_required
 def add_class(request, teacher_email):
+    """
+    add_class() creates the TeacherClass using the teacher_email in the URL,
+    so we must also validate that against the logged-in User.
+    :param request:
+    :param teacher_email:
+    :return:
+    """
+    teacher = Teacher.objects.get(email=teacher_email)
+    if teacher.user != request.user:
+        # weird mistake or evil to manipulate another person's data?  start over
+        return redirect('top.index')
+
     if request.POST:
         form = TeacherClassForm(request.POST)
         if form.is_valid():
             obj = form.save(commit=False)
-            teacher = Teacher.objects.get(email=teacher_email)
             obj.teacher = teacher
             obj.save()
             return redirect('../..')
@@ -108,13 +125,27 @@ def add_class(request, teacher_email):
 
 @login_required
 def add_objective(request, teacher_email, teacher_class_id, date):
+    """
+    add_objective() creates the Entry using the teacher_email and
+    teacher_class_id in the URL, so we must also validate that
+    against the logged-in User.
+    :param request:
+    :param teacher_email:
+    :param teacher_class_id:
+    :param date:
+    :return:
+    """
+    teacher = Teacher.objects.get(email=teacher_email)
+    if teacher.user != request.user:
+        # weird mistake or evil to manipulate another person's data?  start over
+        return redirect('top.index')
+
     teacher_class = TeacherClass.objects.get(id=teacher_class_id)
 
     if request.POST:
         form = EntryForm(request.POST)
         if form.is_valid():
             entry = form.save(commit=False)
-            teacher = Teacher.objects.get(email=teacher_email)
             entry.teacher = teacher
             entry.teacher_class = teacher_class
             entry.date = datetime.datetime.strptime(date, '%B %d, %Y')
@@ -141,8 +172,25 @@ def add_objective(request, teacher_email, teacher_class_id, date):
 
 @login_required
 def remove_objective(request, teacher_email, teacher_class_id, date, objective):
+    """
+    remove_objective() deletes the Entry using the teacher_email and
+    teacher_class_id in the URL, so we must also validate that
+    against the logged-in User.
+
+    :param request:
+    :param teacher_email:
+    :param teacher_class_id:
+    :param date:
+    :param objective:
+    :return:
+    """
+    teacher = Teacher.objects.get(email=teacher_email)
+
+    if teacher.user != request.user:
+        # weird mistake or evil to manipulate another person's data?  start over
+        return redirect('top.index')
+
     if request.POST:
-        teacher = Teacher.objects.get(email=teacher_email)
         date_of_objective = datetime.datetime.strptime(date, '%B %d, %Y')
         Entry.objects.filter(teacher=teacher, teacher_class__id=teacher_class_id,
                              date=date_of_objective, objective=objective).delete()
@@ -163,8 +211,21 @@ def remove_objective(request, teacher_email, teacher_class_id, date, objective):
 
 @login_required
 def dashboard(request, teacher_email, teacher_class_id=None, start_of_week=None):
+    """
+    dashboard() creates the dashboard based on fields in the URL, so we must
+    also validate that based on the logged in User.
+    :param request:
+    :param teacher_email:
+    :param teacher_class_id:
+    :param start_of_week:
+    :return:
+    """
     teacher_class_list = TeacherClass.objects.filter(teacher=teacher_email)
     teacher = Teacher.objects.get(email=teacher_email)
+
+    if teacher.user != request.user:
+        # weird mistake or evil to manipulate another person's data?  start over
+        return redirect('top.index')
 
     if teacher_class_list:
         if not teacher_class_id:
