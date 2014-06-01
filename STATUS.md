@@ -2,14 +2,14 @@ Three worst overall viability issues
 ====================================
 
 1. no end user software (e.g., "My Classes" web app)
-2. dedicated, real deployment (dedicated server, SSL certificate, etc.)
-3. no complete course to use as good example (add reference materials to Alabama Grade 5 Science)
+2. no dedicated, "real" deployment (dedicated server, CA-signed SSL certificate, etc.) to manage usage, resources, costs, etc. specific to the project and support SSL in the expected manner
+3. no complete course to use as good example (easiest fix: add materials to Alabama Grade 5 Science)
 
 Three worst issues in teacher interface
 =======================================
 
-1. XXX
-2. XXX
+1. a logged in user can manipulate data for another user
+2. no way to delete or edit a course definition
 3. XXX
 
 Three worst issues in demo interface
