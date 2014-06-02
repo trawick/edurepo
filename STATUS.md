@@ -2,6 +2,7 @@ Three worst overall viability issues
 ====================================
 
 1. no end user software (e.g., "My Classes" web app)
+   * currently looking at a small script that fetches materials for current objectives and passes it to Anki
 2. no dedicated, "real" deployment (dedicated server, CA-signed SSL certificate, etc.) to manage usage, resources, costs, etc. specific to the project and support SSL in the expected manner
 3. no complete course to use as good example (easiest fix: add materials to Alabama Grade 5 Science)
 
@@ -16,6 +17,7 @@ Three worst issues in demo interface
 ====================================
 
 1. Demo teacher/class has objectives that don't have any supporting materials in the repository.
+   * currently adding more materials to a few of the objectives in Alabama Grade 5 Science
 2. Ugly; needs to be Bootstrap-ed
 3. XXX
 
