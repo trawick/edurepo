@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<support-materials>
+<glossary-items>
+  <objective-group>
+    <objective-id>AL-G5-SCIENCE-05A</objective-id>
+    <item>
+      <term>reflection</term>
+      <definition>light bouncing off a surface</definition>
+    </item>
+    <item>
+      <term>absorption</term>
+      <definition>light that is not reflected when it strikes a surface</definition>
+    </item>
+    <item>
+      <term>refraction</term>
+      <definition>change in direction of light when it travels through an object</definition>
+    </item>
+  </objective-group>
+
+  <objective-group>
+    <objective-id>AL-G5-SCIENCE-05B</objective-id>
+    <item>
+      <term>prism</term>
+      <definition>a transparent optical element that refracts light to split it into different colors</definition>
+    </item>
+    <item>
+      <term>visible spectrum</term>
+      <definition>the portion of the electromagnetic spectrum that is visible to humans</definition>
+    </item>
+    <item>
+      <term>ROYGBIV</term>
+      <definition>ROYGBIV helps you remember the colors of the spectrum: Red, Orange, Yellow, Blue, Indigo, and Violet</definition>
+    </item>
+    <item>
+      <term>convex</term>
+      <definition>curved outward, like the the outside of a bowl</definition>
+    </item>
+    <item>
+      <term>concave</term>
+      <definition>curved inward, like the inside of a bowl</definition>
+    </item>
+  </objective-group>
+
+  <objective-group>
+    <objective-id>AL-G5-SCIENCE-05D</objective-id>
+    <item>
+      <term>cornea</term>
+      <definition>front surface of the eye that covers other parts and helps focus</definition>
+    </item>
+    <item>
+      <term>pupil</term>
+      <definition>a hole in the iris that allows light to enter the retina</definition>
+    </item>
+    <item>
+      <term>iris</term>
+      <definition>circular structure in the eye that controls how much light enters the retina by controlling the size of the pupil</definition>
+    </item>
+    <item>
+      <term>retina</term>
+      <definition>light-sensitive tissue that reacts to the visual image</definition>
+    </item>
+    <item>
+      <term>optic nerve</term>
+      <definition>transmits the visual image from the retina to the brain</definition>
+    </item>
+  </objective-group>
+</glossary-items>
+
+<tf-questions>
+  <objective-group>
+    <objective-id>AL-G5-SCIENCE-05D</objective-id>
+    <question>
+      <statement>The cornea transmits the visual image to the brain.</statement>
+      <answer>F</answer>
+    </question>
+    <question>
+      <statement>The optic nerve transmits the visual image to the brain.</statement>
+      <answer>T</answer>
+    </question>
+    <question>
+      <statement>The cornea is the front surface of the eye.</statement>
+      <answer>T</answer>
+    </question>
+  </objective-group>
+
+</tf-questions>
+</support-materials>

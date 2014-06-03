@@ -184,11 +184,11 @@ def import_glossary_items(root):
                 obj.glossaryitem_set.create(term=term, definition=definition)
 
 
-def process_file(filename):
-    doc = parse(filename)
-    root = doc.getroot()
-
-    if root.tag == 'course-categories':
+def process_root(root):
+    if root.tag == 'support-materials':
+        for child in root:
+            process_root(child)
+    elif root.tag == 'course-categories':
         import_course_categories(root)
     elif root.tag == 'course-standard':
         import_course_standard(root)
@@ -203,6 +203,11 @@ def process_file(filename):
 
     if noisy:
         print
+
+
+def process_file(filename):
+    doc = parse(filename)
+    process_root(doc.getroot())
 
 
 def process(top):
