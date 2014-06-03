@@ -30,7 +30,11 @@ class EntryForm(forms.ModelForm):
 
 def create_entry_form(objective_list):
     """Dynamically create a form like EntryForm above, which presents a list of
-    course-specific objectives in a select box, instead of a Textarea."""
+    course-specific objectives in a select box, instead of a Textarea.
+
+    XXX I should have been able to override __init__ on EntryForm to create
+    the widget for objective in a similar manner.
+    """
 
     class Meta:
         pass
