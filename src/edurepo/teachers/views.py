@@ -277,6 +277,7 @@ def dashboard(request, teacher_email, teacher_class_id=None, start_of_week=None)
     context = RequestContext(request, {'teacher_class_list': teacher_class_list,
                                        'selected_class': selected_class,
                                        'day_names': day_names,
+                                       'day_letters': ['M', 'T', 'W', 'R', 'F'],
                                        'teacher': teacher,
                                        'dashboard_emails': get_dashboard_emails(request),
                                        'previous_week_link': previous_week_link,

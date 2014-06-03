@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load teachers_extras %}
 {% block title %}Dashboard for {{ teacher.name }}{% endblock %}
 {% block content %}
     <div class="col">
@@ -40,76 +41,21 @@
                     <a href="{{ next_week_link }}"><span class="glyphicon glyphicon-forward"></span></a>
                 </div>
             </div>
-            {% comment %}
-            This repetition for each day is nasty, but Django variable resolution
-            doesn't allow a variable for a subscript.  IOW, the "M", "T", "W", etc.
-            in the following similar blocks must be literal strings.
-            {% endcomment %}
+            {% for day in day_letters  %}
             <div class="row">
                 <div class="well">
-                    <p>{{ day_names.M }}, {{ selected_class.dates.M }}</p>
+                    <p>{{ day_names|dereference:day }}, {{ selected_class.dates|dereference:day }}</p>
                     <ul class="list-unstyled">
-                        {% for obj in selected_class.objectives.M %}
+                        {% for obj in selected_class.objectives|dereference:day %}
                         <li>{{ obj.0 }} &mdash; {{ obj.1 }}
-                        <a href="../{{ selected_class.dates.M }}/{{ obj.0 }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
+                        <a href="../{{ selected_class.dates|dereference:day }}/{{ obj.0 }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
                         </li>
                         {% endfor %}
                     </ul>
-                    <a href="../{{ selected_class.dates.M }}/add_objective"><span class="glyphicon glyphicon-plus-sign"></span></a>
+                    <a href="../{{ selected_class.dates|dereference:day }}/add_objective"><span class="glyphicon glyphicon-plus-sign"></span></a>
                 </div>
             </div>
-            <div class="row">
-                <div class="well">
-                    <p>{{ day_names.T }}, {{ selected_class.dates.T }}</p>
-                    <ul class="list-unstyled">
-                        {% for obj in selected_class.objectives.T %}
-                        <li>{{ obj.0 }} &mdash; {{ obj.1 }}
-                        <a href="../{{ selected_class.dates.T }}/{{ obj.0 }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    <a href="../{{ selected_class.dates.T }}/add_objective"><span class="glyphicon glyphicon-plus-sign"></span></a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="well">
-                    <p>{{ day_names.W }}, {{ selected_class.dates.W }}</p>
-                    <ul class="list-unstyled">
-                        {% for obj in selected_class.objectives.W %}
-                        <li>{{ obj.0 }} &mdash; {{ obj.1 }}
-                        <a href="../{{ selected_class.dates.W }}/{{ obj.0 }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    <a href="../{{ selected_class.dates.W }}/add_objective"><span class="glyphicon glyphicon-plus-sign"></span></a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="well">
-                    <p>{{ day_names.R }}, {{ selected_class.dates.R }}</p>
-                    <ul class="list-unstyled">
-                        {% for obj in selected_class.objectives.R %}
-                        <li>{{ obj.0 }} &mdash; {{ obj.1 }}
-                        <a href="../{{ selected_class.dates.R }}/{{ obj.0 }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    <a href="../{{ selected_class.dates.R }}/add_objective"><span class="glyphicon glyphicon-plus-sign"></span></a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="well">
-                    <p>{{ day_names.F }}, {{ selected_class.dates.F }}</p>
-                    <ul class="list-unstyled">
-                        {% for obj in selected_class.objectives.F %}
-                        <li>{{ obj.0 }} &mdash; {{ obj.1 }}
-                        <a href="../{{ selected_class.dates.F }}/{{ obj.0 }}/remove_objective"><span class="glyphicon glyphicon-minus-sign"></span></a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    <a href="../{{ selected_class.dates.F }}/add_objective"><span class="glyphicon glyphicon-plus-sign"></span></a>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
     {% endif %}
