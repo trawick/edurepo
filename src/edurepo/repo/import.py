@@ -21,6 +21,7 @@ def import_course_categories(root):
         description = category.find('description').text
 
         if perform_import:
+            # TODO What if course category already exists?  What sort of import his this?
             cat = CourseCategory(id=category_id, description=description)
             cat.save()
 
@@ -86,6 +87,7 @@ def import_course_standard(root):
 
             if perform_import:
                 obj = LearningObjective.objects.get(id=objective_id)
+                # TODO Delete reference text if it already exists.
                 obj.referencetext_set.create(text=reference.text)
 
 
@@ -109,6 +111,7 @@ def import_tf_questions(root):
                 print '  %s (%s)' % (stmt, ans)
 
             if perform_import:
+                obj.truefalseitem_set.filter(statement=stmt).delete()
                 obj.truefalseitem_set.create(statement=stmt, answer=ans)
 
 
@@ -158,6 +161,7 @@ def import_mc_questions(root):
                 kw['type'] = q_type
                 kw['ans'] = int(answer)
 
+                # TODO Don't add again if it already exists EXACTLY THE SAME.
                 obj.multiplechoiceitem_set.create(**kw)
 
 
@@ -181,6 +185,7 @@ def import_glossary_items(root):
                 print '  %s: %s' % (term, definition)
 
             if perform_import:
+                obj.glossaryitem_set.filter(term=term).delete()
                 obj.glossaryitem_set.create(term=term, definition=definition)
 
 
