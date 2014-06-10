@@ -4,8 +4,6 @@ register = template.Library()
 
 
 def dereference(value, arg):
-    print value
-    print arg
     return value[arg]
 
 
