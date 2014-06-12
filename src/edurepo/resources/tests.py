@@ -18,6 +18,8 @@ class BasicTests(TestCase):
         self.c0.save()
         self.lo0 = LearningObjective(id='C00LO00', course=self.c0)
         self.lo0.save()
+        self.res1 = Resource(objective=self.lo0, url='http://www.example.com/XXX')
+        self.res1.save()
 
     def test_1(self):
         """Basic creation of Resource, disallowing same URL+objective combination"""
@@ -89,3 +91,12 @@ class BasicTests(TestCase):
         rs.save()
 
         self.assertTrue(' voted on ' in str(rs))
+
+    def test_index(self):
+        response = self.client.get("/resources/")
+        self.assertContains(response, self.res1.url, status_code=200, html=False)
+
+    def test_detail(self):
+        detail_url = "/resources/" + str(self.res1.id) + "/"
+        response = self.client.get(detail_url)
+        self.assertContains(response, self.res1.url, status_code=200, html=False)
