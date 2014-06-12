@@ -244,3 +244,17 @@ Dumping current data
 ```
 ./manage.py dumpdata --indent=4 > ~/edurepo-2014-MM-DD.json
 ```
+
+Testing
+=======
+
+```
+./manage.py test
+```
+
+Of course.  But that won't test everything, as we need to have an API provider live and set the API endpoint with the TEST\_PROVIDER environment variable.  First run the normal Django application then run tests like this:
+
+```
+export TEST_PROVIDER=http://127.0.0.1:8000/
+./manage.py test
+```
