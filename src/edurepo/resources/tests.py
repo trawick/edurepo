@@ -2,6 +2,7 @@ import datetime
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.test import TestCase
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from models import Resource, ResourceSubmission
 from repo.models import Course, CourseCategory, LearningObjective
@@ -10,7 +11,11 @@ from repo.models import Course, CourseCategory, LearningObjective
 class BasicTests(TestCase):
 
     def setUp(self):
-        self.u1 = User.objects.create_user(username='user1', email='user1@example.com')
+        self.u1_password = 'F00LI5H'
+        self.u1 = User.objects.create_user(username='user1', email='user1@example.com',
+                                           password=self.u1_password)
+        user = authenticate(username=self.u1.username, password=self.u1_password)
+        assert user
         self.u2 = User.objects.create_user(username='user2', email='user2@example.com')
         self.cc0 = CourseCategory(id='TESTNA', description='Test Non-Academic')
         self.cc0.full_clean()
@@ -104,3 +109,25 @@ class BasicTests(TestCase):
         detail_url = "/resources/" + str(self.res1.id) + "/"
         response = self.client.get(detail_url)
         self.assertContains(response, self.res1.url, status_code=200, html=False)
+
+    def test_create_resource(self):
+        login = self.client.login(username=self.u1.username, password=self.u1_password)
+        self.assertTrue(login)
+        create_url = '/resources/create/?objective=C00LO00'
+        response = self.client.get(create_url, follow=True)
+        self.assertContains(response, 'Submit a resource', status_code=200)
+        self.assertContains(response, 'C00LO00')
+        response = self.client.post(create_url, {'url': 'http://www.example.com/'}, follow=True)
+        self.assertContains(response, 'http://www.example.com/', status_code=200)
+        self.assertContains(response, 'C00LO00')
+
+    def test_comment_on_resource(self):
+        login = self.client.login(username=self.u1.username, password=self.u1_password)
+        self.assertTrue(login)
+        comment_url = "/resources/" + str(self.res1.id) + "/comment/"
+        response = self.client.get(comment_url, follow=True)
+        self.assertContains(response, 'Comment on a resource', status_code=200)
+        self.assertContains(response, self.res1.url)
+        response = self.client.post(comment_url, {'resource': str(self.res1.id),
+                                                  'type': 'v'})
+        self.assertEquals(response.status_code, 302)
