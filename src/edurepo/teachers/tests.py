@@ -133,11 +133,11 @@ class BasicTests(LiveServerTestCase):
 
     def test_index(self):
         response = self.client.get('/teachers/')
-        self.assertContains(response, self.name1, status_code=200, html=False)
+        self.assertContains(response, self.name1)
 
     def test_detail(self):
         response = self.client.get('/teachers/' + self.email1 + '/')
-        self.assertContains(response, self.name1, status_code=200, html=False)
+        self.assertContains(response, self.name1)
 
     def test_events_empty(self):
         teacher_data = self.teacher_data[0]
@@ -145,7 +145,7 @@ class BasicTests(LiveServerTestCase):
         class_data = teacher_data[2][0]
         class_name = class_data[1]
         response = self.client.get('/teachers/' + teacher_email + '/' + class_name + '/')
-        self.assertContains(response, 'No calendar entries for ' + class_name, status_code=200)
+        self.assertContains(response, 'No calendar entries for ' + class_name)
 
     @unittest.skipIf(not 'TEST_PROVIDER' in os.environ,
                      "Test case can't work without TEST_PROVIDER pointing to API provider")
@@ -155,7 +155,7 @@ class BasicTests(LiveServerTestCase):
         class_data = teacher_data[2][0]
         class_name = class_data[1]
         response = self.client.get('/teachers/' + teacher_email + '/' + class_name + '/')
-        self.assertContains(response, 'MG4-FACTMULT', status_code=200)
+        self.assertContains(response, 'MG4-FACTMULT')
 
     @unittest.skipIf(not 'TEST_PROVIDER' in os.environ,
                      "Test case can't work without TEST_PROVIDER pointing to API provider")
@@ -164,19 +164,19 @@ class BasicTests(LiveServerTestCase):
         self.assertTrue(login)
         register_url = '/teachers/register/'
         response = self.client.get(register_url, follow=True)
-        self.assertContains(response, 'Register as a teacher', status_code=200)
+        self.assertContains(response, 'Register as a teacher')
         response = self.client.post(register_url, {'email': 'foo@example.com',
                                                    'name': 'Ms. Smith'}, follow=True)
-        self.assertContains(response, 'Edjective.org reference views', status_code=200)
+        self.assertContains(response, 'Edjective.org reference views')
         self.assertNotContains(response, 'form-group has-error')
 
         # Add a class using class just registered
         add_url = '/teachers/foo@example.com/add'
         response = self.client.get(add_url, follow=True)
-        self.assertContains(response, 'Add a class', status_code=200)
+        self.assertContains(response, 'Add a class')
         response = self.client.post(add_url, {'name': 'MyClass',
                                               'course_id': 'MG4',
                                               'repo_provider': os.environ['TEST_PROVIDER']},
                                     follow=True)
-        self.assertContains(response, 'Edjective.org reference views', status_code=200)
+        self.assertContains(response, 'Edjective.org reference views')
         self.assertNotContains(response, 'form-group has-error')

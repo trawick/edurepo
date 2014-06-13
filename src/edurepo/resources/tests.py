@@ -103,24 +103,24 @@ class BasicTests(TestCase):
 
     def test_index(self):
         response = self.client.get("/resources/")
-        self.assertContains(response, self.res1.url, status_code=200, html=False)
+        self.assertContains(response, self.res1.url)
 
     def test_detail(self):
         detail_url = "/resources/" + str(self.res1.id) + "/"
         response = self.client.get(detail_url)
-        self.assertContains(response, self.res1.url, status_code=200, html=False)
+        self.assertContains(response, self.res1.url)
 
     def test_create_resource(self):
         login = self.client.login(username=self.u1.username, password=self.u1_password)
         self.assertTrue(login)
         create_url = '/resources/create/?objective=C00LO00'
         response = self.client.get(create_url, follow=True)
-        self.assertContains(response, 'Submit a resource', status_code=200)
+        self.assertContains(response, 'Submit a resource')
         self.assertContains(response, 'C00LO00')
         response = self.client.post(create_url, {'url': 'http://www.example.com/',
                                                  'objective': 'C00LO00'}, follow=True)
         self.assertNotContains(response, 'form-group has-error')
-        self.assertContains(response, 'http://www.example.com/', status_code=200)
+        self.assertContains(response, 'http://www.example.com/')
         self.assertContains(response, 'C00LO00')
 
     def test_comment_on_resource(self):
@@ -128,7 +128,7 @@ class BasicTests(TestCase):
         self.assertTrue(login)
         comment_url = "/resources/" + str(self.res1.id) + "/comment/"
         response = self.client.get(comment_url, follow=True)
-        self.assertContains(response, 'Comment on a resource', status_code=200)
+        self.assertContains(response, 'Comment on a resource')
         self.assertContains(response, self.res1.url)
         response = self.client.post(comment_url, {'resource': str(self.res1.id),
                                                   'type': 'v'}, follow=True)

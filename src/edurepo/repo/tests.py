@@ -98,12 +98,12 @@ class BasicTests(TestCase):
 
     def test_index(self):
         response = self.client.get("/repo/")
-        self.assertContains(response, 'Class00', status_code=200, html=False)
+        self.assertContains(response, 'Class00')
 
     def test_detail(self):
         response = self.client.get("/repo/Class00/")
-        self.assertContains(response, 'C00LO00', status_code=200, html=False)
+        self.assertContains(response, 'C00LO00')
 
     def test_by_objective(self):
         response = self.client.get("/repo/Class00/C00LO00/")
-        self.assertContains(response, 'XX_C00LO00_XX', status_code=200, html=False)
+        self.assertContains(response, 'XX_C00LO00_XX')
