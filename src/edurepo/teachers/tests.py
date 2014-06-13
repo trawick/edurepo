@@ -180,3 +180,11 @@ class BasicTests(LiveServerTestCase):
                                     follow=True)
         self.assertContains(response, 'Edjective.org reference views')
         self.assertNotContains(response, 'form-group has-error')
+
+        # look at dashboard
+        dash_url = '/teachers/' + 'foo@example.com' + '/dashboard'
+        response = self.client.get(dash_url, follow=True)
+        self.assertContains(response, 'Dashboard for ' + 'Ms. Smith')
+
+        response = self.client.get('/logout/')
+        self.assertEquals(response.status_code, 302)

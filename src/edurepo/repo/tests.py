@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import DataError, IntegrityError, transaction
 from django.test import TestCase
-from models import Course, CourseCategory, GlossaryItem, LearningObjective, MultipleChoiceItem
+from models import Course, CourseCategory, GlossaryItem, LearningObjective, MultipleChoiceItem, ReferenceText
 
 
 class BasicTests(TestCase):
@@ -16,6 +16,9 @@ class BasicTests(TestCase):
         self.lo0 = LearningObjective(id='C00LO00', course=self.c0, description='XX_C00LO00_XX')
         self.lo0.full_clean()
         self.lo0.save()
+        self.ref0 = ReferenceText(learning_objective=self.lo0, text='XX_C00LO00_REFERENCE_TEXT_XX')
+        self.ref0.full_clean()
+        self.ref0.save()
         self.lo1 = LearningObjective(id='c00LO01', course=self.c0, description='XX_c00LO01_XX')
         self.lo1.full_clean()
         self.lo1.save()
@@ -107,3 +110,4 @@ class BasicTests(TestCase):
     def test_by_objective(self):
         response = self.client.get("/repo/Class00/C00LO00/")
         self.assertContains(response, 'XX_C00LO00_XX')
+        self.assertContains(response, 'XX_C00LO00_REFERENCE_TEXT_XX')
