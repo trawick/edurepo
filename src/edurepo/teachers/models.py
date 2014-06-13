@@ -30,6 +30,10 @@ class TeacherClass(models.Model):
 
     def clean(self):
         super(TeacherClass, self).clean()
+        if not self.repo_provider:
+            # This field is required.  Let the normal validation error bubble up
+            # instead of tripping here.
+            return
         bad_repo_msg = 'The repository is unavailable or the repository URL is invalid.'
         bad_course_id_msg = 'The course id is invalid'
         try:

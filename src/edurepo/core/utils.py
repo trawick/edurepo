@@ -48,6 +48,7 @@ def ellipsis(input_str, max_output_len):
 
 
 def description_for_objective(objective_id, repo_provider):
+    assert repo_provider
     base_objective_url = '%srepo/api/learningobjective/' % repo_provider
     url = '%s%s/?format=json' % (base_objective_url, objective_id)
     response = urllib2.urlopen(url)
@@ -57,6 +58,7 @@ def description_for_objective(objective_id, repo_provider):
 
 
 def objectives_for_course(course_id, repo_provider):
+    assert repo_provider
     base_course_url = '%srepo/api/learningobjective/' % repo_provider
     url = '%s?format=json&course__id=%s' % (base_course_url, course_id)
     response = urllib2.urlopen(url)

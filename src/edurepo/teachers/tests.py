@@ -11,13 +11,6 @@ from models import Entry, Teacher, TeacherClass
 class BasicTests(LiveServerTestCase):
 
     def setUp(self):
-        self.email1 = 'trawick@example.com'
-        self.name1 = 'Jeff T'
-
-        self.u1 = User.objects.create_user(username='user1', email='user1@example.com')
-        self.t1 = Teacher(email=self.email1, name=self.name1, user=self.u1)
-        self.t1.save()
-
         if 'TEST_PROVIDER' in os.environ:
             self.good_provider = os.environ['TEST_PROVIDER']
         else:
@@ -25,6 +18,38 @@ class BasicTests(LiveServerTestCase):
             # but it only works for this app.
             self.good_provider = 'http://localhost:8081/'  # default
         self.bad_provider = 'http://127.0.0.1:65535/'
+
+        self.teacher_data = [('trawick@example.com', 'Jeff T', [['MG4', '1st period math', TeacherClass()]]),
+                             ('jones@example.com', 'Jeff J', [['MG4', '5th period math', TeacherClass()]])]
+        self.email1 = self.teacher_data[0][0]
+        self.name1 = self.teacher_data[0][1]
+
+        self.u1 = User.objects.create_user(username='user1', email='user1@example.com')
+
+        self.teachers = []
+        for teacher_email, teacher_name, teacher_classes in self.teacher_data:
+            t = Teacher(email=teacher_email, name=teacher_name, user=self.u1)
+            t.full_clean()
+            t.save()
+            self.teachers.append(t)
+
+            for i in range(len(teacher_classes)):
+                course_id, class_name, _ = teacher_classes[i]
+                c = TeacherClass(name=class_name,
+                                 course_id=course_id,
+                                 teacher=t,
+                                 repo_provider=self.good_provider)
+                c.full_clean()
+                c.save()
+                teacher_classes[i][2] = c
+
+        # create a calendar entry for the 2nd teacher
+        teacher_2 = self.teacher_data[1]
+        teacher_2_class = teacher_2[2][0][2]
+        e1 = Entry(teacher=self.teachers[1], teacher_class=teacher_2_class, date=datetime.date.today(),
+                   objective='MG4-FACTMULT')
+        e1.full_clean()
+        e1.save()
 
         self.good_course = 'MG4'
         self.bad_course = 'xxx' + self.good_course + 'xxx'
@@ -49,20 +74,20 @@ class BasicTests(LiveServerTestCase):
                      "Test case can't work without TEST_PROVIDER pointing to API provider")
     def test_good_repo_and_course_id(self):
         tc = TeacherClass(name='1st period math (TGRC)',
-                          course_id=self.good_course, teacher=self.t1,
+                          course_id=self.good_course, teacher=self.teachers[0],
                           repo_provider=self.good_provider)
         tc.full_clean()
         tc.save()
 
     def test_good_repo_and_bad_course_id(self):
         tc = TeacherClass(name='1st period math (TGRBC)',
-                          course_id=self.bad_course, teacher=self.t1,
+                          course_id=self.bad_course, teacher=self.teachers[0],
                           repo_provider=self.good_provider)
         self.assertRaises(ValidationError, lambda: tc.full_clean())
 
     def test_bad_repo_and_good_course_id(self):
         tc = TeacherClass(name='1st period math (TBRGC)',
-                          course_id=self.good_course, teacher=self.t1,
+                          course_id=self.good_course, teacher=self.teachers[0],
                           repo_provider=self.bad_provider)
         self.assertRaises(ValidationError, lambda: tc.full_clean())
 
@@ -70,7 +95,7 @@ class BasicTests(LiveServerTestCase):
                      "Test case can't work without TEST_PROVIDER pointing to API provider")
     def test_duplicate_class(self):
         name = '1st period math (TDC)'
-        teacher = self.t1
+        teacher = self.teachers[0]
         tc1 = TeacherClass(name=name, teacher=teacher,
                            course_id=self.good_course,
                            repo_provider=self.good_provider)
@@ -85,7 +110,7 @@ class BasicTests(LiveServerTestCase):
                      "Test case can't work without TEST_PROVIDER pointing to API provider")
     def test_duplicate_class_objective(self):
         tc = TeacherClass(name='1st period math (TDCO)',
-                          course_id=self.good_course, teacher=self.t1,
+                          course_id=self.good_course, teacher=self.teachers[0],
                           repo_provider=self.good_provider)
         tc.full_clean()
         tc.save()
@@ -93,10 +118,36 @@ class BasicTests(LiveServerTestCase):
         same_class = tc
         same_day = datetime.date.today()
         same_objective = 'MG4-FACTMULT'
-        e1 = Entry(teacher=self.t1, teacher_class=same_class, date=same_day,
+        e1 = Entry(teacher=self.teachers[0], teacher_class=same_class, date=same_day,
                    objective=same_objective)
         e1.full_clean()
         e1.save()
-        e2 = Entry(teacher=self.t1, teacher_class=same_class, date=same_day,
+        e2 = Entry(teacher=self.teachers[0], teacher_class=same_class, date=same_day,
                    objective=same_objective)
         self.assertRaises(ValidationError, lambda: e2.full_clean())
+
+    def test_index(self):
+        response = self.client.get('/teachers/')
+        self.assertContains(response, self.name1, status_code=200, html=False)
+
+    def test_detail(self):
+        response = self.client.get('/teachers/' + self.email1 + '/')
+        self.assertContains(response, self.name1, status_code=200, html=False)
+
+    def test_events_empty(self):
+        teacher_data = self.teacher_data[0]
+        teacher_email = teacher_data[0]
+        class_data = teacher_data[2][0]
+        class_name = class_data[1]
+        response = self.client.get('/teachers/' + teacher_email + '/' + class_name + '/')
+        self.assertContains(response, 'No calendar entries for ' + class_name, status_code=200)
+
+    @unittest.skipIf(not 'TEST_PROVIDER' in os.environ,
+                     "Test case can't work without TEST_PROVIDER pointing to API provider")
+    def test_events_nonempty(self):
+        teacher_data = self.teacher_data[1]
+        teacher_email = teacher_data[0]
+        class_data = teacher_data[2][0]
+        class_name = class_data[1]
+        response = self.client.get('/teachers/' + teacher_email + '/' + class_name + '/')
+        self.assertContains(response, 'MG4-FACTMULT', status_code=200)
