@@ -117,7 +117,9 @@ class BasicTests(TestCase):
         response = self.client.get(create_url, follow=True)
         self.assertContains(response, 'Submit a resource', status_code=200)
         self.assertContains(response, 'C00LO00')
-        response = self.client.post(create_url, {'url': 'http://www.example.com/'}, follow=True)
+        response = self.client.post(create_url, {'url': 'http://www.example.com/',
+                                                 'objective': 'C00LO00'}, follow=True)
+        self.assertNotContains(response, 'form-group has-error')
         self.assertContains(response, 'http://www.example.com/', status_code=200)
         self.assertContains(response, 'C00LO00')
 
@@ -130,4 +132,5 @@ class BasicTests(TestCase):
         self.assertContains(response, self.res1.url)
         response = self.client.post(comment_url, {'resource': str(self.res1.id),
                                                   'type': 'v'})
+        self.assertNotContains(response, 'form-group has-error')
         self.assertEquals(response.status_code, 302)

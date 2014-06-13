@@ -168,6 +168,7 @@ class BasicTests(LiveServerTestCase):
         response = self.client.post(register_url, {'email': 'foo@example.com',
                                                    'name': 'Ms. Smith'}, follow=True)
         self.assertContains(response, 'Edjective.org reference views', status_code=200)
+        self.assertNotContains(response, 'form-group has-error')
 
         # Add a class using class just registered
         add_url = '/teachers/foo@example.com/add'
@@ -178,3 +179,4 @@ class BasicTests(LiveServerTestCase):
                                               'repo_provider': os.environ['TEST_PROVIDER']},
                                     follow=True)
         self.assertContains(response, 'Edjective.org reference views', status_code=200)
+        self.assertNotContains(response, 'form-group has-error')
