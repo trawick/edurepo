@@ -13,12 +13,16 @@ class BasicTests(TestCase):
         self.u1 = User.objects.create_user(username='user1', email='user1@example.com')
         self.u2 = User.objects.create_user(username='user2', email='user2@example.com')
         self.cc0 = CourseCategory(id='TESTNA', description='Test Non-Academic')
+        self.cc0.full_clean()
         self.cc0.save()
         self.c0 = Course(id='Class00', cat=self.cc0, description='Class00Desc')
+        self.c0.full_clean()
         self.c0.save()
-        self.lo0 = LearningObjective(id='C00LO00', course=self.c0)
+        self.lo0 = LearningObjective(id='C00LO00', course=self.c0, description='Dummy objective')
+        self.lo0.full_clean()
         self.lo0.save()
         self.res1 = Resource(objective=self.lo0, url='http://www.example.com/XXX')
+        self.res1.full_clean()
         self.res1.save()
 
     def test_1(self):
