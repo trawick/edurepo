@@ -4,6 +4,7 @@ import unittest
 
 from django.core.exceptions import ValidationError
 from django.test import LiveServerTestCase
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from models import Entry, Teacher, TeacherClass
 
@@ -24,7 +25,11 @@ class BasicTests(LiveServerTestCase):
         self.email1 = self.teacher_data[0][0]
         self.name1 = self.teacher_data[0][1]
 
-        self.u1 = User.objects.create_user(username='user1', email='user1@example.com')
+        self.u1_password = 'F00LI5H'
+        self.u1 = User.objects.create_user(username='user1', email='user1@example.com',
+                                           password=self.u1_password)
+        user = authenticate(username=self.u1.username, password=self.u1_password)
+        assert user
 
         self.teachers = []
         for teacher_email, teacher_name, teacher_classes in self.teacher_data:
@@ -151,3 +156,25 @@ class BasicTests(LiveServerTestCase):
         class_name = class_data[1]
         response = self.client.get('/teachers/' + teacher_email + '/' + class_name + '/')
         self.assertContains(response, 'MG4-FACTMULT', status_code=200)
+
+    @unittest.skipIf(not 'TEST_PROVIDER' in os.environ,
+                     "Test case can't work without TEST_PROVIDER pointing to API provider")
+    def test_register_teacher(self):
+        login = self.client.login(username=self.u1.username, password=self.u1_password)
+        self.assertTrue(login)
+        register_url = '/teachers/register/'
+        response = self.client.get(register_url, follow=True)
+        self.assertContains(response, 'Register as a teacher', status_code=200)
+        response = self.client.post(register_url, {'email': 'foo@example.com',
+                                                   'name': 'Ms. Smith'}, follow=True)
+        self.assertContains(response, 'Edjective.org reference views', status_code=200)
+
+        # Add a class using class just registered
+        add_url = '/teachers/foo@example.com/add'
+        response = self.client.get(add_url, follow=True)
+        self.assertContains(response, 'Add a class', status_code=200)
+        response = self.client.post(add_url, {'name': 'MyClass',
+                                              'course_id': 'MG4',
+                                              'repo_provider': os.environ['TEST_PROVIDER']},
+                                    follow=True)
+        self.assertContains(response, 'Edjective.org reference views', status_code=200)
