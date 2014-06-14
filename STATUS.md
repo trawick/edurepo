@@ -11,7 +11,7 @@ Three worst issues in teacher interface
 
 1. no way to delete or edit a course definition
 2. XXX
-3. XXX
+3. when adding course, teacher can't see list of course ids based on current API provider
 
 Three worst issues in demo interface
 ====================================
