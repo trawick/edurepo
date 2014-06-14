@@ -1,4 +1,5 @@
 import datetime
+import json
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.test import TestCase
@@ -29,6 +30,10 @@ class BasicTests(TestCase):
         self.res1 = Resource(objective=self.lo0, url='http://www.example.com/XXX')
         self.res1.full_clean()
         self.res1.save()
+        self.ressub1 = ResourceSubmission(user=self.u1, resource=self.res1,
+                                          type='v', comment='MYCOMMENT')
+        self.ressub1.full_clean()
+        self.ressub1.save()
 
     def test_1(self):
         """Basic creation of Resource, disallowing same URL+objective combination"""
@@ -133,3 +138,24 @@ class BasicTests(TestCase):
         response = self.client.post(comment_url, {'resource': str(self.res1.id),
                                                   'type': 'v'}, follow=True)
         self.assertNotContains(response, 'form-group has-error')
+
+    # This accesses the API endpoint in the test instance, not the one in
+    # the real instance.
+    def test_resource_api(self):
+        response = self.client.get('/resources/api/resource/?format=json')
+        self.assertContains(response, 'http://www.example.com/XXX')
+        objects = json.loads(response.content)['objects']
+        for o in objects:
+            response = self.client.get(o['objective'])
+            self.assertContains(response, '/repo/api/learningobjective/')
+            response = self.client.get(o['resource_uri'])
+            self.assertContains(response, '/resources/api/resource/' + str(o['id']))
+
+    def test_submission_api(self):
+        response = self.client.get('/resources/api/resourcesubmission/?format=json')
+        self.assertContains(response, 'MYCOMMENT')
+        objects = json.loads(response.content)['objects']
+        for o in objects:
+            for k in ('resource', 'resource_uri'):
+                response = self.client.get(o[k])
+                self.assertEqual(response.status_code, 200)
