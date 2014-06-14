@@ -1,4 +1,5 @@
 import datetime
+import json
 import os
 import unittest
 
@@ -179,6 +180,27 @@ class BasicTests(LiveServerTestCase):
                                               'repo_provider': os.environ['TEST_PROVIDER']},
                                     follow=True)
         self.assertContains(response, 'Edjective.org reference views')
+        self.assertNotContains(response, 'form-group has-error')
+
+        # Add a calendar entry
+        today = datetime.date.today().strftime('%B %d, %Y')
+        # Giant kludge: We need to know the id of the class.
+        response = self.client.get('/teachers/api/teacher_class/?format=json')
+        self.assertContains(response, 'MyClass')
+        objects = json.loads(response.content)['objects']
+        for o in objects:
+            if o['name'] == 'MyClass':
+                teacher_class_id = str(o['id'])
+                break
+        else:
+            teacher_class_id = '99999'  # will fail, didn't find class
+        entry_url = '/teachers/foo@example.com/' + teacher_class_id + '/' + today + '/add_objective'
+        response = self.client.get(entry_url, follow=True)
+        self.assertContains(response, 'Add an objective for ' + today)
+        response = self.client.post(entry_url, {'objective': 'MG4',
+                                                'comments': 'This ought to be fun, kids!'},
+                                    follow=True)
+        self.assertContains(response, 'Dashboard for ' + 'Ms. Smith')
         self.assertNotContains(response, 'form-group has-error')
 
         # look at dashboard
