@@ -8,6 +8,7 @@ from django.test import LiveServerTestCase
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from models import Entry, Teacher, TeacherClass
+from pretend_teacher import create_pretend_teacher
 
 
 class BasicTests(LiveServerTestCase):
@@ -147,6 +148,13 @@ class BasicTests(LiveServerTestCase):
         class_name = class_data[1]
         response = self.client.get('/teachers/' + teacher_email + '/' + class_name + '/')
         self.assertContains(response, 'No calendar entries for ' + class_name)
+
+    @unittest.skipIf(not 'TEST_PROVIDER' in os.environ,
+                     "Test case can't work without TEST_PROVIDER pointing to API provider")
+    def test_pretend_teacher(self):
+        create_pretend_teacher(os.environ['TEST_PROVIDER'], noisy=False)
+        objects = Teacher.objects.filter(email='ms.teacher@example.edu')
+        self.assertEquals(len(objects), 1)
 
     @unittest.skipIf(not 'TEST_PROVIDER' in os.environ,
                      "Test case can't work without TEST_PROVIDER pointing to API provider")
