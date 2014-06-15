@@ -10,7 +10,7 @@
 
     <div class="list-group" id="teacher-class-list">
     {% for c in teacher_class_list %}
-        <a href="../{{ c.id }}/dashboard" class="list-group-item {{ c.active_class }}">
+        <a href="../../{{ c.id }}/{{ start_of_week }}/dashboard" class="list-group-item {{ c.active_class }}">
         <h4 class="list-group-item-heading">{{ c.name }}</h4>
         <p class="list-group-item-text">{{ c.course_id }}</p>
         </a>

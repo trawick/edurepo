@@ -280,6 +280,7 @@ def dashboard(request, teacher_email, teacher_class_id=None, start_of_week=None)
                                        'day_letters': ['M', 'T', 'W', 'R', 'F'],
                                        'teacher': teacher,
                                        'dashboard_emails': get_dashboard_emails(request),
+                                       'start_of_week': start_of_week,
                                        'previous_week_link': previous_week_link,
                                        'next_week_link': next_week_link})
     return render(request, 'teachers/dashboard.html', context)
