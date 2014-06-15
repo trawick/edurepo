@@ -27,10 +27,20 @@ json_body = json.loads(body)
 objs = json_body['objects']
 
 if len(objs) == 0:
-    print >> sys.stderr, "No classes were found."
+    # valid teacher, or just no classes?
+    url = server_base + 'teachers/api/teacher/?format=json&email=%s' % teacher_email
+    response = urllib2.urlopen(url)
+    body = response.read()
+    json_body = json.loads(body)
+    objs = json_body['objects']
+    if len(objs) < 1:
+        print >> sys.stderr, 'Invalid teacher e-mail "%s"' % teacher_email
+    else:
+        print >> sys.stderr, "No classes were found."
     sys.exit(1)
 
 for obj in objs:
+    print 'Class %s:' % obj['name']
     print '  %s: %s' % (obj['course_id'], obj['name'])
     url = '%s%s/?format=json' % (base_course_url, obj['course_id'])
     response = urllib2.urlopen(url)

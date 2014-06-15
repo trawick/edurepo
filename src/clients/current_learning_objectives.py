@@ -49,7 +49,8 @@ body = response.read()
 json_body = json.loads(body)
 course_description = json_body['description']
 
-print 'Current objectives for %s:' % course_description
+print 'Current objectives for %s (%s):' % (teacher_class, course_id)
+print
 
 for obj in objs:
     print '  %s: %s' % (obj['date'], obj['objective'])
@@ -58,4 +59,4 @@ for obj in objs:
     response = urllib2.urlopen(url)
     body = response.read()
     json_body = json.loads(body)
-    print '    %s' % (json_body['description'])
+    print '    %s' % json_body['description'].strip()
