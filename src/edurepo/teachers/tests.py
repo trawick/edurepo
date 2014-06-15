@@ -161,22 +161,26 @@ class BasicTests(LiveServerTestCase):
     @unittest.skipIf(not 'TEST_PROVIDER' in os.environ,
                      "Test case can't work without TEST_PROVIDER pointing to API provider")
     def test_register_teacher(self):
+        teacher_email = 'foo@example.com'
+        teacher_name = 'Ms. Smith'
+        class_name = 'MyClass'
+        course_id = 'MG4'
         login = self.client.login(username=self.u1.username, password=self.u1_password)
         self.assertTrue(login)
         register_url = '/teachers/register/'
         response = self.client.get(register_url, follow=True)
         self.assertContains(response, 'Register as a teacher')
-        response = self.client.post(register_url, {'email': 'foo@example.com',
-                                                   'name': 'Ms. Smith'}, follow=True)
+        response = self.client.post(register_url, {'email': teacher_email,
+                                                   'name': teacher_name}, follow=True)
         self.assertContains(response, 'Edjective.org reference views')
         self.assertNotContains(response, 'form-group has-error')
 
         # Add a class using class just registered
-        add_url = '/teachers/foo@example.com/add'
+        add_url = '/teachers/%s/add' % teacher_email
         response = self.client.get(add_url, follow=True)
         self.assertContains(response, 'Add a class')
-        response = self.client.post(add_url, {'name': 'MyClass',
-                                              'course_id': 'MG4',
+        response = self.client.post(add_url, {'name': class_name,
+                                              'course_id': course_id,
                                               'repo_provider': os.environ['TEST_PROVIDER']},
                                     follow=True)
         self.assertContains(response, 'Edjective.org reference views')
@@ -186,27 +190,27 @@ class BasicTests(LiveServerTestCase):
         today = datetime.date.today().strftime('%B %d, %Y')
         # Giant kludge: We need to know the id of the class.
         response = self.client.get('/teachers/api/teacher_class/?format=json')
-        self.assertContains(response, 'MyClass')
+        self.assertContains(response, class_name)
         objects = json.loads(response.content)['objects']
         for o in objects:
-            if o['name'] == 'MyClass':
+            if o['name'] == class_name:
                 teacher_class_id = str(o['id'])
                 break
         else:
             teacher_class_id = '99999'  # will fail, didn't find class
-        entry_url = '/teachers/foo@example.com/' + teacher_class_id + '/' + today + '/add_objective'
+        entry_url = '/teachers/' + teacher_email + '/' + teacher_class_id + '/' + today + '/add_objective'
         response = self.client.get(entry_url, follow=True)
         self.assertContains(response, 'Add an objective for ' + today)
-        response = self.client.post(entry_url, {'objective': 'MG4',
+        response = self.client.post(entry_url, {'objective': course_id,
                                                 'comments': 'This ought to be fun, kids!'},
                                     follow=True)
-        self.assertContains(response, 'Dashboard for ' + 'Ms. Smith')
+        self.assertContains(response, 'Dashboard for ' + teacher_name)
         self.assertNotContains(response, 'form-group has-error')
 
         # look at dashboard
-        dash_url = '/teachers/' + 'foo@example.com' + '/dashboard'
+        dash_url = '/teachers/' + teacher_email + '/dashboard'
         response = self.client.get(dash_url, follow=True)
-        self.assertContains(response, 'Dashboard for ' + 'Ms. Smith')
+        self.assertContains(response, 'Dashboard for ' + teacher_name)
 
         response = self.client.get('/logout/')
         self.assertEquals(response.status_code, 302)

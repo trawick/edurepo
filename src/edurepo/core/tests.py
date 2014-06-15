@@ -4,6 +4,10 @@ from django.test import TestCase
 from utils import description_for_objective, ellipsis, objectives_for_course
 
 
+valid_course = 'MG4'
+valid_objective = 'MG4-FACTMULT'
+
+
 class BasicTests(TestCase):
 
     def test_ellipsis(self):
@@ -16,11 +20,11 @@ class BasicTests(TestCase):
     @unittest.skipIf(not 'TEST_PROVIDER' in os.environ,
                      "Test case can't work without TEST_PROVIDER pointing to API provider")
     def test_objective_lookup(self):
-        desc = description_for_objective('MG4-FACTMULT', os.environ['TEST_PROVIDER'])
+        desc = description_for_objective(valid_objective, os.environ['TEST_PROVIDER'])
         self.assertTrue('factors and multiples' in desc)
 
     @unittest.skipIf(not 'TEST_PROVIDER' in os.environ,
                      "Test case can't work without TEST_PROVIDER pointing to API provider")
     def test_course_lookup(self):
-        res = objectives_for_course('MG4', os.environ['TEST_PROVIDER'])
-        self.assertTrue('MG4-FACTMULT' in [y for (y, z) in res])
+        res = objectives_for_course(valid_course, os.environ['TEST_PROVIDER'])
+        self.assertTrue(valid_objective in [y for (y, z) in res])

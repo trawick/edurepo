@@ -4,37 +4,50 @@ from django.test import TestCase
 from models import Course, CourseCategory, GlossaryItem, LearningObjective, MultipleChoiceItem, ReferenceText
 
 
+dummy_category_id = 'TESTNA'
+dummy_category_description = 'Test Non-Academic'
+dummy_course_id = 'Course00'
+dummy_course_id_2 = 'Course01'
+dummy_course_description = 'Course00Desc'
+dummy_course_description_2 = 'Course01Desc'
+dummy_objective_id = 'C00LO00'
+dummy_objective_description = 'XX_C00LO00_XX'
+dummy_reference_text = 'XX_C00LO00_REFERENCE_TEXT_XX'
+dummy_objective_id_2 = 'C00LO01'
+dummy_objective_description_2 = 'XX_C00LO01_XX'
+
+
 class BasicTests(TestCase):
 
     def setUp(self):
-        self.cc0 = CourseCategory(id='TESTNA', description='Test Non-Academic')
+        self.cc0 = CourseCategory(id=dummy_category_id, description=dummy_category_description)
         self.cc0.full_clean()
         self.cc0.save()
-        self.c0 = Course(id='Class00', cat=self.cc0, description='Class00Desc')
+        self.c0 = Course(id=dummy_course_id, cat=self.cc0, description=dummy_course_description)
         self.c0.full_clean()
         self.c0.save()
-        self.lo0 = LearningObjective(id='C00LO00', course=self.c0, description='XX_C00LO00_XX')
+        self.lo0 = LearningObjective(id=dummy_objective_id, course=self.c0, description=dummy_objective_description)
         self.lo0.full_clean()
         self.lo0.save()
-        self.ref0 = ReferenceText(learning_objective=self.lo0, text='XX_C00LO00_REFERENCE_TEXT_XX')
+        self.ref0 = ReferenceText(learning_objective=self.lo0, text=dummy_reference_text)
         self.ref0.full_clean()
         self.ref0.save()
-        self.lo1 = LearningObjective(id='c00LO01', course=self.c0, description='XX_c00LO01_XX')
+        self.lo1 = LearningObjective(id=dummy_objective_id_2, course=self.c0, description=dummy_objective_description_2)
         self.lo1.full_clean()
         self.lo1.save()
 
     def test_1(self):
         """Basic creation/update of Course and default language"""
-        class_id = 'Class01'
-        c1 = Course(id=class_id, cat=self.cc0, description='desc1')
+        course_id = dummy_course_id_2
+        c1 = Course(id=course_id, cat=self.cc0, description=dummy_course_description_2)
         self.assertEquals(c1.language, 'en')
         c1.save()
 
         desc2 = 'desc2'
-        c2 = Course(id=class_id, cat=self.cc0, description=desc2)
+        c2 = Course(id=course_id, cat=self.cc0, description=desc2)
         c2.save()
 
-        obj = Course.objects.get(id=class_id)
+        obj = Course.objects.get(id=course_id)
         self.assertEquals(obj.description, desc2)
 
         self.assertEquals(obj.language, 'en')
@@ -101,13 +114,13 @@ class BasicTests(TestCase):
 
     def test_index(self):
         response = self.client.get("/repo/")
-        self.assertContains(response, 'Class00')
+        self.assertContains(response, dummy_course_id)
 
     def test_detail(self):
-        response = self.client.get("/repo/Class00/")
-        self.assertContains(response, 'C00LO00')
+        response = self.client.get("/repo/" + dummy_course_id + "/")
+        self.assertContains(response, dummy_objective_id)
 
     def test_by_objective(self):
-        response = self.client.get("/repo/Class00/C00LO00/")
-        self.assertContains(response, 'XX_C00LO00_XX')
-        self.assertContains(response, 'XX_C00LO00_REFERENCE_TEXT_XX')
+        response = self.client.get("/repo/" + dummy_course_id + "/" + dummy_objective_id + "/")
+        self.assertContains(response, dummy_objective_description)
+        self.assertContains(response, dummy_reference_text)

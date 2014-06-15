@@ -21,6 +21,12 @@ class UTC(datetime.tzinfo):
         return datetime.timedelta(0)
 
 
+dummy_objective_id = 'C00LO00'
+dummy_objective_description = 'Dummy objective'
+dummy_comment = 'MYCOMMENT'
+dummy_resource_url = 'http://www.example.com/XXX'
+
+
 class BasicTests(TestCase):
 
     def setUp(self):
@@ -36,14 +42,14 @@ class BasicTests(TestCase):
         self.c0 = Course(id='Class00', cat=self.cc0, description='Class00Desc')
         self.c0.full_clean()
         self.c0.save()
-        self.lo0 = LearningObjective(id='C00LO00', course=self.c0, description='Dummy objective')
+        self.lo0 = LearningObjective(id=dummy_objective_id, course=self.c0, description=dummy_objective_description)
         self.lo0.full_clean()
         self.lo0.save()
-        self.res1 = Resource(objective=self.lo0, url='http://www.example.com/XXX')
+        self.res1 = Resource(objective=self.lo0, url=dummy_resource_url)
         self.res1.full_clean()
         self.res1.save()
         self.ressub1 = ResourceSubmission(user=self.u1, resource=self.res1,
-                                          type='v', comment='MYCOMMENT')
+                                          type='v', comment=dummy_comment)
         self.ressub1.full_clean()
         self.ressub1.save()
 
@@ -134,15 +140,15 @@ class BasicTests(TestCase):
     def test_create_resource(self):
         login = self.client.login(username=self.u1.username, password=self.u1_password)
         self.assertTrue(login)
-        create_url = '/resources/create/?objective=C00LO00'
+        create_url = '/resources/create/?objective=%s' % dummy_objective_id
         response = self.client.get(create_url, follow=True)
         self.assertContains(response, 'Submit a resource')
-        self.assertContains(response, 'C00LO00')
+        self.assertContains(response, dummy_objective_id)
         response = self.client.post(create_url, {'url': 'http://www.example.com/',
-                                                 'objective': 'C00LO00'}, follow=True)
+                                                 'objective': dummy_objective_id}, follow=True)
         self.assertNotContains(response, 'form-group has-error')
         self.assertContains(response, 'http://www.example.com/')
-        self.assertContains(response, 'C00LO00')
+        self.assertContains(response, dummy_objective_id)
 
     def test_comment_on_resource(self):
         login = self.client.login(username=self.u1.username, password=self.u1_password)
@@ -159,7 +165,7 @@ class BasicTests(TestCase):
     # the real instance.
     def test_resource_api(self):
         response = self.client.get('/resources/api/resource/?format=json')
-        self.assertContains(response, 'http://www.example.com/XXX')
+        self.assertContains(response, dummy_resource_url)
         objects = json.loads(response.content)['objects']
         for o in objects:
             response = self.client.get(o['objective'])
@@ -169,7 +175,7 @@ class BasicTests(TestCase):
 
     def test_submission_api(self):
         response = self.client.get('/resources/api/resourcesubmission/?format=json')
-        self.assertContains(response, 'MYCOMMENT')
+        self.assertContains(response, dummy_comment)
         objects = json.loads(response.content)['objects']
         for o in objects:
             for k in ('resource', 'resource_uri'):
