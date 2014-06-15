@@ -3,22 +3,11 @@ import json
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.test import TestCase
+from django.utils.timezone import utc
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from models import Resource, ResourceSubmission, ResourceVerification
 from repo.models import Course, CourseCategory, LearningObjective
-
-
-class UTC(datetime.tzinfo):
-
-    def utcoffset(self, dt):
-        return datetime.timedelta(0)
-
-    def tzname(self, dt):
-        return "UTC"
-
-    def dst(self, dt):
-        return datetime.timedelta(0)
 
 
 dummy_objective_id = 'C00LO00'
@@ -183,7 +172,7 @@ class BasicTests(TestCase):
                 self.assertEqual(response.status_code, 200)
 
     def test_rv_strings(self):
-        now = datetime.datetime.now(tz=UTC())
+        now = datetime.datetime.utcnow().replace(tzinfo=utc)
         rv = ResourceVerification(url='http://127.0.0.1/abcd/',
                                   last_failure=now - datetime.timedelta(seconds=1))
         rv.full_clean()
