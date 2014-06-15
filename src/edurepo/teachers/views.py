@@ -148,7 +148,7 @@ def add_objective(request, teacher_email, teacher_class_id, date):
             entry = form.save(commit=False)
             entry.teacher = teacher
             entry.teacher_class = teacher_class
-            entry.date = datetime.datetime.strptime(date, '%B %d, %Y')
+            entry.date = datetime.datetime.strptime(date, '%Y-%m-%d')
             entry.save()
             start_of_week_datetime = entry.date - datetime.timedelta(days=entry.date.weekday())
             start_of_week = datetime.date(start_of_week_datetime.year, start_of_week_datetime.month,
@@ -191,7 +191,7 @@ def remove_objective(request, teacher_email, teacher_class_id, date, objective):
         return redirect('top.index')
 
     if request.POST:
-        date_of_objective = datetime.datetime.strptime(date, '%B %d, %Y')
+        date_of_objective = datetime.datetime.strptime(date, '%Y-%m-%d')
         Entry.objects.filter(teacher=teacher, teacher_class__id=teacher_class_id,
                              date=date_of_objective, objective=objective).delete()
         start_of_week_datetime = date_of_objective - datetime.timedelta(days=date_of_objective.weekday())
@@ -261,7 +261,7 @@ def dashboard(request, teacher_email, teacher_class_id=None, start_of_week=None)
                                           start_of_week=next_week)
             next_week_link = next_week_redirect.url
             for day in day_letters:
-                c.dates[day] = cur_day
+                c.dates[day] = cur_day.strftime('%Y-%m-%d')
                 entries_for_day = Entry.objects.filter(teacher=teacher, teacher_class=c).filter(date=cur_day)
                 objectives_and_descriptions = []
                 for entry in entries_for_day:

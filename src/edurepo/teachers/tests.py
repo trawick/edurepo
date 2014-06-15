@@ -187,7 +187,7 @@ class BasicTests(LiveServerTestCase):
         self.assertNotContains(response, 'form-group has-error')
 
         # Add a calendar entry
-        today = datetime.date.today().strftime('%B %d, %Y')
+        today = datetime.date.today().strftime('%Y-%m-%d')
         # Giant kludge: We need to know the id of the class.
         response = self.client.get('/teachers/api/teacher_class/?format=json')
         self.assertContains(response, class_name)

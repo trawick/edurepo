@@ -35,7 +35,6 @@ Possible themes for upcoming stages
 Bugs of interest
 ================
 
-* dates in dashboard URLs have different formats than dates in add/remove objective URLs
 * Improve formatting of resource view
 * Minimize data transfer by link validator (e.g., grab just first 4-8K of document)
 * Fix or hide noise from link validator cron job (e.g., invalid characters in some pages)
@@ -55,4 +54,4 @@ Blatant bugs, even obvious at this early stage
 * need ASL in source files
 * caching of API calls somewhere
 * individual items have ids for reuse with multiple objectives?  I dunno...  seems to imply performance hit, when instead the materials could be reused by some definitional mechanism
-* no automated test cases for API, test clients, or AngularJS app, and poor test coverage in general
+* no automated test cases for test clients or AngularJS app
