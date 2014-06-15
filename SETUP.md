@@ -206,7 +206,7 @@ Starting over with new data
 ```
 python manage.py sqlclear teachers resources repo | python manage.py dbshell
 python manage.py syncdb
-python repo/import.py ../../samples/ import
+python repo/import_xml.py ../../samples/ import
 (edit teachers/fixtures/sample.json to fix URL)
 python manage.py loaddata teachers/fixtures/sample.json
 python manage.py loaddata resources/fixtures/sample.json
@@ -218,8 +218,8 @@ Adding a single course
 In this example, NC-HSM-III is imported:
 
 ```
-python repo/import.py ../../samples/M/NC-HSM-III.xml check
-python repo/import.py ../../samples/M/NC-HSM-III.xml import
+python repo/import_xml.py ../../samples/M/NC-HSM-III.xml check
+python repo/import_xml.py ../../samples/M/NC-HSM-III.xml import
 ```
 
 Removing a single course

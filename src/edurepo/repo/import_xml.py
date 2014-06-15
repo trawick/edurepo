@@ -235,18 +235,33 @@ def process(top):
             doc_file = os.path.join(dirpath, f)
             process_file(doc_file)
 
-if len(sys.argv) != 3:
-    print >> sys.stderr, "Usage: %s filesystem-root check-or-import" % sys.argv[0]
-    sys.exit(1)
 
-x_top = sys.argv[1]
+def start_import(top, mode, spew=None):
+    global perform_import, noisy
 
-x_mode = sys.argv[2]
-assert os.path.exists(x_top)
-assert x_mode == 'check' or x_mode == 'import'
-if x_mode == 'import':
-    perform_import = True
-elif x_mode == 'check':
-    noisy = True
+    if mode == 'import':
+        perform_import = True
+    elif mode == 'check':
+        perform_import = False
 
-process(x_top)
+    if spew is not None:
+        noisy = spew
+    else:
+        noisy = not perform_import
+
+    process(top)
+
+
+def main(args):
+    if len(args) != 3:
+        print >> sys.stderr, "Usage: %s filesystem-root check-or-import" % args[0]
+        sys.exit(1)
+
+    top = args[1]
+    mode = args[2]
+    assert os.path.exists(top)
+    assert mode == 'check' or mode == 'import'
+    start_import(top, mode)
+
+if __name__ == '__main__':
+    main(sys.argv)

@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 from django.db import DataError, IntegrityError, transaction
 from django.test import TestCase
 from models import Course, CourseCategory, GlossaryItem, LearningObjective, MultipleChoiceItem, ReferenceText
+from import_xml import start_import
 
 
 dummy_category_id = 'TESTNA'
@@ -35,6 +36,16 @@ class BasicTests(TestCase):
         self.lo1 = LearningObjective(id=dummy_objective_id_2, course=self.c0, description=dummy_objective_description_2)
         self.lo1.full_clean()
         self.lo1.save()
+
+    def test_import(self):
+        for fn in ['00cat.xml', 'M/grade4.xml', 'M/mg4-mc.xml', 'M/mg4-tf.xml']:
+            start_import('../../samples/' + fn, 'check', spew=False)
+            start_import('../../samples/' + fn, 'import', spew=False)
+
+        objects = CourseCategory.objects.filter(id='K12-SS')
+        self.assertEquals(len(objects), 1)
+        objects = Course.objects.filter(id='MG4')
+        self.assertEquals(len(objects), 1)
 
     def test_1(self):
         """Basic creation/update of Course and default language"""
