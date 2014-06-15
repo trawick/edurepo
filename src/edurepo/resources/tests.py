@@ -5,8 +5,20 @@ from django.db import IntegrityError
 from django.test import TestCase
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-from models import Resource, ResourceSubmission
+from models import Resource, ResourceSubmission, ResourceVerification
 from repo.models import Course, CourseCategory, LearningObjective
+
+
+class UTC(datetime.tzinfo):
+
+    def utcoffset(self, dt):
+        return datetime.timedelta(0)
+
+    def tzname(self, dt):
+        return "UTC"
+
+    def dst(self, dt):
+        return datetime.timedelta(0)
 
 
 class BasicTests(TestCase):
@@ -54,6 +66,7 @@ class BasicTests(TestCase):
     def test_bad_url(self):
         bad_urls = ('ftp://trawick:private@example.com/',
                     'http://trawick:private@example.com/',
+                    'http://foo',
                     )
         for (bad_url, i) in zip(bad_urls, range(len(bad_urls))):
             r = Resource(objective=self.lo0, url=bad_url)
@@ -93,18 +106,21 @@ class BasicTests(TestCase):
         rs.save()
 
         self.assertTrue(' created ' in str(rs))
+        self.assertEquals(rs.type_str(), 'Created')
 
         rs = ResourceSubmission(user=self.u1, resource=r, type='f')
         rs.full_clean()
         rs.save()
 
         self.assertTrue(' flagged ' in str(rs))
+        self.assertEquals(rs.type_str(), 'Inappropriate')
 
         rs = ResourceSubmission(user=self.u2, resource=r, type='v')
         rs.full_clean()
         rs.save()
 
         self.assertTrue(' voted on ' in str(rs))
+        self.assertEquals(rs.type_str(), 'Up-voted')
 
     def test_index(self):
         response = self.client.get("/resources/")
@@ -159,3 +175,20 @@ class BasicTests(TestCase):
             for k in ('resource', 'resource_uri'):
                 response = self.client.get(o[k])
                 self.assertEqual(response.status_code, 200)
+
+    def test_rv_strings(self):
+        now = datetime.datetime.now(tz=UTC())
+        rv = ResourceVerification(url='http://127.0.0.1/abcd/',
+                                  last_failure=now - datetime.timedelta(seconds=1))
+        rv.full_clean()
+        rv.save()
+        self.assertEquals(rv.status_char(), 'I')
+        self.assertEquals(rv.status_str(), 'Invalid')
+        rv.last_success = now
+        self.assertEquals(rv.status_char(), 'V')
+        self.assertEquals(rv.status_str(), 'Valid')
+        self.assertEquals(str(rv), 'Valid:' + rv.url)
+        rv.last_failure = now + datetime.timedelta(seconds=1)
+        self.assertEquals(rv.status_char(), 'I')
+        rv.last_failure = None
+        self.assertEquals(rv.status_char(), 'V')
