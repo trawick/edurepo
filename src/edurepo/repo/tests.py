@@ -3,6 +3,7 @@ from django.db import DataError, IntegrityError, transaction
 from django.test import TestCase
 from models import Course, CourseCategory, GlossaryItem, LearningObjective, MultipleChoiceItem, ReferenceText
 from import_xml import start_import
+from remove import delete_course
 
 
 dummy_category_id = 'TESTNA'
@@ -46,6 +47,10 @@ class BasicTests(TestCase):
         self.assertEquals(len(objects), 1)
         objects = Course.objects.filter(id='MG4')
         self.assertEquals(len(objects), 1)
+
+        delete_course('MG4', delete=True, noisy=False)
+        objects = Course.objects.filter(id='MG4')
+        self.assertEquals(len(objects), 0)
 
     def test_1(self):
         """Basic creation/update of Course and default language"""

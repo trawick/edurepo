@@ -7,20 +7,22 @@ sys.path.append('.')
 from repo.models import Course, LearningObjective
 
 
-def delete_learning_objective(lo, delete):
-    print 'Deleting objective %s...' % lo
+def delete_learning_objective(lo, delete, noisy=True):
+    if noisy:
+        print 'Deleting objective %s...' % lo
     if delete:
         lo.delete()
     return 0
 
 
-def delete_course(course, delete):
+def delete_course(course, delete=False, noisy=True):
     courses = Course.objects.filter(id=course)
     assert courses, "Course %s is not in the system" % course
-    print 'Deleting course %s...' % courses[0]
+    if noisy:
+        print 'Deleting course %s...' % courses[0]
     learning_objectives = LearningObjective.objects.filter(course=courses[0])
     for lo in learning_objectives:
-        rc = delete_learning_objective(lo, delete)
+        rc = delete_learning_objective(lo, delete, noisy=noisy)
         if rc:
             return rc
     if delete:
@@ -40,6 +42,7 @@ def process(args):
 
     delete = mode == 'delete'
 
-    return delete_course(course, delete)
+    return delete_course(course, delete=delete)
 
-sys.exit(process(sys.argv[1:]))
+if __name__ == '__main__':
+    sys.exit(process(sys.argv[1:]))
