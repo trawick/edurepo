@@ -1,4 +1,5 @@
 import datetime
+from django.db import IntegrityError, transaction
 from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -70,9 +71,10 @@ def register_teacher(request):
     if request.POST:
         form = TeacherForm(request.POST)
         if form.is_valid():
-            obj = form.save(commit=False)
-            obj.user = request.user
-            obj.save()
+            with transaction.atomic():
+                obj = form.save(commit=False)
+                obj.user = request.user
+                obj.save()
             return redirect('../..')
     else:
         initial = {}
@@ -107,10 +109,16 @@ def add_class(request, teacher_email):
     if request.POST:
         form = TeacherClassForm(request.POST)
         if form.is_valid():
-            obj = form.save(commit=False)
-            obj.teacher = teacher
-            obj.save()
-            return redirect('../..')
+            try:
+                with transaction.atomic():
+                    obj = form.save(commit=False)
+                    obj.teacher = teacher
+                    obj.save()
+                return redirect('../..')
+            except IntegrityError as e:
+                # bad bad bad; I guess the TeacherClassForm has to be initialized
+                # with the teacher so that its clean() method can look at it.
+                form._errors['name'] = ['You already created a class of this name.']
     else:
         initial = {'repo_provider': request_to_provider(request)}
         form = TeacherClassForm(initial=initial)
@@ -145,16 +153,23 @@ def add_objective(request, teacher_email, teacher_class_id, date):
     if request.POST:
         form = EntryForm(request.POST)
         if form.is_valid():
-            entry = form.save(commit=False)
-            entry.teacher = teacher
-            entry.teacher_class = teacher_class
-            entry.date = datetime.datetime.strptime(date, '%Y-%m-%d')
-            entry.save()
-            start_of_week_datetime = entry.date - datetime.timedelta(days=entry.date.weekday())
-            start_of_week = datetime.date(start_of_week_datetime.year, start_of_week_datetime.month,
-                                          start_of_week_datetime.day)
-            return redirect('teachers.views.dashboard', teacher_email=teacher_email, teacher_class_id=teacher_class_id,
-                            start_of_week=start_of_week)
+            try:
+                with transaction.atomic():
+                    entry = form.save(commit=False)
+                    entry.teacher = teacher
+                    entry.teacher_class = teacher_class
+                    entry.date = datetime.datetime.strptime(date, '%Y-%m-%d')
+                    entry.save()
+                start_of_week_datetime = entry.date - datetime.timedelta(days=entry.date.weekday())
+                start_of_week = datetime.date(start_of_week_datetime.year, start_of_week_datetime.month,
+                                              start_of_week_datetime.day)
+                return redirect('teachers.views.dashboard', teacher_email=teacher_email, teacher_class_id=teacher_class_id,
+                                start_of_week=start_of_week)
+            except IntegrityError as e:
+                # bad bad bad; I guess the EntryForm has to be initialized
+                # with the date and teacher so that its clean() method can look at it.
+                form._errors['objective'] = ['This objective is already on the calendar for this day.']
+                pass
     else:
         objectives = objectives_for_course(teacher_class.course_id, teacher_class.repo_provider)
         # like EntryForm() above, but dynamically created to use a selection
