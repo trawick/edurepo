@@ -3,6 +3,7 @@ import json
 import os
 import unittest
 
+from django.db import IntegrityError
 from django.core.exceptions import ValidationError
 from django.test import LiveServerTestCase
 from django.contrib.auth import authenticate
@@ -173,6 +174,7 @@ class BasicTests(LiveServerTestCase):
         teacher_name = 'Ms. Smith'
         class_name = 'MyClass'
         course_id = 'MG4'
+        objective_id = 'MG4-FACTMULT'
         login = self.client.login(username=self.u1.username, password=self.u1_password)
         self.assertTrue(login)
         register_url = '/teachers/register/'
@@ -183,7 +185,7 @@ class BasicTests(LiveServerTestCase):
         self.assertContains(response, 'Edjective.org reference views')
         self.assertNotContains(response, 'form-group has-error')
 
-        # Add a class using class just registered
+        # Add a class using teacher just registered
         add_url = '/teachers/%s/add' % teacher_email
         response = self.client.get(add_url, follow=True)
         self.assertContains(response, 'Add a class')
@@ -193,6 +195,15 @@ class BasicTests(LiveServerTestCase):
                                     follow=True)
         self.assertContains(response, 'Edjective.org reference views')
         self.assertNotContains(response, 'form-group has-error')
+
+        # Try to add same class again
+        with self.assertRaises(IntegrityError):
+            response = self.client.get(add_url, follow=True)
+            self.assertContains(response, 'Add a class')
+            response = self.client.post(add_url, {'name': class_name,
+                                                  'course_id': course_id,
+                                                  'repo_provider': os.environ['TEST_PROVIDER']},
+                                        follow=True)
 
         # Add a calendar entry
         today = datetime.date.today().strftime('%Y-%m-%d')
@@ -209,11 +220,20 @@ class BasicTests(LiveServerTestCase):
         entry_url = '/teachers/' + teacher_email + '/' + teacher_class_id + '/' + today + '/add_objective'
         response = self.client.get(entry_url, follow=True)
         self.assertContains(response, 'Add an objective for ' + today)
-        response = self.client.post(entry_url, {'objective': course_id,
+        response = self.client.post(entry_url, {'objective': objective_id,
                                                 'comments': 'This ought to be fun, kids!'},
                                     follow=True)
         self.assertContains(response, 'Dashboard for ' + teacher_name)
         self.assertNotContains(response, 'form-group has-error')
+
+        # Try to add the same objective again for the same day.
+        with self.assertRaises(IntegrityError):
+            response = self.client.get(entry_url, follow=True)
+            self.assertContains(response, 'Add an objective for ' + today)
+            response = self.client.post(entry_url, {'objective': objective_id,
+                                                    'comments': 'This ought to be fun, kids!'},
+                                        follow=True)
+            self.assertContains(response, 'form-group has-error')  # shouldn't get here
 
         # look at dashboard
         dash_url = '/teachers/' + teacher_email + '/dashboard'
