@@ -258,3 +258,16 @@ Of course.  But that won't test everything, as we need to have an API provider l
 export TEST_PROVIDER=http://127.0.0.1:8000/
 ./manage.py test
 ```
+
+Fixing PostgreSQL user password
+===============================
+```
+$ sudo -u postgres psql postgres
+psql (9.1.13)
+Type "help" for help.
+
+postgres=# ALTER USER djangoedurepo PASSWORD 'NewPassword';
+ALTER ROLE
+postgres=# \q
+$
+```
