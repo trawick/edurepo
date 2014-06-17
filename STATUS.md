@@ -10,7 +10,7 @@ Three worst issues in teacher interface
 =======================================
 
 1. no way to delete or edit a class definition
-2. get "Server Error (500)" when uniqueness check fails; catch it sooner and show an error on the form
+2. XXX
 3. when adding class, teacher can't see list of course ids based on current API provider; first determine API provider then proceed to form with list of courses by category?
 
 Three worst issues in demo interface
@@ -35,6 +35,7 @@ Possible themes for upcoming stages
 Bugs of interest
 ================
 
+* Teacher forms should validate uniqueness instead of catching it in the view and slipping in an error message (must initialize forms with extra model data that they don't currently have)
 * Improve formatting of resource view
 * Minimize data transfer by link validator (e.g., grab just first 4-8K of document)
 * Fix or hide noise from link validator cron job (e.g., invalid characters in some pages)
@@ -45,12 +46,8 @@ Bugs of interest
   * current\_learning\_objectives.py: indicate when the specified class name is invalid
 * handle API failures in Angular webapp
 * Read "Effective JavaScript", finish Django tutorial, finish Angular tutorial, read tastypie docs :)
-* More testcases
+* Testcases for Angular app
 * Improve interface for submitting resources for a LO
-
-Blatant bugs, even obvious at this early stage
-==============================================
-
 * need ASL in source files
 * caching of API calls somewhere
 * individual items have ids for reuse with multiple objectives?  I dunno...  seems to imply performance hit, when instead the materials could be reused by some definitional mechanism
