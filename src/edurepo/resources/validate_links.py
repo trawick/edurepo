@@ -29,6 +29,17 @@ def get_content_type(debug, rsp):
 
 
 def create_verification(debug, url):
+
+    def handle_request_error(url):
+        verification = ResourceVerification(url=url,
+                                            last_failure=now())
+        verification.save()
+        resources = Resource.objects.filter(url=url)
+        print 'Affected learning objectives:'
+        for r in resources:
+            print r.objective
+        print ''
+
     if debug:
         print url
     # www.livescience.com does a permanent redirect to a mobile site
@@ -38,18 +49,15 @@ def create_verification(debug, url):
         req = urllib2.Request(url=url, headers=headers)
         rsp = urllib2.urlopen(req, timeout=10)
     except urllib2.HTTPError as e:
-        print 'Failed now: ' + url
-        print e.code
-        print e.read()
-        verification = ResourceVerification(url=url,
-                                            last_failure=now())
-        verification.save()
+        print 'Failed now with HTTP error code %s: %s' % (e.code, url)
+        if e.code != 404:
+            print e.read()
+        handle_request_error(url)
+        return
     except:
         print 'Failed now: ' + url
         print sys.exc_info()
-        verification = ResourceVerification(url=url,
-                                            last_failure=now())
-        verification.save()
+        handle_request_error(url)
         return
 
     ct = get_content_type(debug, rsp)
