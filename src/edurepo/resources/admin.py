@@ -2,6 +2,9 @@ from django.contrib import admin
 
 from resources.models import Resource, ResourceSubmission, ResourceVerification
 
-admin.site.register(Resource)
+class ResourceAdmin(admin.ModelAdmin):
+    search_fields = ('url',)
+
+admin.site.register(Resource, ResourceAdmin)
 admin.site.register(ResourceSubmission)
 admin.site.register(ResourceVerification)
