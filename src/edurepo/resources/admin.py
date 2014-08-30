@@ -8,7 +8,12 @@ class ResourceAdmin(admin.ModelAdmin):
     search_fields = ('url',)
 
 admin.site.register(Resource, ResourceAdmin)
-admin.site.register(ResourceSubmission)
+
+
+class ResourceSubmissionAdmin(admin.ModelAdmin):
+    search_fields = ('resource__url',)
+
+admin.site.register(ResourceSubmission, ResourceSubmissionAdmin)
 
 
 class UnreachableResourceFilter(admin.SimpleListFilter):
@@ -28,6 +33,7 @@ class UnreachableResourceFilter(admin.SimpleListFilter):
 
 
 class ResourceVerificationAdmin(admin.ModelAdmin):
+    search_fields = ('url',)
     list_filter = (UnreachableResourceFilter,)
 
 admin.site.register(ResourceVerification, ResourceVerificationAdmin)
