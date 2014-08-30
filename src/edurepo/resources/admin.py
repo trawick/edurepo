@@ -22,7 +22,7 @@ class UnreachableResourceFilter(admin.SimpleListFilter):
 
     def queryset(self, request, queryset):
         if self.value():  # must be 'unreachable', since that's the only lookup option
-            return queryset.filter(last_failure__gt=F('last_success'))
+            return queryset.exclude(last_success__gt=F('last_failure'))
         else:
             return queryset
 
