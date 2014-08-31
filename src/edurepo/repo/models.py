@@ -3,6 +3,7 @@ from django.db import models
 from core.utils import ellipsis
 
 id_regex = '^[A-Za-z0-9-]*$'
+objective_id_regex = '^[A-Za-z0-9-\.]*$'
 
 
 class RepoLanguageField(models.CharField):
@@ -52,9 +53,9 @@ class Course(models.Model):
 
 
 class LearningObjective(models.Model):
-    id_desc = 'Learning objective ids may contain only letters, numbers, and hyphens.'
+    id_desc = 'Learning objective ids may contain only letters, numbers, hyphens, and periods.'
     id = models.CharField(max_length=40, primary_key=True, unique=True,
-                          validators=[RegexValidator(regex=id_regex, message=id_desc)])
+                          validators=[RegexValidator(regex=objective_id_regex, message=id_desc)])
     course = models.ForeignKey(Course)
     description = models.CharField(max_length=4096)
     language = RepoLanguageField()
