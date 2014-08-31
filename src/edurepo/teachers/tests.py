@@ -3,7 +3,6 @@ import json
 import os
 import unittest
 
-from django.db import IntegrityError
 from django.core.exceptions import ValidationError
 from django.test import LiveServerTestCase
 from django.contrib.auth import authenticate
