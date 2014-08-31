@@ -115,7 +115,7 @@ def add_class(request, teacher_email):
                     obj.teacher = teacher
                     obj.save()
                 return redirect('../..')
-            except IntegrityError as e:
+            except IntegrityError:
                 # bad bad bad; I guess the TeacherClassForm has to be initialized
                 # with the teacher so that its clean() method can look at it.
                 form._errors['name'] = ['You already created a class of this name.']
@@ -163,9 +163,9 @@ def add_objective(request, teacher_email, teacher_class_id, date):
                 start_of_week_datetime = entry.date - datetime.timedelta(days=entry.date.weekday())
                 start_of_week = datetime.date(start_of_week_datetime.year, start_of_week_datetime.month,
                                               start_of_week_datetime.day)
-                return redirect('teachers.views.dashboard', teacher_email=teacher_email, teacher_class_id=teacher_class_id,
-                                start_of_week=start_of_week)
-            except IntegrityError as e:
+                return redirect('teachers.views.dashboard', teacher_email=teacher_email,
+                                teacher_class_id=teacher_class_id, start_of_week=start_of_week)
+            except IntegrityError:
                 # bad bad bad; I guess the EntryForm has to be initialized
                 # with the date and teacher so that its clean() method can look at it.
                 form._errors['objective'] = ['This objective is already on the calendar for this day.']
@@ -255,6 +255,8 @@ def dashboard(request, teacher_email, teacher_class_id=None, start_of_week=None)
                             start_of_week=today - datetime.timedelta(days=today.weekday()))
 
     selected_class = None
+    previous_week_link = None
+    next_week_link = None
     for c in teacher_class_list:
         c.active_class = ''
         if int(teacher_class_id) == c.id:
@@ -286,9 +288,6 @@ def dashboard(request, teacher_email, teacher_class_id=None, start_of_week=None)
                 cur_day += datetime.timedelta(days=1)
     if teacher_class_list:
         assert selected_class
-    else:
-        previous_week_link = None
-        next_week_link = None
     context = RequestContext(request, {'teacher_class_list': teacher_class_list,
                                        'selected_class': selected_class,
                                        'day_names': day_names,

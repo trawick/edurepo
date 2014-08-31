@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from repo import views
-from repo.api import CourseResource, CourseCategoryResource, GlossaryItemResource, ICanResource, LearningObjectiveResource, \
-    MultipleChoiceItemResource, ReferenceTextResource, TrueFalseItemResource
+from repo.api import CourseResource, CourseCategoryResource, GlossaryItemResource, ICanResource, \
+    LearningObjectiveResource, MultipleChoiceItemResource, ReferenceTextResource, TrueFalseItemResource
 
 course_resource = CourseResource()
 course_category_resource = CourseCategoryResource()

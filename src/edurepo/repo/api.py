@@ -2,7 +2,8 @@ __author__ = 'trawick'
 
 from tastypie import fields
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
-from repo.models import Course, CourseCategory, ICan, LearningObjective, GlossaryItem, MultipleChoiceItem, ReferenceText, TrueFalseItem
+from repo.models import Course, CourseCategory, ICan, LearningObjective, GlossaryItem, MultipleChoiceItem, \
+    ReferenceText, TrueFalseItem
 from core.utils import CORSResource
 
 

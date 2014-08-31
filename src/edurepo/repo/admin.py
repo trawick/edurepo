@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from repo.models import Course, CourseCategory, ICan, LearningObjective, MultipleChoiceItem, GlossaryItem, ReferenceText, TrueFalseItem
+from repo.models import Course, CourseCategory, ICan, LearningObjective, MultipleChoiceItem, GlossaryItem, \
+    ReferenceText, TrueFalseItem
 
 admin.site.register(CourseCategory)
 admin.site.register(Course)

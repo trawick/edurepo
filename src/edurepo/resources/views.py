@@ -78,7 +78,7 @@ def comment_on_resource(request, resource_id):
                         resource.inappropriate_flags = F('inappropriate_flags') + 1
                     resource.save()
                 return redirect(settings.MOUNTED_AT + '/resources')
-            except IntegrityError as e:
+            except IntegrityError:
                 # User will have to guess what the problem is.
                 pass
     else:

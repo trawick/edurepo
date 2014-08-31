@@ -36,8 +36,9 @@ class TeacherClass(models.Model):
             return
         bad_repo_msg = 'The repository is unavailable or the repository URL is invalid.'
         bad_course_id_msg = 'The course id is invalid'
+        class_url = self.repo_provider + 'repo/api/course/' + self.course_id + '/'
+        rsp = None
         try:
-            class_url = self.repo_provider + 'repo/api/course/' + self.course_id + '/'
             req = urllib2.Request(url=class_url)
             rsp = urllib2.urlopen(req, timeout=5)
         except urllib2.HTTPError as e:
@@ -49,8 +50,9 @@ class TeacherClass(models.Model):
             raise ValidationError(bad_repo_msg + ' (URLError)')
         finally:
             try:
-                rsp.close()
-            except NameError:
+                if rsp:
+                    rsp.close()
+            except:
                 pass
 
     def __unicode__(self):

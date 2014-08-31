@@ -20,6 +20,7 @@ def purge_unreachable_resources(debug, min_success_time):
         if debug:
             print 'Checking %s...' % verification
         purge = False
+        reason = ''
         if verification.last_success is None:
             purge = True
             reason = 'Link never worked'
