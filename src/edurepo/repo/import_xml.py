@@ -45,8 +45,16 @@ def import_course_standard(root):
             print "Warning: Category %s is unknown" % cat_id
 
     if perform_import:
-        c = Course(id=course_id, cat=cat, description=description)
-        c.save()
+        # Update or new?
+        try:
+            # We can fix the category or description, but we can't change the id.
+            c = Course.objects.get(id=course_id)
+            c.cat = cat
+            c.description = description
+            c.save()
+        except Course.DoesNotExist:
+            c = Course(id=course_id, cat=cat, description=description)
+            c.save()
     else:
         c = None
 
@@ -68,7 +76,14 @@ def import_course_standard(root):
             print '           %s' % description.encode('utf-8')
 
         if perform_import:
-            c.learningobjective_set.create(id=objective_id, description=description)
+            try:
+                # We can fix the description, but we can't fix the id
+                lo = LearningObjective.objects.get(id=objective_id)
+                lo.description = description
+                lo.course = c
+                lo.save()
+            except LearningObjective.DoesNotExist:
+                c.learningobjective_set.create(id=objective_id, description=description)
 
         icans = child.find('icans')
         if icans is not None:
@@ -254,7 +269,7 @@ def start_import(top, mode, spew=None):
 
 def main(args):
     if len(args) != 3:
-        print >> sys.stderr, "Usage: %s filesystem-root check-or-import" % args[0]
+        print >> sys.stderr, "Usage: %s filesystem-root-or-file check-or-import" % args[0]
         sys.exit(1)
 
     top = args[1]
