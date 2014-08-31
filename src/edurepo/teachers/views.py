@@ -141,11 +141,15 @@ def edit_class(request, teacher_email, teacher_class_id):
 
     teacher_class = TeacherClass.objects.get(id=teacher_class_id)
     if request.POST:
-        form = TeacherClassForm(request.POST, instance=teacher_class)
-        if form.is_valid():
-            form.save()
-            return redirect('teachers.views.dashboard', teacher_email=teacher_email,
-                            teacher_class_id=teacher_class_id)
+        if 'delete-button' in request.POST:
+            teacher_class.delete()
+            return redirect('teachers.views.dashboard', teacher_email=teacher_email)
+        else:
+            form = TeacherClassForm(request.POST, instance=teacher_class)
+            if form.is_valid():
+                form.save()
+                return redirect('teachers.views.dashboard', teacher_email=teacher_email,
+                                teacher_class_id=teacher_class_id)
     else:
         initial = {'name': teacher_class.name,
                    'course_id': teacher_class.course_id,

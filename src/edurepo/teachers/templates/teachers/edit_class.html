@@ -7,14 +7,24 @@
         {% csrf_token %}
         {% bootstrap_form form %}
         {% buttons %}
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" name="submit-button" class="btn btn-primary">
             {% bootstrap_icon "star" %} Submit
+            </button>
+
+            <button type="submit" name="delete-button" class="btn btn-danger pull-right">
+            {% bootstrap_icon "trash" %} Delete this class
             </button>
         {% endbuttons %}
     </form>
 
-    <p>Important:  If you update the class name or course id after students have begun accessing
+    <h3>Important</h3>
+
+    <ul>
+        <li>If you update the class name or course id after students have begun accessing
     this class, they may need to update their software settings again to continue looking up
-    the current learning objectives.</p>
+    the current learning objectives.</li>
+        <li>If you choose to delete the class, it will be deleted immediately with
+    no further confirmation.</li>
+    </ul>
 
 {% endblock %}
