@@ -143,10 +143,7 @@ def edit_class(request, teacher_email, teacher_class_id):
     if request.POST:
         form = TeacherClassForm(request.POST, instance=teacher_class)
         if form.is_valid():
-            with transaction.atomic():
-                obj = form.save(commit=False)
-                obj.teacher = teacher
-                obj.save()
+            form.save()
             return redirect('teachers.views.dashboard', teacher_email=teacher_email,
                             teacher_class_id=teacher_class_id)
     else:
