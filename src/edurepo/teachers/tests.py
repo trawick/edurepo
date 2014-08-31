@@ -196,14 +196,13 @@ class BasicTests(LiveServerTestCase):
         self.assertContains(response, 'Edjective.org reference views')
         self.assertNotContains(response, 'form-group has-error')
 
-        # Try to add same class again
-        with self.assertRaises(IntegrityError):
-            response = self.client.get(add_url, follow=True)
-            self.assertContains(response, 'Add a class')
-            response = self.client.post(add_url, {'name': class_name,
-                                                  'course_id': course_id,
-                                                  'repo_provider': os.environ['TEST_PROVIDER']},
-                                        follow=True)
+        response = self.client.get(add_url, follow=True)
+        self.assertContains(response, 'Add a class')
+        response = self.client.post(add_url, {'name': class_name,
+                                              'course_id': course_id,
+                                              'repo_provider': os.environ['TEST_PROVIDER']},
+                                    follow=True)
+        self.assertContains(response, 'form-group has-error')
 
         # Add a calendar entry
         today = datetime.date.today().strftime('%Y-%m-%d')
@@ -227,13 +226,12 @@ class BasicTests(LiveServerTestCase):
         self.assertNotContains(response, 'form-group has-error')
 
         # Try to add the same objective again for the same day.
-        with self.assertRaises(IntegrityError):
-            response = self.client.get(entry_url, follow=True)
-            self.assertContains(response, 'Add an objective for ' + today)
-            response = self.client.post(entry_url, {'objective': objective_id,
-                                                    'comments': 'This ought to be fun, kids!'},
-                                        follow=True)
-            self.assertContains(response, 'form-group has-error')  # shouldn't get here
+        response = self.client.get(entry_url, follow=True)
+        self.assertContains(response, 'Add an objective for ' + today)
+        response = self.client.post(entry_url, {'objective': objective_id,
+                                                'comments': 'This ought to be fun, kids!'},
+                                    follow=True)
+        self.assertContains(response, 'form-group has-error')  # shouldn't get here
 
         # look at dashboard
         dash_url = '/teachers/' + teacher_email + '/dashboard'
