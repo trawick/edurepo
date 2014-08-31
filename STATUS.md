@@ -10,7 +10,7 @@ Three worst issues in teacher interface
 =======================================
 
 1. XXX
-2. no way to delete a class definition
+2. XXX
 3. when adding class, teacher can't see list of course ids based on current API provider; first determine API provider then proceed to form with list of courses by category?
 
 Three worst issues in demo interface
