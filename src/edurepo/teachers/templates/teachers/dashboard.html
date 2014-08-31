@@ -16,6 +16,12 @@
         </a>
     {% endfor %}
     </div>
+
+    {% if selected_class %}
+        <p><small><a href="{% url 'teacher.views.edit_class' teacher_email=teacher.email teacher_class_id=selected_class.id %}">
+            <span class="glyphicon glyphicon-pencil"></span> Settings for {{ selected_class.name }}</a></small>
+        </p>
+    {% endif %}
     </div>
     </div>
     </div>

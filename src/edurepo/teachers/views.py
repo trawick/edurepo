@@ -132,6 +132,41 @@ def add_class(request, teacher_email):
 
 
 @login_required
+def edit_class(request, teacher_email, teacher_class_id):
+    teacher = Teacher.objects.get(email=teacher_email)
+
+    if teacher.user != request.user:
+        # weird mistake or evil to manipulate another person's data?  start over
+        return redirect('top.index')
+
+    teacher_class = TeacherClass.objects.get(id=teacher_class_id)
+    if request.POST:
+        form = TeacherClassForm(request.POST, instance=teacher_class)
+        if form.is_valid():
+            with transaction.atomic():
+                obj = form.save(commit=False)
+                obj.teacher = teacher
+                obj.save()
+            return redirect('teachers.views.dashboard', teacher_email=teacher_email,
+                            teacher_class_id=teacher_class_id)
+    else:
+        initial = {'name': teacher_class.name,
+                   'course_id': teacher_class.course_id,
+                   'repo_provider': request_to_provider(request),
+                   }
+        form = TeacherClassForm(initial=initial)
+
+    args = {'teacher_email': teacher_email,
+            'dashboard_emails': get_dashboard_emails(request),
+            'teacher_class_id': teacher_class_id
+            }
+    args.update(csrf(request))
+
+    args['form'] = form
+    return render(request, 'teachers/edit_class.html', args)
+
+
+@login_required
 def add_objective(request, teacher_email, teacher_class_id, date):
     """
     add_objective() creates the Entry using the teacher_email and
