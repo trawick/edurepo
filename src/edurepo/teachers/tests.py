@@ -206,7 +206,7 @@ class BasicTests(LiveServerTestCase):
         # Add a calendar entry
         today = datetime.date.today().strftime('%Y-%m-%d')
         # Giant kludge: We need to know the id of the class.
-        response = self.client.get('/teachers/api/teacher_class/?format=json')
+        response = self.client.get('/teachers/api/teacher_class/')
         self.assertContains(response, class_name)
         objects = json.loads(response.content)['objects']
         for o in objects:

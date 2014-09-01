@@ -19,7 +19,7 @@ else:
 base_teacher_url = '%steachers/api/teacher_' % server_base
 base_course_url = '%srepo/api/course/' % server_base
 
-url = server_base + 'teachers/api/teacher_class/?format=json&teacher__email=%s' % \
+url = server_base + 'teachers/api/teacher_class/?teacher__email=%s' % \
     teacher_email
 response = urllib2.urlopen(url)
 body = response.read()
@@ -28,7 +28,7 @@ objs = json_body['objects']
 
 if len(objs) == 0:
     # valid teacher, or just no classes?
-    url = server_base + 'teachers/api/teacher/?format=json&email=%s' % teacher_email
+    url = server_base + 'teachers/api/teacher/?email=%s' % teacher_email
     response = urllib2.urlopen(url)
     body = response.read()
     json_body = json.loads(body)
@@ -42,7 +42,7 @@ if len(objs) == 0:
 for obj in objs:
     print 'Class %s:' % obj['name']
     print '  %s: %s' % (obj['course_id'], obj['name'])
-    url = '%s%s/?format=json' % (base_course_url, obj['course_id'])
+    url = '%s%s/' % (base_course_url, obj['course_id'])
     response = urllib2.urlopen(url)
     body = response.read()
     json_body = json.loads(body)

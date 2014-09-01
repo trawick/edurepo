@@ -153,7 +153,7 @@ class BasicTests(TestCase):
     # This accesses the API endpoint in the test instance, not the one in
     # the real instance.
     def test_resource_api(self):
-        response = self.client.get('/resources/api/resource/?format=json')
+        response = self.client.get('/resources/api/resource/')
         self.assertContains(response, dummy_resource_url)
         objects = json.loads(response.content)['objects']
         for o in objects:
@@ -163,7 +163,7 @@ class BasicTests(TestCase):
             self.assertContains(response, '/resources/api/resource/' + str(o['id']))
 
     def test_submission_api(self):
-        response = self.client.get('/resources/api/resourcesubmission/?format=json')
+        response = self.client.get('/resources/api/resourcesubmission/')
         self.assertContains(response, dummy_comment)
         objects = json.loads(response.content)['objects']
         for o in objects:

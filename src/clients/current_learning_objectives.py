@@ -29,7 +29,7 @@ week_ago_dt = today_dt - timedelta(days=7)
 today = today_dt.strftime('%Y-%m-%d')
 week_ago = week_ago_dt.strftime('%Y-%m-%d')
 
-url = '%s?format=json&teacher__email=%s&date__lte=%s&date__gte=%s&teacher_class__name=%s' % \
+url = '%s?teacher__email=%s&date__lte=%s&date__gte=%s&teacher_class__name=%s' % \
       (base_teacher_url, teacher_email, today, week_ago, urllib.quote(teacher_class))
 response = urllib2.urlopen(url)
 body = response.read()
@@ -43,7 +43,7 @@ if len(objs) == 0:
     sys.exit(1)
 
 course_id = objs[0]['teacher_class']['course_id']
-url = '%s%s/?format=json' % (base_course_url, course_id)
+url = '%s%s/' % (base_course_url, course_id)
 response = urllib2.urlopen(url)
 body = response.read()
 json_body = json.loads(body)
@@ -55,7 +55,7 @@ print
 for obj in objs:
     print '  %s: %s' % (obj['date'], obj['objective'])
     # now fetch description of this objective
-    url = '%s%s/?format=json' % (base_objective_url, obj['objective'])
+    url = '%s%s/' % (base_objective_url, obj['objective'])
     response = urllib2.urlopen(url)
     body = response.read()
     json_body = json.loads(body)
