@@ -18,8 +18,14 @@ Three worst issues in demo interface
 
 1. Demo teacher/class has objectives that don't have any supporting materials in the repository.
    * currently adding more materials to a few of the objectives in Alabama Grade 5 Science
-2. Ugly; needs to be Bootstrap-ed
-3. XXX
+2. Errors or delays fetching asynchronously aren't reported well or at all.  The select boxes under Browse shouln't appear until we have something to select.
+3. Ugly; needs to be Bootstrap-ed
+
+Three worst issues for developers
+=================================
+
+1. need automated deployment (salt, ansible, whatever)
+2. need continuous integration
 
 Possible themes for upcoming stages
 ===================================
