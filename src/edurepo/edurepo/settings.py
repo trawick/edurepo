@@ -124,3 +124,46 @@ STATICFILES_DIRS = (
 )
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+
+LOG_DIRECTORY = config.get('logging', 'DIRECTORY')
+GLOBAL_LOG_LEVEL = config.get('logging', 'GLOBAL_LEVEL')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_logers': False,
+    # what do the log records look like?
+    'formatters': {
+        'verbose': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+    },
+    # what can we do with the log records?
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'maxBytes': 100000,
+            'backupCount': 5,
+            'filename': os.path.join(LOG_DIRECTORY, 'edjective.log'),
+            'formatter': 'verbose',
+        }
+    },
+    'loggers': {
+        # catch-all logger:
+        'django': {
+            'handlers': ['file'],
+            'propagate': True,
+            'level': 'INFO',
+        },
+        'django.request': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        '': {
+            'handlers': ['file'],
+            'level': GLOBAL_LOG_LEVEL,
+        }
+    }
+}

@@ -51,6 +51,10 @@ MOUNTED_AT=
 NAME=djangoedurepo
 USER=   (whatever)
 PASSWORD=   (whatever)
+
+[logging]
+DIRECTORY=/path/where/Django-logs-are-created
+GLOBAL_LEVEL=DEBUG
 ```
 
 Python environment:
