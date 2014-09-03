@@ -24,9 +24,9 @@ Three worst issues in demo interface
 Three worst issues for developers
 =================================
 
-1. Enable logging in a sane manner.  Ensure that we can debug the objective lookup issue.
-2. XXX
-3. need continuous integration
+1. Enable logging in a sane manner.  Ensure that we can debug the objective lookup issue.  Ensure that the logging setup doesn't break cron jobs that use Django.
+2. need VM for testing deployment
+3. need to create virtual env based on Python 2.7 when default system Python is 2.6
 
 Three worst issues for deployers
 ================================
@@ -38,6 +38,7 @@ Three worst issues for deployers
 Possible themes for upcoming stages
 ===================================
 
+* Use requests instead of urllib2
 * Import Common Core high school math course definitions
 * Bootstrap-ify Angular app
 * Improve user interface for resource browsing and commenting
