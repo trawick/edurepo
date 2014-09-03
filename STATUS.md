@@ -24,8 +24,16 @@ Three worst issues in demo interface
 Three worst issues for developers
 =================================
 
-1. need automated deployment (salt, ansible, whatever)
-2. need continuous integration
+1. XXX
+2. XXX
+3. need continuous integration
+
+Three worst issues for deployers
+================================
+
+1. The Ansible deployment script should handle more of the setup process.
+2. XXX
+3. XXX
 
 Possible themes for upcoming stages
 ===================================
