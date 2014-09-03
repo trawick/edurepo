@@ -155,10 +155,12 @@ LOGGING = {
     # what can we do with the log records?
     'handlers': {
         'file': {
-            'level': 'DEBUG',
             '()': group_writable_file_handler,
-            'filename': os.path.join(LOG_DIRECTORY, 'edjective.log'),
+            'level': 'DEBUG',
             'formatter': 'verbose',
+            'filename': os.path.join(LOG_DIRECTORY, 'edjective.log'),
+            'mode': 'w',
+            'encoding': 'utf-8'
         }
     },
     'loggers': {
