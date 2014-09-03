@@ -64,6 +64,8 @@ System python:
 
 Local python environment:
 
+(This is handled by the Ansible deploy script.)
+
 ```
   cd edurepo (root of git checkout)
   mkdir envs
@@ -77,7 +79,11 @@ Local python environment:
 
 bunch of crap with /home/trawick/edurepo-static and django command to put stuff there
 
-* python manage.py collectstatic
+(This is handled by the Ansible deploy script.)
+
+```
+python manage.py collectstatic
+```
 
 httpd.conf
 ==========
@@ -179,6 +185,8 @@ cp bootstrap* /path/to/edurepo/src/webapp/css/
 When picking up software updates
 ================================
 
+(These steps are handled by the Ansible deploy script.)
+
 * Restart httpd
 * pip install -r requirements.txt
 * manage.py collectstatic
@@ -277,9 +285,11 @@ Deploying with Ansible
 
 Currently the playbook itself must be customized.  For support of deploying on machines with differing requirements, the differences need to be extracted.
 
-After activing a `virtualenv` with Ansible installed:
+After activating a `virtualenv` with Ansible installed:
 
 ```
 $ cd src/ansible
 $ ansible-playbook deploy.yml -i inventory
 ```
+
+Check `deploy.yml` for details.  In particular, note the overlay directory that must be created manually, and which corresponds to the manual steps described above which create files in the edurepo checkout.
