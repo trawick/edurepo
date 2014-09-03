@@ -8,9 +8,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
+import logging
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+import stat
 
 import ConfigParser
 config = ConfigParser.ConfigParser()
@@ -128,6 +130,14 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 LOG_DIRECTORY = config.get('logging', 'DIRECTORY')
 GLOBAL_LOG_LEVEL = config.get('logging', 'GLOBAL_LEVEL')
 
+
+def group_writable_file_handler(filename, mode='a', encoding=None):
+    if not os.path.exists(filename):
+        open(filename, 'a').close()
+    os_mode = os.stat(filename).st_mode
+    os.chmod(filename, os_mode | stat.S_IWGRP)
+    return logging.FileHandler(filename, mode, encoding)
+
 LOGGING = {
     'version': 1,
     'disable_existing_logers': False,
@@ -142,9 +152,7 @@ LOGGING = {
     'handlers': {
         'file': {
             'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'maxBytes': 100000,
-            'backupCount': 5,
+            '()': group_writable_file_handler,
             'filename': os.path.join(LOG_DIRECTORY, 'edjective.log'),
             'formatter': 'verbose',
         }
