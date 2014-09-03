@@ -134,11 +134,11 @@ GLOBAL_LOG_LEVEL = config.get('logging', 'GLOBAL_LEVEL')
 def group_writable_file_handler(filename, mode='a', encoding=None):
     if not os.path.exists(filename):
         # We can only make it group writable if we are the owner.
+        # We're always the owner if we create it, and that path
+        # should be sufficient.
         open(filename, 'a').close()
         os_mode = os.stat(filename).st_mode
-        print 'group_writable_f_h 3'
         os.chmod(filename, os_mode | stat.S_IWGRP)
-        print 'group_writable_f_h 4'
     return logging.FileHandler(filename, mode, encoding)
 
 LOGGING = {
