@@ -275,6 +275,10 @@ $
 Deploying with Ansible
 ======================
 
+Currently the playbook itself must be customized.  For support of deploying on machines with differing requirements, the differences need to be extracted.
+
+After activing a `virtualenv` with Ansible installed:
+
 ```
 $ cd src/ansible
 $ ansible-playbook deploy.yml -i inventory
