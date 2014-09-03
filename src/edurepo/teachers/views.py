@@ -153,7 +153,7 @@ def edit_class(request, teacher_email, teacher_class_id):
     else:
         initial = {'name': teacher_class.name,
                    'course_id': teacher_class.course_id,
-                   'repo_provider': request_to_provider(request),
+                   'repo_provider': teacher_class.repo_provider,
                    }
         form = TeacherClassForm(initial=initial)
 
