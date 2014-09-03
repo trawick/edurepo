@@ -1,0 +1,43 @@
+---
+- hosts: all
+  vars:
+    user: trawick
+    remote_checkout: /home/trawick/git/edurepo
+    static_dir: /home/trawick/edurepo-static
+  remote_user: trawick
+  tasks:
+    - name: Check that the server is alive
+      action: ping
+    - git: repo=git://github.com/trawick/edurepo.git
+           dest={{ remote_checkout }}
+           version=HEAD
+           update=yes
+           force=no
+    - name: Overlay files that don't live in git
+      command: 'cp -pR /home/trawick/edurepo-overlays/src {{ remote_checkout }}'
+    - file: >
+           dest={{ remote_checkout }}/envs
+           mode=755
+           owner={{ user }}
+           group={{ user }}
+           state=directory
+    - name: Create new virtualenv
+      command: /usr/local/bin/virtualenv {{ remote_checkout }}/envs/edurepo creates={{ remote_checkout }}/envs/edurepo
+    - file: >
+           dest={{ static_dir }}
+           mode=755
+           owner={{ user }}
+           group={{ user }}
+           state=directory
+    - pip: virtualenv={{ remote_checkout }}/envs/edurepo
+           requirements={{ remote_checkout }}/src/requirements.txt
+    - django_manage: >
+          app_path={{ remote_checkout }}/src/edurepo
+          command=collectstatic
+          virtualenv={{ remote_checkout }}/envs/edurepo
+    - django_manage: >
+          app_path={{ remote_checkout }}/src/edurepo
+          command=syncdb
+          virtualenv={{ remote_checkout }}/envs/edurepo
+    - name: Restart httpd
+      command: '/usr/bin/sudo /usr/local/bin/apachectl graceful'
