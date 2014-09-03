@@ -10,8 +10,8 @@ Three worst issues in teacher interface
 =======================================
 
 1. XXX
-2. XXX
-3. when adding class, teacher can't see list of course ids based on current API provider; first determine API provider then proceed to form with list of courses by category?
+2. when adding class, teacher can't see list of course ids based on current API provider; first determine API provider then proceed to form with list of courses by category?
+3. After adding a class, the teacher is taken back to the main screen.  They should be taken to the dashboard for that class.
 
 Three worst issues in demo interface
 ====================================
