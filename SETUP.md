@@ -271,3 +271,11 @@ ALTER ROLE
 postgres=# \q
 $
 ```
+
+Deploying with Ansible
+======================
+
+```
+$ cd src/ansible
+$ ansible-playbook deploy.yml -i inventory
+```
