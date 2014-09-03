@@ -1,12 +1,13 @@
-#### from https://gist.github.com/robhudson/3848832
-
 import json
+import logging
 import urllib2
 
 from django.http import HttpResponse
 from tastypie import http
 from tastypie.exceptions import ImmediateHttpResponse
 
+
+#### from https://gist.github.com/robhudson/3848832
 
 class CORSResource(object):
     """
@@ -51,7 +52,11 @@ def description_for_objective(objective_id, repo_provider):
     assert repo_provider
     base_objective_url = '%srepo/api/learningobjective/' % repo_provider
     url = '%s%s/' % (base_objective_url, objective_id)
-    response = urllib2.urlopen(url)
+    try:
+        response = urllib2.urlopen(url)
+    except urllib2.URLError:
+        logging.exception('Error retrieving URL %s:' % url)
+        return None
     body = response.read()
     json_body = json.loads(body)
     return json_body['description']
@@ -61,7 +66,11 @@ def objectives_for_course(course_id, repo_provider):
     assert repo_provider
     base_course_url = '%srepo/api/learningobjective/' % repo_provider
     url = '%s?course__id=%s' % (base_course_url, course_id)
-    response = urllib2.urlopen(url)
+    try:
+        response = urllib2.urlopen(url)
+    except urllib2.URLError:
+        logging.exception('Error retrieving URL %s:' % url)
+        return None
     body = response.read()
     json_body = json.loads(body)
     results = []

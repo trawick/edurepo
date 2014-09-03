@@ -40,8 +40,9 @@ def create_entry_form(objective_list):
         pass
 
     widget_list = []
-    for o in objective_list:
-        widget_list += [(o[0], o[0] + ' - ' + o[1])]
+    if objective_list:
+        for o in objective_list:
+            widget_list += [(o[0], o[0] + ' - ' + o[1])]
     setattr(Meta, 'model', Entry)
     setattr(Meta, 'fields', ('objective', 'comments'))
     widgets = {'objective': forms.Select(choices=widget_list)}

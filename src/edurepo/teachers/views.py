@@ -208,6 +208,9 @@ def add_objective(request, teacher_email, teacher_class_id, date):
                 pass
     else:
         objectives = objectives_for_course(teacher_class.course_id, teacher_class.repo_provider)
+        if not objectives:
+            # XXX fail with an error message
+            pass
         # like EntryForm() above, but dynamically created to use a selection
         # of objectives specific to this course
         form = create_entry_form(objectives)
