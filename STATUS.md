@@ -41,7 +41,6 @@ Three worst issues for deployers
 Possible themes for upcoming stages
 ===================================
 
-* Use requests instead of urllib2 for eventual SNI support with 2.7.future
 * Import Common Core high school math course definitions
 * Bootstrap-ify Angular app
 * Improve user interface for resource browsing and commenting
@@ -53,6 +52,8 @@ Possible themes for upcoming stages
 Bugs of interest
 ================
 
+* Follow updates to requests package to see when we can remove workarounds for issue 2192.
+* Follow updates to requests package and Python 2.7.next to see when SNI will be supported and what, if any, needs to change in the edurepo code.
 * Teacher forms should validate uniqueness instead of catching it in the view and slipping in an error message (must initialize forms with extra model data that they don't currently have)
 * Improve formatting of resource view
 * Minimize data transfer by link validator (e.g., grab just first 4-8K of document)

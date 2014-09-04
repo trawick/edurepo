@@ -1,8 +1,11 @@
-import urllib2
+import logging
 
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User
+import requests
+
+logger = logging.getLogger(__name__)
 
 
 class Teacher(models.Model):
@@ -37,23 +40,21 @@ class TeacherClass(models.Model):
         bad_repo_msg = 'The repository is unavailable or the repository URL is invalid.'
         bad_course_id_msg = 'The course id is invalid'
         class_url = self.repo_provider + 'repo/api/course/' + self.course_id + '/'
-        rsp = None
         try:
-            req = urllib2.Request(url=class_url)
-            rsp = urllib2.urlopen(req, timeout=5)
-        except urllib2.HTTPError as e:
-            if e.code == 404:
-                raise ValidationError(bad_course_id_msg + ' (404 error from ' + class_url + ')')
-            else:
-                raise ValidationError(bad_repo_msg + ' (HTTPError ' + e.code + ')')
-        except urllib2.URLError:
-            raise ValidationError(bad_repo_msg + ' (URLError)')
-        finally:
-            try:
-                if rsp:
-                    rsp.close()
-            except:
-                pass
+            logger.info("Fetching %s" % class_url)
+            response = requests.get(class_url, timeout=5)
+        except requests.exceptions.ConnectionError:
+            logger.exception("Error retrieving %s" % class_url)
+            raise ValidationError(bad_repo_msg + ' (Connection error)')
+        # temporary hack for https://github.com/kennethreitz/requests/issues/2192
+        except requests.packages.urllib3.exceptions.ProtocolError:
+            logger.exception("Error retrieving %s" % class_url)
+            raise ValidationError(bad_repo_msg + ' (Connection error)')
+
+        if response.status_code == 404:
+            raise ValidationError(bad_course_id_msg + ' (404 error from ' + class_url + ')')
+        elif response.status_code != 200:
+            raise ValidationError(bad_repo_msg + ' (HTTP error ' + response.status_code + ')')
 
     def __unicode__(self):
         return self.name + '(' + self.course_id + ') taught by ' + str(self.teacher)

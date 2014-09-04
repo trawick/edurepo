@@ -5,11 +5,11 @@ import sys
 sys.path.append('.')
 
 from django.utils.timezone import utc
-import urllib2
 from datetime import datetime, timedelta
 from optparse import OptionParser
 from bs4 import BeautifulSoup
 from resources.models import Resource, ResourceVerification
+import requests
 
 
 def now():
@@ -19,7 +19,7 @@ def now():
 def get_content_type(debug, rsp):
     """Return content-type in lower case with anything else (e.g., charset)
     stripped off.  Return empty string if no content-type is available."""
-    ct_hdr = rsp.info().getheader('Content-Type')
+    ct_hdr = rsp.headers['Content-Type']
     if not ct_hdr:
         return ''
     fields = ct_hdr.split(';')
@@ -43,15 +43,20 @@ def create_verification(debug, url):
     if debug:
         print url
     # www.livescience.com does a permanent redirect to a mobile site
-    # when using the default urllib2 user-agent string.
+    # when using the default urllib2 user-agent string.  (I haven't
+    # checked that again after switching to requests.)
     headers = {"User-Agent": "Mozilla/5.0 (edurepo link validity checker"}
     try:
-        req = urllib2.Request(url=url, headers=headers)
-        rsp = urllib2.urlopen(req, timeout=10)
-    except urllib2.HTTPError as e:
-        print 'Failed now with HTTP error code %s: %s' % (e.code, url)
-        if e.code != 404:
-            print e.read()
+        response = requests.get(url, headers=headers)
+    except requests.exceptions.ConnectionError:
+        print 'Failed now: ' + url
+        print sys.exc_info()
+        handle_request_error(url)
+        return
+    # temporary hack for https://github.com/kennethreitz/requests/issues/2192
+    except requests.packages.urllib3.exceptions.ProtocolError:
+        print 'Failed now: ' + url
+        print sys.exc_info()
         handle_request_error(url)
         return
     except:
@@ -60,14 +65,21 @@ def create_verification(debug, url):
         handle_request_error(url)
         return
 
-    ct = get_content_type(debug, rsp)
+    if response.status_code != 200:
+        print 'Failed now with HTTP error code %s: %s' % (response.status_code, url)
+        if response.status_code != 404:
+            print response.text
+        handle_request_error(url)
+        return
+
+    ct = get_content_type(debug, response)
 
     if debug:
-        print rsp.getcode()
-        print rsp.info().getheader('Content-Type') + ' => ' + ct
+        print response.status_code
+        print response.headers['Content-Type'] + ' => ' + ct
 
     if ct == 'text/html':
-        contents = rsp.read()
+        contents = response.text
         try:
             soup = BeautifulSoup(contents)
         except:

@@ -1,8 +1,7 @@
-import json
 import logging
-import urllib2
 
 from django.http import HttpResponse
+import requests
 from tastypie import http
 from tastypie.exceptions import ImmediateHttpResponse
 
@@ -55,12 +54,15 @@ def description_for_objective(objective_id, repo_provider):
     url = '%s%s/' % (base_objective_url, objective_id)
     try:
         logger.info('Fetching %s' % url)
-        response = urllib2.urlopen(url)
-    except urllib2.URLError:
+        response = requests.get(url)
+    except requests.exceptions.ConnectionError:
         logger.exception('Error retrieving URL %s:' % url)
         return None
-    body = response.read()
-    json_body = json.loads(body)
+    # temporary hack for https://github.com/kennethreitz/requests/issues/2192
+    except requests.packages.urllib3.exceptions.ProtocolError:
+        logger.exception("Error retrieving %s" % url)
+        return None
+    json_body = response.json()
     return json_body['description']
 
 
@@ -70,12 +72,15 @@ def objectives_for_course(course_id, repo_provider):
     url = '%s?course__id=%s' % (base_course_url, course_id)
     try:
         logger.info('Fetching %s' % url)
-        response = urllib2.urlopen(url)
-    except urllib2.URLError:
+        response = requests.get(url)
+    except requests.exceptions.ConnectionError:
         logger.exception('Error retrieving URL %s:' % url)
         return None
-    body = response.read()
-    json_body = json.loads(body)
+    # temporary hack for https://github.com/kennethreitz/requests/issues/2192
+    except requests.packages.urllib3.exceptions.ProtocolError:
+        logger.exception('Error retrieving URL %s:' % url)
+        return None
+    json_body = response.json()
     results = []
     for o in json_body['objects']:
         results += [(o['id'], o['description'])]
