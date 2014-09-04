@@ -41,7 +41,7 @@ Three worst issues for deployers
 Possible themes for upcoming stages
 ===================================
 
-* Use requests instead of urllib2
+* Use requests instead of urllib2 for eventual SNI support with 2.7.future
 * Import Common Core high school math course definitions
 * Bootstrap-ify Angular app
 * Improve user interface for resource browsing and commenting
@@ -66,7 +66,7 @@ Bugs of interest
 * Read "Effective JavaScript", finish Django tutorial, finish Angular tutorial, read tastypie docs :)
 * Testcases for Angular app
 * Improve interface for submitting resources for a LO
-* need ASL in source files
+* might need ASL in source files
 * caching of API calls somewhere
 * individual items have ids for reuse with multiple objectives?  I dunno...  seems to imply performance hit, when instead the materials could be reused by some definitional mechanism
 * no automated test cases for test clients or AngularJS app
