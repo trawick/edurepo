@@ -9,6 +9,9 @@ Three worst overall viability issues
 Three worst issues in teacher interface
 =======================================
 
+0. SSL is used for the API endpoint if a class is added via https (okay); Python 2.x SSL to edjective.org
+fails BECAUSE THERE IS NO FREAKING SNI SUPPORT!!!!!!!!!!!  The API endpoint has to be manually edited to
+disable SSL.
 1. If no objectives can be found via web lookup, the add-objective-to-calendar form is useless.
 2. when adding class, teacher can't see list of course ids based on current API provider; first determine API provider then proceed to form with list of courses by category?
 3. After adding a class, the teacher is taken back to the main screen.  They should be taken to the dashboard for that class.
@@ -24,9 +27,9 @@ Three worst issues in demo interface
 Three worst issues for developers
 =================================
 
-1. Enable logging in a sane manner.  Ensure that we can debug the objective lookup issue.  Ensure that the logging setup doesn't break cron jobs that use Django.
+1. XXX
 2. need VM for testing deployment
-3. need to create virtual env based on Python 2.7 when default system Python is 2.6
+3. XXX
 
 Three worst issues for deployers
 ================================
