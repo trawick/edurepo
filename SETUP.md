@@ -1,3 +1,10 @@
+Python version
+==============
+
+It has been tested a lot with Python 2.6, but Python 2.7 is currently used.
+The `group_writable_file_handler` in `settings.py` might only work with 2.7,
+so be careful out there.
+
 Configuration and setup for the Django app
 ==========================================
 
@@ -282,6 +289,20 @@ postgres=# ALTER USER djangoedurepo PASSWORD 'NewPassword';
 ALTER ROLE
 postgres=# \q
 $
+```
+
+Setting up a log directory
+==========================
+
+Create a directory somewhere to store Django logs, such as /var/log/django-edurepo.
+
+Create a group with the managing user AND the daemon user in it.  (The daemon user
+will be the normal log writer; the managing user may run commands interactively
+or via cron, which need to write to the log directory.)
+
+```
+# usermod -a -G LOGGING-GROUP DAEMON-USER
+# usermod -a -G LOGGING-GROUP MANAGING_USER
 ```
 
 Deploying with Ansible

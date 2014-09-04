@@ -4,10 +4,22 @@
     user: trawick
     remote_checkout: /home/trawick/git/edurepo
     static_dir: /home/trawick/edurepo-static
+    log_dir: /var/log/django-edurepo
+    log_group: edurepo-loggers
+    log_dir_owner: www-data
+    python_binary: /home/trawick/python-2.7/bin/python
   remote_user: trawick
   tasks:
     - name: Check that the server is alive
       action: ping
+    - name: Create log directory
+      command: /usr/bin/sudo mkdir {{ log_dir }} creates={{ log_dir }}
+    - name: Fix owner/group on log directory
+      command: /usr/bin/sudo chown {{ log_dir_owner }}:{{ log_group }} {{ log_dir }}
+    - name: Fix permissions on log directory
+      command: /usr/bin/sudo chmod 0775 {{ log_dir }}
+    - name: Fix group sticky on log directory
+      command: /usr/bin/sudo chmod g+s {{ log_dir }}
     - git: repo=git://github.com/trawick/edurepo.git
            dest={{ remote_checkout }}
            version=HEAD
@@ -22,7 +34,7 @@
            group={{ user }}
            state=directory
     - name: Create new virtualenv
-      command: /usr/local/bin/virtualenv {{ remote_checkout }}/envs/edurepo creates={{ remote_checkout }}/envs/edurepo
+      command: /usr/local/bin/virtualenv -p {{ python_binary }} {{ remote_checkout }}/envs/edurepo creates={{ remote_checkout }}/envs/edurepo
     - file: >
            dest={{ static_dir }}
            mode=755
