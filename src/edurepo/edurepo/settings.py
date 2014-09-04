@@ -143,7 +143,7 @@ def group_writable_file_handler(filename, mode='a', encoding=None):
 
 LOGGING = {
     'version': 1,
-    'disable_existing_logers': False,
+    'disable_existing_loggers': False,
     # what do the log records look like?
     'formatters': {
         'verbose': {
