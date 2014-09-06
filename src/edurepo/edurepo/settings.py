@@ -158,7 +158,7 @@ LOGGING = {
             'level': 'DEBUG',
             'formatter': 'verbose',
             'filename': os.path.join(LOG_DIRECTORY, 'edjective.log'),
-            'mode': 'w',
+            'mode': 'a',
             'encoding': 'utf-8'
         }
     },
