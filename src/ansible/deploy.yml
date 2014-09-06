@@ -1,32 +1,81 @@
 ---
-- hosts: all
-  vars:
-    user: trawick
-    remote_checkout: /home/trawick/git/edurepo
-    static_dir: /home/trawick/edurepo-static
-    log_dir: /var/log/django-edurepo
-    log_group: edurepo-loggers
-    log_dir_owner: www-data
-    python_binary: /home/trawick/python-2.7/bin/python
-  remote_user: trawick
+
+- name: Configure and deploy the application code
+  hosts: webservers
   tasks:
-    - name: Check that the server is alive
-      action: ping
+    - name: Install packages
+      apt: name={{ item }} state=latest
+      sudo: yes
+      with_items:
+        - git
+        - unzip
+        - python-virtualenv
+        - postgresql
+        - libpq-dev
+        - python-dev
+# The system python-psycopg2 package is used by Ansible; the Django app uses psycopg2 from its virtualenv.
+        - python-psycopg2
+    - name: Install system httpd
+      apt: name={{ item }} state=latest
+      sudo: yes
+      with_items:
+        - apache2
+        - libapache2-mod-wsgi
+      when: use_system_httpd == "yes"
+    - name: Setup up Postgresql user
+      sudo: yes
+      sudo_user: postgres
+      postgresql_user: name={{ edurepo_pg_user }} password={{ edurepo_pg_password }} role_attr_flags=CREATEDB,NOSUPERUSER
+    - name: Setup up Postgresql DB
+      sudo: yes
+      sudo_user: postgres
+      postgresql_db: name={{ edurepo_db }}
+                     encoding='UTF-8'
+    - name: Add the logging group
+      group: name={{ log_group }} state=present
+      sudo: yes
+    - name: Add managing user to logging group
+      user: name={{ remote_user }} groups={{log_group}} append=yes
+      sudo: yes
+    - name: Add daemon user to logging group
+      user: name={{ log_dir_owner }} groups={{log_group}} append=yes
+      sudo: yes
     - name: Create log directory
-      command: /usr/bin/sudo mkdir {{ log_dir }} creates={{ log_dir }}
-    - name: Fix owner/group on log directory
-      command: /usr/bin/sudo chown {{ log_dir_owner }}:{{ log_group }} {{ log_dir }}
-    - name: Fix permissions on log directory
-      command: /usr/bin/sudo chmod 0775 {{ log_dir }}
-    - name: Fix group sticky on log directory
-      command: /usr/bin/sudo chmod g+s {{ log_dir }}
+      file: >
+          dest={{ log_dir }}
+          mode=2775
+          owner={{ log_dir_owner }}
+          group={{ log_group }}
+          state=directory
+      sudo: yes
     - git: repo=git://github.com/trawick/edurepo.git
            dest={{ remote_checkout }}
            version=HEAD
            update=yes
            force=no
-    - name: Overlay files that don't live in git
-      command: 'cp -pR /home/trawick/edurepo-overlays/src {{ remote_checkout }}'
+    - copy: src={{ local_overlay_dir }}/ dest={{ remote_checkout }}
+    - file: >
+           dest={{ scratch_dir }}
+           mode=755
+           owner={{ user }}
+           group={{ user }}
+           state=directory
+    - unarchive: src={{ local_dist_dir }}/angular-1.2.13.zip dest={{ scratch_dir }} creates={{ scratch_dir }}/angular-1.2.13
+    - unarchive: src={{ local_dist_dir }}/bootstrap-2.3.2.zip dest={{ scratch_dir }} creates={{ scratch_dir }}/bootstrap
+    - file: >
+           dest={{ remote_checkout }}/src/webapp/lib
+           mode=755
+           owner={{ user }}
+           group={{ user }}
+           state=directory
+    - name: Drop Ansible files in the right place
+      command: cp -pR {{ scratch_dir }}/angular-1.2.13 {{ remote_checkout }}/src/webapp/lib creates={{ remote_checkout }}/src/webapp/lib/angular-1.2.13
+    - file: >
+           src={{ remote_checkout }}/src/webapp/lib/angular-1.2.13
+           dest={{ remote_checkout }}/src/webapp/lib/angular
+           state=link
+    - name: Drop Bootstrap files in the right place
+      command: cp -pR {{ scratch_dir }}/bootstrap/css/ {{ remote_checkout }}/src/webapp/ creates={{ remote_checkout }}/src/webapp/css/bootstrap.css
     - file: >
            dest={{ remote_checkout }}/envs
            mode=755
@@ -34,7 +83,7 @@
            group={{ user }}
            state=directory
     - name: Create new virtualenv
-      command: /usr/local/bin/virtualenv -p {{ python_binary }} {{ remote_checkout }}/envs/edurepo creates={{ remote_checkout }}/envs/edurepo
+      command: "{{ virtualenv_binary }} -p {{ python_binary }} --no-site-packages {{ remote_checkout }}/envs/edurepo creates={{ remote_checkout }}/envs/edurepo"
     - file: >
            dest={{ static_dir }}
            mode=755
@@ -45,11 +94,34 @@
            requirements={{ remote_checkout }}/src/requirements.txt
     - django_manage: >
           app_path={{ remote_checkout }}/src/edurepo
-          command=collectstatic
+          command=syncdb
           virtualenv={{ remote_checkout }}/envs/edurepo
     - django_manage: >
           app_path={{ remote_checkout }}/src/edurepo
-          command=syncdb
+          command=collectstatic
           virtualenv={{ remote_checkout }}/envs/edurepo
-    - name: Restart httpd
-      command: '/usr/bin/sudo /usr/local/bin/apachectl graceful'
+    - name: Load initial data into system (1st time only)
+      command: "{{ remote_checkout }}/envs/edurepo/bin/python repo/import_xml.py ../../samples/ import"
+      args:
+        chdir: "{{ remote_checkout }}/src/edurepo"
+        creates: "{{ remote_checkout }}/data-imported"
+    - name: Skip import of data in the future
+# Use this copy command to touch the file so that the timestamp isn't changed each time.
+# That allows us to see the last time the data was imported.
+      copy: content="" dest={{ remote_checkout }}/data-imported force=no
+    - name: Configure system httpd
+      apache2_module: state=present name=wsgi
+      sudo: yes
+      when: use_system_httpd == "yes"
+    - name: Configure system httpd
+      copy: src={{ local_conf_dir }}/ dest=/etc/apache2/sites-enabled/
+      sudo: yes
+      when: use_system_httpd == "yes"
+    - name: Restart system httpd
+      command: /etc/init.d/apache2 reload
+      sudo: yes
+      when: use_system_httpd == "yes"
+    - name: Restart custom httpd
+      command: '{{ apachectl }} graceful'
+      sudo: yes
+      when: use_system_httpd == "no"

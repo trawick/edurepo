@@ -46,8 +46,7 @@ DEBUG=False
 TEMPLATE_DEBUG=False
 
 [deployment]
-# should be comma-delimited list of acceptable hostnames
-ALLOWED_HOSTS=*
+ALLOWED\_HOSTS=*
 set_static_root=True
 # set this to location where /static from Django app will be copied
 STATIC_ROOT=/home/whatever/edurepo-static/
@@ -61,7 +60,7 @@ PASSWORD=   (whatever)
 
 [logging]
 DIRECTORY=/path/where/Django-logs-are-created
-GLOBAL_LEVEL=DEBUG
+GLOBAL_LEVEL=INFO
 ```
 
 Python environment:
@@ -318,3 +317,53 @@ $ ansible-playbook deploy.yml -i inventory
 ```
 
 Check `deploy.yml` for details.  In particular, note the overlay directory that must be created manually, and which corresponds to the manual steps described above which create files in the edurepo checkout.
+
+Starting from zero
+==================
+
+Initial manual setup
+--------------------
+
+Create an Ubuntu 14.04 Server VM:
+
+* A 32-bit image with 1 CPU and 2GB of RAM is fine.
+* Create a user to manage edurepo.  This will be referred to as "managing-user" in subsequent
+instructions.
+* Use visudo to add a line like the following to the end of the sudo config:
+```
+managing-user ALL=(ALL) NOPASSWD: ALL
+```
+(The user must be able to run commands as root or as the Postgresql user without a password prompt.)
+* Enable sshd:
+```
+sudo apt-get install openssh-server
+```
+* Put your client's public key in the `/home/managing-user/.ssh/authorized_keys` file on the server,
+creating `.ssh` (with permissions 0700) or `authorized_keys` (with permissions 0600) as necessary.
+* ssh from the system to github.com to populate the host key (or git checkout from playbook will fail)
+
+Automatic setup and deploy
+--------------------------
+
+1. Look at the Ansible inventory file in `src/ansible/hosts_sample` and create a version for your system.
+2. Create a virtualenv for running Ansible (`virtualenv /path/to/env` followed by `pip install ansible`).
+3. With that virtualenv activated:
+```
+$ ansible-playbook -i /path/to/hosts deploy.yml
+```
+
+Manual creation of Django superuser
+-----------------------------------
+
+After running the deploy script, log in to the remove server and create a Django superuser:
+```
+$ cd /home/managing-user/git/edurepo
+$ . envs/edurepo/bin/activate
+$ cd src/edurepo
+$ python manage.py createsuperuser
+Username: superman
+Email address: superman@example.com
+Password:
+Password (again):
+Superuser created successfully.
+```
