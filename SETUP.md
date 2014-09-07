@@ -25,7 +25,7 @@ edurepo ALL=(ALL) NOPASSWD: ALL
 ```
 (This allows the user to be able to run commands as `root` or as the Postgresql user without
 a password prompt.)
-* Enable sshd and install git:
+* Enable sshd:
 ```
 $ sudo apt-get install openssh-server
 ```
@@ -35,7 +35,7 @@ Also, ensure that it has the proper ownership:
 ```
 $ sudo chown -R edurepo:edurepo /home/edurepo/.ssh
 ```
-* Log in as user `edurepo` and ssh to github.com to populate the host key (or git checkout from playbook will fail):
+* Log in as user `edurepo` and ssh to github.com to populate the host key:
 ```
 $ ssh github.com
 The authenticity of host 'github.com (XXX)' can't be established.
@@ -48,10 +48,11 @@ Permission denied (publickey).
 
 ### Configuration files
 
-Several configuration files have to be created on the managing system, within a certain directory
-structure, referred to as `rootdir` in the following documentation.  This configuration should be
-kept out of public repositories as it will contain private information.  (Consider filesystem
-encryption and appropriate backup strategies.)
+Several configuration files have to be created within a certain directory
+structure on the managing system; the top directory in the structure is referred
+to as `rootdir` in the following documentation.  This configuration should be
+kept out of public repositories as it will contain private information.
+(Consider filesystem encryption and appropriate backup strategies.)
 
 #### `rootdir/ansible/hosts`
 
