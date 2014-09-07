@@ -113,6 +113,8 @@
       args:
         chdir: "{{ remote_checkout }}/src/edurepo"
         creates: "{{ remote_checkout }}/data-imported"
+      notify:
+      - load-resource-data
     - name: Skip import of data in the future
 # Use this copy command to touch the file so that the timestamp isn't changed each time.
 # That allows us to see the last time the data was imported.
@@ -133,3 +135,10 @@
       command: '{{ apachectl }} graceful'
       sudo: yes
       when: use_system_httpd == "no"
+  handlers:
+    - name: load-resource-data
+      django_manage: >
+          command=loaddata
+          app_path={{ remote_checkout }}/src/edurepo
+          virtualenv={{ remote_checkout }}/envs/edurepo
+          fixtures={{ remote_checkout }}/src/edurepo/resources/fixtures/sample.json
