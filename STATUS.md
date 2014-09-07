@@ -13,7 +13,6 @@ fails BECAUSE THERE IS NO FREAKING SNI SUPPORT!!!!!!!!!!!  The API endpoint has 
 disable SSL.
 2. If no objectives can be found via web lookup, the add-objective-to-calendar form is useless.
 3. when adding class, teacher can't see list of course ids based on current API provider; first determine API provider then proceed to form with list of courses by category?
-4. After adding a class, the teacher is taken back to the main screen.  They should be taken to the dashboard for that class.
 
 Three worst issues in demo interface
 ====================================

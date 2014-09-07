@@ -75,7 +75,7 @@ def register_teacher(request):
                 obj = form.save(commit=False)
                 obj.user = request.user
                 obj.save()
-            return redirect('../..')
+            return redirect('teachers.views.dashboard', teacher_email=obj.email)
     else:
         initial = {}
         form = TeacherForm(initial=initial)
@@ -114,7 +114,8 @@ def add_class(request, teacher_email):
                     obj = form.save(commit=False)
                     obj.teacher = teacher
                     obj.save()
-                return redirect('../..')
+                return redirect('teachers.views.dashboard', teacher_email=teacher.email,
+                                teacher_class_id=obj.id)
             except IntegrityError:
                 # bad bad bad; I guess the TeacherClassForm has to be initialized
                 # with the teacher so that its clean() method can look at it.
