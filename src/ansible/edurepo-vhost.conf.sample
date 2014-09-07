@@ -1,7 +1,7 @@
 <VirtualHost 192.168.1.218:80>
     WSGIDaemonProcess edurepo \
-        home=/home/trawick/git/edurepo/src/edurepo \
-        python-path=/home/trawick/git/edurepo/src/edurepo:/home/trawick/git/edurepo/envs/edurepo/lib/python2.7/site-packages
+        home=/home/edurepo/git/edurepo/src/edurepo \
+        python-path=/home/edurepo/git/edurepo/src/edurepo:/home/edurepo/git/edurepo/envs/edurepo/lib/python2.7/site-packages
 
     WSGIProcessGroup edurepo
 
@@ -11,7 +11,7 @@
     LogLevel warn
 
     ServerName 192.168.1.218
-    DocumentRoot /home/trawick/git/edurepo/src/webapp/
+    DocumentRoot /home/edurepo/git/edurepo/src/webapp/
 
     <Directory />
         Options FollowSymLinks
@@ -19,16 +19,16 @@
         AllowOverride None
     </Directory>
 
-    <Directory /home/trawick/git/edurepo/src/webapp/>
+    <Directory /home/edurepo/git/edurepo/src/webapp/>
         AllowOverride None
         Require all granted
     </Directory>
 
-    WSGIScriptAlias /ed/ /home/trawick/git/edurepo/src/edurepo/edurepo/wsgi.py/
+    WSGIScriptAlias /ed/ /home/edurepo/git/edurepo/src/edurepo/edurepo/wsgi.py/
 
-    Alias /static/ /home/trawick/edurepo-static/
+    Alias /static/ /home/edurepo/edurepo-static/
 
-    <Directory /home/trawick/git/edurepo/src/edurepo>
+    <Directory /home/edurepo/git/edurepo/src/edurepo>
         <Files wsgi.py>
             Require all granted
         </Files>
@@ -40,7 +40,7 @@
 </IfModule>
     </Location>
 
-    <Directory /home/trawick/edurepo-static>
+    <Directory /home/edurepo/edurepo-static>
         Require all granted
     </Directory>
 

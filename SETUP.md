@@ -11,20 +11,40 @@ Initial manual setup
 Create an Ubuntu 14.04 Server VM:
 
 * A 32-bit image with 1 CPU and 2GB of RAM is fine.
-* Create a user to manage edurepo.  This will be referred to as "managing-user" in subsequent
-instructions.
+* Using the user id created during installation, create the user `edurepo` to manage edurepo:
+```
+$ sudo useradd -m edurepo
+$ sudo passwd edurepo
+Enter new UNIX password:
+Retype new UNIX password:
+passwd: password updated successfully
+```
 * Use visudo to add a line like the following to the end of the sudo config:
 ```
-managing-user ALL=(ALL) NOPASSWD: ALL
+edurepo ALL=(ALL) NOPASSWD: ALL
 ```
-(The user must be able to run commands as root or as the Postgresql user without a password prompt.)
-* Enable sshd:
+(This allows the user to be able to run commands as `root` or as the Postgresql user without
+a password prompt.)
+* Enable sshd and install git:
 ```
-sudo apt-get install openssh-server
+$ sudo apt-get install openssh-server
 ```
-* Put your client's public key in the `/home/managing-user/.ssh/authorized_keys` file on the server,
+* Put your client's public key in the `/home/edurepo/.ssh/authorized_keys` file on the server,
 creating `.ssh` (with permissions 0700) or `authorized_keys` (with permissions 0600) as necessary.
-* ssh from the system to github.com to populate the host key (or git checkout from playbook will fail)
+Also, ensure that it has the proper ownership:
+```
+$ sudo chown -R edurepo:edurepo /home/edurepo/.ssh
+```
+* Log in as user `edurepo` and ssh to github.com to populate the host key (or git checkout from playbook will fail):
+```
+$ ssh github.com
+The authenticity of host 'github.com (XXX)' can't be established.
+RSA key fingerprint is YYYYY.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'github.com,XXX' (RSA) to the list of known hosts.
+Permission denied (publickey).
+```
+(You'll need to verify YYYYY manually, such as by checking the Github documentation using an https connection.)
 
 ### Configuration files
 
@@ -53,7 +73,7 @@ Refer to `git-edurepo/src/edurepo/settings.cfg.sample` for instructions.
 
 #### `rootdir/ubuntu-apache24/edurepo-vhost.conf`
 
-
+Refer to `git-edurepo/src/ansible/edurepo-vhost.conf.sample` for an example.
 
 Automatic setup and deploy
 --------------------------

@@ -4,37 +4,41 @@ ip-address-or-hostname
 
 [webservers:vars]
 
-# Set this to the name of the user on the remote system which manages the application.
-remote_user=xxx
-
-# Set this to the directory on the remote system where the software will be checked out.
-# (Usually this is under the home directory of the user.)
-remote_checkout=/some/path
-
-# Set this to the directory where files requested via /static will be stored.
-static_dir=/some/path
-
-# This is the root of the local directory tree where you've created some 
-# configuration files documented in SETUP.md.
-local_overlay_dir=
+# This is the root of the directory tree on the managing system where you've 
+# created some configuration files documented in SETUP.md.
+local_overlay_dir=XXX
 
 # This is the local directory in which you've created a .conf file
 # for Ubuntu's Apache 2.4.
-local_conf_dir=
+local_conf_dir=XXX
 
 # This directory contains angular-x.y.z.zip and bootstrap-x.y.z.zip.
-local_dist_dir=
+local_dist_dir=XXX
 
 # Password for Postgresql role edurepo
-edurepo_pg_password=
+edurepo_pg_password=XXX
 
-# Use the defaults for these unless you really know what you are doing.
+#### END OF TYPICAL CONFIGURATION ####
+
+# Use the defaults for the following variables unless you really know what 
+# you are doing.
+
+# The name of the user on the remote system which manages the application.
+remote_user=edurepo
+
+# The directory on the remote system where the software will be checked out.
+# (Usually this is under the home directory of the user.)
+remote_checkout=/home/edurepo/git/edurepo
+
+# The directory where files requested via /static will be stored.
+static_dir=/home/edurepo/edurepo-static
+
 use_system_httpd=yes
 log_dir=/var/log/django-edurepo
 log_group=edurepo-loggers
 log_dir_owner=www-data
 python_binary=/usr/bin/python
 virtualenv_binary=/usr/bin/virtualenv
-scratch_dir=/tmp
+scratch_dir=/home/edurepo/scratch
 edurepo_db=edurepo
 edurepo_pg_user=edurepo
