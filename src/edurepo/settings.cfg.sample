@@ -1,0 +1,29 @@
+[secret]
+# Create key in the Django shell like this:
+#   >>> from django.utils.crypto import get_random_string
+#   >>> chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
+#   >>> get_random_string(50, chars)
+key=XXX
+
+[debugging]
+DEBUG=False
+TEMPLATE_DEBUG=False
+
+[deployment]
+ALLOWED_HOSTS=*
+set_static_root=True
+
+# Change this to the value of static_dir in the Ansible inventory file.
+STATIC_ROOT=/home/trawick/edurepo-static/
+MOUNTED_AT=/ed
+
+[database]
+NAME=edurepo
+USER=edurepo
+# Change this to the value of edurepo_pg_password in the Ansible inventory file.
+PASSWORD=XXX
+
+[logging]
+DIRECTORY=/var/log/django-edurepo
+# Change this to INFO or WARNING for a production server.
+GLOBAL_LEVEL=DEBUG

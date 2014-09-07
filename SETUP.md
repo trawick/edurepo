@@ -1,15 +1,104 @@
+Setting up a test or production machine from zero
+=================================================
+
+Ubuntu Linux and Ansible are currently required.
+
+Initial manual setup
+--------------------
+
+### VM
+
+Create an Ubuntu 14.04 Server VM:
+
+* A 32-bit image with 1 CPU and 2GB of RAM is fine.
+* Create a user to manage edurepo.  This will be referred to as "managing-user" in subsequent
+instructions.
+* Use visudo to add a line like the following to the end of the sudo config:
+```
+managing-user ALL=(ALL) NOPASSWD: ALL
+```
+(The user must be able to run commands as root or as the Postgresql user without a password prompt.)
+* Enable sshd:
+```
+sudo apt-get install openssh-server
+```
+* Put your client's public key in the `/home/managing-user/.ssh/authorized_keys` file on the server,
+creating `.ssh` (with permissions 0700) or `authorized_keys` (with permissions 0600) as necessary.
+* ssh from the system to github.com to populate the host key (or git checkout from playbook will fail)
+
+### Configuration files
+
+Several configuration files have to be created on the managing system, within a certain directory
+structure, referred to as `rootdir` in the following documentation.  This configuration should be
+kept out of public repositories as it will contain private information.  (Consider filesystem
+encryption and appropriate backup strategies.)
+
+#### `rootdir/ansible/hosts`
+
+Refer to the example in `git-edurepo/src/ansible/hosts_sample` for instructions.
+
+#### `rootdir/git-edurepo/src/webapp/resources/config.json`
+
+This small JSON file is used to configure the Angular application.  It has the following format:
+
+```
+{"base_api_url" : "http://ip-address-or-hostname/ed/"}
+```
+
+Replace `ip-address-or-servername` with the hostname (preferred) or IP address of the system.
+
+#### `rootdir/git-edurepo/src/edurepo/settings.cfg
+
+Refer to `git-edurepo/src/edurepo/settings.cfg.sample` for instructions.
+
+#### `rootdir/ubuntu-apache24/edurepo-vhost.conf`
+
+
+
+Automatic setup and deploy
+--------------------------
+
+1. Look at the Ansible inventory file in `src/ansible/hosts_sample` and create a version for your system.
+2. Create a virtualenv for running Ansible (`virtualenv /path/to/env` followed by `pip install ansible`).
+3. With that virtualenv activated:
+```
+$ cd /path/to/git-edurepo/src/ansible
+$ ansible-playbook -i /path/to/hosts deploy.yml
+```
+
+Manual creation of Django superuser
+-----------------------------------
+
+After running the deploy script, log in to the remote server and create a Django superuser:
+```
+$ cd /home/managing-user/git/edurepo
+$ . envs/edurepo/bin/activate
+$ cd src/edurepo
+$ python manage.py createsuperuser
+Username: superman
+Email address: superman@example.com
+Password:
+Password (again):
+Superuser created successfully.
+```
+
+Developer instructions
+======================
+
+The Ansible playbook described under the deployment instructions above covers installation of
+required packages so look there for such requirements.
+
 Python version
-==============
+--------------
 
 It has been tested a lot with Python 2.6, but Python 2.7 is currently used.
 The `group_writable_file_handler` in `settings.py` might only work with 2.7,
 so be careful out there.
 
 Configuration and setup for the Django app
-==========================================
+------------------------------------------
 
 PostgreSQL on Ubuntu:
-
 
 ```
 sudo apt-get install postgresql libpq-dev
@@ -63,7 +152,8 @@ DIRECTORY=/path/where/Django-logs-are-created
 GLOBAL_LEVEL=INFO
 ```
 
-Python environment:
+Python environment
+------------------
 
 System python: 
 
@@ -96,7 +186,7 @@ python manage.py collectstatic
 ```
 
 httpd.conf
-==========
+----------
 
 ```
 WSGIDaemonProcess edurepo \
@@ -116,7 +206,7 @@ WSGIDaemonProcess edurepo \
 ```
 
 foo.include
-===========
+-----------
 
 ```
 # included in SSL and non-SSL vhosts
@@ -158,7 +248,7 @@ Alias /static/ /home/trawick/edurepo-static/
 ```
 
 Configuration and setup of the AngularJS web app
-================================================
+------------------------------------------------
 
 Create file src/webapp/resources/config.json with something like the following
 to configure the API endpoint:
@@ -193,17 +283,34 @@ cp bootstrap* /path/to/edurepo/src/webapp/css/
 ```
 
 When picking up software updates
-================================
+--------------------------------
 
 (These steps are handled by the Ansible deploy script.)
 
-* Restart httpd
 * pip install -r requirements.txt
 * manage.py collectstatic
 * manage.py syncdb   OR POSSIBLY starting over with new data (below)
+* Restart httpd
+
+Testing
+-------
+
+```
+./manage.py test
+```
+
+Of course.  But that won't test everything, as we need to have an API provider live and set the API endpoint with the TEST\_PROVIDER environment variable.  First run the normal Django application then run tests like this:
+
+```
+export TEST_PROVIDER=http://127.0.0.1:8000/
+./manage.py test
+```
+
+Various administration hints
+============================
 
 When dropping tables
-====================
+--------------------
 
 E.g., table south_migrationhistory...
 
@@ -217,7 +324,7 @@ djangoedurepo=# \q
 ```
 
 Starting over with new data
-===========================
+---------------------------
 
 **Yo!  Save teachers and resources data first!**
 
@@ -231,7 +338,7 @@ python manage.py loaddata resources/fixtures/sample.json
 ```
 
 Adding a single course
-======================
+----------------------
 
 In this example, NC-HSM-III is imported:
 
@@ -241,7 +348,8 @@ python repo/import_xml.py ../../samples/M/NC-HSM-III.xml import
 ```
 
 Removing a single course
-========================
+------------------------
+
 ```
 python repo/remove.py COURSE-ID check
 python repo/delete.py COURSE-ID delete
@@ -250,35 +358,22 @@ python repo/delete.py COURSE-ID delete
 This will display any objectives that will be removed, but it will also remove related I-Can statements, glossary items, and anything else in the repository.
 
 Fixing the admin password
-=========================
+-------------------------
 
 ```
 ./manage.py changepassword <admin-user-id>
 ```
 
 Dumping current data
-====================
+--------------------
 
 ```
 ./manage.py dumpdata --indent=4 > ~/edurepo-2014-MM-DD.json
 ```
 
-Testing
-=======
-
-```
-./manage.py test
-```
-
-Of course.  But that won't test everything, as we need to have an API provider live and set the API endpoint with the TEST\_PROVIDER environment variable.  First run the normal Django application then run tests like this:
-
-```
-export TEST_PROVIDER=http://127.0.0.1:8000/
-./manage.py test
-```
-
 Fixing PostgreSQL user password
-===============================
+-------------------------------
+
 ```
 $ sudo -u postgres psql postgres
 psql (9.1.13)
@@ -290,80 +385,3 @@ postgres=# \q
 $
 ```
 
-Setting up a log directory
-==========================
-
-Create a directory somewhere to store Django logs, such as /var/log/django-edurepo.
-
-Create a group with the managing user AND the daemon user in it.  (The daemon user
-will be the normal log writer; the managing user may run commands interactively
-or via cron, which need to write to the log directory.)
-
-```
-# usermod -a -G LOGGING-GROUP DAEMON-USER
-# usermod -a -G LOGGING-GROUP MANAGING_USER
-```
-
-Deploying with Ansible
-======================
-
-Currently the playbook itself must be customized.  For support of deploying on machines with differing requirements, the differences need to be extracted.
-
-After activating a `virtualenv` with Ansible installed:
-
-```
-$ cd src/ansible
-$ ansible-playbook deploy.yml -i inventory
-```
-
-Check `deploy.yml` for details.  In particular, note the overlay directory that must be created manually, and which corresponds to the manual steps described above which create files in the edurepo checkout.
-
-Starting from zero
-==================
-
-Initial manual setup
---------------------
-
-Create an Ubuntu 14.04 Server VM:
-
-* A 32-bit image with 1 CPU and 2GB of RAM is fine.
-* Create a user to manage edurepo.  This will be referred to as "managing-user" in subsequent
-instructions.
-* Use visudo to add a line like the following to the end of the sudo config:
-```
-managing-user ALL=(ALL) NOPASSWD: ALL
-```
-(The user must be able to run commands as root or as the Postgresql user without a password prompt.)
-* Enable sshd:
-```
-sudo apt-get install openssh-server
-```
-* Put your client's public key in the `/home/managing-user/.ssh/authorized_keys` file on the server,
-creating `.ssh` (with permissions 0700) or `authorized_keys` (with permissions 0600) as necessary.
-* ssh from the system to github.com to populate the host key (or git checkout from playbook will fail)
-
-Automatic setup and deploy
---------------------------
-
-1. Look at the Ansible inventory file in `src/ansible/hosts_sample` and create a version for your system.
-2. Create a virtualenv for running Ansible (`virtualenv /path/to/env` followed by `pip install ansible`).
-3. With that virtualenv activated:
-```
-$ ansible-playbook -i /path/to/hosts deploy.yml
-```
-
-Manual creation of Django superuser
------------------------------------
-
-After running the deploy script, log in to the remove server and create a Django superuser:
-```
-$ cd /home/managing-user/git/edurepo
-$ . envs/edurepo/bin/activate
-$ cd src/edurepo
-$ python manage.py createsuperuser
-Username: superman
-Email address: superman@example.com
-Password:
-Password (again):
-Superuser created successfully.
-```

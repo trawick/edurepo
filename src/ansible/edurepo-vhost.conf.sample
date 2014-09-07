@@ -1,0 +1,47 @@
+<VirtualHost 192.168.1.218:80>
+    WSGIDaemonProcess edurepo \
+        home=/home/trawick/git/edurepo/src/edurepo \
+        python-path=/home/trawick/git/edurepo/src/edurepo:/home/trawick/git/edurepo/envs/edurepo/lib/python2.7/site-packages
+
+    WSGIProcessGroup edurepo
+
+    # included in SSL and non-SSL vhosts
+
+    ErrorLog /var/log/django-edurepo/httpd.log
+    LogLevel warn
+
+    ServerName 192.168.1.218
+    DocumentRoot /home/trawick/git/edurepo/src/webapp/
+
+    <Directory />
+        Options FollowSymLinks
+        Require all denied
+        AllowOverride None
+    </Directory>
+
+    <Directory /home/trawick/git/edurepo/src/webapp/>
+        AllowOverride None
+        Require all granted
+    </Directory>
+
+    WSGIScriptAlias /ed/ /home/trawick/git/edurepo/src/edurepo/edurepo/wsgi.py/
+
+    Alias /static/ /home/trawick/edurepo-static/
+
+    <Directory /home/trawick/git/edurepo/src/edurepo>
+        <Files wsgi.py>
+            Require all granted
+        </Files>
+    </Directory>
+
+    <Location /ed/admin/>
+<IfModule ssl_module>
+        Require ssl
+</IfModule>
+    </Location>
+
+    <Directory /home/trawick/edurepo-static>
+        Require all granted
+    </Directory>
+
+</VirtualHost>

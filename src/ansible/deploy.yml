@@ -57,16 +57,16 @@
     - file: >
            dest={{ scratch_dir }}
            mode=755
-           owner={{ user }}
-           group={{ user }}
+           owner={{ remote_user }}
+           group={{ remote_user }}
            state=directory
     - unarchive: src={{ local_dist_dir }}/angular-1.2.13.zip dest={{ scratch_dir }} creates={{ scratch_dir }}/angular-1.2.13
     - unarchive: src={{ local_dist_dir }}/bootstrap-2.3.2.zip dest={{ scratch_dir }} creates={{ scratch_dir }}/bootstrap
     - file: >
            dest={{ remote_checkout }}/src/webapp/lib
            mode=755
-           owner={{ user }}
-           group={{ user }}
+           owner={{ remote_user }}
+           group={{ remote_user }}
            state=directory
     - name: Drop Ansible files in the right place
       command: cp -pR {{ scratch_dir }}/angular-1.2.13 {{ remote_checkout }}/src/webapp/lib creates={{ remote_checkout }}/src/webapp/lib/angular-1.2.13
@@ -79,16 +79,16 @@
     - file: >
            dest={{ remote_checkout }}/envs
            mode=755
-           owner={{ user }}
-           group={{ user }}
+           owner={{ remote_user }}
+           group={{ remote_user }}
            state=directory
     - name: Create new virtualenv
       command: "{{ virtualenv_binary }} -p {{ python_binary }} --no-site-packages {{ remote_checkout }}/envs/edurepo creates={{ remote_checkout }}/envs/edurepo"
     - file: >
            dest={{ static_dir }}
            mode=755
-           owner={{ user }}
-           group={{ user }}
+           owner={{ remote_user }}
+           group={{ remote_user }}
            state=directory
     - pip: virtualenv={{ remote_checkout }}/envs/edurepo
            requirements={{ remote_checkout }}/src/requirements.txt
