@@ -44,7 +44,7 @@ def create_verification(debug, url):
         print url
     # www.livescience.com does a permanent redirect to a mobile site
     # when using the default urllib2 user-agent string.  (I haven't
-    # checked that again after switching to requests.)
+    # checked that again after switching from urllib2 to requests.)
     headers = {"User-Agent": "Mozilla/5.0 (edurepo link validity checker"}
     try:
         response = requests.get(url, headers=headers)
