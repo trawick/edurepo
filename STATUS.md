@@ -2,7 +2,6 @@ Three worst overall viability issues
 ====================================
 
 1. no end user software (e.g., "My Classes" web app)
-   * currently looking at a small script that fetches materials for current objectives and passes it to Anki
 2. no complete course to use as good example (easiest fix: add materials to Alabama Grade 5 Science)
 3. XXX
 
@@ -34,9 +33,9 @@ Three worst issues for developers
 Three worst issues for deployers
 ================================
 
-1. The Ansible deployment script should handle more of the setup steps.
-2. The Ansible inventory should be used to fill in template versions of the several required configuration files.
-3. XXX
+1. SETUP.md should show the cron jobs for cleaning up bad resources and backing up selected tables.
+2. The Ansible deployment script should handle more of the setup steps.
+3. The Ansible inventory should be used to fill in template versions of the several required configuration files.
 
 Possible themes for upcoming stages
 ===================================
