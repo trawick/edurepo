@@ -8,7 +8,6 @@
       apt: name={{ item }} state=latest
       sudo: yes
       with_items:
-        - git
         - unzip
         - python-virtualenv
         - postgresql
@@ -16,6 +15,14 @@
         - python-dev
 # The system python-psycopg2 package is used by Ansible; the Django app uses psycopg2 from its virtualenv.
         - python-psycopg2
+    - name: Install git
+      apt: name=git state=latest
+      sudo: yes
+      when: ansible_distribution_release != "lucid"
+    - name: Install git
+      apt: name=git-core state=latest
+      sudo: yes
+      when: ansible_distribution_release == "lucid"
     - name: Install system httpd
       apt: name={{ item }} state=latest
       sudo: yes
