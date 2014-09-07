@@ -9,12 +9,12 @@ Three worst overall viability issues
 Three worst issues in teacher interface
 =======================================
 
-0. SSL is used for the API endpoint if a class is added via https (okay); Python 2.x SSL to edjective.org
+1. SSL is used for the API endpoint if a class is added via https (okay); Python 2.x SSL to edjective.org
 fails BECAUSE THERE IS NO FREAKING SNI SUPPORT!!!!!!!!!!!  The API endpoint has to be manually edited to
 disable SSL.
-1. If no objectives can be found via web lookup, the add-objective-to-calendar form is useless.
-2. when adding class, teacher can't see list of course ids based on current API provider; first determine API provider then proceed to form with list of courses by category?
-3. After adding a class, the teacher is taken back to the main screen.  They should be taken to the dashboard for that class.
+2. If no objectives can be found via web lookup, the add-objective-to-calendar form is useless.
+3. when adding class, teacher can't see list of course ids based on current API provider; first determine API provider then proceed to form with list of courses by category?
+4. After adding a class, the teacher is taken back to the main screen.  They should be taken to the dashboard for that class.
 
 Three worst issues in demo interface
 ====================================
@@ -28,14 +28,14 @@ Three worst issues for developers
 =================================
 
 1. XXX
-2. need VM for testing deployment
+2. XXX
 3. XXX
 
 Three worst issues for deployers
 ================================
 
-1. The Ansible deployment script should handle more of the setup process.
-2. XXX
+1. The Ansible deployment script should handle more of the setup steps.
+2. The Ansible inventory should be used to fill in template versions of the several required configuration files.
 3. XXX
 
 Possible themes for upcoming stages
@@ -63,8 +63,6 @@ Bugs of interest
 * command-line "reference" clients:
   * test these automatically
   * current\_learning\_objectives.py: indicate when the specified class name is invalid
-* handle API failures in Angular webapp
-* Read "Effective JavaScript", finish Django tutorial, finish Angular tutorial, read tastypie docs :)
 * Testcases for Angular app
 * Improve interface for submitting resources for a LO
 * might need ASL in source files
