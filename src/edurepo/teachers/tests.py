@@ -181,7 +181,7 @@ class BasicTests(LiveServerTestCase):
         self.assertContains(response, 'Register as a teacher')
         response = self.client.post(register_url, {'email': teacher_email,
                                                    'name': teacher_name}, follow=True)
-        self.assertContains(response, 'Edjective.org reference views')
+        self.assertContains(response, 'Dashboard for ' + teacher_name)
         self.assertNotContains(response, 'form-group has-error')
 
         # Add a class using teacher just registered
@@ -192,7 +192,7 @@ class BasicTests(LiveServerTestCase):
                                               'course_id': course_id,
                                               'repo_provider': os.environ['TEST_PROVIDER']},
                                     follow=True)
-        self.assertContains(response, 'Edjective.org reference views')
+        self.assertContains(response, 'Dashboard for ' + teacher_name)
         self.assertNotContains(response, 'form-group has-error')
 
         response = self.client.get(add_url, follow=True)
