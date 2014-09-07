@@ -30,7 +30,7 @@ Three worst issues for developers
 Three worst issues for deployers
 ================================
 
-1. SETUP.md should show the cron jobs for cleaning up bad resources and backing up selected tables.
+1. Backup procedure should be encapsulated and somehow activated via the deploy script.  Right now you have to dump manually, and you will dump more than is necessary.
 2. The Ansible deployment script should handle more of the setup steps.
 3. The Ansible inventory should be used to fill in template versions of the several required configuration files.
 
