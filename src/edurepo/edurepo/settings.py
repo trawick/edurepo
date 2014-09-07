@@ -180,3 +180,13 @@ LOGGING = {
         }
     }
 }
+
+# Set SNI_API_BREAKAGE to True iff all of the following are true:
+# . The app is hosted on a system that relies on SNI to support SSL, on port
+#   443.
+# . Non-SSL is also supported, on port 80.
+# . Some interesting clients, including Python requests running in the app,
+#   don't work with SNI for whatever reason.
+# (If they aren't all true, it may still be broken, but there's no workaround
+# in the code.)
+SNI_API_BREAKAGE = True

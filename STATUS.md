@@ -8,9 +8,7 @@ Three worst overall viability issues
 Three worst issues in teacher interface
 =======================================
 
-1. SSL is used for the API endpoint if a class is added via https (okay); Python 2.x SSL to edjective.org
-fails BECAUSE THERE IS NO FREAKING SNI SUPPORT!!!!!!!!!!!  The API endpoint has to be manually edited to
-disable SSL.
+1. XXX
 2. If no objectives can be found via web lookup, the add-objective-to-calendar form is useless.
 3. when adding class, teacher can't see list of course ids based on current API provider; first determine API provider then proceed to form with list of courses by category?
 

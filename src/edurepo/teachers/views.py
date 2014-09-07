@@ -89,7 +89,10 @@ def register_teacher(request):
 
 def request_to_provider(request):
     root = settings.MOUNTED_AT + '/'
-    return request.build_absolute_uri(root)
+    absolute = request.build_absolute_uri(root)
+    if settings.SNI_API_BREAKAGE and absolute[:6] == 'https:':
+        absolute = 'http:' + absolute[6:]
+    return absolute
 
 
 @login_required
