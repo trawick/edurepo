@@ -127,6 +127,9 @@ Developer instructions
 The Ansible playbook described under the deployment instructions above covers installation of
 required packages so look there for such requirements.
 
+In general, look at the Ansible playbook for an overview of what is required on a staging/production
+server, even though a developer set is simpler.
+
 Python version
 --------------
 
@@ -137,10 +140,12 @@ so be careful out there.
 Configuration and setup for the Django app
 ------------------------------------------
 
-PostgreSQL on Ubuntu:
+### PostgreSQL on Ubuntu:
+
+You likely have your own way to administer PostgreSQL.  You need to create a database (named in `setup.cfg`) and
+create a new PostgreSQL user or use an existing one.
 
 ```
-sudo apt-get install postgresql libpq-dev
 sudo su - postgres
   createdb djangoedurepo
   createuser -P
@@ -150,60 +155,27 @@ sudo su - postgres
     \q
 ```
 
-In order to run tests, run this additional command under psql so that the test version of the database can be created by the PostgreSQL user:
+In order to run tests, run this additional command under `psql` so that the test version of the database can be created by the PostgreSQL user:
 
 ```
 alter user NEWUSER createdb;
 ```
 
+### settings.cfg
 
-Create settings.cfg for Django app in src/edurepo directory
+Create settings.cfg for the Django app in the `src/edurepo` directory.  See `settings.cfg.sample` for instructions.
 
-```
-# generate a new secret:
-#   >>> from django.utils.crypto import get_random_string
-#   >>> chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
-#   >>> get_random_string(50, chars)
-
-[secret]
-key=    (whatever)
-
-[debugging]
-# should be True or False
-DEBUG=False
-TEMPLATE_DEBUG=False
-
-[deployment]
-ALLOWED\_HOSTS=*
-set_static_root=True
-# set this to location where /static from Django app will be copied
-STATIC_ROOT=/home/whatever/edurepo-static/
-# set this to location where Django app is mounted (blank for /)
-MOUNTED_AT=
-
-[database]
-NAME=djangoedurepo
-USER=   (whatever)
-PASSWORD=   (whatever)
-
-[logging]
-DIRECTORY=/path/where/Django-logs-are-created
-GLOBAL_LEVEL=INFO
-```
-
-Python environment
-------------------
-
-System python: 
+For development, you'll want these particular values:
 
 ```
-  sudo apt-get install python-pip
-  sudo pip install virtualenv
+DEBUG=True
+TEMPLATE_DEBUG=True
+set_static_root=False
 ```
 
-Local python environment:
 
-(This is handled by the Ansible deploy script.)
+### Local python environment
+
 
 ```
   cd edurepo (root of git checkout)
@@ -214,89 +186,11 @@ Local python environment:
   pip install -r requirements.txt
 ```
 
----
 
-bunch of crap with /home/trawick/edurepo-static and django command to put stuff there
+### Configuration and setup of the AngularJS web app
 
-(This is handled by the Ansible deploy script.)
-
-```
-python manage.py collectstatic
-```
-
-httpd.conf
-----------
-
-```
-WSGIDaemonProcess edurepo \
-    home=/home/trawick/git/edurepo/src/edurepo \
-    python-path=/home/trawick/git/edurepo/src/edurepo:/home/trawick/git/edurepo/envs/edurepo/lib/python2.6/site-packages
-
-<VirtualHost *:80>
-  WSGIProcessGroup edurepo
-  include conf/conf.d/foo.include
-</VirtualHost>
-
-<VirtualHost *:443>
-  WSGIProcessGroup edurepo
-  (SSL configuration)
-  include conf/conf.d/foo.include
-</VirtualHost>
-```
-
-foo.include
------------
-
-```
-# included in SSL and non-SSL vhosts
-
-ErrorLog logs/edjective.org.errors
-LogLevel info
-
-ServerName edjective.org
-DocumentRoot /home/trawick/git/edurepo/src/webapp/
-
-<Directory />
-    Options FollowSymlinks
-    Require all denied
-    AllowOverride None
-</Directory>
-
-<Directory /home/trawick/git/edurepo/src/webapp/>
-    AllowOverride None
-    Require all granted
-</Directory>
-
-WSGIScriptAlias /ed/ /home/trawick/git/edurepo/src/edurepo/edurepo/wsgi.py/
-
-Alias /static/ /home/trawick/edurepo-static/
-
-<Directory /home/trawick/git/edurepo/src/edurepo>
-    <Files wsgi.py>
-        Require all granted
-    </Files>
-</Directory>
-
-<Location /ed/admin/>
-    Require ssl
-</Location>
-
-<Directory /home/trawick/edurepo-static>
-    Require all granted
-</Directory>
-```
-
-Configuration and setup of the AngularJS web app
-------------------------------------------------
-
-Create file src/webapp/resources/config.json with something like the following
-to configure the API endpoint:
-
-```
-{"base_api_url" : "http://edjective.org/ed/"}
-```
-
-On a development system, the setting would typically be:
+Create the file `src/webapp/resources/config.json` with something like the following
+to configure the API endpoint to point to your development server:
 
 ```
 {"base_api_url" : "http://127.0.0.1:8000/"}
@@ -329,16 +223,11 @@ When picking up software updates
 * pip install -r requirements.txt
 * manage.py collectstatic
 * manage.py syncdb   OR POSSIBLY starting over with new data (below)
-* Restart httpd
 
 Testing
 -------
 
-```
-./manage.py test
-```
-
-Of course.  But that won't test everything, as we need to have an API provider live and set the API endpoint with the TEST\_PROVIDER environment variable.  First run the normal Django application then run tests like this:
+You'll need to have an API provider live (e.g., run `manage.py runserver` in the background) and point to it with the TEST_PROVIDER environment variable while running tests:
 
 ```
 export TEST_PROVIDER=http://127.0.0.1:8000/
