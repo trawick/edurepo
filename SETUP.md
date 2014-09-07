@@ -346,7 +346,8 @@ djangoedurepo=# \q
 Starting over with new data
 ---------------------------
 
-**Yo!  Save teachers and resources data first!**
+**If this is a production server, you probably don't want to do this.  First
+consider what you need to save and restore.**
 
 ```
 python manage.py sqlclear teachers resources repo | python manage.py dbshell
@@ -356,6 +357,19 @@ python repo/import_xml.py ../../samples/ import
 python manage.py loaddata teachers/fixtures/sample.json
 python manage.py loaddata resources/fixtures/sample.json
 ```
+
+### Or with the Ansible deploy playbook
+
+Run these commands from the `git/edurepo/src/edurepo` directory before running
+he deploy playbook:
+
+```
+python manage.py sqlclear teachers resources repo | python manage.py dbshell
+rm ../../data-imported
+```
+
+(The `data-imported` file is the flag that indicates that data needs to be
+reloaded.)
 
 Adding a single course
 ----------------------
@@ -390,6 +404,14 @@ Dumping current data
 ```
 ./manage.py dumpdata --indent=4 > ~/edurepo-2014-MM-DD.json
 ```
+
+Saving and restoring data for a single app
+------------------------------------------
+
+```
+python manage.py dumpdata --indent 2 resource > ~/edurepo-resource-2014-xx-yy.json
+```
+
 
 Fixing PostgreSQL user password
 -------------------------------
