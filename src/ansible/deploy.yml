@@ -119,6 +119,12 @@
 # Use this copy command to touch the file so that the timestamp isn't changed each time.
 # That allows us to see the last time the data was imported.
       copy: content="" dest={{ remote_checkout }}/data-imported force=no
+    - name: Define server_validation cron job
+      cron: name="server_validation" hour="*/2" minute="11" job="{{ remote_checkout }}/src/edurepo/resources/server_validation.sh"
+    - name: Define server_purge cron job
+      cron: name="server_purge" hour="1" minute="11" job="{{ remote_checkout }}/src/edurepo/resources/server_purge.sh"
+    - name: Define maintain_pretend_teacher cron job
+      cron: name="maintain_pretend_teacher" hour="0" minute="30" job="{{ remote_checkout }}/src/edurepo/teachers/pretend_teacher.sh {{ canonical_base_url }}ed/"
     - name: Configure system httpd
       apache2_module: state=present name=wsgi
       sudo: yes

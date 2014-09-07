@@ -103,6 +103,24 @@ Password (again):
 Superuser created successfully.
 ```
 
+Setup e-mail address for cron job output
+----------------------------------------
+
+Edit the crontab with `crontab -e` and add a line like the following to the top:
+
+```
+MAILTO=you@example.com
+```
+
+(with a working e-mail address, of course.)
+
+Reports on issues with web resource submissions will be sent there.
+
+Archiving data
+--------------
+
+TBD...
+
 Developer instructions
 ======================
 

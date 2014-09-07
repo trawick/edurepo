@@ -4,6 +4,13 @@ ip-address-or-hostname
 
 [webservers:vars]
 
+# This is the canonical way to reach the server.  Often this is the same as
+# the web server address above, but in URL format (with trailing slash).
+# Examples:
+#   http://edjective.org/
+#   http://192.168.1.200/
+canonical_base_url=XXX
+
 # This is the root of the directory tree on the managing system where you've 
 # created some configuration files documented in SETUP.md.
 local_overlay_dir=XXX
