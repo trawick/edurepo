@@ -56,6 +56,10 @@
           group={{ log_group }}
           state=directory
       sudo: yes
+    - name: Create archive directory
+      file: >
+          dest=/home/{{ remote_user }}/backups
+          state=directory
     - git: repo=git://github.com/trawick/edurepo.git
            dest={{ remote_checkout }}
            version=HEAD
@@ -125,6 +129,9 @@
       cron: name="server_purge" hour="1" minute="11" job="{{ remote_checkout }}/src/edurepo/resources/server_purge.sh"
     - name: Define maintain_pretend_teacher cron job
       cron: name="maintain_pretend_teacher" hour="0" minute="30" job="{{ remote_checkout }}/src/edurepo/teachers/pretend_teacher.sh {{ canonical_base_url }}ed/"
+    - name: Define nightly_archive cron job
+      cron: name="nightly_archive" hour="1" minute="20" job="{{ remote_checkout }}/src/edurepo/backup.sh /home/{{ remote_user }}/backups"
+      when: nightly_archive != "no"
     - name: Configure system httpd
       apache2_module: state=present name=wsgi
       sudo: yes

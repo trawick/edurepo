@@ -119,7 +119,17 @@ Reports on issues with web resource submissions will be sent there.
 Archiving data
 --------------
 
-TBD...
+A very simple mechanism to dump tables in gzipped, JSON format is provided
+in `src/edurepo/backup.sh`.  The deploy script runs this nightly and saves
+it to the `backup` folder in the managing user's home directory.  The last
+10 backups will be retained in that location, and older backups will be
+deleted.  Separate logic must be required for moving the backups off-site.
+
+Archival can be disabled by setting `nightly_archive=no` in the Ansible
+inventory file (`hosts`).
+
+This script dumps the tables at the Django layer.  It will be more efficient
+to manage this at the database layer.
 
 Developer instructions
 ======================

@@ -30,6 +30,8 @@ edurepo_pg_password=XXX
 # Use the defaults for the following variables unless you really know what 
 # you are doing.
 
+nightly_archive=yes
+
 # The name of the user on the remote system which manages the application.
 remote_user=edurepo
 
