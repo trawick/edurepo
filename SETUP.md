@@ -68,7 +68,7 @@ This small JSON file is used to configure the Angular application.  It has the f
 
 Replace `ip-address-or-servername` with the hostname (preferred) or IP address of the system.
 
-#### `rootdir/git-edurepo/src/edurepo/settings.cfg
+#### `rootdir/git-edurepo/src/edurepo/settings.cfg`
 
 Refer to `git-edurepo/src/edurepo/settings.cfg.sample` for instructions.
 
