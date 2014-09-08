@@ -3,6 +3,8 @@ Setting up a test or production machine from zero
 
 Ubuntu Linux and Ansible are currently required.
 
+You need to be familiar with Linux system administration and Python "virtual environments" in order to install the software.  Most of the necessary steps will be shown explicitly, but you may not be able to identify when an error occurs without any background information.
+
 Initial manual setup
 --------------------
 
@@ -44,7 +46,7 @@ Are you sure you want to continue connecting (yes/no)? yes
 Warning: Permanently added 'github.com,XXX' (RSA) to the list of known hosts.
 Permission denied (publickey).
 ```
-(You'll need to verify YYYYY manually, such as by checking the Github documentation using an https connection.)
+(You'll need to verify Github's RSA key fingerprint (YYYYY above) manually, such as by checking the Github documentation; be sure to use an https connection to minimize the chance of accessing a malicious page.)
 
 ### Configuration files
 
@@ -57,6 +59,8 @@ kept out of public repositories as it will contain private information.
 #### `rootdir/ansible/hosts`
 
 Refer to the example in `git-edurepo/src/ansible/hosts_sample` for instructions.
+
+The path to this file will be passed to the `ansible-playbook` command when deploying.
 
 #### `rootdir/git-edurepo/src/webapp/resources/config.json`
 
@@ -80,12 +84,19 @@ Automatic setup and deploy
 --------------------------
 
 1. Look at the Ansible inventory file in `src/ansible/hosts_sample` and create a version for your system.
-2. Create a virtualenv for running Ansible (`virtualenv /path/to/env` followed by `pip install ansible`).
+2. Create a virtualenv for running Ansible:
+
+  ```
+  $ virtualenv /path/to/env
+  $ . /path/to/env/bin/activate
+  $ pip install ansible
+  ```
 3. With that virtualenv activated:
-```
-$ cd /path/to/git-edurepo/src/ansible
-$ ansible-playbook -i /path/to/hosts deploy.yml
-```
+
+  ```
+  $ cd /path/to/git-edurepo/src/ansible
+  $ ansible-playbook -i /path/to/hosts deploy.yml
+  ```
 
 Manual creation of Django superuser
 -----------------------------------
@@ -114,12 +125,12 @@ MAILTO=you@example.com
 
 (with a working e-mail address, of course.)
 
-Reports on issues with web resource submissions will be sent there.
+Reports on issues with web resource submissions will be sent to that address.
 
 Archiving data
 --------------
 
-TBD...
+TBD...  (Using Django's `manage.py` to dump tables for the `resources` and `teachers` apps in fixture format should be sufficient, but a general helper script that can be used from cron should be provided.)
 
 Developer instructions
 ======================
@@ -127,8 +138,7 @@ Developer instructions
 The Ansible playbook described under the deployment instructions above covers installation of
 required packages so look there for such requirements.
 
-In general, look at the Ansible playbook for an overview of what is required on a staging/production
-server, even though a developer set is simpler.
+Although a developer setup is much simpler, you can get an overview of what is required by looking at the Ansible playbook for deployment (`src/ansible/deploy.yml`).
 
 Python version
 --------------
@@ -142,8 +152,8 @@ Configuration and setup for the Django app
 
 ### PostgreSQL on Ubuntu:
 
-You likely have your own way to administer PostgreSQL.  You need to create a database (named in `setup.cfg`) and
-create a new PostgreSQL user or use an existing one.
+You likely have your own methodology for PostgreSQL administration, and won't choose to follow the instructions below.  You need to create a database (named in `setup.cfg`) and
+create a new PostgreSQL user or use an existing one for use by the Django application.
 
 ```
 sudo su - postgres
@@ -215,10 +225,10 @@ cd bootstrap/css
 cp bootstrap* /path/to/edurepo/src/webapp/css/
 ```
 
+You need a web server to serve the files under `/webapp` in a development environment; it is not served by Django's `runserver`.
+
 When picking up software updates
 --------------------------------
-
-(These steps are handled by the Ansible deploy script.)
 
 * pip install -r requirements.txt
 * manage.py collectstatic
