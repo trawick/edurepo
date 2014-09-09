@@ -67,14 +67,15 @@ class activity for your children automatically.)</p>
               </li>
             </ul>
 
-            <p data-ng-show="obj.glossitems.length">Glossary items:</p>
+            <p data-ng-show="obj.glossitems.length">Glossary items:<br />
+              <button data-ng-click="glossaryFlashcards(obj)">Use as flashcards</button></p>
             <ul>
               <li data-ng-repeat="glossitem in obj.glossitems">
                 {{glossitem.term}}: {{glossitem.definition}}
               </li>
             </ul>
 
-            <p data-ng-show="obj.tfitems.length">True/False questions:</p>
+            <p data-ng-show="obj.tfitems.length">True/False questions:<br />
               <button data-ng-click="trueFalseFlashcards(obj)">Use as flashcards</button></p>
             <ul>
               <li data-ng-repeat="tfitem in obj.tfitems">
@@ -82,7 +83,7 @@ class activity for your children automatically.)</p>
               </li>
             </ul>
 
-            <p data-ng-show="obj.mcitems.length">Multiple choice questions:</p>
+            <p data-ng-show="obj.mcitems.length">Multiple choice questions:<br />
               <button data-ng-click="multipleChoiceFlashcards(obj)">Use as flashcards</button></p>
             <ul>
               <li data-ng-repeat="mcitem in obj.mcitems">

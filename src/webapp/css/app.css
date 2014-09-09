@@ -159,6 +159,7 @@ div.flashcard-page {
 
 div.flashcard-page p {
     font-weight: bold;
+    line-height: 40px;
     font-size: 40px;
     padding-top: 60px;
     padding-bottom: 80px;

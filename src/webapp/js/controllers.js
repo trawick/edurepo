@@ -411,6 +411,17 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter, $locatio
         $location.path("flashcards");
     };
 
+    $scope.glossaryFlashcards = function (obj) {
+        var flashcards = [];
+        for (var i = 0; i < obj.glossitems.length; i++) {
+            var item = obj.glossitems[i];
+            var card = [item.term, item.definition];
+            flashcards.push(card);
+        }
+        $scope.flashcards.set(flashcards);
+        $location.path("flashcards");
+    };
+
     $scope.multipleChoiceFlashcards = function (obj) {
         var flashcards = [];
         for (var i = 0; i < obj.mcitems.length; i++) {
