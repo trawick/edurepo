@@ -78,6 +78,18 @@ edjectiveApp.factory('CurrentObjectives', function() {
     };
 });
 
+edjectiveApp.factory('Flashcards', function () {
+    var flashcards = null;
+    return {
+        get: function () {
+            return flashcards;
+        },
+        set: function (new_flashcards) {
+            flashcards = new_flashcards;
+        }
+    };
+});
+
 edjectiveApp.config(function($routeProvider) {
     $routeProvider
 
@@ -129,6 +141,11 @@ edjectiveApp.config(function($routeProvider) {
     .when('/forNerds', {
         templateUrl: 'pages/forNerds.html',
         controller: 'FrontCtrl'
+    })
+
+    .when('/flashcards', {
+        templateUrl: 'pages/flashcards.html',
+        controller: 'FlashcardCtrl'
     })
 
     .otherwise({redirectTo: '/', controller: 'LookupCtrl'});
@@ -376,10 +393,50 @@ edjectiveApp.controller('GetTeacherEmailCtrl', function ($scope) {
 
 });
 
-edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
+edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter, $location, Flashcards) {
 
     $scope.objectives = {'data': []};
     $scope.teacher_email = '';
+    $scope.flashcards = Flashcards;
+    $scope.trueFalseFlashcards = function (obj) {
+        // Flashcards are just an array of arrays, where the inner arrays
+        // are the front side of the flash card in the first element and
+        // the back side in the second element.
+        var flashcards = [];
+        for (var i = 0; i < obj.tfitems.length; i++) {
+            var card = [obj.tfitems[i].statement, obj.tfitems[i].answer.toString()];
+            flashcards.push(card);
+        }
+        $scope.flashcards.set(flashcards);
+        $location.path("flashcards");
+    };
+
+    $scope.multipleChoiceFlashcards = function (obj) {
+        var flashcards = [];
+        for (var i = 0; i < obj.mcitems.length; i++) {
+            var item = obj.mcitems[i];
+            var ans;
+            if (item.ans == 1) {
+                ans = item.choice1;
+            }
+            else if (item.ans == 2) {
+                ans = item.choice2;
+            }
+            else if (item.ans == 3) {
+                ans = item.choice3;
+            }
+            else if (item.ans == 4) {
+                ans = item.choice4;
+            }
+            else if (item.ans == 5) {
+                ans = item.choice5;
+            }
+            var card = [item.question, ans];
+            flashcards.push(card);
+        }
+        $scope.flashcards.set(flashcards);
+        $location.path("flashcards");
+    };
 
     function annotate_objective($http, data, obj) {
         return function(data) {
@@ -461,4 +518,23 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter) {
             $scope.notice.text = 'The server could not be contacted.';
         });
     });
+});
+
+edjectiveApp.controller('FlashcardCtrl', function ($scope, Flashcards) {
+    $scope.flashcards_service = Flashcards;
+    $scope.flashcards = $scope.flashcards_service.get();
+    // $scope.flashcards = [["5 times 4", "20"], ["1 times 2", "2"]];
+    $scope.min = 0;
+    $scope.max = $scope.flashcards.length - 1;
+    $scope.front_back = 0;
+    $scope.current = 0;
+    $scope.previousFlashcard = function() {
+        if ($scope.current > $scope.min) $scope.current--;
+    };
+    $scope.nextFlashcard = function() {
+        if ($scope.current < $scope.max) $scope.current++;
+    };
+    $scope.flipFlashcard = function() {
+        $scope.front_back = 1 - $scope.front_back;
+    };
 });

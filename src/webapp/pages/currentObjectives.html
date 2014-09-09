@@ -75,6 +75,7 @@ class activity for your children automatically.)</p>
             </ul>
 
             <p data-ng-show="obj.tfitems.length">True/False questions:</p>
+              <button data-ng-click="trueFalseFlashcards(obj)">Use as flashcards</button></p>
             <ul>
               <li data-ng-repeat="tfitem in obj.tfitems">
                 {{tfitem.statement}} ({{tfitem.answer}})
@@ -82,6 +83,7 @@ class activity for your children automatically.)</p>
             </ul>
 
             <p data-ng-show="obj.mcitems.length">Multiple choice questions:</p>
+              <button data-ng-click="multipleChoiceFlashcards(obj)">Use as flashcards</button></p>
             <ul>
               <li data-ng-repeat="mcitem in obj.mcitems">
                 {{mcitem.question}}

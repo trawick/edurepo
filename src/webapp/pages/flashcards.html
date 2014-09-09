@@ -1,0 +1,16 @@
+<!-- browse -->
+    <div class="flashcard-page" data-ng-controller="FlashcardCtrl">
+
+        <p>{{ flashcards[current][front_back] }}</p>
+
+        <input type="button" class="btn btn-default btn-mini"
+               value="Previous"
+               data-ng-click="previousFlashcard()">
+        <input type="button" class="btn btn-default btn-mini"
+               value="Flip"
+               data-ng-click="flipFlashcard()">
+        <input type="button" class="btn btn-default btn-mini"
+               value="Next"
+               data-ng-click="nextFlashcard()">
+
+    </div>
