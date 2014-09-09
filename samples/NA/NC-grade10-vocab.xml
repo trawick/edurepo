@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<course-standard id="NC-GRADE10-VOCABULARY">
+  <description>10th grade Language Arts Vocabulary</description>
+  <category>NA</category>
+  <objectives>
+    <objective id="NC-GRADE10-VOCABULARY-1">
+      <description>NC-GRADE10-VOCABULARY-1</description>
+    </objective>
+    <objective id="NC-GRADE10-VOCABULARY-2">
+      <description>NC-GRADE10-VOCABULARY-2</description>
+    </objective>
+  </objectives>
+</course-standard>
