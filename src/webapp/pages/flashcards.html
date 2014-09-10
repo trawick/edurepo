@@ -3,14 +3,14 @@
 
         <p>{{ flashcards[current][front_back] }}</p>
 
-        <input type="button" class="btn btn-default btn-mini"
-               value="Previous"
-               data-ng-click="previousFlashcard()">
-        <input type="button" class="btn btn-default btn-mini"
-               value="Flip"
-               data-ng-click="flipFlashcard()">
-        <input type="button" class="btn btn-default btn-mini"
-               value="Next"
-               data-ng-click="nextFlashcard()">
+        <button type="button" class="btn btn-default btn-lg" data-ng-click="previousFlashcard()">
+            <span class="glyphicon glyphicon-hand-left"></span>
+        </button>
+        <button type="button" class="btn btn-default btn-lg" data-ng-click="flipFlashcard()">
+            <span class="glyphicon glyphicon-thumbs-up"></span>
+        </button>
+        <button type="button" class="btn btn-default btn-lg" data-ng-click="nextFlashcard()">
+            <span class="glyphicon glyphicon-hand-right"></span>
+        </button>
 
     </div>
