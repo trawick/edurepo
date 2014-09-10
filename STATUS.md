@@ -25,14 +25,14 @@ Three worst issues for developers
 
 1. XXX
 2. need model migration support (instead of using South, upgrade Django to 1.7)
-3. manual labor to try with newer Bootstrap or Angular versions
+3. XXX
 
 Three worst issues for deployers
 ================================
 
-1. XXX
-2. The Ansible deployment script should handle more of the setup steps.  In particular, Angular and Bootstrap distributions shouldn't have to be handled manually.
-3. The Ansible inventory should be used to fill in template versions of the several required configuration files.
+1. Angular and Bootstrap are now loaded from CDN; zap from instructions/deployment scripts.
+2. The Ansible inventory should be used to fill in template versions of the several required configuration files.
+3. The Ansible deployment script should handle more of the setup steps, possibly with a small script that is run from the initial Ubuntu login.
 
 Possible themes for upcoming stages
 ===================================
