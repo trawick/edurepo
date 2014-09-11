@@ -20,6 +20,13 @@ Three worst issues in demo interface
 2. Errors or delays fetching asynchronously aren't reported well or at all.  The select boxes under Browse shouln't appear until we have something to select.
 3. Ugly; needs to be Bootstrap-ed
 
+Three worst issues for end users
+================================
+
+1. no end upser application ("My Edjectives")
+2. Flashcards should indicate the type of question (e.g., "True or false?")
+3. XXX
+
 Three worst issues for developers
 =================================
 
