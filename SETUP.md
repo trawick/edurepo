@@ -101,9 +101,9 @@ Automatic setup and deploy
 Manual creation of Django superuser
 -----------------------------------
 
-After running the deploy script, log in to the remote server and create a Django superuser:
+After running the deploy script, log in to the remote server as user `edurepo` and create a Django superuser:
 ```
-$ cd /home/managing-user/git/edurepo
+$ cd /home/edurepo/git/edurepo
 $ . envs/edurepo/bin/activate
 $ cd src/edurepo
 $ python manage.py createsuperuser
