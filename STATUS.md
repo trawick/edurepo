@@ -33,6 +33,7 @@ Three worst issues for deployers
 1. Angular and Bootstrap are now loaded from CDN; zap from instructions/deployment scripts.
 2. The Ansible inventory should be used to fill in template versions of the several required configuration files.
 3. The Ansible deployment script should handle more of the setup steps, possibly with a small script that is run from the initial Ubuntu login.
+4. Run pretend_teacher.sh immediately (instead of waiting for cron job) so that the demo works immediately.
 
 Possible themes for upcoming stages
 ===================================
