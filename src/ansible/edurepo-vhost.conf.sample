@@ -1,16 +1,14 @@
-<VirtualHost 192.168.1.218:80>
+<VirtualHost {{ target_address }}:80>
     WSGIDaemonProcess edurepo \
         home=/home/edurepo/git/edurepo/src/edurepo \
         python-path=/home/edurepo/git/edurepo/src/edurepo:/home/edurepo/git/edurepo/envs/edurepo/lib/python2.7/site-packages
 
     WSGIProcessGroup edurepo
 
-    # included in SSL and non-SSL vhosts
-
     ErrorLog /var/log/django-edurepo/httpd.log
-    LogLevel warn
+    LogLevel {{ httpd_log_level }}
 
-    ServerName 192.168.1.218
+    ServerName {{ canonical_server_name }}
     DocumentRoot /home/edurepo/git/edurepo/src/webapp/
 
     <Directory />

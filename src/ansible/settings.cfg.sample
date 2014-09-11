@@ -1,0 +1,27 @@
+[secret]
+# Create key in the Django shell like this:
+#   >>> from django.utils.crypto import get_random_string
+#   >>> chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
+#   >>> get_random_string(50, chars)
+key=XXX
+
+[debugging]
+DEBUG=False
+TEMPLATE_DEBUG=False
+
+[deployment]
+ALLOWED_HOSTS=*
+set_static_root=True
+
+STATIC_ROOT={{ static_dir }}
+MOUNTED_AT=/ed
+
+[database]
+NAME={{ edurepo_db }}
+USER={{ edurepo_pg_user }}
+PASSWORD={{ edurepo_pg_password }}
+
+[logging]
+DIRECTORY={{ log_dir }}
+# Change this to INFO or WARNING for a production server, except when debugging.
+GLOBAL_LEVEL=DEBUG

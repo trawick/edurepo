@@ -1,0 +1,20 @@
+---
+
+- name: Clean up artifacts of previous implementations
+  hosts: webservers
+  remote_user: "{{ remote_user }}"
+  tasks:
+# Clean up old Bootstrap and Angular distributions
+    - name: Clean up Angular
+      file: >
+          dest={{ remote_checkout }}/src/webapp/lib/
+          state=absent
+    - name: Clean up Bootstrap
+      file: >
+          dest={{ remote_checkout }}/src/webapp/css/{{ item }}
+          state=absent
+      with_items:
+        - bootstrap.css
+        - bootstrap.min.css
+        - bootstrap-responsive.css
+        - bootstrap-responsive.min.css

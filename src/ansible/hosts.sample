@@ -1,15 +1,9 @@
 [webservers]
 # This is the IP address or hostname of the server machine.
-ip-address-or-hostname
+# Fix the four appearances of "ip-address-or-hostname" in the following line.
+ip-address-or-hostname target_address=ip-address-or-hostname canonical_server_name=ip-address-or-hostname canonical_base_url=http://ip-address-or-hostname/
 
 [webservers:vars]
-
-# This is the canonical way to reach the server.  Often this is the same as
-# the web server address above, but in URL format (with trailing slash).
-# Examples:
-#   http://edjective.org/
-#   http://192.168.1.200/
-canonical_base_url=XXX
 
 # This is the root of the directory tree on the managing system where you've 
 # created some configuration files documented in SETUP.md.
@@ -18,9 +12,6 @@ local_overlay_dir=XXX
 # This is the local directory in which you've created a .conf file
 # for Ubuntu's Apache 2.4.
 local_conf_dir=XXX
-
-# This directory contains angular-x.y.z.zip and bootstrap-x.y.z.zip.
-local_dist_dir=XXX
 
 # Password for Postgresql role edurepo
 edurepo_pg_password=XXX

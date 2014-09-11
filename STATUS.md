@@ -23,7 +23,7 @@ Three worst issues in demo interface
 Three worst issues for end users
 ================================
 
-1. no end upser application ("My Edjectives")
+1. no end user application ("My Edjectives")
 2. Flashcards should indicate the type of question (e.g., "True or false?")
 3. XXX
 
@@ -37,11 +37,9 @@ Three worst issues for developers
 Three worst issues for deployers
 ================================
 
-1. Angular and Bootstrap are now loaded from CDN; zap from instructions/deployment scripts.
-2. The Ansible inventory should be used to fill in template versions of the several required configuration files.
-3. The Ansible deployment script should handle more of the setup steps, possibly with a small script that is run from the initial Ubuntu login.
-4. Run pretend_teacher.sh immediately (instead of waiting for cron job) so that the demo works immediately.
-5. bash as default shell for `edurepo` user id
+1. The Ansible deployment script should handle more of the setup steps, possibly with a small script that is run from the initial Ubuntu login.
+2. Run pretend_teacher.sh immediately (instead of waiting for cron job) so that the demo works immediately.
+3. bash as default shell for `edurepo` user id
 
 Possible themes for upcoming stages
 ===================================

@@ -58,44 +58,33 @@ kept out of public repositories as it will contain private information.
 
 #### `rootdir/ansible/hosts`
 
-Refer to the example in `git-edurepo/src/ansible/hosts_sample` for instructions.
+Refer to the example in `git-edurepo/src/ansible/hosts.sample` for instructions.
 
 The path to this file will be passed to the `ansible-playbook` command when deploying.
 
-#### `rootdir/git-edurepo/src/webapp/resources/config.json`
-
-This small JSON file is used to configure the Angular application.  It has the following format:
-
-```
-{"base_api_url" : "http://ip-address-or-hostname/ed/"}
-```
-
-Replace `ip-address-or-servername` with the hostname (preferred) or IP address of the system.
-
 #### `rootdir/git-edurepo/src/edurepo/settings.cfg`
 
-Refer to `git-edurepo/src/edurepo/settings.cfg.sample` for instructions.
+Refer to `git-edurepo/src/ansible/settings.cfg.sample` for instructions.  In many cases, only the secret key needs to be set.
 
 #### `rootdir/ubuntu-apache24/edurepo-vhost.conf`
 
-Refer to `git-edurepo/src/ansible/edurepo-vhost.conf.sample` for an example.
+Refer to `git-edurepo/src/ansible/edurepo-vhost.conf.sample` for an example.  In many cases this won't have to be modified.
 
 Automatic setup and deploy
 --------------------------
 
-1. Look at the Ansible inventory file in `src/ansible/hosts_sample` and create a version for your system.
-2. Create a virtualenv for running Ansible:
+1. Create a virtualenv for running Ansible:
 
   ```
   $ virtualenv /path/to/env
   $ . /path/to/env/bin/activate
   $ pip install ansible
   ```
-3. With that virtualenv activated:
+2. With that virtualenv activated:
 
   ```
   $ cd /path/to/git-edurepo/src/ansible
-  $ ansible-playbook -i /path/to/hosts deploy.yml
+  $ ansible-playbook -i rootdir/ansible/hosts deploy.yml
   ```
 
 Manual creation of Django superuser
@@ -214,25 +203,6 @@ to configure the API endpoint to point to your development server:
 
 ```
 {"base_api_url" : "http://127.0.0.1:8000/"}
-```
-
-Angular for webapp:
-
-```
-cd edurepo/src/webapp/
-mkdir lib
-cd lib
-unzip /path/to/angular-1.2.13.zip
-ln -s angular-1.2.13 angular
-```
-
-Bootstrap for webapp:
-
-```
-cd /scratch
-unzip /path/to/bootstrap.zip (2.3.2)
-cd bootstrap/css
-cp bootstrap* /path/to/edurepo/src/webapp/css/
 ```
 
 You need a web server to serve the files under `/webapp` in a development environment; it is not served by Django's `runserver`.
