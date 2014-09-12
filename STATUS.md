@@ -39,7 +39,7 @@ Three worst issues for deployers
 
 1. Deployment should pick up changes to repo data.
 2. The Ansible deployment script should handle more of the setup steps, possibly with a small script that is run from the initial Ubuntu login.
-3. Run pretend_teacher.sh immediately (instead of waiting for cron job) so that the demo works immediately.
+3. XXX
 
 Possible themes for upcoming stages
 ===================================

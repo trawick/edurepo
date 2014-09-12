@@ -117,6 +117,8 @@
     - name: Define nightly_archive cron job
       cron: name="nightly_archive" hour="1" minute="20" job="{{ remote_checkout }}/src/edurepo/backup.sh /home/{{ remote_user }}/backups"
       when: nightly_archive != "no"
+    - name: Set up pretend teacher immediately, so that the demo works without waiting for the cron job.
+      command: "{{ remote_checkout }}/src/edurepo/teachers/pretend_teacher.sh {{canonical_base_url }}ed/"
     - name: Configure system httpd
       apache2_module: state=present name=wsgi
       sudo: yes
