@@ -540,10 +540,16 @@ edjectiveApp.controller('FlashcardCtrl', function ($scope, Flashcards) {
     $scope.front_back = 0;
     $scope.current = 0;
     $scope.previousFlashcard = function() {
-        if ($scope.current > $scope.min) $scope.current--;
+        if ($scope.current > $scope.min) {
+            $scope.current--;
+            $scope.front_back = 0;
+        }
     };
     $scope.nextFlashcard = function() {
-        if ($scope.current < $scope.max) $scope.current++;
+        if ($scope.current < $scope.max) {
+            $scope.current++;
+            $scope.front_back = 0;
+        }
     };
     $scope.flipFlashcard = function() {
         $scope.front_back = 1 - $scope.front_back;
