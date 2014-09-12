@@ -69,6 +69,5 @@ purge_unreachable_resources(debug=options.debug,
                             min_success_time=now() - timedelta(days=14),
                             purge_stranded=options.purge_stranded)
 
-print ''
 # Identify resources for removal based on inappropriate flags.
 purge_inappropriate_resources(options.debug)
