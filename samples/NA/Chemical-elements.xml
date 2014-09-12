@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<course-standard id="CHEMFACTS">
+  <description>Chemistry facts</description>
+  <category>NA</category>
+  <objectives>
+    <objective id="CHEMFACTS-1">
+      <description>Learn the groups 1-8 in the periodic table</description>
+    </objective>
+  </objectives>
+</course-standard>
