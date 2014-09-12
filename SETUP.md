@@ -15,7 +15,7 @@ Create an Ubuntu 14.04 Server VM:
 * A 32-bit image with 1 CPU and 2GB of RAM is fine.
 * Using the user id created during installation, create the user `edurepo` to manage edurepo:
 ```
-$ sudo useradd -m edurepo
+$ sudo useradd -m edurepo -s /bin/bash
 $ sudo passwd edurepo
 Enter new UNIX password:
 Retype new UNIX password:
