@@ -78,6 +78,7 @@ class GlossaryItemResource(CORSResource, ModelResource):
     learning_objective = fields.ForeignKey(LearningObjectiveResource, 'learning_objective', full=False)
 
     class Meta:
+        limit = 200
         queryset = GlossaryItem.objects.all()
         resource_name = 'glossary_item'
         filtering = {
