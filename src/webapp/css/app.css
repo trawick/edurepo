@@ -150,6 +150,17 @@ ul.objective-list > li {
 div.flashcard-page {
 }
 
+div.no-flashcard {
+    width: 800px;
+    height: 600px;
+    background-color: #3B653D;
+    color: white;
+    padding: 0;
+    margin: 0;
+    border: solid #000000;
+    border-width: 3px;
+}
+
 div.flashcard {
     width: 800px;
     height: 600px;
@@ -159,8 +170,6 @@ div.flashcard {
     margin: 0;
     border: solid #000000;
     border-width: 3px;
-    /* float: none; */
-    /* display: inline-block; */
 }
 
 div.flashcard-text {

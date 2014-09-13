@@ -535,7 +535,7 @@ edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter, $locatio
 edjectiveApp.controller('FlashcardCtrl', function ($scope, Flashcards) {
     $scope.flashcards_service = Flashcards;
     $scope.flashcards = $scope.flashcards_service.get();
-    // $scope.flashcards = [["5 times 4", "20"], ["1 times 2", "2"]];
+    $scope.have_flashcards = $scope.flashcards.length > 0;
     $scope.min = 0;
     $scope.max = $scope.flashcards.length - 1;
     $scope.front_back = 0;
@@ -562,6 +562,16 @@ edjectiveApp.controller('FlashcardCtrl', function ($scope, Flashcards) {
     };
     $scope.flipFlashcard = function() {
         $scope.front_back = 1 - $scope.front_back;
+    };
+    $scope.removeFlashcard = function() {
+        $scope.flashcards.splice($scope.current, 1);
+        if ($scope.current > 0) {
+            $scope.current--;
+        }
+        $scope.max--;
+        $scope.front_back = 0;
+        $scope.have_flashcards = $scope.flashcards.length > 0;
+        $scope.update_status();
     };
 
     $scope.update_status();

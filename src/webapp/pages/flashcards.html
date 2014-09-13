@@ -1,8 +1,15 @@
 <!-- browse -->
     <div class="flashcard-page" data-ng-controller="FlashcardCtrl">
 
-        <div class="flashcard">
+        <div class="flashcard" data-ng-show="have_flashcards">
             <div class="flashcard-status"><p>{{ deck_status }}</p></div>
+
+            <div class="flashcard-options">
+                <button type="button" class="btn btn-default btn-lg" data-ng-click="removeFlashcard()">
+                    <span class="glyphicon glyphicon-ok"></span>
+                </button>
+
+            </div>
 
             <div class="flashcard-text">{{ flashcards[current][front_back] }}</div>
 
@@ -17,6 +24,10 @@
                     <span class="glyphicon glyphicon-hand-right"></span>
             </button>
             </div>
+        </div>
+
+        <div class="no-flashcard" data-ng-hide="have_flashcards">
+            <div class="flashcard-text">The deck of cards is empty.</div>
         </div>
 
     </div>
