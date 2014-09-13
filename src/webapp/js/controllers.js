@@ -387,6 +387,7 @@ edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
 });
 
 edjectiveApp.controller('GetTeacherEmailCtrl', function ($scope) {
+    $scope.teacherEmail = 'ms.teacher@example.edu';
     $scope.update = function(teacherEmail) {
         $scope.$emit('updateTeacherEmailEvent', teacherEmail);
     };
@@ -539,19 +540,29 @@ edjectiveApp.controller('FlashcardCtrl', function ($scope, Flashcards) {
     $scope.max = $scope.flashcards.length - 1;
     $scope.front_back = 0;
     $scope.current = 0;
+    $scope.deck_status = '';
+
+    $scope.update_status = function() {
+        $scope.deck_status = '' + ($scope.current + 1) + ' of ' + $scope.flashcards.length;
+    };
+
     $scope.previousFlashcard = function() {
         if ($scope.current > $scope.min) {
             $scope.current--;
             $scope.front_back = 0;
+            $scope.update_status();
         }
     };
     $scope.nextFlashcard = function() {
         if ($scope.current < $scope.max) {
             $scope.current++;
             $scope.front_back = 0;
+            $scope.update_status();
         }
     };
     $scope.flipFlashcard = function() {
         $scope.front_back = 1 - $scope.front_back;
     };
+
+    $scope.update_status();
 });
