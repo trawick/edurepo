@@ -37,9 +37,9 @@ Three worst issues for developers
 Three worst issues for deployers
 ================================
 
-1. Deployment should pick up changes to repo data.
-2. The Ansible deployment script should handle more of the setup steps, possibly with a small script that is run from the initial Ubuntu login.
-3. XXX
+1. XXX
+2. XXX
+3. The Ansible deployment script should handle more of the setup steps, possibly with a small script that is run from the initial Ubuntu login.
 
 Possible themes for upcoming stages
 ===================================

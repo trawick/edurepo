@@ -97,17 +97,16 @@
           app_path={{ remote_checkout }}/src/edurepo
           command=collectstatic
           virtualenv={{ remote_checkout }}/envs/edurepo
-    - name: Load initial data into system (1st time only)
+    - name: Load repository data from XML
       command: "{{ remote_checkout }}/envs/edurepo/bin/python repo/import_xml.py ../../samples/ import"
       args:
         chdir: "{{ remote_checkout }}/src/edurepo"
-        creates: "{{ remote_checkout }}/data-imported"
+    - name: Skip import of resource data in the future
+# Use this copy command to touch the file so that the timestamp isn't changed each time.
+# That allows us to see the last time the resource data was imported.
+      copy: content="" dest={{ remote_checkout }}/data-imported force=no
       notify:
       - load-resource-data
-    - name: Skip import of data in the future
-# Use this copy command to touch the file so that the timestamp isn't changed each time.
-# That allows us to see the last time the data was imported.
-      copy: content="" dest={{ remote_checkout }}/data-imported force=no
     - name: Define server_validation cron job
       cron: name="server_validation" hour="*/2" minute="11" job="{{ remote_checkout }}/src/edurepo/resources/server_validation.sh"
     - name: Define server_purge cron job
