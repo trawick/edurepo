@@ -1,3 +1,4 @@
+import argparse
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'edurepo.settings')
 
@@ -87,12 +88,20 @@ def import_course_standard(root):
 
         icans = child.find('icans')
         if icans is not None:
+            # I-Can statements don't have global identifiers, so to avoid complications with
+            # replacement, we can simply zap any existing ones.
+            if perform_import:
+                obj = LearningObjective.objects.get(id=objective_id)
+                for ican in obj.ican_set.all():
+                    ican.delete()
+            else:
+                obj = None  # keep lint happy
+
             for ican in icans:
                 if noisy:
                     print '  ICan: ' + ican.text
 
                 if perform_import:
-                    obj = LearningObjective.objects.get(id=objective_id)
                     obj.ican_set.create(statement=ican.text)
 
         reference = child.find('reference')
@@ -102,7 +111,9 @@ def import_course_standard(root):
 
             if perform_import:
                 obj = LearningObjective.objects.get(id=objective_id)
-                # TODO Delete reference text if it already exists.
+                # Delete reference text if it already exists.
+                for reference_text in obj.referencetext_set.all():
+                    reference_text.delete()
                 obj.referencetext_set.create(text=reference.text)
 
 
@@ -230,11 +241,11 @@ def process_file(filename):
     process_root(doc.getroot())
 
 
-def process(top):
+def process(top, purge):
     if os.path.isfile(top):
         return process_file(top)
 
-    if perform_import:
+    if purge:
         # drop existing data before we add the current
         TrueFalseItem.objects.all().delete()
         GlossaryItem.objects.all().delete()
@@ -251,7 +262,7 @@ def process(top):
             process_file(doc_file)
 
 
-def start_import(top, mode, spew=None):
+def start_import(top, mode, purge, spew=None):
     global perform_import, noisy
 
     if mode == 'import':
@@ -264,19 +275,32 @@ def start_import(top, mode, spew=None):
     else:
         noisy = not perform_import
 
-    process(top)
+    process(top, purge)
 
 
-def main(args):
-    if len(args) != 3:
-        print >> sys.stderr, "Usage: %s filesystem-root-or-file check-or-import" % args[0]
-        sys.exit(1)
+def main():
+    parser = argparse.ArgumentParser(epilog="""
+    This program allows repository data to be imported from XML files.
+    To start from scratch, specify the --purge option along with
+    the import command.
 
-    top = args[1]
-    mode = args[2]
+    When updating a live server, you can omit the --purge option, and
+    data will be minimally changed, with only a small amount of data
+    missing at any given time.  In this mode, any objectives or courses
+    which disappear in the new XML files will not be removed from the
+    database.""")
+    parser.add_argument('--purge', action='store_true',
+                        help='Remove existing data first')
+    parser.add_argument('top', nargs=1, help='Directory root or file')
+    parser.add_argument('command', nargs=1, choices=('check', 'import'),
+                        help='"check" or "import"')
+    args = parser.parse_args()
+
+    top = args.top[0]
+    mode = args.command[0]
     assert os.path.exists(top)
-    assert mode == 'check' or mode == 'import'
-    start_import(top, mode)
+    assert not (mode == 'check' and args.purge)
+    start_import(top, mode, args.purge)
 
 if __name__ == '__main__':
-    main(sys.argv)
+    sys.exit(main())
