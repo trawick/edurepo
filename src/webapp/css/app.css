@@ -40,6 +40,11 @@ ul.huge {
     color: black;
 }
 
+.myEdjectives {
+    background-color: #849fe2;
+    color: black;
+}
+
 .browse {
     background-color: #3B653D;
 }
@@ -189,4 +194,19 @@ div.flashcard-nav {
 }
 
 div.flashcard-status {
+}
+
+div.single-student {
+    background-color: lightgreen;
+    margin: 10px;
+    padding: 10px;
+}
+
+div.single-student h2 {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+div.single-student ul {
+    list-style-type: none;
 }

@@ -1,0 +1,65 @@
+<div class="my-edjectives-page">
+
+    <h1>Your class activity</h1>
+
+    <div class="existing-students" data-ng-repeat="student in studentData">
+
+        <div class="single-student">
+            <h2>Student: {{ student.name }}
+                <button type="button" class="btn btn-default" data-ng-click="removeStudent()">
+                    <span class="glyphicon glyphicon-remove-sign"></span>
+                </button>
+            </h2>
+
+            <ul>
+                <li data-ng-repeat="class in student.classes">
+                    <h3>{{ class.className }} (teacher {{ class.teacherEmail}})
+                        <button type="button" class="btn btn-default" data-ng-click="removeClass()">
+                            <span class="glyphicon glyphicon-remove-sign"></span>
+                        </button>
+                    </h3>
+                    <ul>
+                        <li data-ng-repeat="objective in class.objectives track by $index">
+                            {{ objective.date }} {{ objective.name }}
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <br />
+            <p>
+                <span data-ng-hide="student.enableAdd">
+                    <button type="button" class="btn btn-default" data-ng-click="enableAddClassWidget()">
+                        <span class="glyphicon glyphicon-plus-sign"></span>
+                    </button>
+                </span>
+                <span data-ng-show="student.enableAdd">
+                    <button type="button" class="btn btn-default" data-ng-click="disableAddClassWidget()">
+                        <span class="glyphicon glyphicon-minus-sign"></span>
+                    </button>
+                </span>
+                Add a class
+                <span data-ng-show="student.enableAdd">
+                    <input type="text" id="new-class-{{ student.name }}" value="{{ student.teacherOfNewClass }}" />
+                    <button data-ng-click="addClassTeacherLookup()">Lookup teacher</button>
+                    <span data-ng-show="student.teacherOfNewClass">
+                        <select id="addClassSelectedClass-{{ student.name }}"
+                                data-ng-model="addClassSelectClass"
+                                data-ng-options="course for course in student.addClassTeacherClasses">
+                            <option>--</option>
+                        </select>
+                        <button data-ng-click="addClass()">Add</button>
+                    </span>
+                </span>
+            </p>
+        </div>
+    </div>
+
+    <br />
+    <div class="add-a-student">
+        <h2>Add a student</h2>
+
+        <input type="text" id="new-student-name"/>
+        <button data-ng-click="addStudent()">Add</button>
+    </div>
+</div>

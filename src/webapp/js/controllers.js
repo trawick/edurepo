@@ -98,6 +98,11 @@ edjectiveApp.config(function($routeProvider) {
         controller: 'FrontCtrl'
     })
 
+    .when('/myEdjectives', {
+        templateUrl: 'pages/myEdjectives.html',
+        controller: 'MyEdjectivesCtrl'
+    })
+
     .when('/browse/:objective', {
         templateUrl: 'pages/browseObjective.html',
         controller: 'BrowseObjectiveCtrl'
@@ -159,6 +164,173 @@ edjectiveApp.run(function($rootScope) {
 
 edjectiveApp.controller('FrontCtrl', function ($scope) {
     // nothing for now
+});
+
+edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter) {
+    $scope.studentData = [];
+
+    $scope.enableAddClassWidget = function () {
+        for (var i = 0; i < $scope.studentData.length; i++) {
+            $scope.studentData[i].enableAdd = false;
+        }
+        this.student.enableAdd = true;
+    };
+
+    $scope.disableAddClassWidget = function () {
+        this.student.enableAdd = false;
+        this.student.teacherOfNewClass = '';
+        this.student.addClassTeacherClasses = [];
+    };
+
+    $scope.addClassTeacherLookup = function () {
+        var student = this.student;
+        var studentName = this.student.name;
+        var teacher = $("#new-class-" + studentName).val();
+        if (teacher == '') {
+            // XXX use an error message field instead
+            alert('Please provide a teacher e-mail address.');
+        }
+        this.student.teacherOfNewClass = teacher;
+        var url = edjectiveAppUrls['getClassesFromTeacher'](this.student.teacherOfNewClass);
+        $http.get(url).success(function(data) {
+            if (data.meta.total_count == 0) {
+                // XXX use an error message field instead
+                alert('No classes for teacher ' + teacher);
+                $scope.addClassNotice = 'The teacher e-mail address is invalid.';
+            }
+            else {
+                student.addClassTeacherClasses = [];
+                for (var i = 0; i < data.objects.length; i++) {
+                    student.addClassTeacherClasses.push(data.objects[i].name);
+                }
+            }
+        });
+    };
+
+    $scope.addClass = function () {
+        var classIndex = $("#addClassSelectedClass-" + this.student.name).val();
+
+        for (var i = 0; i < $scope.studentData.length; i++) {
+            if ($scope.studentData[i].name == this.student.name) {
+                // XXX don't add same class again!
+                $scope.studentData[i].classes.push({'teacherEmail': this.student.teacherOfNewClass,
+                                                    'className': this.student.addClassTeacherClasses[classIndex]});
+                $scope.saveConfig();
+                // XXX load objectives for the new class so that user doesn't have to refresh
+                break;
+            }
+        }
+        this.student.teacherOfNewClass = '';
+        this.student.addClassTeacherClasses = [];
+        this.student.enableAdd = false;
+    };
+
+    $scope.removeClass = function () {
+        var student = this.$parent.student;
+        var studentClasses = student.classes;
+        var classToRemove = this.class;
+
+        for (var i = 0; i < studentClasses.length; i++) {
+            if (studentClasses[i].className == classToRemove.className) {
+                studentClasses.splice(i, 1);
+                $scope.saveConfig();
+                break;
+            }
+        }
+    };
+
+    $scope.saveConfig = function () {
+        // XXX Try saving/restoring JSON.
+        localStorage['MyEdjectives.numStudents'] = $scope.studentData.length;
+        for (var i = 0; i < $scope.studentData.length; i++) {
+            localStorage['MyEdjectives.' + i + '.name'] = $scope.studentData[i].name;
+            localStorage['MyEdjectives.' + i + '.numClasses'] = $scope.studentData[i].classes.length;
+            for (var j = 0; j < $scope.studentData[i].classes.length; j++) {
+                localStorage['MyEdjectives.' + i + '.' + j + '.teacherEmail'] = $scope.studentData[i].classes[j].teacherEmail;
+                localStorage['MyEdjectives.' + i + '.' + j + '.className'] = $scope.studentData[i].classes[j].className;
+            }
+        }
+    };
+
+    $scope.loadConfig = function () {
+        $scope.studentData = [];
+        var numStudents = localStorage['MyEdjectives.numStudents'];
+        for (var i = 0; i < numStudents; i++) {
+            var studentData = {
+                'classes': []
+            };
+            studentData['name'] = localStorage['MyEdjectives.' + i + '.name'];
+            var numClasses = localStorage['MyEdjectives.' + i + '.numClasses'];
+            for (var j = 0; j < numClasses; j++) {
+                var classData = {};
+                classData['teacherEmail'] = localStorage['MyEdjectives.' + i + '.' + j + '.teacherEmail'];
+                classData['className'] = localStorage['MyEdjectives.' + i + '.' + j + '.className'];
+                studentData['classes'].push(classData);
+            }
+            $scope.studentData.push(studentData);
+        }
+    };
+
+    function receiveClassObjectivesFunction(studentNum, classNum) {
+        return function(data) {
+            $scope.studentData[studentNum].classes[classNum].objectives = [];
+            for (var i = 0; i < data.objects.length; i++) {
+                console.log(data.objects[i]);
+                var objectives = $scope.studentData[studentNum].classes[classNum].objectives;
+                objectives.push({'name': data.objects[i].objective,
+                                 'date': data.objects[i].date});
+            }
+        };
+    }
+
+    $scope.loadData = function () {
+        for (var i = 0; i < $scope.studentData.length; i++) {
+            var studentData = $scope.studentData[i];
+            for (var j = 0; j < studentData.classes.length; j++) {
+                var classData = studentData.classes[j];
+
+                var curdate = new Date();
+                var curdatestr = $filter('date')(curdate, 'yyyy-MM-dd');
+                var weekago = new Date();
+                weekago.setDate(weekago.getDate() - 7);
+                var weekagostr = $filter('date')(weekago, 'yyyy-MM-dd');
+
+                var url = edjectiveAppUrls['getObjectivesFromTeacherClass'](classData['teacherEmail'],
+                    weekagostr, curdatestr,
+                    classData['className']);
+
+                $http.get(url).success(receiveClassObjectivesFunction(i, j));
+            }
+        }
+    };
+
+    $scope.addStudent = function() {
+        // XXX Make sure student name is unique!
+        var newName = $("#new-student-name").val();
+        $scope.studentData.push({'name': newName,
+                                 'classes': []});
+        $scope.saveConfig();
+    };
+
+    $scope.removeStudent = function() {
+        for (var i = 0; i < $scope.studentData.length; i++) {
+            if ($scope.studentData[i].name == this.student.name) {
+                $scope.studentData.splice(i, 1);
+                $scope.saveConfig();
+                break;
+            }
+        }
+    };
+
+    $scope.loadConfig();
+
+    $http.get("resources/config.json").success(function(data) {
+        // XXX Should we block out the UI for adding students until this is complete?
+        edjectiveAppUrls.setBase(data['base_api_url']);
+
+        $scope.loadData();
+    });
+    // XXX error path: update an error message field
 });
 
 edjectiveApp.controller('ForTeachersCtrl', function ($scope, $http) {
