@@ -1,7 +1,7 @@
 Three worst overall viability issues
 ====================================
 
-1. no end user software (e.g., "My Classes" web app)
+1. lots of improvements needed to "My Edjectives"
 2. no complete course to use as good example (easiest fix: add materials to Alabama Grade 5 Science)
 3. XXX
 
@@ -23,8 +23,8 @@ Three worst issues in demo interface
 Three worst issues for end users
 ================================
 
-1. no end user application ("My Edjectives")
-2. Flashcards should indicate the type of question (e.g., "True or false?")
+1. "My Edjectives" needs to allow expansion of current objectives and access to flash cards and other materials
+2. True/False flashcards should indicate the type of question
 3. XXX
 
 Three worst issues for developers
@@ -45,7 +45,6 @@ Possible themes for upcoming stages
 ===================================
 
 * Import Common Core high school math course definitions
-* Bootstrap-ify Angular app
 * Improve user interface for resource browsing and commenting
 * Course needs short form of description
 * Add Spanish version of "I Can" statements (from Sonya), with means of retrieval
