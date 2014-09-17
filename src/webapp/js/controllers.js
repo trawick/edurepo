@@ -166,8 +166,20 @@ edjectiveApp.controller('FrontCtrl', function ($scope) {
     // nothing for now
 });
 
-edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter) {
+edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter, $location, Flashcards) {
     $scope.studentData = [];
+    $scope.flashcards = Flashcards;
+
+    $scope.glossaryFlashcards = function (obj) {
+        var flashcards = [];
+        for (var i = 0; i < obj.glossitems.length; i++) {
+            var item = obj.glossitems[i];
+            var card = [item.term, item.definition];
+            flashcards.push(card);
+        }
+        $scope.flashcards.set(flashcards);
+        $location.path("flashcards");
+    };
 
     $scope.enableAddClassWidget = function () {
         for (var i = 0; i < $scope.studentData.length; i++) {
@@ -274,11 +286,22 @@ edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter) {
     function receiveClassObjectivesFunction(studentNum, classNum) {
         return function(data) {
             $scope.studentData[studentNum].classes[classNum].objectives = [];
+            var objectives = $scope.studentData[studentNum].classes[classNum].objectives;
+
             for (var i = 0; i < data.objects.length; i++) {
-                console.log(data.objects[i]);
-                var objectives = $scope.studentData[studentNum].classes[classNum].objectives;
-                objectives.push({'name': data.objects[i].objective,
-                                 'date': data.objects[i].date});
+                var objectiveDate = data.objects[i].date;
+                var objectiveName = data.objects[i].objective;
+
+                var objectiveData = {};
+                $http.get(edjectiveAppUrls.getGlossaryItemsFromObjective(objectiveName)).success(function(data) {
+                    objectiveData.glossitems = data.objects;
+                });
+                $http.get(edjectiveAppUrls.getTrueFalseItemsFromObjective(data.id)).success(function(data) {
+                    objectiveData.tfitems = data.objects;
+                });
+                objectives.push({'name': objectiveName,
+                                 'date': objectiveDate,
+                                 'data': objectiveData});
             }
         };
     }

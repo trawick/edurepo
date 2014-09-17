@@ -21,6 +21,10 @@
                     <ul>
                         <li data-ng-repeat="objective in class.objectives track by $index">
                             {{ objective.date }} {{ objective.name }}
+
+                            <p data-ng-show="objective.data.glossitems.length">
+                                <button data-ng-click="glossaryFlashcards(objective.data)">Use glossary items as flashcards</button>
+                            </p>
                         </li>
                     </ul>
                 </li>
