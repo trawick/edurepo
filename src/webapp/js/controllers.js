@@ -283,6 +283,18 @@ edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter, $l
         }
     };
 
+    function saveGlossitemsWrapper(objectiveData) {
+        return function(data) {
+            objectiveData.glossitems = data.objects;
+        }
+    }
+
+    function saveTfitemsWrapper(objectiveData) {
+        return function(data) {
+            objectiveData.tfitems = data.objects;
+        }
+    }
+
     function receiveClassObjectivesFunction(studentNum, classNum) {
         return function(data) {
             $scope.studentData[studentNum].classes[classNum].objectives = [];
@@ -293,12 +305,8 @@ edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter, $l
                 var objectiveName = data.objects[i].objective;
 
                 var objectiveData = {};
-                $http.get(edjectiveAppUrls.getGlossaryItemsFromObjective(objectiveName)).success(function(data) {
-                    objectiveData.glossitems = data.objects;
-                });
-                $http.get(edjectiveAppUrls.getTrueFalseItemsFromObjective(data.id)).success(function(data) {
-                    objectiveData.tfitems = data.objects;
-                });
+                $http.get(edjectiveAppUrls.getGlossaryItemsFromObjective(objectiveName)).success(saveGlossitemsWrapper(objectiveData));
+                $http.get(edjectiveAppUrls.getTrueFalseItemsFromObjective(data.id)).success(saveTfitemsWrapper(objectiveData));
                 objectives.push({'name': objectiveName,
                                  'date': objectiveDate,
                                  'data': objectiveData});
