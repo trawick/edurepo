@@ -237,11 +237,20 @@ edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter, $l
 
         for (var i = 0; i < $scope.studentData.length; i++) {
             if ($scope.studentData[i].name == this.student.name) {
-                // XXX don't add same class again!
-                $scope.studentData[i].classes.push({'teacherEmail': this.student.teacherOfNewClass,
-                                                    'className': this.student.addClassTeacherClasses[classIndex]});
+                // Don't add same class again!
+                var className = this.student.addClassTeacherClasses[classIndex];
+                var result = $.grep($scope.studentData[i].classes, function (e) { return e.className == className; });
+                if (result.length != 0) {
+                    alert('Class ' + className + ' was already added for this student.');
+                    break;
+                }
+                var classData = {'teacherEmail': this.student.teacherOfNewClass,
+                                 'className': className};
+                $scope.studentData[i].classes.push(classData);
                 $scope.saveConfig();
-                // XXX load objectives for the new class so that user doesn't have to refresh
+                var j = $scope.studentData[i].classes.length - 1;
+                // Load objectives for the new class so that user doesn't have to refresh.
+                $scope.loadDataForClass(classData, i, j);
                 break;
             }
         }
@@ -327,25 +336,34 @@ edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter, $l
         };
     }
 
+    $scope.loadDataForClass = function (classData, studentIndex, classIndex) {
+        var range = dateRange($filter);
+        var url = edjectiveAppUrls['getObjectivesFromTeacherClass'](classData['teacherEmail'],
+            range.startDate, range.endDate,
+            classData['className']);
+
+        $http.get(url).success(receiveClassObjectivesFunction(studentIndex, classIndex));
+    };
+
     $scope.loadData = function () {
         for (var i = 0; i < $scope.studentData.length; i++) {
             var studentData = $scope.studentData[i];
             for (var j = 0; j < studentData.classes.length; j++) {
                 var classData = studentData.classes[j];
-
-                var range = dateRange($filter);
-                var url = edjectiveAppUrls['getObjectivesFromTeacherClass'](classData['teacherEmail'],
-                    range.startDate, range.endDate,
-                    classData['className']);
-
-                $http.get(url).success(receiveClassObjectivesFunction(i, j));
+                $scope.loadDataForClass(classData, i, j);
             }
         }
     };
 
     $scope.addStudent = function() {
-        // XXX Make sure student name is unique!
         var newName = $("#new-student-name").val();
+        newName = $.trim(newName);
+        // Make sure student name is unique!
+        var result = $.grep($scope.studentData, function(e) { return e.name === newName; });
+        if (result.length != 0) {
+            alert('Student ' + newName + ' already exists.  Choose a unique name.');
+            return;
+        }
         $scope.studentData.push({'name': newName,
                                  'classes': []});
         $scope.saveConfig();
