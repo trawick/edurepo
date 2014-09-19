@@ -165,6 +165,20 @@ edjectiveApp.controller('FrontCtrl', function ($scope) {
     // nothing for now
 });
 
+function dateRange($filter) {
+    var endDate = new Date();
+    endDate.setDate(endDate.getDate() + 1);
+    var endDateStr = $filter('date')(endDate, 'yyyy-MM-dd');
+    var weekAgo = new Date();
+    weekAgo.setDate(weekAgo.getDate() - 7);
+    var weekAgoStr = $filter('date')(weekAgo, 'yyyy-MM-dd');
+
+    return {
+        startDate: weekAgoStr,
+        endDate: endDateStr
+    };
+}
+
 edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter, $location, Flashcards) {
     $scope.studentData = [];
     $scope.flashcards = Flashcards;
@@ -319,14 +333,9 @@ edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter, $l
             for (var j = 0; j < studentData.classes.length; j++) {
                 var classData = studentData.classes[j];
 
-                var curdate = new Date();
-                var curdatestr = $filter('date')(curdate, 'yyyy-MM-dd');
-                var weekago = new Date();
-                weekago.setDate(weekago.getDate() - 7);
-                var weekagostr = $filter('date')(weekago, 'yyyy-MM-dd');
-
+                var range = dateRange($filter);
                 var url = edjectiveAppUrls['getObjectivesFromTeacherClass'](classData['teacherEmail'],
-                    weekagostr, curdatestr,
+                    range.startDate, range.endDate,
                     classData['className']);
 
                 $http.get(url).success(receiveClassObjectivesFunction(i, j));
@@ -682,12 +691,10 @@ edjectiveApp.controller('ParentsCtrl', function ($scope, $http, $filter, $locati
     $scope.classSelection = function(cl) {
         // Key data is cl.name and cl.isSelected
         if (cl.isSelected) {
-            var curdate = new Date();
-            var curdatestr = $filter('date')(curdate, 'yyyy-MM-dd');
-            var weekago = new Date();
-            weekago.setDate(weekago.getDate() - 7);
-            var weekagostr = $filter('date')(weekago, 'yyyy-MM-dd');
-            $http.get(edjectiveAppUrls.getObjectivesFromTeacherClass($scope.teacher_email, weekagostr, curdatestr, cl.name)).success(function(data) {
+            var range = dateRange($filter);
+            $http.get(edjectiveAppUrls.getObjectivesFromTeacherClass($scope.teacher_email,
+                                                                     range.startDate, range.endDate,
+                                                                     cl.name)).success(function(data) {
                 var newobj = {'text': cl.name, 'objectives': []};
                 for (var i = 0; i < data.meta.total_count; i++) {
                     newobj.objectives.push({'date': data.objects[i].date, 'objective': data.objects[i].objective,
