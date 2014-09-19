@@ -119,8 +119,7 @@ edjectiveApp.config(function($routeProvider) {
     })
 
     .when('/forParents', {
-        templateUrl: 'pages/currentObjectives.html',
-        controller: 'LookupCtrl'
+        templateUrl: 'pages/currentObjectives.html'
     })
 
     .when('/forTeachers', {
@@ -153,7 +152,7 @@ edjectiveApp.config(function($routeProvider) {
         controller: 'FlashcardCtrl'
     })
 
-    .otherwise({redirectTo: '/', controller: 'LookupCtrl'});
+    .otherwise({redirectTo: '/', controller: 'FrontCtrl'});
 });
 
 edjectiveApp.run(function($rootScope) {
@@ -597,7 +596,7 @@ edjectiveApp.controller('GetTeacherEmailCtrl', function ($scope) {
 
 });
 
-edjectiveApp.controller('LookupCtrl', function ($scope, $http, $filter, $location, Flashcards) {
+edjectiveApp.controller('ParentsCtrl', function ($scope, $http, $filter, $location, Flashcards) {
 
     $scope.objectives = {'data': []};
     $scope.teacher_email = '';
