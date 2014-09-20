@@ -1,6 +1,114 @@
 var edjectiveApp = angular.module('edjectiveApp', ['ngRoute']);
 
-var edjectiveAppUrls = {};
+edjectiveApp.directive('learningObjective', function ($http, $location, Flashcards) {
+    function initialize($scope, $element, $attrs) {
+        $scope.learningObjective = $.trim($attrs.learningObjective);
+        if ('assert' in console) {
+            console.assert($scope.learningObjective,
+                           'The learning objective is not part of the attributes of the <learning-objective> element!');
+            console.assert(edjectiveAppUrls.base != 'INVALID',
+                           '<learning-objective> was active without the API base known!');
+        }
+
+        $scope.flashcards = Flashcards;
+
+        $scope.trueFalseFlashcards = function (obj) {
+            var flashcards = [];
+            for (var i = 0; i < obj.tfitems.length; i++) {
+                var card = [obj.tfitems[i].statement, obj.tfitems[i].answer.toString()];
+                flashcards.push(card);
+            }
+            $scope.flashcards.set(flashcards);
+            $location.path("flashcards");
+        };
+
+        $scope.glossaryFlashcards = function (obj) {
+            var flashcards = [];
+            for (var i = 0; i < obj.glossitems.length; i++) {
+                var item = obj.glossitems[i];
+                var card = [item.term, item.definition];
+                flashcards.push(card);
+            }
+            $scope.flashcards.set(flashcards);
+            $location.path("flashcards");
+        };
+
+        $scope.multipleChoiceFlashcards = function (obj) {
+            var flashcards = [];
+            for (var i = 0; i < obj.mcitems.length; i++) {
+                var item = obj.mcitems[i];
+                var ans;
+                if (item.ans == 1) {
+                    ans = item.choice1;
+                }
+                else if (item.ans == 2) {
+                    ans = item.choice2;
+                }
+                else if (item.ans == 3) {
+                    ans = item.choice3;
+                }
+                else if (item.ans == 4) {
+                    ans = item.choice4;
+                }
+                else if (item.ans == 5) {
+                    ans = item.choice5;
+                }
+                var card = [item.question, ans];
+                flashcards.push(card);
+            }
+            $scope.flashcards.set(flashcards);
+            $location.path("flashcards");
+        };
+
+        function saveObjectiveData(objectiveData, fieldName) {
+            return function(data) {
+                if (fieldName == 'description') {
+                    objectiveData[fieldName] = data[fieldName];
+                }
+                else if (fieldName == 'referencetext') {
+                    objectiveData[fieldName] = data.objects[0];
+                }
+                else {
+                    objectiveData[fieldName] = data.objects;
+                }
+            };
+        }
+
+        $scope.teacherComments = $attrs.teacherComments; // not part of the objective itself; teacher can add this when scheduling the objective
+        $scope.data = {};
+
+        // Can't get here without base API URL already set...
+
+        var lo = $scope.learningObjective;
+        $http.get(edjectiveAppUrls.getObjective(lo)).success(saveObjectiveData($scope.data, 'description'));
+        $http.get(edjectiveAppUrls.getIcansFromObjective(lo)).success(saveObjectiveData($scope.data, 'icans'));
+        $http.get(edjectiveAppUrls.getReferenceTextFromObjective(lo)).success(saveObjectiveData($scope.data, 'referencetext'));
+        $http.get(edjectiveAppUrls.getResourcesFromObjective(lo)).success(saveObjectiveData($scope.data, 'resources'));
+        $http.get(edjectiveAppUrls.getGlossaryItemsFromObjective(lo)).success(saveObjectiveData($scope.data, 'glossitems'));
+        $http.get(edjectiveAppUrls.getTrueFalseItemsFromObjective(lo)).success(saveObjectiveData($scope.data, 'tfitems'));
+        $http.get(edjectiveAppUrls.getMultipleChoiceItemsFromObjective(lo)).success(saveObjectiveData($scope.data, 'mcitems'));
+    }
+
+    return {
+        scope: true,
+        restrict: 'E',
+        templateUrl: 'elements/learning-objective.html',
+        link: function($scope, $element, $attrs) {
+            if ($attrs.learningObjective) {
+                initialize($scope, $element, $attrs);
+            }
+            else {
+                $attrs.$observe('learningObjective', function (val) {
+                    if (val) {
+                        initialize($scope, $element, $attrs);
+                    }
+                });
+            }
+        }
+    }
+});
+
+var edjectiveAppUrls = {'base': 'INVALID'};
 edjectiveAppUrls['setBase'] = function(base) {
     edjectiveAppUrls['base'] = base;
     edjectiveAppUrls['coursecat_baseurl'] = base + 'repo/api/coursecategory/';
@@ -179,20 +287,8 @@ function dateRange($filter) {
     };
 }
 
-edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter, $location, Flashcards) {
+edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter) {
     $scope.studentData = [];
-    $scope.flashcards = Flashcards;
-
-    $scope.glossaryFlashcards = function (obj) {
-        var flashcards = [];
-        for (var i = 0; i < obj.glossitems.length; i++) {
-            var item = obj.glossitems[i];
-            var card = [item.term, item.definition];
-            flashcards.push(card);
-        }
-        $scope.flashcards.set(flashcards);
-        $location.path("flashcards");
-    };
 
     $scope.enableAddClassWidget = function () {
         for (var i = 0; i < $scope.studentData.length; i++) {
@@ -305,18 +401,6 @@ edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter, $l
         }
     };
 
-    function saveGlossitemsWrapper(objectiveData) {
-        return function(data) {
-            objectiveData.glossitems = data.objects;
-        }
-    }
-
-    function saveTfitemsWrapper(objectiveData) {
-        return function(data) {
-            objectiveData.tfitems = data.objects;
-        }
-    }
-
     function receiveClassObjectivesFunction(studentNum, classNum) {
         return function(data) {
             $scope.studentData[studentNum].classes[classNum].objectives = [];
@@ -326,12 +410,8 @@ edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter, $l
                 var objectiveDate = data.objects[i].date;
                 var objectiveName = data.objects[i].objective;
 
-                var objectiveData = {};
-                $http.get(edjectiveAppUrls.getGlossaryItemsFromObjective(objectiveName)).success(saveGlossitemsWrapper(objectiveData));
-                $http.get(edjectiveAppUrls.getTrueFalseItemsFromObjective(data.id)).success(saveTfitemsWrapper(objectiveData));
                 objectives.push({'name': objectiveName,
-                                 'date': objectiveDate,
-                                 'data': objectiveData});
+                                 'date': objectiveDate});
             }
         };
     }
@@ -439,7 +519,6 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
     // Kick everything off once we retrieve the API configuration.
     $http.get("resources/config.json").success(function(data) {
         edjectiveAppUrls.setBase(data['base_api_url']);
-
         $http.get(edjectiveAppUrls.getObjectiveFromName($scope.objective_name)).success(function(data) {
             $scope.objective = data.objects[0];
 
@@ -563,31 +642,6 @@ edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
         }
     };
 
-    function annotate_objective($http, obj) {
-        obj.objective = obj.id + ' ' + obj.description;
-        obj.resources = [];
-        obj.glossitems = [];
-        obj.icans = [];
-        $http.get(edjectiveAppUrls.getIcansFromObjective(obj.id)).success(function(data) {
-            obj.icans = data.objects;
-        });
-        $http.get(edjectiveAppUrls.getReferenceTextFromObjective(obj.id)).success(function(data) {
-            obj.referencetext = data.objects[0];
-        });
-        $http.get(edjectiveAppUrls.getResourcesFromObjective(obj.id)).success(function(data) {
-            obj.resources = data.objects;
-        });
-        $http.get(edjectiveAppUrls.getGlossaryItemsFromObjective(obj.id)).success(function(data) {
-            obj.glossitems = data.objects;
-        });
-        $http.get(edjectiveAppUrls.getTrueFalseItemsFromObjective(obj.id)).success(function(data) {
-            obj.tfitems = data.objects;
-        });
-        $http.get(edjectiveAppUrls.getMultipleChoiceItemsFromObjective(obj.id)).success(function(data) {
-            obj.mcitems = data.objects;
-        });
-    }
-
     function updateCourse(courseId) {
         $scope.courseId = courseId;
         $scope.course = null;
@@ -603,11 +657,6 @@ edjectiveApp.controller('CourseLookupCtrl', function ($scope, $http) {
             }
             else {
                 $scope.objectives = data.objects;
-                for (var i = 0; i < data.meta.total_count; i++) {
-                    if (data.objects[i]) { // may have hit limit
-                        annotate_objective($http, data.objects[i]);
-                    }
-                }
             }
         }).error(function () {
             $scope.courseLookupError = 'The server could not be contacted.';
@@ -623,88 +672,10 @@ edjectiveApp.controller('GetTeacherEmailCtrl', function ($scope) {
 
 });
 
-edjectiveApp.controller('ParentsCtrl', function ($scope, $http, $filter, $location, Flashcards) {
+edjectiveApp.controller('ParentsCtrl', function ($scope, $http, $filter) {
 
     $scope.objectives = {'data': []};
     $scope.teacher_email = '';
-    $scope.flashcards = Flashcards;
-    $scope.trueFalseFlashcards = function (obj) {
-        // Flashcards are just an array of arrays, where the inner arrays
-        // are the front side of the flash card in the first element and
-        // the back side in the second element.
-        var flashcards = [];
-        for (var i = 0; i < obj.tfitems.length; i++) {
-            var card = [obj.tfitems[i].statement, obj.tfitems[i].answer.toString()];
-            flashcards.push(card);
-        }
-        $scope.flashcards.set(flashcards);
-        $location.path("flashcards");
-    };
-
-    $scope.glossaryFlashcards = function (obj) {
-        var flashcards = [];
-        for (var i = 0; i < obj.glossitems.length; i++) {
-            var item = obj.glossitems[i];
-            var card = [item.term, item.definition];
-            flashcards.push(card);
-        }
-        $scope.flashcards.set(flashcards);
-        $location.path("flashcards");
-    };
-
-    $scope.multipleChoiceFlashcards = function (obj) {
-        var flashcards = [];
-        for (var i = 0; i < obj.mcitems.length; i++) {
-            var item = obj.mcitems[i];
-            var ans;
-            if (item.ans == 1) {
-                ans = item.choice1;
-            }
-            else if (item.ans == 2) {
-                ans = item.choice2;
-            }
-            else if (item.ans == 3) {
-                ans = item.choice3;
-            }
-            else if (item.ans == 4) {
-                ans = item.choice4;
-            }
-            else if (item.ans == 5) {
-                ans = item.choice5;
-            }
-            var card = [item.question, ans];
-            flashcards.push(card);
-        }
-        $scope.flashcards.set(flashcards);
-        $location.path("flashcards");
-    };
-
-    function annotate_objective($http, data, obj) {
-        return function(data) {
-            obj.objective = data.id + ' ' + data.description;
-            obj.resources = [];
-            obj.glossitems = [];
-            obj.icans = [];
-            $http.get(edjectiveAppUrls.getIcansFromObjective(data.id)).success(function(data) {
-                obj.icans = data.objects;
-            });
-            $http.get(edjectiveAppUrls.getReferenceTextFromObjective(data.id)).success(function(data) {
-                obj.referencetext = data.objects[0];
-            });
-            $http.get(edjectiveAppUrls.getResourcesFromObjective(data.id)).success(function(data) {
-                obj.resources = data.objects;
-            });
-            $http.get(edjectiveAppUrls.getGlossaryItemsFromObjective(data.id)).success(function(data) {
-                obj.glossitems = data.objects;
-            });
-            $http.get(edjectiveAppUrls.getTrueFalseItemsFromObjective(data.id)).success(function(data) {
-                obj.tfitems = data.objects;
-            });
-            $http.get(edjectiveAppUrls.getMultipleChoiceItemsFromObjective(data.id)).success(function(data) {
-                obj.mcitems = data.objects;
-            });
-        };
-    }
 
     $scope.classSelection = function(cl) {
         // Key data is cl.name and cl.isSelected
@@ -717,7 +688,6 @@ edjectiveApp.controller('ParentsCtrl', function ($scope, $http, $filter, $locati
                 for (var i = 0; i < data.meta.total_count; i++) {
                     newobj.objectives.push({'date': data.objects[i].date, 'objective': data.objects[i].objective,
                                             'comments': data.objects[i].comments});
-                    $http.get(edjectiveAppUrls.getObjective(data.objects[i].objective)).success(annotate_objective($http, data, newobj.objectives[newobj.objectives.length - 1]));
                 }
                 $scope.objectives['data'].push(newobj);
             });

@@ -47,53 +47,7 @@ id, then press Lookup.</p>
   <p data-ng-show="objectives.length">Course objectives:</p>
   <ul>
     <li data-ng-repeat="obj in objectives">
-      {{obj.id}} {{obj.description}}
-
-      <p data-ng-show="obj.icans.length">I Can statements:</p>
-      <ul>
-        <li data-ng-repeat="ican in obj.icans">
-          {{ican.statement}}
-        </li>
-      </ul>
-
-      <p data-ng-show="obj.referencetext">Reference text:</p>
-      <p>{{obj.referencetext.text}}</p>
-
-      <p data-ng-show="obj.resources.length">External resources:</p>
-      <ul>
-        <li data-ng-repeat="res in obj.resources">
-          <a href="{{res.url}}">{{res.url}}</a>
-        </li>
-      </ul>
-
-      <p data-ng-show="obj.glossitems.length">Glossary items:</p>
-      <ul>
-        <li data-ng-repeat="glossitem in obj.glossitems">
-          {{glossitem.term}}: {{glossitem.definition}}
-        </li>
-      </ul>
-
-      <p data-ng-show="obj.tfitems.length">True/False questions:</p>
-      <ul>
-        <li data-ng-repeat="tfitem in obj.tfitems">
-          {{tfitem.statement}} ({{tfitem.answer}})
-        </li>
-      </ul>
-
-      <p data-ng-show="obj.mcitems.length">Multiple choice questions:</p>
-      <ul>
-        <li data-ng-repeat="mcitem in obj.mcitems">
-          {{mcitem.question}}
-          <ol>
-            <li>{{mcitem.choice1}}</li>
-            <li>{{mcitem.choice2}}</li>
-            <li data-ng-show="mcitem.choice3">{{mcitem.choice3}}</li>
-            <li data-ng-show="mcitem.choice4">{{mcitem.choice4}}</li>
-            <li data-ng-show="mcitem.choice5">{{mcitem.choice5}}</li>
-          </ol>
-          (Correct answer: #{{mcitem.ans}})
-        </li>
-      </ul>
+      <learning-objective data-learning-objective="{{ obj.id }}"></learning-objective>
     </li>
   </ul>
 

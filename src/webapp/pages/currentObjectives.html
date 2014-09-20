@@ -37,68 +37,10 @@ class activity for your children automatically.)</p>
         {{class.text}}
         <ul>
           <li data-ng-repeat="obj in class.objectives">
-            {{obj.date}} {{obj.objective}}
-
-            <p data-ng-show="obj.comments.length">Comments from the teacher:
-            {{obj.comments}}
-            </p>
-
-            <p data-ng-show="obj.icans.length">I Can statements:</p>
-            <ul>
-              <li data-ng-repeat="ican in obj.icans">
-                {{ican.statement}}
-              </li>
-            </ul>
-
-            <p data-ng-show="obj.referencetext">Reference text:</p>
-            <p>{{obj.referencetext.text}}</p>
-
-            <p data-ng-show="obj.resources.length">External resources:</p>
-            <ul>
-              <li data-ng-repeat="res in obj.resources">
-                <a href="{{res.url}}">{{res.url}}</a>
-                <br />
-                <span data-ng-show="res.votes">
-                Votes: {{res.votes}}
-                </span>
-                <span data-ng-show="res.inappropriate_flags">(Flagged as inappropriate {{res.inappropriate_flags}} times)</span>
-                <div data-ng-show="res.notes.length">
-                Comments from submitter: {{res.notes}}
-                </div>
-              </li>
-            </ul>
-
-            <p data-ng-show="obj.glossitems.length">Glossary items:<br />
-              <button data-ng-click="glossaryFlashcards(obj)">Use as flashcards</button></p>
-            <ul>
-              <li data-ng-repeat="glossitem in obj.glossitems">
-                {{glossitem.term}}: {{glossitem.definition}}
-              </li>
-            </ul>
-
-            <p data-ng-show="obj.tfitems.length">True/False questions:<br />
-              <button data-ng-click="trueFalseFlashcards(obj)">Use as flashcards</button></p>
-            <ul>
-              <li data-ng-repeat="tfitem in obj.tfitems">
-                {{tfitem.statement}} ({{tfitem.answer}})
-              </li>
-            </ul>
-
-            <p data-ng-show="obj.mcitems.length">Multiple choice questions:<br />
-              <button data-ng-click="multipleChoiceFlashcards(obj)">Use as flashcards</button></p>
-            <ul>
-              <li data-ng-repeat="mcitem in obj.mcitems">
-                {{mcitem.question}}
-                <ol>
-                  <li>{{mcitem.choice1}}</li>
-                  <li>{{mcitem.choice2}}</li>
-                  <li data-ng-show="mcitem.choice3">{{mcitem.choice3}}</li>
-                  <li data-ng-show="mcitem.choice4">{{mcitem.choice4}}</li>
-                  <li data-ng-show="mcitem.choice5">{{mcitem.choice5}}</li>
-                </ol>
-                (Correct answer: #{{mcitem.ans}})
-              </li>
-            </ul>
+            {{obj.date}}
+            <learning-objective data-learning-objective="{{ obj.objective }}"
+                                data-teacher-comments="{{ obj.comments }}">
+            </learning-objective>
           </li>
         </ul>
       </li>

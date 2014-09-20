@@ -1,5 +1,5 @@
 <!-- browseObjective -->
-<div class="browse-page" data-ng-controller="BrowseObjectiveCtrl">
+<div class="browse-page">
 
     <div data-ng-show="objective">
         <span data-ng-show="previous_objective">
@@ -14,6 +14,8 @@
         </a>
         </span>
         <span class="objective-list-entry-description">{{objective.description}}</span>
+
+        <learning-objective data-learning-objective="{{ objective.id }}"></learning-objective>
     </div>
 
     <br />

@@ -20,11 +20,8 @@
                     </h3>
                     <ul>
                         <li data-ng-repeat="objective in class.objectives track by $index">
-                            {{ objective.date }} {{ objective.name }}
-
-                            <p data-ng-show="objective.data.glossitems.length">
-                                <button data-ng-click="glossaryFlashcards(objective.data)">Use glossary items as flashcards</button>
-                            </p>
+                            {{ objective.date }}
+                            <learning-objective data-learning-objective="{{ objective.name }}"></learning-objective>
                         </li>
                     </ul>
                 </li>

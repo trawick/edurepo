@@ -1,0 +1,67 @@
+<div>
+    <p><strong>{{ learningObjective }}</strong></p>
+    <p>{{ data.description }}</p>
+
+    <p data-ng-show="teacherComments.length">Comments from the teacher:
+    {{ teacherComments }}
+    </p>
+
+    <p data-ng-show="data.icans.length">I Can statements:</p>
+    <ul>
+      <li data-ng-repeat="ican in data.icans">
+        {{ ican.statement }}
+      </li>
+    </ul>
+
+    <p data-ng-show="data.referencetext">Reference text:</p>
+    <p>{{ data.referencetext.text  }}</p>
+
+    <p data-ng-show="data.resources.length">External resources:</p>
+    <ul>
+      <li data-ng-repeat="res in data.resources">
+        <a href="{{ res.url }}">{{ res.url }}</a>
+        <br />
+        <span data-ng-show="res.votes">
+        Votes: {{ res.votes }}
+        </span>
+        <span data-ng-show="res.inappropriate_flags">(Flagged as inappropriate {{ res.inappropriate_flags }} times)</span>
+        <div data-ng-show="res.notes.length">
+        Comments from submitter: {{ res.notes }}
+        </div>
+      </li>
+    </ul>
+
+    <p data-ng-show="data.glossitems.length">Glossary items:<br />
+        <button data-ng-click="glossaryFlashcards(data)">Use glossary items as flashcards</button>
+    </p>
+    <ul>
+      <li data-ng-repeat="glossitem in data.glossitems">
+        {{ glossitem.term }}: {{ glossitem.definition }}
+      </li>
+    </ul>
+
+    <p data-ng-show="data.tfitems.length">True/False questions:<br />
+        <button data-ng-click="trueFalseFlashcards(data)">Use T/F items as flashcards</button>
+    </p>
+    <ul>
+      <li data-ng-repeat="tfitem in data.tfitems">
+        {{ tfitem.statement }} ({{ tfitem.answer }})
+      </li>
+    </ul>
+
+    <p data-ng-show="data.mcitems.length">Multiple choice questions:<br />
+      <button data-ng-click="multipleChoiceFlashcards(data)">Use as flashcards</button></p>
+    <ul>
+      <li data-ng-repeat="mcitem in data.mcitems">
+        {{ mcitem.question }}
+        <ol>
+          <li>{{ mcitem.choice1 }}</li>
+          <li>{{ mcitem.choice2 }}</li>
+          <li data-ng-show="mcitem.choice3">{{ mcitem.choice3 }}</li>
+          <li data-ng-show="mcitem.choice4">{{ mcitem.choice4 }}</li>
+          <li data-ng-show="mcitem.choice5">{{ mcitem.choice5 }}</li>
+        </ol>
+        (Correct answer: #{{ mcitem.ans }})
+      </li>
+    </ul>
+</div>
