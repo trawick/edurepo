@@ -210,3 +210,35 @@ div.single-student h2 {
 div.single-student ul {
     list-style-type: none;
 }
+
+.objectiveDescription {
+    display: block;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    font-size: 120%;
+    padding-top: 5px;
+    margin-top: 5px;
+}
+
+.objectiveId {
+    font-weight: bold;
+}
+
+.objectiveFieldName {
+    font-size: 180%;
+}
+
+div.browse-page * .objectiveId {
+    display: none;
+}
+
+.objectiveWarning {
+    font-size: 100%;
+    color: white;
+    background-color: rgba(255, 5, 14, 0.67);
+    width: 40%;
+    margin: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}

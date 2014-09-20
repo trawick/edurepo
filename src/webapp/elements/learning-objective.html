@@ -1,37 +1,22 @@
 <div>
-    <p><strong>{{ learningObjective }}</strong></p>
-    <p>{{ data.description }}</p>
+    <p><span class="objectiveId">{{ learningObjective }}</span></p>
+    <p><span class="objectiveDescription">{{ data.description }}</span></p>
 
-    <p data-ng-show="teacherComments.length">Comments from the teacher:
+    <p data-ng-show="teacherComments.length"><span class="objectiveFieldName">Comments from the teacher:</span>
     {{ teacherComments }}
     </p>
 
-    <p data-ng-show="data.icans.length">I Can statements:</p>
+    <p data-ng-show="data.icans.length"><span class="objectiveFieldName">I Can statements:</span></p>
     <ul>
       <li data-ng-repeat="ican in data.icans">
         {{ ican.statement }}
       </li>
     </ul>
 
-    <p data-ng-show="data.referencetext">Reference text:</p>
+    <p data-ng-show="data.referencetext"><span class="objectiveFieldName">Reference text:</span></p>
     <p>{{ data.referencetext.text  }}</p>
 
-    <p data-ng-show="data.resources.length">External resources:</p>
-    <ul>
-      <li data-ng-repeat="res in data.resources">
-        <a href="{{ res.url }}">{{ res.url }}</a>
-        <br />
-        <span data-ng-show="res.votes">
-        Votes: {{ res.votes }}
-        </span>
-        <span data-ng-show="res.inappropriate_flags">(Flagged as inappropriate {{ res.inappropriate_flags }} times)</span>
-        <div data-ng-show="res.notes.length">
-        Comments from submitter: {{ res.notes }}
-        </div>
-      </li>
-    </ul>
-
-    <p data-ng-show="data.glossitems.length">Glossary items:<br />
+    <p data-ng-show="data.glossitems.length"><span class="objectiveFieldName">Glossary items:</span><br />
         <button data-ng-click="glossaryFlashcards(data)">Use glossary items as flashcards</button>
     </p>
     <ul>
@@ -40,7 +25,7 @@
       </li>
     </ul>
 
-    <p data-ng-show="data.tfitems.length">True/False questions:<br />
+    <p data-ng-show="data.tfitems.length"><span class="objectiveFieldName">True/False questions:</span><br />
         <button data-ng-click="trueFalseFlashcards(data)">Use T/F items as flashcards</button>
     </p>
     <ul>
@@ -49,7 +34,7 @@
       </li>
     </ul>
 
-    <p data-ng-show="data.mcitems.length">Multiple choice questions:<br />
+    <p data-ng-show="data.mcitems.length"><span class="objectiveFieldName">Multiple choice questions:</span><br />
       <button data-ng-click="multipleChoiceFlashcards(data)">Use as flashcards</button></p>
     <ul>
       <li data-ng-repeat="mcitem in data.mcitems">
@@ -64,4 +49,54 @@
         (Correct answer: #{{ mcitem.ans }})
       </li>
     </ul>
+
+    <p data-ng-show="data.resources.length"><span class="objectiveFieldName">Learning resources for this objective:</span></p>
+    <ul>
+      <li data-ng-repeat="res in data.resources">
+
+        <span data-ng-show="res.embed">
+        <div ng-bind-html="toTrusted(res.embed)"></div>
+        </span>
+
+        <a href="{{ res.url }}">
+            <span data-ng-show="res.title">{{ res.title }}</span>
+            <span data-ng-hide="res.title">{{ res.url }}</span>
+        </a>
+
+        <div data-ng-show="res.warning">
+            <p class="objectiveWarning">
+            Warning: {{ res.warning }}
+            </p>
+        </div>
+
+        <div data-ng-show="res.notes">
+            ({{res.notes}})
+        </div>
+
+        <div data-ng-show="res.votes">
+            {{ res.votes }} votes
+            <ul>
+                <li data-ng-repeat="comment in res.upvotes">
+                    {{ comment.comment }}
+                </li>
+            </ul>
+        </div>
+
+        <div data-ng-show="res.inappropriate_flags">
+            Flagged as inappropriate {{ res.inappropriate_flags }} times)
+            <ul>
+                <li data-ng-repeat="comment in res.flags">
+                    {{comment.comment}}
+                </li>
+            </ul>
+        </div>
+        <div>
+            <input type="button" class="btn btn-default btn-mini" value="Up-vote or flag resource..."
+                   data-ng-click="commentOnResource(res.id)" />
+        </div>
+      </li>
+    </ul>
+    <input type="button" class="btn btn-default"
+           value="Add a resource..."
+           data-ng-click="submitResource(learningObjective)" />
 </div>

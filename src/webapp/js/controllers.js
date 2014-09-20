@@ -1,6 +1,6 @@
 var edjectiveApp = angular.module('edjectiveApp', ['ngRoute']);
 
-edjectiveApp.directive('learningObjective', function ($http, $location, Flashcards) {
+edjectiveApp.directive('learningObjective', function ($http, $location, $sce, Flashcards) {
     function initialize($scope, $element, $attrs) {
         $scope.learningObjective = $.trim($attrs.learningObjective);
         if ('assert' in console) {
@@ -74,6 +74,69 @@ edjectiveApp.directive('learningObjective', function ($http, $location, Flashcar
             };
         }
 
+        function saveResourceData(objectiveData) {
+            function annotateResource(resource) {
+                return function(data) {
+                    resource.upvotes = [];
+                    resource.flags = [];
+                    for (var i = 0; i < data.objects.length; i++) {
+                        if (data.objects[i].type == "f") {
+                            resource.flags.push(data.objects[i]);
+                        }
+                        else {
+                            resource.upvotes.push(data.objects[i]);
+                        }
+                    }
+                }
+            }
+
+            return function(data) {
+                objectiveData.resources = data.objects;
+                var is_secure = /^https:/.exec(window.location);
+                var youtube_scheme = is_secure ? "https" : "http";
+                var regex = /youtube.com.*v=(.*)/;
+                if (objectiveData.resources.length == 0) {
+                    objectiveData.no_resources_msg = 'No educational resources have been submitted.';
+                }
+                for (var i = 0; i < objectiveData.resources.length; i++) {
+                    var match = regex.exec(objectiveData.resources[i].url);
+                    if (match) {
+                        objectiveData.resources[i].embed =
+                            '<iframe title="YouTube Video" type="text/html" src="'
+                            + youtube_scheme + '://youtube.com/embed/' + match[1] + '" />';
+                    }
+
+                    if (objectiveData.resources[i].status != 'V') {
+                        objectiveData.resources[i].warning = 'This resource may not be accessible.';
+                    }
+                    else if (objectiveData.resources[i].inappropriate_flags != 0) {
+                        objectiveData.resources[i].warning = 'This resource has been flagged as inappropriate.';
+                    }
+                    else if (objectiveData.resources[i].content_type != 'text/html') {
+                        objectiveData.resources[i].warning = 'This resource might not be viewable in your web browser.';
+                    }
+                    else {
+                        objectiveData.resources[i].warning = '';
+                    }
+                    $http.get(edjectiveAppUrls.getCommentsFromResource(objectiveData.resources[i].id)).success(annotateResource(objectiveData.resources[i]));
+                }
+            };
+        }
+
+        $scope.toTrusted = function(html) {
+            return $sce.trustAsHtml(html);
+        };
+
+        $scope.submitResource = function(objective_id) {
+            window.open(edjectiveAppUrls.getResourceEntryForm(objective_id),
+                        "Resource for " + objective_id);
+        };
+
+        $scope.commentOnResource = function(resource_id) {
+            window.open(edjectiveAppUrls.getResourceCommentForm(resource_id),
+                        "Comment on resource");
+        };
+
         $scope.teacherComments = $attrs.teacherComments; // not part of the objective itself; teacher can add this when scheduling the objective
         $scope.data = {};
 
@@ -83,7 +146,7 @@ edjectiveApp.directive('learningObjective', function ($http, $location, Flashcar
         $http.get(edjectiveAppUrls.getObjective(lo)).success(saveObjectiveData($scope.data, 'description'));
         $http.get(edjectiveAppUrls.getIcansFromObjective(lo)).success(saveObjectiveData($scope.data, 'icans'));
         $http.get(edjectiveAppUrls.getReferenceTextFromObjective(lo)).success(saveObjectiveData($scope.data, 'referencetext'));
-        $http.get(edjectiveAppUrls.getResourcesFromObjective(lo)).success(saveObjectiveData($scope.data, 'resources'));
+        $http.get(edjectiveAppUrls.getResourcesFromObjective(lo)).success(saveResourceData($scope.data));
         $http.get(edjectiveAppUrls.getGlossaryItemsFromObjective(lo)).success(saveObjectiveData($scope.data, 'glossitems'));
         $http.get(edjectiveAppUrls.getTrueFalseItemsFromObjective(lo)).success(saveObjectiveData($scope.data, 'tfitems'));
         $http.get(edjectiveAppUrls.getMultipleChoiceItemsFromObjective(lo)).success(saveObjectiveData($scope.data, 'mcitems'));
@@ -478,28 +541,12 @@ edjectiveApp.controller('ForTeachersCtrl', function ($scope, $http) {
     });
 });
 
-edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routeParams, $sce, CurrentObjectives) {
+edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routeParams, CurrentObjectives) {
     $scope.objective_name = $routeParams.objective;
     $scope.objective = null;
     $scope.all_objectives = CurrentObjectives.get();
     $scope.previous_objective = null;
     $scope.next_objective = null;
-    $scope.resources = null;
-    $scope.no_resources_msg = ''; // No educational resources have been submitted.
-
-    $scope.submitResource = function(objective_id) {
-        window.open(edjectiveAppUrls.getResourceEntryForm(objective_id),
-                    "Resource for " + objective_id);
-    };
-
-    $scope.commentOnResource = function(resource_id) {
-        window.open(edjectiveAppUrls.getResourceCommentForm(resource_id),
-                    "Comment on resource");
-    };
-
-    $scope.toTrusted = function(html) {
-        return $sce.trustAsHtml(html);
-    };
 
     $scope.calcPrevNext = function() {
         for (var i = 0; i < $scope.all_objectives.length; i++) {
@@ -534,55 +581,7 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
                 });
             }
         });
-
-        function annotate_resource(resource) {
-            return function(data) {
-                resource.upvotes = [];
-                resource.flags = [];
-                for (var i = 0; i < data.objects.length; i++) {
-                    if (data.objects[i].type == "f") {
-                        resource.flags.push(data.objects[i]);
-                    }
-                    else {
-                        resource.upvotes.push(data.objects[i]);
-                    }
-                }
-            }
-        }
-
-        $http.get(edjectiveAppUrls.getResourcesFromObjective($scope.objective_name)).success(function(data) {
-            $scope.resources = data.objects;
-            var is_secure = /^https:/.exec(window.location);
-            var youtube_scheme = is_secure ? "https" : "http";
-            var regex = /youtube.com.*v=(.*)/;
-            if ($scope.resources.length == 0) {
-                $scope.no_resources_msg = 'No educational resources have been submitted.';
-            }
-            for (var i = 0; i < $scope.resources.length; i++) {
-                var match = regex.exec($scope.resources[i].url);
-                if (match) {
-                    $scope.resources[i].embed =
-                        '<iframe title="YouTube Video" type="text/html" src="'
-                        + youtube_scheme + '://youtube.com/embed/' + match[1] + '" />';
-                }
-
-                if ($scope.resources[i].status != 'V') {
-                    $scope.resources[i].warning = 'This resource may not be accessible.';
-                }
-                else if ($scope.resources[i].inappropriate_flags != 0) {
-                    $scope.resources[i].warning = 'This resource has been flagged as inappropriate.';
-                }
-                else if ($scope.resources[i].content_type != 'text/html') {
-                    $scope.resources[i].warning = 'This resource might not be viewable in your web browser.';
-                }
-                else {
-                    $scope.resources[i].warning = '';
-                }
-                $http.get(edjectiveAppUrls.getCommentsFromResource($scope.resources[i].id)).success(annotate_resource($scope.resources[i]));
-            }
-        });
     });
-
 });
 
 edjectiveApp.controller('BrowseCtrl', function ($scope, $http, CurrentObjectives) {

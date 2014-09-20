@@ -13,61 +13,8 @@
             <span class="previous-next-objective">next</span>
         </a>
         </span>
-        <span class="objective-list-entry-description">{{objective.description}}</span>
 
         <learning-objective data-learning-objective="{{ objective.id }}"></learning-objective>
     </div>
-
-    <br />
-    <div data-ng-hide="resources">
-        <h2>{{no_resources_msg}}</h2>
-    </div>
-    <div data-ng-show="resources">
-        <h2>Learning resources for this objective:</h2>
-        <ul>
-            <li data-ng-repeat="resource in resources">
-
-                <span data-ng-show="resource.embed">
-                <div ng-bind-html="toTrusted(resource.embed)"></div>
-                </span>
-
-                <a href="{{resource.url}}">
-                    <span data-ng-show="resource.title">{{resource.title}}</span>
-                    <span data-ng-hide="resource.title">{{resource.url}}</span>
-                </a>
-                <div data-ng-show="resource.warning">
-                    <p class="edjective-warning">
-                    Warning: {{resource.warning}}
-                    </p>
-                </div>
-                <div data-ng-show="resource.notes">
-                    ({{resource.notes}})
-                </div>
-                <div data-ng-show="resource.votes">
-                    {{resource.votes}} votes
-                    <ul>
-                        <li data-ng-repeat="comment in resource.upvotes">
-                            {{comment.comment}}
-                        </li>
-                    </ul>
-                </div>
-                <div data-ng-show="resource.inappropriate_flags">
-                    Flagged as inappropriate {{resource.inappropriate_flags}} times
-                    <ul>
-                        <li data-ng-repeat="comment in resource.flags">
-                            {{comment.comment}}
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                <input type="button" class="btn btn-default btn-mini" value="Up-vote or flag resource..."
-                       data-ng-click="commentOnResource(resource.id)">
-                </div>
-            </li>
-        </ul>
-    </div>
-
-    <br />
-    <input type="button" class="btn btn-default" value="Add a resource..." data-ng-click="submitResource(objective.id)">
 
 </div>
