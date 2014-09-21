@@ -11,21 +11,19 @@
                 </button>
             </h2>
 
-            <ul>
-                <li data-ng-repeat="class in student.classes">
-                    <h3>{{ class.className }} (teacher {{ class.teacherEmail}})
-                        <button type="button" class="btn btn-default" data-ng-click="removeClass()">
-                            <span class="glyphicon glyphicon-remove-sign"></span>
-                        </button>
-                    </h3>
-                    <ul>
-                        <li data-ng-repeat="objective in class.objectives track by $index">
-                            {{ objective.date }}
-                            <learning-objective data-learning-objective="{{ objective.name }}"></learning-objective>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+            <div class="studentClass" data-ng-repeat="class in student.classes">
+                <h3>{{ class.className }} (teacher {{ class.teacherEmail}})
+                    <button type="button" class="btn btn-default" data-ng-click="removeClass()">
+                        <span class="glyphicon glyphicon-remove-sign"></span>
+                    </button>
+                </h3>
+                <ul>
+                    <li data-ng-repeat="objective in class.objectives track by $index">
+                        {{ objective.date }}
+                        <learning-objective data-learning-objective="{{ objective.name }}"></learning-objective>
+                    </li>
+                </ul>
+            </div>
 
             <br />
             <p>

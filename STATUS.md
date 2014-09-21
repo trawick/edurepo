@@ -26,7 +26,6 @@ N worst issues in user interface
 9. objective display needs link to browsing of class
 10. MyEdjectives shows objectives in order by date
 11. objective display shows each type of material in its own box
-12. MyEdjectives shows each objective in its own box
 13. MyEdjectives lets range of dates be selected; by default, range is previous school day + this school day + next school day
 14. refresh on flashcard screen should take you to somewhere meaningful
 

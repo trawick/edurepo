@@ -211,6 +211,18 @@ div.single-student ul {
     list-style-type: none;
 }
 
+div.studentClass {
+    background-color: lightblue;
+    margin: 10px;
+    padding: 10px;
+}
+
+div.learningObjectiveBox {
+    background-color: lightyellow;
+    margin: 10px;
+    padding: 10px;
+}
+
 .objectiveDescription {
     display: block;
     font-family: Geneva, Arial, Helvetica, sans-serif;
