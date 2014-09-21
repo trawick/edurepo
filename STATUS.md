@@ -12,20 +12,25 @@ Three worst issues in teacher interface
 2. If no objectives can be found via web lookup, the add-objective-to-calendar form is useless.
 3. when adding class, teacher can't see list of course ids based on current API provider; first determine API provider then proceed to form with list of courses by category?
 
-Three worst issues in demo interface
+N worst issues in user interface
 ====================================
 
-1. Demo teacher/class has objectives that don't have any supporting materials in the repository.
-   * currently adding more materials to a few of the objectives in Alabama Grade 5 Science
+
 2. Errors or delays fetching asynchronously aren't reported well or at all.  The select boxes under Browse shouln't appear until we have something to select.
 3. Ugly; needs to be Bootstrap-ed
-
-Three worst issues for end users
-================================
-
 1. "My Edjectives" needs to allow expansion of current objectives and access to flash cards and other materials
 2. True/False flashcards should indicate the type of question
-3. XXX
+3. Flashcard needs a shuffle feature
+4. objective display needs nicer buttons
+5. objective display should not show objective description if same as objective id
+6. objective display needs to show a calendar
+7. objective display shouldn't show same objective multiple times (if on calendar for multiple days)
+8. objective display needs show/hide for different types of materials
+9. objective display needs link to browsing of class
+10. MyEdjectives shows objectives in order by date
+11. objective display shows each type of material in its own box
+12. MyEdjectives shows each objective in its own box
+13. MyEdjectives lets range of dates be selected; by default, range is previous school day + this school day + next school day
 
 Three worst issues for developers
 =================================
