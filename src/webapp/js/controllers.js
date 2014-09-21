@@ -14,28 +14,30 @@ edjectiveApp.directive('learningObjective', function ($http, $location, $sce, Fl
         $scope.suppressDescription = false;
 
         $scope.trueFalseFlashcards = function (obj) {
-            var flashcards = [];
+            var flashcardData = [];
             for (var i = 0; i < obj.tfitems.length; i++) {
                 var card = [obj.tfitems[i].statement, obj.tfitems[i].answer.toString()];
-                flashcards.push(card);
+                flashcardData.push(card);
             }
+            var flashcards = {'data': flashcardData, 'footer': 'True or false?'};
             $scope.flashcards.set(flashcards);
             $location.path("flashcards");
         };
 
         $scope.glossaryFlashcards = function (obj) {
-            var flashcards = [];
+            var flashcardData = [];
             for (var i = 0; i < obj.glossitems.length; i++) {
                 var item = obj.glossitems[i];
                 var card = [item.term, item.definition];
-                flashcards.push(card);
+                flashcardData.push(card);
             }
+            var flashcards = {'data': flashcardData};
             $scope.flashcards.set(flashcards);
             $location.path("flashcards");
         };
 
         $scope.multipleChoiceFlashcards = function (obj) {
-            var flashcards = [];
+            var flashcardData = [];
             for (var i = 0; i < obj.mcitems.length; i++) {
                 var item = obj.mcitems[i];
                 var ans;
@@ -55,8 +57,9 @@ edjectiveApp.directive('learningObjective', function ($http, $location, $sce, Fl
                     ans = item.choice5;
                 }
                 var card = [item.question, ans];
-                flashcards.push(card);
+                flashcardData.push(card);
             }
+            var flashcards = {'data': flashcardData};
             $scope.flashcards.set(flashcards);
             $location.path("flashcards");
         };
@@ -753,15 +756,16 @@ edjectiveApp.controller('ParentsCtrl', function ($scope, $http, $filter) {
 edjectiveApp.controller('FlashcardCtrl', function ($scope, Flashcards) {
     $scope.flashcards_service = Flashcards;
     $scope.flashcards = $scope.flashcards_service.get();
-    $scope.have_flashcards = $scope.flashcards.length > 0;
+    $scope.flashcardData = $scope.flashcards.data;
+    $scope.have_flashcards = $scope.flashcards.data.length > 0;
     $scope.min = 0;
-    $scope.max = $scope.flashcards.length - 1;
+    $scope.max = $scope.flashcards.data.length - 1;
     $scope.front_back = 0;
     $scope.current = 0;
     $scope.deck_status = '';
 
     $scope.update_status = function() {
-        $scope.deck_status = '' + ($scope.current + 1) + ' of ' + $scope.flashcards.length;
+        $scope.deck_status = '' + ($scope.current + 1) + ' of ' + $scope.flashcards.data.length;
     };
 
     $scope.previousFlashcard = function() {
@@ -788,7 +792,7 @@ edjectiveApp.controller('FlashcardCtrl', function ($scope, Flashcards) {
         }
         $scope.max--;
         $scope.front_back = 0;
-        $scope.have_flashcards = $scope.flashcards.length > 0;
+        $scope.have_flashcards = $scope.flashcards.data.length > 0;
         $scope.update_status();
     };
 

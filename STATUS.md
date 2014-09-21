@@ -18,7 +18,6 @@ N worst issues in user interface
 
 2. Errors or delays fetching asynchronously aren't reported well or at all.  The select boxes under Browse shouln't appear until we have something to select.
 3. Ugly; needs to be Bootstrap-ed
-2. True/False flashcards should indicate the type of question
 3. Flashcard needs a shuffle feature
 4. objective display needs nicer buttons
 6. objective display needs to show a calendar
@@ -29,6 +28,7 @@ N worst issues in user interface
 11. objective display shows each type of material in its own box
 12. MyEdjectives shows each objective in its own box
 13. MyEdjectives lets range of dates be selected; by default, range is previous school day + this school day + next school day
+14. refresh on flashcard screen should take you to somewhere meaningful
 
 Three worst issues for developers
 =================================
