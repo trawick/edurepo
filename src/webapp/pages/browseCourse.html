@@ -1,0 +1,19 @@
+<!-- browse-course -->
+<div>
+    <div data-ng-show="serverUnreachable">
+        <p>{{ serverUnreachable }}</p>
+    </div>
+    <div data-ng-hide="serverUnreachable">
+        <p class="objective-list-entry-id">{{ courseId }}</p>
+        <div data-ng-show="objectives">
+            <ul class="objective-list">
+                <li data-ng-repeat="objective in objectives">
+                    <a href="#/browse/{{ courseId }}/{{ objective.id }}">
+                        <span class="objective-list-entry-id">{{ objective.id }}</span>
+                    </a>
+                    <span class="objective-list-entry-description">{{ objective.description }}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

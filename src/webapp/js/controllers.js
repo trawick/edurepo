@@ -274,9 +274,14 @@ edjectiveApp.config(function($routeProvider) {
         controller: 'MyEdjectivesCtrl'
     })
 
-    .when('/browse/:objective', {
+    .when('/browse/:course/:objective', {
         templateUrl: 'pages/browseObjective.html',
         controller: 'BrowseObjectiveCtrl'
+    })
+
+    .when('/browse/:course', {
+        templateUrl: 'pages/browseCourse.html',
+        controller: 'BrowseCourseCtrl'
     })
 
     .when('/browse', {
@@ -541,7 +546,23 @@ edjectiveApp.controller('ForTeachersCtrl', function ($scope, $http) {
     });
 });
 
+edjectiveApp.controller('BrowseCourseCtrl', function ($http, $scope, $routeParams) {
+    $scope.courseId = $routeParams.course;
+    $scope.serverUnreachable = null;
+    $scope.objectives = null;
+
+    $http.get("resources/config.json").success(function(data) {
+        edjectiveAppUrls.setBase(data['base_api_url']);
+        $http.get(edjectiveAppUrls.getObjectivesFromCourse($scope.courseId)).success(function(data) {
+            $scope.objectives = data.objects;
+        });
+    }).error(function(data) {
+        $scope.serverUnreachable = "The server cannot be reached.";
+    });
+});
+
 edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routeParams, CurrentObjectives) {
+    $scope.courseId = $routeParams.course;
     $scope.objective_name = $routeParams.objective;
     $scope.objective = null;
     $scope.all_objectives = CurrentObjectives.get();
@@ -584,7 +605,7 @@ edjectiveApp.controller('BrowseObjectiveCtrl', function ($scope, $http, $routePa
     });
 });
 
-edjectiveApp.controller('BrowseCtrl', function ($scope, $http, CurrentObjectives) {
+edjectiveApp.controller('BrowseCtrl', function ($scope, $http, $location, CurrentObjectives) {
     $scope.categories = null;
     $scope.selectedCategory = null;
     $scope.courses = null;
@@ -600,14 +621,11 @@ edjectiveApp.controller('BrowseCtrl', function ($scope, $http, CurrentObjectives
         });
     };
 
-    $scope.updateSelectedCourse = function() {
+    $scope.browseCourse = function() {
         if ($scope.selectedCourse == null) {
             return;
         }
-        $http.get(edjectiveAppUrls.getObjectivesFromCourse($scope.selectedCourse.id)).success(function(data) {
-            $scope.objectives = data.objects;
-            CurrentObjectives.set(data.objects);
-        });
+        $location.path('/browse/' + $scope.selectedCourse.id);
     };
 
     // Kick everything off once we retrieve the API configuration.

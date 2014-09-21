@@ -3,13 +3,13 @@
 
     <div data-ng-show="objective">
         <span data-ng-show="previous_objective">
-        <a href="#/browse/{{previous_objective.id}}">
+        <a href="#/browse/{{ courseId }}/{{ previous_objective.id }}">
             <span class="previous-next-objective">previous</span>
         </a>
         </span>
-        <span class="objective-list-entry-id">{{objective.id}}</span>
+        <span class="objective-list-entry-id">{{ objective.id }}</span>
         <span data-ng-show="next_objective">
-        <a href="#/browse/{{next_objective.id}}">
+        <a href="#/browse/{{ courseId }}/{{ next_objective.id }}">
             <span class="previous-next-objective">next</span>
         </a>
         </span>

@@ -5,38 +5,30 @@
         <p>{{serverUnreachable}}</p>
     </div>
     <div data-ng-hide="serverUnreachable">
-    <p>Select course category:</p>
+        <p>Select course category:</p>
 
-    <form>
-        <select data-ng-model="selectedCategory"
-                data-ng-options="category as category.description for category in categories"
-                data-ng-click="updateSelectedCategory()">
-        </select>
-    </form>
+        <form>
+            <select data-ng-model="selectedCategory"
+                    data-ng-options="category as category.description for category in categories"
+                    data-ng-click="updateSelectedCategory()">
+            </select>
+        </form>
 
-    <div data-ng-show="selectedCategory">
-    <p data-ng-hide="courses"><em>This course category does not contain any courses.</em></p>
-    </div>
-    <div data-ng-show="courses">
-    <p>Select course:</p>
+        <div data-ng-show="selectedCategory">
+            <p data-ng-hide="courses"><em>This course category does not contain any courses.</em></p>
+        </div>
+        <div data-ng-show="courses">
+            <p>Select course:</p>
 
-    <form>
-        <select data-ng-model="selectedCourse"
-                data-ng-options="course as course.description for course in courses"
-                data-ng-click="updateSelectedCourse()">
-        </select>
-    </form>
-    </div>
+            <form>
+                <select data-ng-model="selectedCourse"
+                        data-ng-options="course as course.description for course in courses">
+                </select>
+            </form>
+        </div>
 
-    <div data-ng-show="objectives">
-    <ul class="objective-list">
-        <li data-ng-repeat="objective in objectives">
-            <a href="#/browse/{{objective.id}}">
-            <span class="objective-list-entry-id">{{objective.id}}</span>
-            </a>
-            <span class="objective-list-entry-description">{{objective.description}}</span>
-        </li>
-    </ul>
-    </div>
+        <div data-ng-show="selectedCourse">
+            <button data-ng-click="browseCourse()">Browse course</button>
+        </div>
     </div>
 </div>
