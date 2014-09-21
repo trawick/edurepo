@@ -11,6 +11,7 @@ edjectiveApp.directive('learningObjective', function ($http, $location, $sce, Fl
         }
 
         $scope.flashcards = Flashcards;
+        $scope.suppressDescription = false;
 
         $scope.trueFalseFlashcards = function (obj) {
             var flashcards = [];
@@ -64,6 +65,9 @@ edjectiveApp.directive('learningObjective', function ($http, $location, $sce, Fl
             return function(data) {
                 if (fieldName == 'description') {
                     objectiveData[fieldName] = data[fieldName];
+                    if ($scope.learningObjective == data[fieldName]) {
+                        $scope.suppressDescription = true;
+                    }
                 }
                 else if (fieldName == 'referencetext') {
                     objectiveData[fieldName] = data.objects[0];

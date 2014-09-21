@@ -18,11 +18,9 @@ N worst issues in user interface
 
 2. Errors or delays fetching asynchronously aren't reported well or at all.  The select boxes under Browse shouln't appear until we have something to select.
 3. Ugly; needs to be Bootstrap-ed
-1. "My Edjectives" needs to allow expansion of current objectives and access to flash cards and other materials
 2. True/False flashcards should indicate the type of question
 3. Flashcard needs a shuffle feature
 4. objective display needs nicer buttons
-5. objective display should not show objective description if same as objective id
 6. objective display needs to show a calendar
 7. objective display shouldn't show same objective multiple times (if on calendar for multiple days)
 8. objective display needs show/hide for different types of materials

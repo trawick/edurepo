@@ -1,6 +1,8 @@
 <div>
     <p><span class="objectiveId">{{ learningObjective }}</span></p>
-    <p><span class="objectiveDescription">{{ data.description }}</span></p>
+    <p><span class="objectiveDescription" data-ng-hide="suppressDescription">
+        {{ data.description }}
+    </span></p>
 
     <p data-ng-show="teacherComments.length"><span class="objectiveFieldName">Comments from the teacher:</span>
     {{ teacherComments }}
