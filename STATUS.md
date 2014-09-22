@@ -23,7 +23,6 @@ N worst issues in user interface
 9. objective display needs link to browsing of class
 11. objective display shows each type of material in its own box
 13. MyEdjectives lets range of dates be selected; by default, range is previous school day + this school day + next school day
-1. MyEdjectives should display teacher name instead of teacher e-mail
 
 Three worst issues for developers
 =================================

@@ -225,6 +225,9 @@ edjectiveAppUrls['getMultipleChoiceItemsFromObjective'] = function(objective_id)
 edjectiveAppUrls['getTrueFalseItemsFromObjective'] = function(objective_id) {
     return edjectiveAppUrls.base + 'repo/api/true_false_item/?learning_objective__id=' + objective_id;
 };
+edjectiveAppUrls['getTeacherFromEmail'] = function(teacher_email) {
+    return edjectiveAppUrls.base + 'teachers/api/teacher/?email=' + teacher_email;
+};
 edjectiveAppUrls['getClassesFromTeacher'] = function(teacher_email) {
     return edjectiveAppUrls.base + 'teachers/api/teacher_class/?teacher__email=' + teacher_email;
 };
@@ -500,6 +503,12 @@ edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter) {
         };
     }
 
+    function receiveTeacherData(studentNum, classNum) {
+        return function(data) {
+            $scope.studentData[studentNum].classes[classNum].teacherName = data.objects[0].name;
+        }
+    }
+
     $scope.loadDataForClass = function (classData, studentIndex, classIndex) {
         var range = dateRange($filter);
         var url = edjectiveAppUrls['getObjectivesFromTeacherClass'](classData['teacherEmail'],
@@ -507,6 +516,8 @@ edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter) {
             classData['className']);
 
         $http.get(url).success(receiveClassObjectivesFunction(studentIndex, classIndex));
+        url = edjectiveAppUrls['getTeacherFromEmail'](classData['teacherEmail']);
+        $http.get(url).success(receiveTeacherData(studentIndex, classIndex));
     };
 
     $scope.loadData = function () {

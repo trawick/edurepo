@@ -12,7 +12,9 @@
             </h2>
 
             <div class="studentClass" data-ng-repeat="class in student.classes">
-                <h3>{{ class.className }} (teacher {{ class.teacherEmail}})
+                <h3>{{ class.className }} with teacher
+                    <span data-ng-show="class.teacherName">{{ class.teacherName }}</span>
+                    <span data-ng-hide="class.teacherName">{{ class.teacherEmail }}</span>
                     <button type="button" class="btn btn-default" data-ng-click="removeClass()">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
