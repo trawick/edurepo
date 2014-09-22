@@ -477,6 +477,11 @@ edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter) {
 
     function receiveClassObjectivesFunction(studentNum, classNum) {
         return function(data) {
+            // Sort input objectives by date
+            data.objects.sort(function (a, b) {
+                return a.date > b.date;
+            });
+
             $scope.studentData[studentNum].classes[classNum].objectives = [];
             var objectives = $scope.studentData[studentNum].classes[classNum].objectives;
 

@@ -24,7 +24,6 @@ N worst issues in user interface
 7. objective display shouldn't show same objective multiple times (if on calendar for multiple days)
 8. objective display needs show/hide for different types of materials
 9. objective display needs link to browsing of class
-10. MyEdjectives shows objectives in order by date
 11. objective display shows each type of material in its own box
 13. MyEdjectives lets range of dates be selected; by default, range is previous school day + this school day + next school day
 

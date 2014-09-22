@@ -1,11 +1,11 @@
 <div class="my-edjectives-page">
 
-    <h1>Your class activity</h1>
+    <h1>Current class activity</h1>
 
     <div class="existing-students" data-ng-repeat="student in studentData">
 
         <div class="single-student">
-            <h2>Student: {{ student.name }}
+            <h2>{{ student.name }}
                 <button type="button" class="btn btn-default" data-ng-click="removeStudent()">
                     <span class="glyphicon glyphicon-remove-sign"></span>
                 </button>
@@ -19,7 +19,7 @@
                 </h3>
                 <ul>
                     <li data-ng-repeat="objective in class.objectives track by $index">
-                        {{ objective.date }}
+                        {{ objective.date | date:'fullDate' }}
                         <learning-objective data-learning-objective="{{ objective.name }}"></learning-objective>
                     </li>
                 </ul>
