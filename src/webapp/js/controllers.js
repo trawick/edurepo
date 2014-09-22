@@ -485,12 +485,17 @@ edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter) {
             $scope.studentData[studentNum].classes[classNum].objectives = [];
             var objectives = $scope.studentData[studentNum].classes[classNum].objectives;
 
+            var displayed = {};
             for (var i = 0; i < data.objects.length; i++) {
                 var objectiveDate = data.objects[i].date;
                 var objectiveName = data.objects[i].objective;
 
                 objectives.push({'name': objectiveName,
                                  'date': objectiveDate});
+                if (objectiveName in displayed) {
+                    objectives[objectives.length - 1].hide = true;
+                }
+                displayed[objectiveName] = true;
             }
         };
     }

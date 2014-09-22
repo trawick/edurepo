@@ -15,13 +15,11 @@ Three worst issues in teacher interface
 N worst issues in user interface
 ====================================
 
-
 2. Errors or delays fetching asynchronously aren't reported well or at all.  The select boxes under Browse shouln't appear until we have something to select.
 3. Ugly; needs to be Bootstrap-ed
 3. Flashcard needs a shuffle feature
 4. objective display needs nicer buttons
 6. objective display needs to show a calendar
-7. objective display shouldn't show same objective multiple times (if on calendar for multiple days)
 8. objective display needs show/hide for different types of materials
 9. objective display needs link to browsing of class
 11. objective display shows each type of material in its own box

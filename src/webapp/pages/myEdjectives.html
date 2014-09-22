@@ -17,10 +17,21 @@
                         <span class="glyphicon glyphicon-remove-sign"></span>
                     </button>
                 </h3>
+
                 <ul>
                     <li data-ng-repeat="objective in class.objectives track by $index">
-                        {{ objective.date | date:'fullDate' }}
-                        <learning-objective data-learning-objective="{{ objective.name }}"></learning-objective>
+                        <span data-ng-hide="objective.hide">
+                            {{ objective.date | date:'fullDate' }}
+                            <learning-objective data-learning-objective="{{ objective.name }}"></learning-objective>
+                        </span>
+                        <span data-ng-show="objective.hide">
+                            {{ objective.date | date:'fullDate' }}
+
+                            <div class="learningObjectiveBox">
+                                <p><span class="objectiveId">{{ objective.name }}</span></p>
+                                <em>displayed above</em>
+                            </div>
+                        </span>
                     </li>
                 </ul>
             </div>
