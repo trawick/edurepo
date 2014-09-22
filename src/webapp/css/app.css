@@ -200,6 +200,7 @@ div.single-student {
     background-color: lightgreen;
     margin: 10px;
     padding: 10px;
+    border-radius: 10px;
 }
 
 div.single-student h2 {
@@ -215,12 +216,14 @@ div.studentClass {
     background-color: lightblue;
     margin: 10px;
     padding: 10px;
+    border-radius: 10px;
 }
 
 div.learningObjectiveBox {
     background-color: lightyellow;
     margin: 10px;
     padding: 10px;
+    border-radius: 10px;
 }
 
 .objectiveDescription {

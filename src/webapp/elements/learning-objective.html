@@ -4,11 +4,11 @@
         {{ data.description }}
     </span></p>
 
-    <p data-ng-show="teacherComments.length"><span class="objectiveFieldName">Comments from the teacher:</span>
+    <p data-ng-show="teacherComments.length"><span class="objectiveFieldName">Comments from the teacher</span>
     {{ teacherComments }}
     </p>
 
-    <p data-ng-show="data.icans.length"><span class="objectiveFieldName">I Can statements:</span></p>
+    <p data-ng-show="data.icans.length"><span class="objectiveFieldName">I Can statements</span></p>
     <ul>
       <li data-ng-repeat="ican in data.icans">
         {{ ican.statement }}
@@ -18,27 +18,27 @@
     <p data-ng-show="data.referencetext"><span class="objectiveFieldName">Reference text:</span></p>
     <p>{{ data.referencetext.text  }}</p>
 
-    <p data-ng-show="data.glossitems.length"><span class="objectiveFieldName">Glossary items:</span><br />
-        <button data-ng-click="glossaryFlashcards(data)">Use glossary items as flashcards</button>
+    <p data-ng-show="data.glossitems.length"><span class="objectiveFieldName">Glossary items</span>
+        <button data-ng-click="glossaryFlashcards(data)"><span class="glyphicon glyphicon-film"></span></button>
     </p>
-    <ul>
+    <ol>
       <li data-ng-repeat="glossitem in data.glossitems">
         {{ glossitem.term }}: {{ glossitem.definition }}
       </li>
-    </ul>
+    </ol>
 
-    <p data-ng-show="data.tfitems.length"><span class="objectiveFieldName">True/False questions:</span><br />
-        <button data-ng-click="trueFalseFlashcards(data)">Use T/F items as flashcards</button>
+    <p data-ng-show="data.tfitems.length"><span class="objectiveFieldName">True/False questions</span>
+        <button data-ng-click="trueFalseFlashcards(data)"><span class="glyphicon glyphicon-film"></span></button>
     </p>
-    <ul>
+    <ol>
       <li data-ng-repeat="tfitem in data.tfitems">
         {{ tfitem.statement }} ({{ tfitem.answer }})
       </li>
-    </ul>
+    </ol>
 
-    <p data-ng-show="data.mcitems.length"><span class="objectiveFieldName">Multiple choice questions:</span><br />
-      <button data-ng-click="multipleChoiceFlashcards(data)">Use as flashcards</button></p>
-    <ul>
+    <p data-ng-show="data.mcitems.length"><span class="objectiveFieldName">Multiple choice questions:</span>
+      <button data-ng-click="multipleChoiceFlashcards(data)"><span class="glyphicon glyphicon-film"></span></button></p>
+    <ol>
       <li data-ng-repeat="mcitem in data.mcitems">
         {{ mcitem.question }}
         <ol>
@@ -50,9 +50,18 @@
         </ol>
         (Correct answer: #{{ mcitem.ans }})
       </li>
-    </ul>
+    </ol>
 
-    <p data-ng-show="data.resources.length"><span class="objectiveFieldName">Learning resources for this objective:</span></p>
+    <p><span class="objectiveFieldName">Learning resources on other sites</span>
+        <button data-ng-click="submitResource(learningObjective)">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </p>
+
+    <span data-ng-hide="data.resources.length">
+        <p><em>none</em></p>
+    </span>
+    <span data-ng-show="data.resources.length">
     <ul>
       <li data-ng-repeat="res in data.resources">
 
@@ -64,6 +73,11 @@
             <span data-ng-show="res.title">{{ res.title }}</span>
             <span data-ng-hide="res.title">{{ res.url }}</span>
         </a>
+        &nbsp;
+        <button data-ng-click="commentOnResource(res.id)">
+            <span class="glyphicon glyphicon-thumbs-up"></span>
+            <span class="glyphicon glyphicon-thumbs-down"></span>
+        </button>
 
         <div data-ng-show="res.warning">
             <p class="objectiveWarning">
@@ -92,13 +106,7 @@
                 </li>
             </ul>
         </div>
-        <div>
-            <input type="button" class="btn btn-default btn-mini" value="Up-vote or flag resource..."
-                   data-ng-click="commentOnResource(res.id)" />
-        </div>
       </li>
     </ul>
-    <input type="button" class="btn btn-default"
-           value="Add a resource..."
-           data-ng-click="submitResource(learningObjective)" />
+    </span>
 </div>
