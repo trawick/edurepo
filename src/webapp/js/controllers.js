@@ -331,8 +331,7 @@ edjectiveApp.config(function($routeProvider) {
     })
 
     .when('/flashcards', {
-        templateUrl: 'pages/flashcards.html',
-        controller: 'FlashcardCtrl'
+        templateUrl: 'pages/flashcards.html'
     })
 
     .otherwise({redirectTo: '/', controller: 'FrontCtrl'});
@@ -753,9 +752,14 @@ edjectiveApp.controller('ParentsCtrl', function ($scope, $http, $filter) {
     });
 });
 
-edjectiveApp.controller('FlashcardCtrl', function ($scope, Flashcards) {
+edjectiveApp.controller('FlashcardCtrl', function ($location, $scope, Flashcards) {
     $scope.flashcards_service = Flashcards;
     $scope.flashcards = $scope.flashcards_service.get();
+    if (!$scope.flashcards) {
+        $scope.have_flashcards = false;
+        $location.path('/');
+        return;
+    }
     $scope.flashcardData = $scope.flashcards.data;
     $scope.have_flashcards = $scope.flashcards.data.length > 0;
     $scope.min = 0;

@@ -1,39 +1,39 @@
-<!-- browse -->
-    <div class="flashcard-page" data-ng-controller="FlashcardCtrl">
+<!-- flashcards -->
+<div class="flashcard-page" data-ng-controller="FlashcardCtrl">
 
-        <div class="flashcard" data-ng-show="have_flashcards">
-            <div class="flashcard-status"><p>{{ deck_status }}</p></div>
+    <div class="flashcard" data-ng-show="have_flashcards">
+        <div class="flashcard-status"><p>{{ deck_status }}</p></div>
 
-            <div class="flashcard-options">
-                <button type="button" class="btn btn-default btn-lg" data-ng-click="removeFlashcard()">
-                    <span class="glyphicon glyphicon-ok"></span>
-                </button>
-
-            </div>
-
-            <div class="flashcard-text">
-                {{ flashcards.data[current][front_back] }}
-            </div>
-            <div class="flashcard-text" data-ng-show="flashcards.footer && front_back == 0">
-                <br />
-                {{ flashcards.footer }}
-            </div>
-
-            <div class="flashcard-nav">
-                <button type="button" class="btn btn-default btn-lg" data-ng-click="previousFlashcard()">
-                    <span class="glyphicon glyphicon-hand-left"></span>
-                </button>
-                <button type="button" class="btn btn-default btn-lg" data-ng-click="flipFlashcard()">
-                    <span class="glyphicon glyphicon-thumbs-up"></span>
-                </button>
-                <button type="button" class="btn btn-default btn-lg" data-ng-click="nextFlashcard()">
-                    <span class="glyphicon glyphicon-hand-right"></span>
+        <div class="flashcard-options">
+            <button type="button" class="btn btn-default btn-lg" data-ng-click="removeFlashcard()">
+                <span class="glyphicon glyphicon-ok"></span>
             </button>
-            </div>
+
         </div>
 
-        <div class="no-flashcard" data-ng-hide="have_flashcards">
-            <div class="flashcard-text">The deck of cards is empty.</div>
+        <div class="flashcard-text">
+            {{ flashcards.data[current][front_back] }}
+        </div>
+        <div class="flashcard-text" data-ng-show="flashcards.footer && front_back == 0">
+            <br />
+            {{ flashcards.footer }}
         </div>
 
+        <div class="flashcard-nav">
+            <button type="button" class="btn btn-default btn-lg" data-ng-click="previousFlashcard()">
+                <span class="glyphicon glyphicon-hand-left"></span>
+            </button>
+            <button type="button" class="btn btn-default btn-lg" data-ng-click="flipFlashcard()">
+                <span class="glyphicon glyphicon-thumbs-up"></span>
+            </button>
+            <button type="button" class="btn btn-default btn-lg" data-ng-click="nextFlashcard()">
+                <span class="glyphicon glyphicon-hand-right"></span>
+        </button>
+        </div>
     </div>
+
+    <div class="no-flashcard" data-ng-hide="have_flashcards">
+        <div class="flashcard-text">The deck of cards is empty.</div>
+    </div>
+
+</div>
