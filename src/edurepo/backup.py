@@ -35,7 +35,7 @@ def main():
 
     older_files = files[:-10]
     for older_file in older_files:
-        os.remove(older_file)
+        os.remove(older_file[0])
 
 if __name__ == '__main__':
     main()
