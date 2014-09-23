@@ -44,7 +44,6 @@ Possible themes for upcoming stages
 ===================================
 
 * Import Common Core high school math course definitions
-* Improve user interface for resource browsing and commenting
 * Course needs short form of description
 * Add Spanish version of "I Can" statements (from Sonya), with means of retrieval
 * New Django app: Interface for submitting materials for a LO (moves to repo after review/rework by approver)
@@ -53,19 +52,16 @@ Possible themes for upcoming stages
 Bugs of interest
 ================
 
-* Follow updates to requests package to see when we can remove workarounds for issue 2192.
+* Follow updates to requests package to see when we can remove workarounds for issue 2192.  (4.0.1 is now available.)
 * Follow updates to requests package and Python 2.7.next to see when SNI will be supported and what, if any, needs to change in the edurepo code.
 * Teacher forms should validate uniqueness instead of catching it in the view and slipping in an error message (must initialize forms with extra model data that they don't currently have)
-* Improve formatting of resource view
+* Improve formatting of resource view in Django application
 * Minimize data transfer by link validator (e.g., grab just first 4-8K of document)
-* Fix or hide noise from link validator cron job (e.g., invalid characters in some pages)
-* edjective.org issue parsing some resources: Upgrade Python or use external HTML parser or just wait until setting up dedicated server with newer Ubuntu release
 * websnapr or similar for more previews
 * command-line "reference" clients:
   * test these automatically
   * current\_learning\_objectives.py: indicate when the specified class name is invalid
 * Testcases for Angular app
-* Improve interface for submitting resources for a LO
 * might need ASL in source files
 * caching of API calls somewhere
 * individual items have ids for reuse with multiple objectives?  I dunno...  seems to imply performance hit, when instead the materials could be reused by some definitional mechanism
