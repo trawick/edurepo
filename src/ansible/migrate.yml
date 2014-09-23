@@ -9,6 +9,10 @@
       file: >
           dest={{ remote_checkout }}/src/webapp/lib/
           state=absent
+    - name: Clean up Angular distribution
+      file: >
+          dest={{ remote_checkout }}/src/webapp/angular-1.2.13.zip
+          state=absent
     - name: Clean up Bootstrap
       file: >
           dest={{ remote_checkout }}/src/webapp/css/{{ item }}
