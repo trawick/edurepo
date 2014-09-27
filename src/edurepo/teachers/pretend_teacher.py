@@ -1,3 +1,5 @@
+import argparse
+import json
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'edurepo.settings')
 
@@ -34,8 +36,23 @@ def create_pretend_teacher(base_api_url, noisy=True):
         e.save()
         cur_day += datetime.timedelta(days=1)
 
+
+def main():
+    parser = argparse.ArgumentParser()
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('--from-json', type=argparse.FileType('r'), default=None,
+                       help='name of file with JSON-formatted base API URL')
+    group.add_argument('base_api_url', type=str, default=None,
+                       nargs='?',
+                       help='base API URL')
+    args = parser.parse_args()
+
+    if args.from_json:
+        url = json.load(args.from_json)['base_api_url']
+        args.from_json.close()
+    else:
+        url = args.base_api_url
+    create_pretend_teacher(url)
+
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print >> sys.stderr, "one arg required: Base API URL"
-        sys.exit(1)
-    create_pretend_teacher(sys.argv[1])
+    main()
