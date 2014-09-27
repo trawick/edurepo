@@ -8,36 +8,50 @@
     {{ teacherComments }}
     </p>
 
-    <p data-ng-show="data.icans.length"><span class="objectiveFieldName">I Can statements</span></p>
+    <p data-ng-show="data.icans.length">
+        <span class="objectiveFieldName" data-ng-click="clickFieldName($event, data)">I Can statements</span></p>
+    <div class="objectiveFieldContents">
     <ul>
       <li data-ng-repeat="ican in data.icans">
         {{ ican.statement }}
       </li>
     </ul>
+    </div>
 
-    <p data-ng-show="data.referencetext"><span class="objectiveFieldName">Reference text:</span></p>
+    <p data-ng-show="data.referencetext">
+        <span class="objectiveFieldName" data-ng-click="clickFieldName($event, data)">Reference text</span></p>
+    <div class="objectiveFieldContents">
     <p>{{ data.referencetext.text  }}</p>
+    </div>
 
-    <p data-ng-show="data.glossitems.length"><span class="objectiveFieldName">Glossary items</span>
+    <p data-ng-show="data.glossitems.length">
+        <span class="objectiveFieldName" data-ng-click="clickFieldName($event, data)">Glossary items</span>
         <button data-ng-click="glossaryFlashcards(data)"><span class="glyphicon glyphicon-film"></span></button>
     </p>
+    <div class="objectiveFieldContents">
     <ol>
       <li data-ng-repeat="glossitem in data.glossitems">
         {{ glossitem.term }}: {{ glossitem.definition }}
       </li>
     </ol>
+    </div>
 
-    <p data-ng-show="data.tfitems.length"><span class="objectiveFieldName">True/False questions</span>
+    <p data-ng-show="data.tfitems.length">
+        <span class="objectiveFieldName" data-ng-click="clickFieldName($event, data)">True/False questions</span>
         <button data-ng-click="trueFalseFlashcards(data)"><span class="glyphicon glyphicon-film"></span></button>
     </p>
+    <div class="objectiveFieldContents">
     <ol>
       <li data-ng-repeat="tfitem in data.tfitems">
         {{ tfitem.statement }} ({{ tfitem.answer }})
       </li>
     </ol>
+    </div>
 
-    <p data-ng-show="data.mcitems.length"><span class="objectiveFieldName">Multiple choice questions:</span>
+    <p data-ng-show="data.mcitems.length">
+        <span class="objectiveFieldName" data-ng-click="clickFieldName($event, data)">Multiple choice questions</span>
       <button data-ng-click="multipleChoiceFlashcards(data)"><span class="glyphicon glyphicon-film"></span></button></p>
+    <div class="objectiveFieldContents">
     <ol>
       <li data-ng-repeat="mcitem in data.mcitems">
         {{ mcitem.question }}
@@ -51,23 +65,25 @@
         (Correct answer: #{{ mcitem.ans }})
       </li>
     </ol>
+    </div>
 
-    <p><span class="objectiveFieldName">Learning resources on other sites</span>
+    <p>
+        <span class="objectiveFieldName" data-ng-click="clickFieldName($event, data)">Learning resources on other sites</span>
         <button data-ng-click="submitResource(learningObjective)">
             <span class="glyphicon glyphicon-plus"></span>
         </button>
     </p>
-
-    <span data-ng-hide="data.resources.length">
+    <div class="objectiveFieldContents">
+    <div data-ng-hide="data.resources.length">
         <p><em>none</em></p>
-    </span>
-    <span data-ng-show="data.resources.length">
+    </div>
+    <div data-ng-show="data.resources.length">
     <ul>
       <li data-ng-repeat="res in data.resources">
 
-        <span data-ng-show="res.embed">
+        <div data-ng-show="res.embed">
         <div ng-bind-html="toTrusted(res.embed)"></div>
-        </span>
+        </div>
 
         <a href="{{ res.url }}">
             <span data-ng-show="res.title">{{ res.title }}</span>
@@ -106,7 +122,8 @@
                 </li>
             </ul>
         </div>
-      </li>
+    </li>
     </ul>
-    </span>
+    </div>
+    </div>
 </div>

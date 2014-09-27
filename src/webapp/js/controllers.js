@@ -144,6 +144,21 @@ edjectiveApp.directive('learningObjective', function ($http, $location, $sce, Fl
                         "Comment on resource");
         };
 
+        $scope.clickFieldName = function(e, data) {
+            var objectiveField = $(e.target).text();
+            if (! (objectiveField in data)) {
+                data[objectiveField] = 'V';
+            }
+            if (data[objectiveField] == 'V') {
+                $(e.target).parent().next().hide();
+                data[objectiveField] = 'H';
+            }
+            else {
+                $(e.target).parent().next().show();
+                data[objectiveField] = 'V';
+            }
+        };
+
         $scope.teacherComments = $attrs.teacherComments; // not part of the objective itself; teacher can add this when scheduling the objective
         $scope.data = {};
 

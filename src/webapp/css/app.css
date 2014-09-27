@@ -236,10 +236,24 @@ div.learningObjectiveBox {
 
 .objectiveId {
     font-weight: bold;
+    text-shadow: 2px 2px 1px #fff;
+    letter-spacing: 0.15em;
 }
 
 .objectiveFieldName {
     font-size: 180%;
+    background-color: #ec8b68;
+    color: #fff;
+    border-top: 1px solid #fe9772;
+    border-bottom: 1px solid #9f593f;
+    border-radius: 5px;
+    letter-spacing: .05em;
+    text-shadow: 2px 2px 1px #9f593f;
+    padding: 4px 12px 4px 12px;
+}
+
+.objectiveFieldContents {
+    margin-bottom: 20px;
 }
 
 div.browse-page * .objectiveId {

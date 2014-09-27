@@ -16,14 +16,13 @@ N worst issues in user interface
 ====================================
 
 3. Ugly; needs to be pretty
-3. Flashcard needs a shuffle feature
-6. objective display needs to show a calendar
-8. objective display needs show/hide for different types of materials
-9. objective display needs link to browsing of class
-11. objective display shows each type of material in its own box
-13. MyEdjectives lets range of dates be selected; by default, range is previous school day + this school day + next school day
 1. resource upvote/downvote need different views/URLs, and shouldn't let user change the resource
 1. resource submission shouldn't let user change the objective
+3. Flashcard needs a shuffle feature
+13. MyEdjectives lets range of dates be selected; by default, range is previous school day + this school day + next school day
+9. objective display needs link to browsing of class
+6. objective display needs to show a calendar
+11. objective display shows each type of material in its own box
 2. Errors or delays fetching asynchronously aren't reported well or at all.  The select boxes under Browse shouln't appear until we have something to select.
 
 Three worst issues for developers
