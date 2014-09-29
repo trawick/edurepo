@@ -69,9 +69,17 @@
 
     <br />
     <div class="add-a-student">
-        <h2>Add a student</h2>
+        <p id="newStudentButton"><button type="button" class="btn btn-default" id="showNewStudentForm">
+            <span class="glyphicon glyphicon-plus-sign"></span>
+            </button>
+            New Student
+        </p>
+        <div id="newStudentForm">
+            <h4>Add a student</h4>
 
-        <input type="text" id="new-student-name"/>
-        <button data-ng-click="addStudent()">Add</button>
+            <input type="text" id="new-student-name"/>
+            <button data-ng-click="addStudent()">Add</button>
+            <button id="cancelAddStudent">Cancel</button>
+        </div>
     </div>
 </div>

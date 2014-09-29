@@ -548,6 +548,13 @@ edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter) {
     $scope.addStudent = function() {
         var newName = $("#new-student-name").val();
         newName = $.trim(newName);
+        var form = $('#newStudentForm');
+        var button = $('#newStudentButton');
+        if (newName.length == 0) {
+            form.hide();
+            button.show();
+            return;
+        }
         // Make sure student name is unique!
         var result = $.grep($scope.studentData, function(e) { return e.name === newName; });
         if (result.length != 0) {
@@ -557,6 +564,8 @@ edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter) {
         $scope.studentData.push({'name': newName,
                                  'classes': []});
         $scope.saveConfig();
+        form.hide();
+        button.show();
     };
 
     $scope.removeStudent = function() {
@@ -568,6 +577,16 @@ edjectiveApp.controller('MyEdjectivesCtrl', function ($scope, $http, $filter) {
             }
         }
     };
+
+    $('#newStudentForm').hide();
+    $('#showNewStudentForm').on('click', function () {
+        $('#newStudentButton').hide();
+        $('#newStudentForm').show();
+    });
+    $('#cancelAddStudent').on('click', function () {
+        $('#newStudentForm').hide();
+        $('#newStudentButton').show();
+    });
 
     $scope.loadConfig();
 
