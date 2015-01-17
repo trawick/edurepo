@@ -263,7 +263,7 @@ def process(top, purge):
             process_file(doc_file)
 
 
-def start_import(top, mode, purge, spew=None):
+def start_import(top, mode, purge=False, spew=None):
     global perform_import, noisy
 
     if mode == 'import':
@@ -301,7 +301,7 @@ def main():
     mode = args.command[0]
     assert os.path.exists(top)
     assert not (mode == 'check' and args.purge)
-    start_import(top, mode, args.purge)
+    start_import(top, mode, purge=args.purge)
 
 if __name__ == '__main__':
     django.setup()
