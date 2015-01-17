@@ -4,6 +4,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'edurepo.settings')
 import sys
 sys.path.append('.')
 
+import django
 from django.utils.timezone import utc
 from datetime import datetime, timedelta
 from optparse import OptionParser
@@ -51,6 +52,8 @@ def purge_inappropriate_resources(debug):
             print 'Checking %s...' % resource
         print 'Consider purging inappropriate resource %s (%d)' % (resource, resource.inappropriate_flags)
 
+
+django.setup()
 parser = OptionParser()
 parser.add_option("-d", "--debug", dest="debug",
                   action="store_true",

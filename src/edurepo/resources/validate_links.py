@@ -4,6 +4,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'edurepo.settings')
 import sys
 sys.path.append('.')
 
+import django
 from django.utils.timezone import utc
 from datetime import datetime, timedelta
 from optparse import OptionParser
@@ -139,6 +140,7 @@ def re_verify(debug, oldest_valid_success):
                 print "not tested in a while: " + verification.url
             create_verification(debug, verification.url)
 
+django.setup()
 parser = OptionParser()
 parser.add_option("-d", "--debug", dest="debug",
                   action="store_true",

@@ -4,6 +4,8 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'edurepo.settings')
 import sys
 sys.path.append('.')
 
+import django
+
 from repo.models import Course, LearningObjective
 
 
@@ -45,4 +47,5 @@ def process(args):
     return delete_course(course, delete=delete)
 
 if __name__ == '__main__':
+    django.setup()
     sys.exit(process(sys.argv[1:]))

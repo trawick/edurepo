@@ -7,6 +7,7 @@ import sys
 sys.path.append('.')
 
 import datetime
+import django
 from django.contrib.auth.models import User
 from teachers.models import Entry, Teacher, TeacherClass
 
@@ -55,4 +56,5 @@ def main():
     create_pretend_teacher(url)
 
 if __name__ == '__main__':
+    django.setup()
     main()
