@@ -126,7 +126,7 @@ class GlossaryItem(models.Model):
 class TrueFalseItem(models.Model):
     learning_objective = models.ForeignKey(LearningObjective)
     statement = models.CharField(max_length=1024)
-    answer = models.BooleanField()
+    answer = models.BooleanField(default=None)
     language = RepoLanguageField()
 
     def __unicode__(self):
