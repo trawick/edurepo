@@ -2,7 +2,7 @@ beautifulsoup4==4.3.2
 certifi==14.5.14
 coverage==3.7.1
 Django==1.7.3
-django-bootstrap3==3.3.0
+django-bootstrap3==5.0.3
 django-tastypie==0.12.1
 oauthlib==0.7.2
 psycopg2==2.5.4
