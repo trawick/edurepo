@@ -1,4 +1,5 @@
 import argparse
+import django
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'edurepo.settings')
 
@@ -303,4 +304,5 @@ def main():
     start_import(top, mode, args.purge)
 
 if __name__ == '__main__':
+    django.setup()
     sys.exit(main())

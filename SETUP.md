@@ -156,9 +156,8 @@ create a new PostgreSQL user or use an existing one for use by the Django applic
 
 ```
 sudo su - postgres
-  createdb djangoedurepo
-  createuser -P
-    ("n" to last three questions)
+  createdb -E UTF-8 djangoedurepo
+  createuser -P NEWUSER
   psql
     grant all privileges on database djangoedurepo to NEWUSER;
     \q
@@ -212,7 +211,7 @@ When picking up software updates
 
 * pip install -r requirements.txt
 * manage.py collectstatic
-* manage.py syncdb   OR POSSIBLY starting over with new data (below)
+* manage.py migrate   OR POSSIBLY starting over with new data (below)
 
 Testing
 -------
@@ -249,7 +248,7 @@ consider what you need to save and restore.**
 
 ```
 python manage.py sqlclear teachers resources repo | python manage.py dbshell
-python manage.py syncdb
+python manage.py migrate
 python repo/import_xml.py ../../samples/ import
 (edit teachers/fixtures/sample.json to fix URL)
 python manage.py loaddata teachers/fixtures/sample.json

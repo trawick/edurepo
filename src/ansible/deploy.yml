@@ -91,7 +91,7 @@
            requirements={{ remote_checkout }}/src/requirements.txt
     - django_manage: >
           app_path={{ remote_checkout }}/src/edurepo
-          command=syncdb
+          command=migrate
           virtualenv={{ remote_checkout }}/envs/edurepo
     - django_manage: >
           app_path={{ remote_checkout }}/src/edurepo

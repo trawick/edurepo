@@ -2,7 +2,6 @@ from django.core.context_processors import csrf
 from django.db import IntegrityError, transaction
 from django.db.models import F
 from django.shortcuts import render, redirect
-from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from edurepo import settings
 from resources.models import Resource, ResourceSubmission, ResourceVerification
@@ -12,9 +11,10 @@ from teachers.views import get_dashboard_emails
 
 def index(request):
     resource_list = Resource.objects.order_by('id')
-    context = RequestContext(request, {'resource_list': resource_list,
-                                       'dashboard_emails': get_dashboard_emails(request)})
-    return render(request, 'resources/index.html', context)
+    return render(request, 'resources/index.html', {
+        'resource_list': resource_list,
+        'dashboard_emails': get_dashboard_emails(request)
+    })
 
 
 def detail(request, resource_id):
@@ -24,11 +24,12 @@ def detail(request, resource_id):
     except ResourceVerification.DoesNotExist:
         rv = None
     comments = ResourceSubmission.objects.filter(resource=resource).exclude(comment='')
-    context = RequestContext(request, {'resource': resource,
-                                       'comments': comments,
-                                       'verification': rv,
-                                       'dashboard_emails': get_dashboard_emails(request)})
-    return render(request, 'resources/resource.html', context)
+    return render(request, 'resources/resource.html', {
+        'resource': resource,
+        'comments': comments,
+        'verification': rv,
+        'dashboard_emails': get_dashboard_emails(request)
+    })
 
 
 @login_required

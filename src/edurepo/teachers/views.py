@@ -4,7 +4,6 @@ from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.template import RequestContext
 from edurepo import settings
 from teachers.models import Teacher, TeacherClass, Entry
 from teachers.forms import EntryForm, TeacherForm, TeacherClassForm, create_entry_form
@@ -30,18 +29,20 @@ def get_dashboard_emails(request):
 
 def index(request):
     teacher_list = Teacher.objects.order_by('name')
-    context = RequestContext(request, {'teacher_list': teacher_list,
-                                       'dashboard_emails': get_dashboard_emails(request)})
-    return render(request, 'teachers/index.html', context)
+    return render(request, 'teachers/index.html', {
+        'teacher_list': teacher_list,
+        'dashboard_emails': get_dashboard_emails(request)
+    })
 
 
 def detail(request, teacher_email):
     teacher_class_list = TeacherClass.objects.filter(teacher=teacher_email)
     teacher = Teacher.objects.get(email=teacher_email)
-    context = RequestContext(request, {'teacher_class_list': teacher_class_list,
-                                       'teacher': teacher,
-                                       'dashboard_emails': get_dashboard_emails(request)})
-    return render(request, 'teachers/classes.html', context)
+    return render(request, 'teachers/classes.html', {
+        'teacher_class_list': teacher_class_list,
+        'teacher': teacher,
+        'dashboard_emails': get_dashboard_emails(request)
+    })
 
 
 def events(request, teacher_email, class_name):
@@ -53,11 +54,12 @@ def events(request, teacher_email, class_name):
     for e in entry_list:
         e.description = description_for_objective(e.objective, teacher_class.repo_provider)
 
-    context = RequestContext(request, {'entry_list': entry_list,
-                                       'teacher': teacher,
-                                       'class_name': class_name,
-                                       'dashboard_emails': get_dashboard_emails(request)})
-    return render(request, 'teachers/entries.html', context)
+    return render(request, 'teachers/entries.html', {
+        'entry_list': entry_list,
+        'teacher': teacher,
+        'class_name': class_name,
+        'dashboard_emails': get_dashboard_emails(request)
+    })
 
 
 @login_required
@@ -331,13 +333,14 @@ def dashboard(request, teacher_email, teacher_class_id=None, start_of_week=None)
                 cur_day += datetime.timedelta(days=1)
     if teacher_class_list:
         assert selected_class
-    context = RequestContext(request, {'teacher_class_list': teacher_class_list,
-                                       'selected_class': selected_class,
-                                       'day_names': day_names,
-                                       'day_letters': ['M', 'T', 'W', 'R', 'F'],
-                                       'teacher': teacher,
-                                       'dashboard_emails': get_dashboard_emails(request),
-                                       'start_of_week': start_of_week,
-                                       'previous_week_link': previous_week_link,
-                                       'next_week_link': next_week_link})
-    return render(request, 'teachers/dashboard.html', context)
+    return render(request, 'teachers/dashboard.html', {
+        'teacher_class_list': teacher_class_list,
+        'selected_class': selected_class,
+        'day_names': day_names,
+        'day_letters': ['M', 'T', 'W', 'R', 'F'],
+        'teacher': teacher,
+        'dashboard_emails': get_dashboard_emails(request),
+        'start_of_week': start_of_week,
+        'previous_week_link': previous_week_link,
+        'next_week_link': next_week_link
+    })

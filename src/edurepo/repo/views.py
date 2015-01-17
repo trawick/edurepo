@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.template import RequestContext
 from django.contrib.auth import logout as auth_logout
 from edurepo import settings
 from repo.models import Course, ICan, LearningObjective, MultipleChoiceItem, GlossaryItem, ReferenceText, TrueFalseItem
@@ -8,19 +7,21 @@ from teachers.views import get_dashboard_emails
 
 def index(request):
     course_list = Course.objects.order_by('cat__id', 'id')
-    context = RequestContext(request, {'course_list': course_list,
-                                       'dashboard_emails': get_dashboard_emails(request)})
-    return render(request, 'repo/index.html', context)
+    return render(request, 'repo/index.html', {
+        'course_list': course_list,
+        'dashboard_emails': get_dashboard_emails(request)
+    })
 
 
 def detail(request, course_id):
     course = Course.objects.get(id=course_id)
     objective_list = LearningObjective.objects.filter(course=course_id).order_by('id')
-    context = RequestContext(request, {'objective_list': objective_list,
-                                       'course': course,
-                                       'course_id': course_id,
-                                       'dashboard_emails': get_dashboard_emails(request)})
-    return render(request, 'repo/course.html', context)
+    return render(request, 'repo/course.html', {
+        'objective_list': objective_list,
+        'course': course,
+        'course_id': course_id,
+        'dashboard_emails': get_dashboard_emails(request)
+    })
 
 
 def by_objective(request, course_id, objective_id):
@@ -32,16 +33,17 @@ def by_objective(request, course_id, objective_id):
     reference_text = ReferenceText.objects.filter(learning_objective=objective_id)
     if reference_text:
         reference_text = reference_text[0]
-    context = RequestContext(request, {'course_id': course_id,
-                                       'objective': objective,
-                                       'objective_id': objective_id,
-                                       'reference_text': reference_text,
-                                       'glossary_items': glossary_items,
-                                       'ican_items': ican_items,
-                                       'multiple_choice_items': multiple_choice_items,
-                                       'tf_items': tf_items,
-                                       'dashboard_emails': get_dashboard_emails(request)})
-    return render(request, 'repo/objective.html', context)
+    return render(request, 'repo/objective.html', {
+        'course_id': course_id,
+        'objective': objective,
+        'objective_id': objective_id,
+        'reference_text': reference_text,
+        'glossary_items': glossary_items,
+        'ican_items': ican_items,
+        'multiple_choice_items': multiple_choice_items,
+        'tf_items': tf_items,
+        'dashboard_emails': get_dashboard_emails(request)
+    })
 
 
 def logout(request):

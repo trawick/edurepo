@@ -40,8 +40,7 @@ class ResourceSubmission(models.Model):
     )
     type = models.CharField(max_length=1, choices=RS_TYPE_CHOICES, default='c')
     comment = models.CharField(max_length=160, blank=True)
-    when = models.DateTimeField(auto_now_add=True)
-    when.editable = True
+    when = models.DateTimeField(auto_now_add=True, editable=False)
 
     verbs = {'c': 'created', 'v': 'voted on', 'f': 'flagged'}
 
