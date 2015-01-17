@@ -13,6 +13,9 @@ Initial manual setup
 Create an Ubuntu 14.04 Server VM:
 
 * A 32-bit image with 1 CPU and 2GB of RAM is fine.
+* If the host can't resolve its own name, add an entry to `/etc/hosts`.  (This is most likely to happen
+on a test/staging server.)  This will lead to failures in operations where a request uses
+a web API to look up data, but is unable to resolve the address.
 * Using the user id created during installation, create the user `edurepo` to manage edurepo:
 ```
 $ sudo useradd -m edurepo -s /bin/bash

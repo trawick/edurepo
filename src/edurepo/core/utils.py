@@ -62,7 +62,13 @@ def description_for_objective(objective_id, repo_provider):
     except requests.packages.urllib3.exceptions.ProtocolError:
         logger.exception("Error retrieving %s" % url)
         return None
-    json_body = response.json()
+    try:
+        json_body = response.json()
+    except ValueError:
+        logger.error('Failed to parse %d response of type %s as JSON' % (
+            response.status_code, response.headers['content-type']
+        ))
+        raise
     return json_body['description']
 
 
@@ -80,7 +86,13 @@ def objectives_for_course(course_id, repo_provider):
     except requests.packages.urllib3.exceptions.ProtocolError:
         logger.exception('Error retrieving URL %s:' % url)
         return None
-    json_body = response.json()
+    try:
+        json_body = response.json()
+    except ValueError:
+        logger.error('Failed to parse %d response of type %s as JSON' % (
+            response.status_code, response.headers['content-type']
+        ))
+        raise
     results = []
     for o in json_body['objects']:
         results += [(o['id'], o['description'])]
