@@ -29,7 +29,7 @@ Three worst issues for developers
 =================================
 
 1. XXX
-2. need model migration support (instead of using South, upgrade Django to 1.7)
+2. XXX
 3. XXX
 
 Three worst issues for deployers
