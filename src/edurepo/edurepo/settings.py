@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'social.apps.django_app.default',
     'bootstrap3',
+    'django_nose',
     'repo',
     'resources',
     'teachers',
@@ -67,6 +68,8 @@ AUTHENTICATION_BACKENDS = (
     'social.backends.google.GoogleOpenId',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 ROOT_URLCONF = 'edurepo.urls'
 
