@@ -1,7 +1,7 @@
 Three worst overall viability issues
 ====================================
 
-1. lots of improvements needed to "My Edjectives"
+1. lots of improvements needed to "My Edjectives" (see user interface issues below)
 2. no complete course to use as good example (easiest fix: add materials to Alabama Grade 5 Science)
 3. XXX
 
