@@ -30,6 +30,11 @@ DEBUG = config.get('debugging', 'DEBUG') == 'True'
 TEMPLATE_DEBUG = config.get('debugging', 'TEMPLATE_DEBUG') == 'True'
 ALLOWED_HOSTS = [x for x in config.get('deployment', 'ALLOWED_HOSTS') if x != '']
 
+have_google_oauth2 = config.get('auth', 'have_google_oauth2') == 'True'
+if have_google_oauth2:
+    SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config.get('auth', 'OAUTH2_KEY')
+    SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config.get('auth', 'OAUTH2_SECRET')
+
 # Application definition
 
 INSTALLED_APPS = (
@@ -65,7 +70,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    'social.backends.google.GoogleOpenId',
+    'social.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
