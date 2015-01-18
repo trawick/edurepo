@@ -65,3 +65,4 @@ Bugs of interest
 * caching of API calls somewhere
 * individual items have ids for reuse with multiple objectives?  I dunno...  seems to imply performance hit, when instead the materials could be reused by some definitional mechanism
 * no automated test cases for test clients or AngularJS app
+* redirect production http requests to https; too confusing to hit admin over http and get bogus message, and probably want https for other requests anyway
