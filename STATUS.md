@@ -15,15 +15,15 @@ Three worst issues in teacher interface
 N worst issues in user interface
 ====================================
 
-3. Ugly; needs to be pretty
+1. Ugly; needs to be pretty :)
 1. resource upvote/downvote need different views/URLs, and shouldn't let user change the resource
 1. resource submission shouldn't let user change the objective
-3. Flashcard needs a shuffle feature
-13. MyEdjectives lets range of dates be selected; by default, range is previous school day + this school day + next school day
-9. objective display needs link to browsing of class
-6. objective display needs to show a calendar
-11. objective display shows each type of material in its own box
-2. Errors or delays fetching asynchronously aren't reported well or at all.  The select boxes under Browse shouln't appear until we have something to select.
+1. Flashcard needs a shuffle feature
+1. MyEdjectives lets range of dates be selected; by default, range is previous school day + this school day + next school day
+1. objective display needs link to browsing of class
+1. objective display needs to show a calendar
+1. objective display shows each type of material in its own box
+1. Errors or delays fetching asynchronously aren't reported well or at all.  The select boxes under Browse shouln't appear until we have something to select.
 
 Three worst issues for developers
 =================================
@@ -51,6 +51,7 @@ Possible themes for upcoming stages
 Bugs of interest
 ================
 
+* resources/fixtures/sample.json is out of date; meanwhile, the resources should be exportable in a share-able format so that, for example, someone can use the course definition files and set of resources for those objectives with some other system
 * Follow updates to requests package to see when we can remove workarounds for issue 2192.  (4.0.1 is now available.)
 * Follow updates to requests package and Python 2.7.next to see when SNI will be supported and what, if any, needs to change in the edurepo code.
 * Teacher forms should validate uniqueness instead of catching it in the view and slipping in an error message (must initialize forms with extra model data that they don't currently have)
