@@ -28,7 +28,7 @@
                     </ul>
                     {% endif %}
                     {% if not user.is_authenticated %}
-                    <li><a href="{% url 'social:begin' 'google' %}?next={% url 'top.index' %}">Login with a Google account</a></li>
+                    <li><a href="{% url 'social:begin' 'google-oauth2' %}?next={% url 'top.index' %}">Login with a Google account</a></li>
                     {% endif %}
                     {% if user.is_authenticated %}
 
