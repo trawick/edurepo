@@ -27,3 +27,11 @@ PASSWORD=XXX
 DIRECTORY=/var/log/django-edurepo
 # Change this to INFO or WARNING for a production server.
 GLOBAL_LEVEL=DEBUG
+
+[auth]
+# for development:
+have_google_oauth2=False
+# for deployment:  (create in Google developer's console)
+have_google_oauth2=True
+OAUTH2_KEY=xxx
+OAUTH2_SECRET=yyy
