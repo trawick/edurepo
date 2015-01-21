@@ -3,6 +3,7 @@ import gzip
 import os
 import sys
 
+import django
 from django.core.management import call_command
 
 
@@ -13,6 +14,7 @@ def usage():
 
 def main():
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "edurepo.settings")
+    django.setup()
 
     backup_dir = None
     try:
