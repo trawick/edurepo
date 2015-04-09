@@ -1,9 +1,9 @@
 #!/bin/sh
 
-SERVICE_NAME=edurepo-app
-PIDFILE={{ log_dir }}/edurepo.pid
-UWSGI_INI={{ log_dir }}/edurepo.ini
-UWSGI_ENV={{ remote_checkout }}/envs/edurepo
+SERVICE_NAME={{ project_name }}-app
+PIDFILE={{ log_dir }}/{{ project_name }}.pid
+UWSGI_INI={{ log_dir }}/{{ project_name }}.ini
+UWSGI_ENV={{ remote_checkout }}/envs/{{ project_name }}
 
 . ${UWSGI_ENV}/bin/activate
 

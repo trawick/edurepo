@@ -1,0 +1,12 @@
+[uwsgi]
+pidfile = {{ log_dir }}/{{ project_name }}.pid
+daemonize = {{ log_dir }}/{{ project_name }}.log
+scgi-socket = 127.0.0.1:{{ application_port }}
+chdir = {{ django_src }}
+module = {{ project_name }}.wsgi
+master = true
+processes = 1
+threads = 2
+uid = {{ remote_user }}
+gid = {{ remote_user }}
+virtualenv = {{ virtualenv_dir }}
