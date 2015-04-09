@@ -130,6 +130,21 @@
       command: /etc/init.d/apache2 reload
       sudo: yes
       when: use_system_httpd == "yes"
+    - name: Add edurepo-app uWSGI config
+      template: src=edurepo.ini dest={{ log_dir }}/edurepo.ini
+      when: use_system_httpd == "yes"
+    - name: Add edurepo-app init script
+      template: src=edurepo-app dest=/etc/init.d/edurepo-app mode=0751
+      sudo: yes
+      when: use_system_httpd == "yes"
+    - name: Configure run-levels for edurepo-app
+      command: update-rc.d edurepo-app defaults
+      sudo: yes
+      when: use_system_httpd == "yes"
+    - name: Restart edurepo-app
+      action: service name=edurepo-app state=started
+      sudo: yes
+      when: use_system_httpd == "yes"
     - name: Restart custom httpd
       command: '{{ apachectl }} graceful'
       sudo: yes
