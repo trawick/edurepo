@@ -148,6 +148,10 @@
       action: service name={{ project_name }}-app state=started
       sudo: yes
       when: use_system_httpd == "yes"
+    - name: Configure custom httpd
+      template: src={{ local_conf_dir }}/{{ project_name }}-vhost.conf dest=/usr/local/conf/conf.d/
+      sudo: yes
+      when: use_system_httpd == "no"
     - name: Restart custom httpd
       command: '{{ apachectl }} graceful'
       sudo: yes
