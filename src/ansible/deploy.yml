@@ -28,7 +28,6 @@
       sudo: yes
       with_items:
         - apache2
-        - libapache2-mod-wsgi
       when: use_system_httpd == "yes"
     - name: Setup up Postgresql user
       sudo: yes
@@ -118,8 +117,12 @@
       when: nightly_archive != "no"
     - name: Set up pretend teacher immediately, so that the demo works without waiting for the cron job.
       command: "{{ remote_checkout }}/src/edurepo/teachers/pretend_teacher.sh {{canonical_base_url }}ed/"
-    - name: Configure system httpd
-      apache2_module: state=present name=wsgi
+    - name: Configure system httpd to include mod_proxy
+      apache2_module: state=present name=proxy
+      sudo: yes
+      when: use_system_httpd == "yes"
+    - name: Configure system httpd to include mod_proxy_scgi
+      apache2_module: state=present name=proxy_scgi
       sudo: yes
       when: use_system_httpd == "yes"
     - name: Configure system httpd
