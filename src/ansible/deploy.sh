@@ -14,4 +14,4 @@ if test $1 != "prod"; then
 fi
 
 . ~/envs/ansible/bin/activate
-exec ansible-playbook -i $HOME/server-config/$1/edurepo/ansible/hosts deploy.yml
+exec ansible-playbook -i $HOME/server-config/$1/edurepo/ansible-settings deploy.yml

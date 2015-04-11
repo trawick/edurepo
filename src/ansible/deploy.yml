@@ -64,7 +64,7 @@
            version=HEAD
            update=yes
            force=no
-    - template: src={{ local_overlay_dir }}/src/{{ project_name }}/settings.cfg dest={{ django_src }}
+    - template: src={{ base_cfg_dir }}/settings.cfg.j2 dest={{ django_src }}/settings.cfg
     - template: src=config.json.j2 dest={{ remote_checkout }}/src/webapp/resources/config.json
     - file: >
            dest={{ scratch_dir }}
@@ -126,7 +126,7 @@
       sudo: yes
       when: use_system_httpd == "yes"
     - name: Configure system httpd
-      template: src={{ local_conf_dir }}/{{ project_name }}-vhost.conf dest=/etc/apache2/sites-enabled/
+      template: src={{ base_cfg_dir }}/ubuntu-apache24/{{ project_name }}-vhost.conf dest=/etc/apache2/sites-enabled/
       sudo: yes
       when: use_system_httpd == "yes"
     - name: Restart system httpd
@@ -149,7 +149,7 @@
       sudo: yes
       when: use_system_httpd == "yes"
     - name: Configure custom httpd
-      template: src={{ local_conf_dir }}/{{ project_name }}-vhost.conf dest=/usr/local/conf/conf.d/
+      template: src={{ base_cfg_dir }}/custom-apache24/{{ project_name }}-vhost.conf dest=/usr/local/conf/conf.d/
       sudo: yes
       when: use_system_httpd == "no"
     - name: Restart custom httpd
