@@ -15,38 +15,47 @@
         - python-dev
 # The system python-psycopg2 package is used by Ansible; the Django app uses psycopg2 from its virtualenv.
         - python-psycopg2
+
     - name: Install git
       apt: name=git state=latest
       sudo: yes
       when: ansible_distribution_release != "lucid"
+
     - name: Install git
       apt: name=git-core state=latest
       sudo: yes
       when: ansible_distribution_release == "lucid"
+
     - name: Install system httpd
       apt: name={{ item }} state=latest
       sudo: yes
       with_items:
         - apache2
       when: use_system_httpd == "yes"
+
     - name: Setup up Postgresql user
       sudo: yes
       sudo_user: postgres
       postgresql_user: name={{ pg_user }} password={{ pg_password }} role_attr_flags=CREATEDB,NOSUPERUSER
+
     - name: Setup up Postgresql DB
       sudo: yes
       sudo_user: postgres
       postgresql_db: name={{ project_db }}
                      encoding='UTF-8'
+
     - name: Add the logging group
       group: name={{ log_group }} state=present
       sudo: yes
+
     - name: Add managing user to logging group
       user: name={{ remote_user }} groups={{log_group}} append=yes
       sudo: yes
+
     - name: Add daemon user to logging group
       user: name={{ log_dir_owner }} groups={{log_group}} append=yes
       sudo: yes
+
     - name: Create log directory
       file: >
           dest={{ log_dir }}
@@ -55,111 +64,141 @@
           group={{ log_group }}
           state=directory
       sudo: yes
+
     - name: Create archive directory
       file: >
           dest=/home/{{ remote_user }}/backups
           state=directory
+
     - git: repo=git://github.com/trawick/{{ project_name }}.git
            dest={{ remote_checkout }}
            version=HEAD
            update=yes
            force=no
+
     - template: src={{ base_cfg_dir }}/settings.cfg.j2 dest={{ django_src }}/settings.cfg
+
     - template: src=config.json.j2 dest={{ remote_checkout }}/src/webapp/resources/config.json
+
     - file: >
            dest={{ scratch_dir }}
            mode=755
            owner={{ remote_user }}
            group={{ remote_user }}
            state=directory
+
     - file: >
            dest={{ remote_checkout }}/envs
            mode=755
            owner={{ remote_user }}
            group={{ remote_user }}
            state=directory
+
     - name: Create new virtualenv
       command: "{{ virtualenv_binary }} -p {{ python_binary }} --no-site-packages {{ virtualenv_dir }} creates={{ virtualenv_dir }}"
+
     - file: >
            dest={{ static_dir }}
            mode=755
            owner={{ remote_user }}
            group={{ remote_user }}
            state=directory
+
     - pip: virtualenv={{ virtualenv_dir }}
            requirements={{ remote_checkout }}/src/requirements.txt
+
     - django_manage: >
           app_path={{ django_src }}
           command=migrate
           virtualenv={{ virtualenv_dir }}
+
     - django_manage: >
           app_path={{ django_src }}
           command=collectstatic
           virtualenv={{ virtualenv_dir }}
+
     - name: Load repository data from XML
       command: "{{ virtualenv_dir }}/bin/python repo/import_xml.py ../../samples/ import"
       args:
         chdir: "{{ django_src }}"
+
     - name: Skip import of resource data in the future
 # Use this copy command to touch the file so that the timestamp isn't changed each time.
 # That allows us to see the last time the resource data was imported.
       copy: content="" dest={{ remote_checkout }}/data-imported force=no
       notify:
       - load-resource-data
+
     - name: Define server_validation cron job
       cron: name="server_validation" hour="*/2" minute="11" job="{{ django_src }}/resources/server_validation.sh"
+
     - name: Define server_purge cron job
       cron: name="server_purge" hour="1" minute="11" job="{{ django_src }}/resources/server_purge.sh"
+
     - name: Define maintain_pretend_teacher cron job
       cron: name="maintain_pretend_teacher" hour="0" minute="30" job="{{ django_src }}/teachers/pretend_teacher.sh --from-json={{ remote_checkout }}/src/webapp/resources/config.json"
+
     - name: Define nightly_archive cron job
       cron: name="nightly_archive" hour="1" minute="20" job="{{ django_src }}/backup.sh /home/{{ remote_user }}/backups"
       when: nightly_archive != "no"
+
     - name: Set up pretend teacher immediately, so that the demo works without waiting for the cron job.
       command: "{{ django_src }}/teachers/pretend_teacher.sh {{canonical_base_url }}ed/"
+
     - name: Configure system httpd to include mod_proxy
       apache2_module: state=present name=proxy
       sudo: yes
       when: use_system_httpd == "yes" and use_mod_wsgi == "no"
+
     - name: Configure system httpd to include mod_proxy_scgi
       apache2_module: state=present name=proxy_scgi
       sudo: yes
       when: use_system_httpd == "yes" and use_mod_wsgi == "no"
+
     - name: Configure system httpd
       template: src={{ base_cfg_dir }}/ubuntu-apache24/{{ project_name }}-vhost.conf dest=/etc/apache2/sites-enabled/
       sudo: yes
       when: use_system_httpd == "yes"
+
     - name: Restart system httpd
       command: /etc/init.d/apache2 reload
       sudo: yes
       when: use_system_httpd == "yes"
+
     - name: Add application uWSGI config
       template: src=uwsgi-ini.j2 dest={{ log_dir }}/{{ project_name }}.ini
       when: use_mod_wsgi == "no"
+
     - name: Add application init script
       template: src=init-script.j2 dest=/etc/init.d/{{ project_name }}-app mode=0751
       sudo: yes
       when: use_mod_wsgi == "no"
+
     - name: Configure run-levels for application
       command: update-rc.d {{ project_name }}-app defaults
       sudo: yes
       when: use_mod_wsgi == "no"
+
     - name: Restart application
       action: service name={{ project_name }}-app state=started
       sudo: yes
       when: use_mod_wsgi == "no"
+
     - name: Configure custom httpd using mod_wsgi
       template: src={{ base_cfg_dir }}/custom-apache24-wsgi/{{ project_name }}-vhost.conf dest=/usr/local/conf/conf.d/
       sudo: yes
       when: use_system_httpd == "no" and use_mod_wsgi == "yes"
+
     - name: Configure custom httpd using mod_proxy_scgi
       template: src={{ base_cfg_dir }}/custom-apache24-proxy-scgi/{{ project_name }}-vhost.conf dest=/usr/local/conf/conf.d/
       sudo: yes
       when: use_system_httpd == "no" and use_mod_wsgi == "no"
+
     - name: Restart custom httpd
       command: '{{ apachectl }} graceful'
       sudo: yes
       when: use_system_httpd == "no"
+
   handlers:
     - name: load-resource-data
       django_manage: >
