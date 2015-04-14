@@ -17,9 +17,9 @@ STATIC_ROOT={{ static_dir }}
 MOUNTED_AT=/ed
 
 [database]
-NAME={{ edurepo_db }}
-USER={{ edurepo_pg_user }}
-PASSWORD={{ edurepo_pg_password }}
+NAME={{ project_db }}
+USER={{ pg_user }}
+PASSWORD={{ pg_password }}
 
 [logging]
 DIRECTORY={{ log_dir }}

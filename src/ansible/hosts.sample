@@ -14,7 +14,7 @@ local_overlay_dir=XXX
 local_conf_dir=XXX
 
 # Password for Postgresql role edurepo
-edurepo_pg_password=XXX
+pg_password=XXX
 
 #### END OF TYPICAL CONFIGURATION ####
 
@@ -40,5 +40,5 @@ log_dir_owner=www-data
 python_binary=/usr/bin/python
 virtualenv_binary=/usr/bin/virtualenv
 scratch_dir=/home/edurepo/scratch
-edurepo_db=edurepo
-edurepo_pg_user=edurepo
+project_db=edurepo
+pg_user=edurepo
