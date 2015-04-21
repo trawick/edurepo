@@ -2,7 +2,7 @@
 
 SERVICE_NAME={{ project_name }}-app
 PIDFILE={{ log_dir }}/{{ project_name }}.pid
-UWSGI_INI={{ log_dir }}/{{ project_name }}.ini
+UWSGI_INI={{ uwsgi_cfg_dir }}/{{ project_name }}.ini
 UWSGI_ENV={{ virtualenv_dir }}
 
 . ${UWSGI_ENV}/bin/activate

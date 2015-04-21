@@ -165,9 +165,19 @@
       sudo: yes
       when: use_system_httpd == "yes"
 
+    - name: Create uWSGI config directory
+      file: >
+          dest={{ uwsgi_cfg_dir }}
+          mode=755
+          owner=root
+          group=root
+          state=directory
+      sudo: yes
+
     - name: Add application uWSGI config
-      template: src=uwsgi-ini.j2 dest={{ log_dir }}/{{ project_name }}.ini
+      template: src=uwsgi-ini.j2 dest={{ uwsgi_cfg_dir }}/{{ project_name }}.ini
       when: use_mod_wsgi == "no"
+      sudo: yes
       notify: restart application
 
     - name: Add application init script
