@@ -168,18 +168,21 @@
     - name: Add application uWSGI config
       template: src=uwsgi-ini.j2 dest={{ log_dir }}/{{ project_name }}.ini
       when: use_mod_wsgi == "no"
+      notify: restart application
 
     - name: Add application init script
       template: src=init-script.j2 dest=/etc/init.d/{{ project_name }}-app mode=0751
       sudo: yes
       when: use_mod_wsgi == "no"
+      notify: restart application
 
     - name: Configure run-levels for application
       command: update-rc.d {{ project_name }}-app defaults
       sudo: yes
       when: use_mod_wsgi == "no"
+      notify: restart application
 
-    - name: Restart application
+    - name: Run application
       action: service name={{ project_name }}-app state=started
       sudo: yes
       when: use_mod_wsgi == "no"
@@ -206,3 +209,8 @@
           app_path={{ django_src }}
           virtualenv={{ virtualenv_dir }}
           fixtures={{ django_src }}/resources/fixtures/sample.json
+
+    - name: restart application
+      service: name={{ project_name }}-app state=restarted
+      sudo: yes
+      when: use_mod_wsgi == "no"
