@@ -29,17 +29,20 @@ def get_content_type(debug, rsp):
     return fields[0].strip().lower()
 
 
-def create_verification(debug, url):
+def handle_request_error(url, verification):
+    if not verification:
+        verification = ResourceVerification(url=url)
+    verification.last_failure = now()
+    verification.full_clean()
+    verification.save()
+    resources = Resource.objects.filter(url=url)
+    print 'Affected learning objectives:'
+    for r in resources:
+        print r.objective
+    print ''
 
-    def handle_request_error(url):
-        verification = ResourceVerification(url=url,
-                                            last_failure=now())
-        verification.save()
-        resources = Resource.objects.filter(url=url)
-        print 'Affected learning objectives:'
-        for r in resources:
-            print r.objective
-        print ''
+
+def create_or_update_verification(debug, url, verification):
 
     if debug:
         print url
@@ -52,25 +55,25 @@ def create_verification(debug, url):
     except requests.exceptions.ConnectionError:
         print 'Failed now: ' + url
         print sys.exc_info()
-        handle_request_error(url)
+        handle_request_error(url, verification)
         return
     # temporary hack for https://github.com/kennethreitz/requests/issues/2192
     except requests.packages.urllib3.exceptions.ProtocolError:
         print 'Failed now: ' + url
         print sys.exc_info()
-        handle_request_error(url)
+        handle_request_error(url, verification)
         return
     except:
         print 'Failed now: ' + url
         print sys.exc_info()
-        handle_request_error(url)
+        handle_request_error(url, verification)
         return
 
     if response.status_code != 200:
         print 'Failed now with HTTP error code %s: %s' % (response.status_code, url)
         if response.status_code != 404:
             print response.text
-        handle_request_error(url)
+        handle_request_error(url, verification)
         return
 
     ct = get_content_type(debug, response)
@@ -106,10 +109,13 @@ def create_verification(debug, url):
     else:
         title = ''
 
-    verification = ResourceVerification(url=url,
-                                        last_success=now(),
-                                        document_title=title,
-                                        content_type=ct)
+    if not verification:
+        verification = ResourceVerification(url=url)
+
+    verification.last_success = now()
+    verification.document_title = title
+    verification.content_type = ct
+    verification.full_clean()
     verification.save()
 
 
@@ -121,7 +127,7 @@ def verify_all_resources(debug):
             if debug:
                 print verification
         except ResourceVerification.DoesNotExist:
-            create_verification(debug, resource.url)
+            create_or_update_verification(debug, resource.url, None)
 
 
 def re_verify(debug, oldest_valid_success):
@@ -130,15 +136,15 @@ def re_verify(debug, oldest_valid_success):
         if verification.last_success is None:
             if debug:
                 print "never worked: " + verification.url
-            create_verification(debug, verification.url)
+            create_or_update_verification(debug, verification.url, verification)
         elif verification.last_failure and verification.last_failure > verification.last_success:
             if debug:
                 print "most recently failed: " + verification.url
-            create_verification(debug, verification.url)
+            create_or_update_verification(debug, verification.url, verification)
         elif verification.last_success < oldest_valid_success:
             if debug:
                 print "not tested in a while: " + verification.url
-            create_verification(debug, verification.url)
+            create_or_update_verification(debug, verification.url, verification)
 
 django.setup()
 parser = OptionParser()
