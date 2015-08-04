@@ -84,7 +84,7 @@ MOUNTED_AT = config.get('deployment', 'MOUNTED_AT')
 
 LOGIN_URL = MOUNTED_AT + '/login/google/'
 
-SOCIAL_AUTH_LOGIN_URL = '/login/'
+SOCIAL_AUTH_LOGIN_URL = MOUNTED_AT + '/login/'
 # SOCIAL_AUTH_LOGIN_REDIRECT_URL = <TBD>
 # SOCIAL_AUTH_LOGIN_ERROR_URL = <TBD>
 SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
