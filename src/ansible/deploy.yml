@@ -105,6 +105,10 @@
            state=directory
 
     - pip: virtualenv={{ virtualenv_dir }}
+           name=pip
+           version=7.1.2
+
+    - pip: virtualenv={{ virtualenv_dir }}
            requirements={{ remote_checkout }}/src/requirements.txt
 
     - django_manage: >
