@@ -16,6 +16,19 @@ Create an Ubuntu 14.04 Server VM:
 * If the host can't resolve its own name, add an entry to `/etc/hosts`.  (This is most likely to happen
 on a test/staging server.)  This will lead to failures in operations where a request uses
 a web API to look up data, but is unable to resolve the address.
+
+Initial manual user setup:
+
+* Create initial user id (initial_user in hosts file)
+* Give that user sudo access, with no password required
+```
+myusername ALL=(ALL) NOPASSWD: ALL
+```
+(at end of the file)
+* Copy public key of desired ssh key to .ssh/authorized_keys of initial user
+
+Old manual user setup:
+
 * Using the user id created during installation, create the user `edurepo` to manage edurepo:
 ```
 $ sudo useradd -m edurepo -s /bin/bash

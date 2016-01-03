@@ -1,9 +1,46 @@
 ---
 
+- name: Create remote user
+  hosts: webservers
+  remote_user: "{{ initial_user }}"
+  sudo: true
+  tasks:
+    - name: Create remote user really
+      user: name={{ remote_user }} comment="{{ project_name }} user" createhome=yes state=present
+
+    - name: Add authorized key for {{ remote_user }}
+      authorized_key: user={{ remote_user }}
+                      key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+                      state=present
+
+    - name: Add {{ remote_user }} to sudoers
+      lineinfile: >
+          dest=/etc/sudoers
+          regexp='^{{ remote_user }}'
+          line='{{ remote_user }} ALL=(ALL) NOPASSWD: ALL'
+          state=present
+
 - name: Configure and deploy the application code
   hosts: webservers
   remote_user: "{{ remote_user }}"
   tasks:
+    - name: Update apt cache
+      apt: update_cache=yes
+      sudo: yes
+
+    - name: Make sure python-software-properties is installed
+      apt: pkg=python-software-properties state=latest
+      sudo: yes
+
+    - name: Add ppa repo for httpd 2.4.latest
+      apt_repository: repo='ppa:ondrej/apache2/ubuntu'
+      sudo: yes
+      when: use_system_httpd == "yes"
+
+    - name: Update apt cache
+      apt: update_cache=yes
+      sudo: yes
+
     - name: Install packages
       apt: name={{ item }} state=latest
       sudo: yes
@@ -33,7 +70,7 @@
         - apache2
       when: use_system_httpd == "yes"
 
-    - name: Setup up Postgresql user
+    - name: Setup Postgresql user
       sudo: yes
       sudo_user: postgres
       postgresql_user: name={{ pg_user }} password={{ pg_password }} role_attr_flags=CREATEDB,NOSUPERUSER
@@ -72,6 +109,7 @@
 
     - git: repo=git://github.com/trawick/{{ project_name }}.git
            dest={{ remote_checkout }}
+           accept_hostkey=true
            version=HEAD
            update=yes
            force=no
@@ -158,6 +196,21 @@
       apache2_module: state=present name=proxy_scgi
       sudo: yes
       when: use_system_httpd == "yes" and use_mod_wsgi == "no"
+
+    - name: Configure system httpd to include mod_headers
+      apache2_module: state=present name=headers
+      sudo: yes
+      when: use_system_httpd == "yes"
+
+    - name: Configure system httpd to include mod_deflate
+      apache2_module: state=present name=deflate
+      sudo: yes
+      when: use_system_httpd == "yes"
+
+    - name: Configure system httpd to include mod_expires
+      apache2_module: state=present name=expires
+      sudo: yes
+      when: use_system_httpd == "yes"
 
     - name: Configure system httpd
       template: src={{ base_cfg_dir }}/ubuntu-apache24/{{ project_name }}-vhost.conf dest=/etc/apache2/sites-enabled/
