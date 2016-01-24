@@ -1,0 +1,72 @@
+<IfModule ssl_module>
+SSLRandomSeed startup builtin
+SSLRandomSeed connect builtin
+
+SSLProtocol all -SSLv2 -SSLv3
+SSLHonorCipherOrder on
+SSLCipherSuite ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS
+SSLCompression Off
+
+SSLPassPhraseDialog  builtin
+SSLSessionCache        "shmcb:{{ log_dir }}/ssl_scache(512000)"
+SSLSessionCacheTimeout  300
+
+SSLUseStapling On
+SSLStaplingCache "shmcb:{{ log_dir }}/ssl_stapling(8192)"
+
+{% if server_type != "staging" %}
+
+<IfModule cgid_module>
+ScriptAlias /httpd_error_scripts {{ site_checkout }}/deployment/httpd_error_scripts/
+<Directory {{ site_checkout }}/deployment/httpd_error_scripts/>
+    Options +ExecCGI
+    Require all granted
+</Directory>
+</IfModule>
+
+ErrorDocument 403 /httpd_error_scripts/http_403.py
+
+# Require SNI support for all sites on this IP address and port.
+SSLStrictSNIVHostCheck on
+
+# We're using this default web site to explain
+# host mismatch and SNI issues to our users.
+<VirtualHost _default_:443>
+    # The hostname used here should never match.
+    ServerName Emptyhammock:443
+
+    # Force all requests to this site to fail with a 404 status code.
+    RewriteEngine On
+    RewriteRule ^ - [L,R=404]
+
+    # Error message for the clients that do support SNI but that
+    # request a hostname that is not configured on this server.
+    ErrorDocument 404 "<h1>No such site</h1><p>The site you requested does not exist on this server.</p>
+
+    SSLCertificateKeyFile {{ server_key_dir }}/default-self-signed/default-self-signed.key
+    SSLCertificateFile    {{ server_key_dir }}/default-self-signed/default-self-signed.crt
+
+    ErrorLog {{ log_dir }}/default-ssl-vhost.log
+
+</VirtualHost>
+
+{% endif %}
+
+</IfModule>
+
+<VirtualHost _default_:80>
+    # Don't inherit a defaulted server name staging.arewewalkingtomorrow.com,
+    # which would then override the desired SSL vhost for that hostname.
+    ServerName invalid.example.com
+
+    # Force all requests to this site to fail with a 404 status code.
+    RewriteEngine On
+    RewriteRule ^ - [L,R=404]
+
+    # Error message for the clients that request a hostname that is not
+    # configured on this server.
+    ErrorDocument 404 "<h1>No such site</h1><p>The site you requested does not exist on this server.</p>
+
+    LogLevel warn
+    ErrorLog {{ log_dir }}/default-nonssl-vhost.log
+</VirtualHost>

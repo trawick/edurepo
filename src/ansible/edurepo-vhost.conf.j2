@@ -1,0 +1,59 @@
+<VirtualHost *:80>
+    ServerName {{ canonical_server_name }}
+    Redirect permanent / https://{{ canonical_server_name }}/
+</VirtualHost>
+
+<VirtualHost *:443>
+
+    ServerName {{ canonical_server_name }}
+    ServerAdmin trawick@gmail.com
+
+    CustomLog {{ log_dir }}/httpd-access.log common
+    ErrorLog {{ log_dir }}/httpd-errors.log
+    LogLevel {{ httpd_log_level }}
+
+    DocumentRoot {{ remote_checkout }}/src/webapp/
+
+    <Directory />
+        Options FollowSymLinks
+        Require all denied
+        AllowOverride None
+    </Directory>
+
+    <Directory {{ remote_checkout }}/src/webapp/>
+        AllowOverride None
+        Require all granted
+    </Directory>
+
+    Alias /static/ {{ static_dir }}/
+
+    # plain "SetEnv" sets this too late
+    SetEnvIf Request_URI . proxy-scgi-pathinfo
+    # Not needed since not proxying "/":
+    # ProxyPass /robots.txt !
+    # ProxyPass /static/ !
+    # ProxyPass /media/ !
+    ProxyPass /ed/ scgi://127.0.0.1:{{ application_port }}/
+
+    <Directory {{ static_dir }}/>
+        Require all granted
+        # only compress static+public files (see BREACH)
+        SetOutputFilter DEFLATE
+        # if they aren't naturally compressed
+        SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip
+        ExpiresActive On
+        ExpiresDefault "access plus 3 days"
+        Header set Cache-Control public
+    </Directory>
+
+    SSLEngine on
+
+    # SSL protocols/ciphers/etc. inherited from global scope
+
+    Header always set Strict-Transport-Security "max-age=31536000"
+
+    SSLCertificateKeyFile   {{ server_key_dir }}/edjective.org/edjective.key
+    SSLCertificateFile      {{ server_key_dir }}/edjective.org/edjective_org.crt
+    SSLCertificateChainFile {{ server_key_dir }}/edjective.org/all.pem
+
+</VirtualHost>
