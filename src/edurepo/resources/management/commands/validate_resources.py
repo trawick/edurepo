@@ -1,16 +1,13 @@
-import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'edurepo.settings')
-
-import sys
-sys.path.append('.')
-
-import django
-from django.utils.timezone import utc
 from datetime import datetime, timedelta
-from optparse import OptionParser
+from optparse import make_option
+import sys
+
 from bs4 import BeautifulSoup
-from resources.models import Resource, ResourceVerification
+from django.core.management.base import BaseCommand
+from django.utils.timezone import utc
 import requests
+
+from resources.models import Resource, ResourceVerification
 
 
 def now():
@@ -63,7 +60,7 @@ def create_or_update_verification(debug, url, verification):
         print sys.exc_info()
         handle_request_error(url, verification)
         return
-    except:
+    except Exception:
         print 'Failed now: ' + url
         print sys.exc_info()
         handle_request_error(url, verification)
@@ -86,7 +83,7 @@ def create_or_update_verification(debug, url, verification):
         contents = response.text
         try:
             soup = BeautifulSoup(contents)
-        except:
+        except Exception:
             print 'Failed to parse: ' + url
             print sys.exc_info()
             soup = None
@@ -146,18 +143,24 @@ def re_verify(debug, oldest_valid_success):
                 print "not tested in a while: " + verification.url
             create_or_update_verification(debug, verification.url, verification)
 
-django.setup()
-parser = OptionParser()
-parser.add_option("-d", "--debug", dest="debug",
-                  action="store_true",
-                  help="show debug messages")
 
-(options, args) = parser.parse_args()
+class Command(BaseCommand):
+    option_list = BaseCommand.option_list + (
+        make_option(
+            '--debug',
+            action='store_true',
+            dest='debug',
+            default=False,
+            help='Show debug messages',
+        ),
+    )
 
-# First, ensure that all resources have a verification record.
-# Only newly-added resources won't have one.
-verify_all_resources(options.debug)
+    def handle(self, *args, **options):
 
-# Re-verify as necessary
-max_success_age = timedelta(days=12)
-re_verify(options.debug, now() - max_success_age)
+        # First, ensure that all resources have a verification record.
+        # Only newly-added resources won't have one.
+        verify_all_resources(options['debug'])
+
+        # Re-verify as necessary
+        max_success_age = timedelta(days=12)
+        re_verify(options['debug'], now() - max_success_age)
