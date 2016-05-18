@@ -4,14 +4,10 @@ import sys
 
 from bs4 import BeautifulSoup
 from django.core.management.base import BaseCommand
-from django.utils.timezone import utc
+from django.utils.timezone import now
 import requests
 
 from resources.models import Resource, ResourceVerification
-
-
-def now():
-    return datetime.utcnow().replace(tzinfo=utc)
 
 
 def get_content_type(debug, rsp):
