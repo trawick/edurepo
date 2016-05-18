@@ -20,7 +20,7 @@ def purge_unreachable_resources(debug=False, min_success_time=None, purge_strand
                 print ''
                 verification.delete()
             else:
-                print 'Purge stranded verification record %s' % verification
+                print 'Manually purge stranded verification record %s' % verification
             continue
         purge = False
         reason = ''
@@ -32,7 +32,7 @@ def purge_unreachable_resources(debug=False, min_success_time=None, purge_strand
             reason = 'Link did not work recently'
         if purge:
             if resources:
-                print 'Purge resources with URL %s (%s):' % (verification, reason)
+                print 'Manually purge resources with URL %s (%s):' % (verification, reason)
                 for resource in resources:
                     print '  %s' % resource
 
