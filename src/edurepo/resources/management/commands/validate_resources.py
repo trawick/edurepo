@@ -125,7 +125,12 @@ def verify_all_resources(debug):
 
 def re_verify(debug, oldest_valid_success):
     verifications = ResourceVerification.objects.all()
+    one_day_ago = now() - timedelta(days=1)
     for verification in verifications:
+        if verification.last_failure and verification.last_failure > one_day_ago:
+            if debug:
+                print 'Failed in last 24 hours, not checking yet: %s' % verification.url
+            continue
         if verification.last_success is None:
             if debug:
                 print "never worked: " + verification.url
