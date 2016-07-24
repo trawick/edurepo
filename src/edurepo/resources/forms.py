@@ -21,7 +21,9 @@ class ResourceSubmissionForm(forms.ModelForm):
 
     class Meta:
         model = ResourceSubmission
-        fields = ('resource', 'type', 'comment')
+        fields = ('type', 'comment')
         labels = {'comment': _('Optional written comments'),
                   'type': _('Type of comment')}
-        widgets = {'comment': forms.Textarea(attrs={'cols': 80, 'rows': 2})}
+        widgets = {
+            'comment': forms.Textarea(attrs={'cols': 80, 'rows': 2}),
+        }

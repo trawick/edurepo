@@ -5,6 +5,7 @@
     <h1>Comment on a resource</h1>
     <form action="{% url 'resources.views.comment_on_resource' resource_id=resource_id %}" method="post">
         {% csrf_token %}
+        <p>{{ resource_name }}</p>
         {% bootstrap_form form %}
         {% buttons %}
             <button type="submit" class="btn btn-primary">
