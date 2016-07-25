@@ -8,6 +8,7 @@ sys.path.append('.')
 
 from xml.etree.ElementTree import parse
 
+from django.core.exceptions import ObjectDoesNotExist
 
 from repo.models import Course, CourseCategory, LearningObjective, ICan, \
     GlossaryItem, MultipleChoiceItem, ReferenceText, TrueFalseItem
@@ -112,10 +113,15 @@ def import_course_standard(root):
 
             if perform_import:
                 obj = LearningObjective.objects.get(id=objective_id)
-                # Delete reference text if it already exists.
-                for reference_text in obj.referencetext_set.all():
-                    reference_text.delete()
-                obj.referencetext_set.create(text=reference.text)
+                try:
+                    obj.referencetext.delete()
+                except ObjectDoesNotExist:
+                    pass
+                rt = ReferenceText(
+                    text=reference.text,
+                    learning_objective=obj,
+                )
+                rt.save()
 
 
 def import_tf_questions(root):

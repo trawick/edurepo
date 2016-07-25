@@ -1,5 +1,7 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout as auth_logout
+
 from edurepo import settings
 from repo.models import Course, ICan, LearningObjective, MultipleChoiceItem, GlossaryItem, ReferenceText, TrueFalseItem
 from teachers.views import get_dashboard_emails
@@ -30,9 +32,10 @@ def by_objective(request, course_id, objective_id):
     glossary_items = GlossaryItem.objects.filter(learning_objective=objective_id)
     multiple_choice_items = MultipleChoiceItem.objects.filter(learning_objective=objective_id)
     tf_items = TrueFalseItem.objects.filter(learning_objective=objective_id)
-    reference_text = ReferenceText.objects.filter(learning_objective=objective_id)
-    if reference_text:
-        reference_text = reference_text[0]
+    try:
+        reference_text = objective.referencetext
+    except ObjectDoesNotExist:
+        reference_text = None
     return render(request, 'repo/objective.html', {
         'course_id': course_id,
         'objective': objective,

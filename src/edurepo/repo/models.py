@@ -65,7 +65,7 @@ class LearningObjective(models.Model):
 
 
 class ReferenceText(models.Model):
-    learning_objective = models.ForeignKey(LearningObjective, primary_key=True, unique=True)
+    learning_objective = models.OneToOneField(LearningObjective, primary_key=True)
     text = models.CharField(max_length=4000)
     language = RepoLanguageField()
 
