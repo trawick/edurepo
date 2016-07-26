@@ -1,24 +1,24 @@
-beautifulsoup4==4.3.2
+beautifulsoup4==4.5.0
 certifi==14.5.14
-coverage==4.0.3
+coverage==4.1
 Django==1.8.14
 django-bootstrap3==5.0.3
 django-nose==1.4.4
-  nose==1.3.4
+  nose==1.3.7
 django-tastypie==0.13.3
-  python-dateutil==2.4.0
+  python-dateutil==2.5.3
     six==1.10.0
   python-mimeparse==0.1.4
-psycopg2==2.6.1
-python-social-auth==0.2.13
+psycopg2==2.6.2
+python-social-auth==0.2.19
   # requests
-  oauthlib==1.0.3
+  oauthlib==1.1.2
   # six
-  PyJWT==1.4.0
+  PyJWT==1.4.1
   python-openid==2.2.5
-  requests-oauthlib==0.6.0
+  requests-oauthlib==0.6.2
     # requests
     # oauthlib
-pytz==2015.7
-requests==2.9.1
+pytz==2016.6.1
+requests==2.10.0
 uWSGI==2.0.11.2
