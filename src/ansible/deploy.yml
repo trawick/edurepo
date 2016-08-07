@@ -52,6 +52,8 @@
         - python-dev
 # The system python-psycopg2 package is used by Ansible; the Django app uses psycopg2 from its virtualenv.
         - python-psycopg2
+        - rabbitmq-server
+        - supervisor
 
     - name: Install git
       apt: name=git state=latest
@@ -187,6 +189,16 @@
     - name: Set up pretend teacher immediately, so that the demo works without waiting for the cron job.
       command: "{{ django_src }}/teachers/pretend_teacher.sh {{canonical_base_url }}ed/"
 
+    - name: Configure supervisord to run celery worker
+      template: src={{ project_name }}-celery-worker.conf.j2 dest=/etc/supervisor/conf.d/{{ project_name }}-celery-worker.conf
+      sudo: yes
+      notify: restart supervisord
+
+    - name: Configure supervisord to run celery beat
+      template: src={{ project_name }}-celery-beat.conf.j2 dest=/etc/supervisor/conf.d/{{ project_name }}-celery-beat.conf
+      sudo: yes
+      notify: restart supervisord
+
     - name: Configure system httpd to include necessary modules
       apache2_module: state=present name={{ item }}
       sudo: yes
@@ -269,4 +281,8 @@
 
     - name: restart application
       service: name={{ project_name }}-app state=restarted
+      sudo: yes
+
+    - name: restart supervisord
+      service: name=supervisor state=restarted
       sudo: yes

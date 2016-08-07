@@ -1,0 +1,16 @@
+[program:{{ project_name }}-celery-beat]
+command={{ virtualenv_dir }}/bin/celery -A {{ project_name }} beat --schedule=/home/{{ remote_user }}/celerybeat-schedule.db --loglevel=INFO --maxtasksperchild=1 -c 1
+user={{ remote_user }}
+directory={{ remote_checkout }}/src/edurepo
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+stdout_logfile=/tmp/{{ project_name }}-celery-beat.log
+redirect_stderr=true
+stderr_logfile=/tmp/{{ project_name }}-celery-beat.error.log
+startsecs=1
+; Need to wait for currently executing tasks to finish at shutdown.
+; Increase this if you have very long running tasks.
+stopwaitsecs=60
+environment=DJANGO_SETTINGS_MODULE="{{ project_name }}.settings"
