@@ -12,31 +12,15 @@
       authorized_key: user={{ remote_user }}
                       key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
                       state=present
-
     - name: Add {{ remote_user }} to sudoers
-      lineinfile: >
-          dest=/etc/sudoers
-          regexp='^{{ remote_user }}'
-          line='{{ remote_user }} ALL=(ALL) NOPASSWD: ALL'
-          state=present
+      template: >
+          src=sudoers.j2
+          dest="/etc/sudoers.d/{{ remote_user }}"
 
 - name: Configure and deploy the application code
   hosts: webservers
   remote_user: "{{ remote_user }}"
   tasks:
-    - name: Update apt cache
-      apt: update_cache=yes
-      sudo: yes
-
-    - name: Make sure python-software-properties is installed
-      apt: pkg=python-software-properties state=latest
-      sudo: yes
-
-    - name: Add ppa repo for httpd 2.4.latest
-      apt_repository: repo='ppa:ondrej/apache2/ubuntu'
-      sudo: yes
-      when: use_system_httpd == "yes"
-
     - name: Update apt cache
       apt: update_cache=yes
       sudo: yes
@@ -58,19 +42,12 @@
     - name: Install git
       apt: name=git state=latest
       sudo: yes
-      when: ansible_distribution_release != "lucid"
-
-    - name: Install git
-      apt: name=git-core state=latest
-      sudo: yes
-      when: ansible_distribution_release == "lucid"
 
     - name: Install system httpd
       apt: name={{ item }} state=latest
       sudo: yes
       with_items:
         - apache2
-      when: use_system_httpd == "yes"
 
     - name: Setup Postgresql user
       sudo: yes
@@ -146,7 +123,7 @@
 
     - pip: virtualenv={{ virtualenv_dir }}
            name=pip
-           version=7.1.2
+           version=9.0.1
 
     - pip: virtualenv={{ virtualenv_dir }}
            requirements={{ remote_checkout }}/src/requirements.txt
@@ -211,27 +188,27 @@
         - proxy_scgi
         - rewrite
         - ssl
-      when: use_system_httpd == "yes"
+      notify: restart system httpd
 
     - name: Configure system httpd
       template: src=edurepo-vhost.conf.j2 dest=/etc/apache2/sites-enabled/edurepo-vhost.conf
       sudo: yes
-      when: use_system_httpd == "yes"
+      notify: restart system httpd
 
     - name: Configure system httpd SSL and other global settings
       template: src=staging-ssl-common.conf.j2 dest=/etc/apache2/conf-enabled/staging-ssl-common.conf
       sudo: yes
-      when: use_system_httpd == "yes" and server_type == "staging"
+      when: server_type == "staging"
+      notify: restart system httpd
 
     - name: Disable system httpd default site
       command: a2dissite 000-default
       sudo: yes
-      when: use_system_httpd == "yes"
+      notify: restart system httpd
 
-    - name: Restart system httpd
-      command: /etc/init.d/apache2 reload
+    - name: Make sure httpd is started and will run at boot
+      service: name=apache2 state=started enabled=yes
       sudo: yes
-      when: use_system_httpd == "yes"
 
     - name: Create uWSGI config directory
       file: >
@@ -261,16 +238,6 @@
       action: service name={{ project_name }}-app state=started
       sudo: yes
 
-    - name: Configure custom httpd using mod_proxy_scgi
-      template: src=edurepo-vhost.conf.j2 dest=/usr/local/conf/conf.d/edurepo-vhost.conf
-      sudo: yes
-      when: use_system_httpd == "no"
-
-    - name: Restart custom httpd
-      command: '{{ apachectl }} graceful'
-      sudo: yes
-      when: use_system_httpd == "no"
-
   handlers:
     - name: load-resource-data
       django_manage: >
@@ -286,3 +253,8 @@
     - name: restart supervisord
       service: name=supervisor state=restarted
       sudo: yes
+
+    - name: restart system httpd
+      service: name=apache2 state=restarted
+      sudo: yes
+ 

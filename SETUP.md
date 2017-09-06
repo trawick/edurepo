@@ -10,7 +10,7 @@ Initial manual setup
 
 ### VM
 
-Create an Ubuntu 14.04 Server VM:
+Create an Ubuntu 16.04 Server VM:
 
 * A 32-bit image with 1 CPU and 2GB of RAM is fine.
 * If the host can't resolve its own name, add an entry to `/etc/hosts`.  (This is most likely to happen
@@ -20,11 +20,10 @@ a web API to look up data, but is unable to resolve the address.
 Initial manual user setup:
 
 * Create initial user id (initial_user in hosts file)
-* Give that user sudo access, with no password required
+* Give that user sudo access, with no password required by creating file ``myusername`` in /etc/sudoers.d
 ```
 myusername ALL=(ALL) NOPASSWD: ALL
 ```
-(at end of the file)
 * Copy public key of desired ssh key to .ssh/authorized_keys of initial user
 * create directory $HOME/server_keys/edjective.org/ and copy .key, .crt, and all.pem there
 
