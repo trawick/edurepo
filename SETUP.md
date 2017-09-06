@@ -27,7 +27,6 @@ myusername ALL=(ALL) NOPASSWD: ALL
 * Copy public key of desired ssh key to .ssh/authorized_keys of initial user
 * create directory $HOME/server_keys/edjective.org/ and copy .key, .crt, and all.pem there
 
-
 Old manual user setup:
 
 * Using the user id created during installation, create the user `edurepo` to manage edurepo:
