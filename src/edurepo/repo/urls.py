@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from repo import views
 from repo.api import CourseResource, CourseCategoryResource, GlossaryItemResource, ICanResource, \
     LearningObjectiveResource, MultipleChoiceItemResource, ReferenceTextResource, TrueFalseItemResource

@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from teachers import views
 from teachers.api import TeacherClassResource, TeacherResource, EntryResource
 
