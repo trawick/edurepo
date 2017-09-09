@@ -1,4 +1,4 @@
-from django.core.context_processors import csrf
+from django.template.context_processors import csrf
 from django.db import IntegrityError, transaction
 from django.db.models import F
 from django.shortcuts import render, redirect

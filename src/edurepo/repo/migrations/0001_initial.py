@@ -89,7 +89,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='ReferenceText',
             fields=[
-                ('learning_objective', models.ForeignKey(primary_key=True, serialize=False, to='repo.LearningObjective', unique=True)),
+                ('learning_objective', models.ForeignKey(primary_key=True, serialize=False, to='repo.LearningObjective', unique=True, on_delete=models.CASCADE)),
                 ('text', models.CharField(max_length=4000)),
                 ('language', repo.models.RepoLanguageField(default=b'en', max_length=8, blank=True, choices=[(b'en', b'English'), (b'es', b'Spanish')])),
             ],
@@ -104,7 +104,7 @@ class Migration(migrations.Migration):
                 ('statement', models.CharField(max_length=1024)),
                 ('answer', models.BooleanField(default=None)),
                 ('language', repo.models.RepoLanguageField(default=b'en', max_length=8, blank=True, choices=[(b'en', b'English'), (b'es', b'Spanish')])),
-                ('learning_objective', models.ForeignKey(to='repo.LearningObjective')),
+                ('learning_objective', models.ForeignKey(to='repo.LearningObjective', on_delete=models.CASCADE)),
             ],
             options={
             },
@@ -113,25 +113,25 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='multiplechoiceitem',
             name='learning_objective',
-            field=models.ForeignKey(to='repo.LearningObjective'),
+            field=models.ForeignKey(to='repo.LearningObjective', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='learningobjective',
             name='course',
-            field=models.ForeignKey(to='repo.Course'),
+            field=models.ForeignKey(to='repo.Course', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='ican',
             name='learning_objective',
-            field=models.ForeignKey(to='repo.LearningObjective'),
+            field=models.ForeignKey(to='repo.LearningObjective', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='glossaryitem',
             name='learning_objective',
-            field=models.ForeignKey(to='repo.LearningObjective'),
+            field=models.ForeignKey(to='repo.LearningObjective', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterUniqueTogether(
@@ -141,7 +141,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='course',
             name='cat',
-            field=models.ForeignKey(to='repo.CourseCategory'),
+            field=models.ForeignKey(to='repo.CourseCategory', on_delete=models.CASCADE),
             preserve_default=True,
         ),
     ]

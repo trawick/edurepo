@@ -17,7 +17,7 @@ class Teacher(models.Model):
     email = models.EmailField(primary_key=True, unique=True)
     # Why doesn't user have to be unique?  Same teacher with different
     # contact e-mails for different classes...
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
 
     def __unicode__(self):
@@ -27,7 +27,7 @@ class Teacher(models.Model):
 class TeacherClass(models.Model):
     name = models.CharField(max_length=100)  # how this teacher refers to the class
     course_id = models.CharField(max_length=30)  # the short name of the standard class in the repo
-    teacher = models.ForeignKey(Teacher)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     # A default for this is provided in the add_class form
     repo_provider = models.CharField(max_length=250)
 
@@ -65,8 +65,8 @@ class TeacherClass(models.Model):
 
 
 class Entry(models.Model):
-    teacher = models.ForeignKey(Teacher)
-    teacher_class = models.ForeignKey(TeacherClass)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    teacher_class = models.ForeignKey(TeacherClass, on_delete=models.CASCADE)
     date = models.DateField(blank=False)
     objective = models.CharField(max_length=40)
     comments = models.CharField(max_length=300, blank=True)

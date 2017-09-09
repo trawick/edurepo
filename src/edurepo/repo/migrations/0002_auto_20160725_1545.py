@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='referencetext',
             name='learning_objective',
-            field=models.OneToOneField(primary_key=True, serialize=False, to='repo.LearningObjective'),
+            field=models.OneToOneField(primary_key=True, serialize=False, to='repo.LearningObjective', on_delete=models.CASCADE),
         ),
     ]

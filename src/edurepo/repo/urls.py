@@ -12,16 +12,16 @@ multiple_choice_item_resource = MultipleChoiceItemResource()
 reference_text_resource = ReferenceTextResource()
 true_false_item_resource = TrueFalseItemResource()
 
-urlpatterns = patterns('',
-                       url(r'^$', views.index, name='repo.index'),
-                       (r'^api/', include(course_resource.urls)),
-                       (r'^api/', include(course_category_resource.urls)),
-                       (r'^api/', include(glossary_item_resource.urls)),
-                       (r'^api/', include(ican_resource.urls)),
-                       (r'^api/', include(multiple_choice_item_resource.urls)),
-                       (r'^api/', include(objective_resource.urls)),
-                       (r'^api/', include(reference_text_resource.urls)),
-                       (r'^api/', include(true_false_item_resource.urls)),
-                       url(r'^(?P<course_id>[^/]+)/$', views.detail, name='detail'),
-                       url(r'^(?P<course_id>[^/]+)/(?P<objective_id>[^/]+)/$', views.by_objective, name='objective'),
-                       )
+urlpatterns = [
+    url(r'^$', views.index, name='repo.index'),
+    url(r'^api/', include(course_resource.urls)),
+    url(r'^api/', include(course_category_resource.urls)),
+    url(r'^api/', include(glossary_item_resource.urls)),
+    url(r'^api/', include(ican_resource.urls)),
+    url(r'^api/', include(multiple_choice_item_resource.urls)),
+    url(r'^api/', include(objective_resource.urls)),
+    url(r'^api/', include(reference_text_resource.urls)),
+    url(r'^api/', include(true_false_item_resource.urls)),
+    url(r'^(?P<course_id>[^/]+)/$', views.detail, name='detail'),
+    url(r'^(?P<course_id>[^/]+)/(?P<objective_id>[^/]+)/$', views.by_objective, name='objective'),
+]

@@ -44,7 +44,7 @@ class Course(models.Model):
     id_desc = 'Course ids may contain only letters, numbers, and hyphens.'
     id = models.CharField(max_length=30, primary_key=True, unique=True,
                           validators=[RegexValidator(regex=id_regex, message=id_desc)])
-    cat = models.ForeignKey(CourseCategory)
+    cat = models.ForeignKey(CourseCategory, on_delete=models.CASCADE)
     description = models.CharField(max_length=4000)
     language = RepoLanguageField()
 
@@ -56,7 +56,7 @@ class LearningObjective(models.Model):
     id_desc = 'Learning objective ids may contain only letters, numbers, hyphens, and periods.'
     id = models.CharField(max_length=40, primary_key=True, unique=True,
                           validators=[RegexValidator(regex=objective_id_regex, message=id_desc)])
-    course = models.ForeignKey(Course)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
     description = models.CharField(max_length=4096)
     language = RepoLanguageField()
 
@@ -65,7 +65,7 @@ class LearningObjective(models.Model):
 
 
 class ReferenceText(models.Model):
-    learning_objective = models.OneToOneField(LearningObjective, primary_key=True)
+    learning_objective = models.OneToOneField(LearningObjective, primary_key=True, on_delete=models.CASCADE)
     text = models.CharField(max_length=4000)
     language = RepoLanguageField()
 
@@ -74,7 +74,7 @@ class ReferenceText(models.Model):
 
 
 class ICan(models.Model):
-    learning_objective = models.ForeignKey(LearningObjective)
+    learning_objective = models.ForeignKey(LearningObjective, on_delete=models.CASCADE)
     statement = models.CharField(max_length=200)
     language = RepoLanguageField()
 
@@ -83,7 +83,7 @@ class ICan(models.Model):
 
 
 class MultipleChoiceItem(models.Model):
-    learning_objective = models.ForeignKey(LearningObjective)
+    learning_objective = models.ForeignKey(LearningObjective, on_delete=models.CASCADE)
     question = models.CharField(max_length=400)
     language = RepoLanguageField()
     choice1 = models.CharField(max_length=200)
@@ -112,7 +112,7 @@ class MultipleChoiceItem(models.Model):
 
 class GlossaryItem(models.Model):
     term = models.CharField(max_length=60)
-    learning_objective = models.ForeignKey(LearningObjective)
+    learning_objective = models.ForeignKey(LearningObjective, on_delete=models.CASCADE)
     definition = models.CharField(max_length=4096)
     language = RepoLanguageField()
 
@@ -124,7 +124,7 @@ class GlossaryItem(models.Model):
 
 
 class TrueFalseItem(models.Model):
-    learning_objective = models.ForeignKey(LearningObjective)
+    learning_objective = models.ForeignKey(LearningObjective, on_delete=models.CASCADE)
     statement = models.CharField(max_length=1024)
     answer = models.BooleanField(default=None)
     language = RepoLanguageField()

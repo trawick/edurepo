@@ -27,7 +27,6 @@ SECRET_KEY = config.get('secret', 'key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config.get('debugging', 'DEBUG') == 'True'
-TEMPLATE_DEBUG = config.get('debugging', 'TEMPLATE_DEBUG') == 'True'
 ALLOWED_HOSTS = [x for x in config.get('deployment', 'ALLOWED_HOSTS') if x != '']
 
 have_google_oauth2 = config.get('auth', 'have_google_oauth2') == 'True'
@@ -59,15 +58,28 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'social.apps.django_app.context_processors.backends',
-    'social.apps.django_app.context_processors.login_redirect',
-    'django.contrib.auth.context_processors.auth',
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
+                'django.contrib.auth.context_processors.auth',
+            ],
+            'debug': config.get('debugging', 'TEMPLATE_DEBUG') == 'True',
+        },
+    },
+]
 
 AUTHENTICATION_BACKENDS = (
     'social.backends.google.GoogleOAuth2',
@@ -133,8 +145,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
-TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
-
 LOG_DIRECTORY = config.get('logging', 'DIRECTORY')
 GLOBAL_LOG_LEVEL = config.get('logging', 'GLOBAL_LEVEL')
 
@@ -148,6 +158,7 @@ def group_writable_file_handler(filename, mode='a', encoding=None):
         os_mode = os.stat(filename).st_mode
         os.chmod(filename, os_mode | stat.S_IWGRP)
     return logging.FileHandler(filename, mode, encoding)
+
 
 LOGGING = {
     'version': 1,

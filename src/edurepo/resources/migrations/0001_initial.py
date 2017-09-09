@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('url', models.URLField(validators=[resources.models.validate_resource_url])),
                 ('notes', models.CharField(max_length=1000, blank=True)),
                 ('when_added', models.DateTimeField(auto_now_add=True)),
-                ('objective', models.ForeignKey(to='repo.LearningObjective')),
+                ('objective', models.ForeignKey(to='repo.LearningObjective', on_delete=models.CASCADE)),
             ],
             options={
             },
@@ -36,8 +36,8 @@ class Migration(migrations.Migration):
                 ('type', models.CharField(default=b'c', max_length=1, choices=[(b'c', b'Creator'), (b'v', b'Voter'), (b'f', b'Flagger')])),
                 ('comment', models.CharField(max_length=160, blank=True)),
                 ('when', models.DateTimeField(auto_now_add=True)),
-                ('resource', models.ForeignKey(to='resources.Resource')),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('resource', models.ForeignKey(to='resources.Resource', on_delete=models.CASCADE)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
             options={
             },

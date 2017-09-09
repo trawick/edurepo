@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('email', models.EmailField(max_length=75, unique=True, serialize=False, primary_key=True)),
                 ('name', models.CharField(max_length=100)),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
             options={
             },
@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=100)),
                 ('course_id', models.CharField(max_length=30)),
                 ('repo_provider', models.CharField(max_length=250)),
-                ('teacher', models.ForeignKey(to='teachers.Teacher')),
+                ('teacher', models.ForeignKey(to='teachers.Teacher', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name_plural': 'classes',
@@ -57,13 +57,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='entry',
             name='teacher',
-            field=models.ForeignKey(to='teachers.Teacher'),
+            field=models.ForeignKey(to='teachers.Teacher', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='entry',
             name='teacher_class',
-            field=models.ForeignKey(to='teachers.TeacherClass'),
+            field=models.ForeignKey(to='teachers.TeacherClass', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterUniqueTogether(

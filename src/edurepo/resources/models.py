@@ -16,7 +16,7 @@ def validate_resource_url(u):
 
 
 class Resource(models.Model):
-    objective = models.ForeignKey(LearningObjective)
+    objective = models.ForeignKey(LearningObjective, on_delete=models.CASCADE)
     votes = models.IntegerField(default=0)
     inappropriate_flags = models.IntegerField(default=0)
     url = models.URLField(validators=[validate_resource_url])
@@ -31,8 +31,8 @@ class Resource(models.Model):
 
 
 class ResourceSubmission(models.Model):
-    user = models.ForeignKey(User)
-    resource = models.ForeignKey(Resource)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
     RS_TYPE_CHOICES = (
         ('c', 'Creator'),
         ('v', 'Voter'),
