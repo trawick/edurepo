@@ -1,6 +1,6 @@
 ---
 
-- name: Create remote user
+- name: Create remote users
   hosts: webservers
   remote_user: "{{ initial_user }}"
   sudo: true
@@ -12,10 +12,35 @@
       authorized_key: user={{ remote_user }}
                       key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
                       state=present
+
     - name: Add {{ remote_user }} to sudoers
       template: >
           src=sudoers.j2
           dest="/etc/sudoers.d/{{ remote_user }}"
+      vars:
+          sudoer_user: "{{ remote_user }}"
+
+    - name: Add authorized key for {{ certbot_auto_renew_user }}
+      authorized_key: user={{ certbot_auto_renew_user }}
+                      key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+                      state=present
+
+    - name: Create certbot user
+      user: name={{ certbot_auto_renew_user }} comment="certbot renewer" createhome=yes state=present
+
+    - name: Add {{ certbot_auto_renew_user }} to sudoers
+      template: >
+          src=sudoers.j2
+          dest="/etc/sudoers.d/{{ certbot_auto_renew_user }}"
+      vars:
+          sudoer_user: "{{ certbot_auto_renew_user }}"
+
+- name: Set up Let's Encrypt
+  hosts: webservers
+  remote_user: "{{ remote_user }}"
+  sudo: true
+  roles:
+    - geerlingguy.certbot
 
 - name: Configure and deploy the application code
   hosts: webservers

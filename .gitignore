@@ -4,6 +4,7 @@
 db.sqlite3
 README.html
 src/ansible/deploy.retry
+src/ansible/roles/
 src/edurepo/.idea/
 src/webapp/css/bootstrap*.css
 src/webapp/lib/angular

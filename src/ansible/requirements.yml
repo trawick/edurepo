@@ -1,0 +1,3 @@
+---
+- src: geerlingguy.certbot
+  version: 2.0.0

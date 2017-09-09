@@ -52,8 +52,13 @@
 
     Header always set Strict-Transport-Security "max-age=31536000"
 
+    {% if use_lets_encrypt %}
+    SSLCertificateKeyFile /etc/letsencrypt/live/{{ canonical_server_name }}/privkey.pem
+    SSLCertificateFile    /etc/letsencrypt/live/{{ canonical_server_name }}/fullchain.pem
+    {% else %}
     SSLCertificateKeyFile   {{ server_key_dir }}/edjective.org/edjective.key
     SSLCertificateFile      {{ server_key_dir }}/edjective.org/edjective_org.crt
     SSLCertificateChainFile {{ server_key_dir }}/edjective.org/all.pem
+    {% endif %}
 
 </VirtualHost>

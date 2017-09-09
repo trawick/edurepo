@@ -19,4 +19,4 @@ if test $SERVER != "prod"; then
 fi
 
 . ~/envs/ansible/bin/activate
-exec ansible-playbook $* -i $HOME/server-config/${SERVER}/${PROJECT}/ansible-settings deploy.yml
+exec ansible-playbook $* -i $HOME/server-config/${SERVER}/${PROJECT}/ansible-settings -e @global.yml deploy.yml

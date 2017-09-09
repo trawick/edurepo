@@ -1,7 +1,7 @@
 BASICALLY BROKEN
 ================
 
-1. Bad SSL certificate
+1. XXX
 
 Three worst overall viability issues
 ====================================

@@ -1,0 +1,7 @@
+---
+certbot_install_from_source: yes
+certbot_auto_renew: true
+certbot_auto_renew_user: certbot-renewer
+certbot_auto_renew_hour: 1
+certbot_auto_renew_minute: 23
+use_lets_encrypt: true
