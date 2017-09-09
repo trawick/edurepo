@@ -139,9 +139,10 @@
           virtualenv={{ virtualenv_dir }}
 
     - name: Load repository data from XML
-      command: "{{ virtualenv_dir }}/bin/python repo/import_xml.py ../../samples/ import"
-      args:
-        chdir: "{{ django_src }}"
+      django_manage: >
+          app_path={{ django_src }}
+          command="import_xml ../../samples/ import"
+          virtualenv={{ virtualenv_dir }}
 
     - name: Skip import of resource data in the future
 # Use this copy command to touch the file so that the timestamp isn't changed each time.

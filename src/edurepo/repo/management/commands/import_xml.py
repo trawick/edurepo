@@ -1,10 +1,8 @@
 import argparse
-import django
 import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'edurepo.settings')
 
-import sys
-sys.path.append('.')
+import django
+import djclick as click
 
 from xml.etree.ElementTree import parse
 
@@ -285,8 +283,12 @@ def start_import(top, mode, purge=False, spew=None):
     process(top, purge)
 
 
-def main():
-    parser = argparse.ArgumentParser(epilog="""
+@click.option('--purge', default=False, help='Remove existing data first')
+@click.argument('top')  # 'Directory root or file'
+@click.argument('mode', type=click.Choice(['check', 'import']))
+@click.command()
+def main(purge, top, mode):
+    """
     This program allows repository data to be imported from XML files.
     To start from scratch, specify the --purge option along with
     the import command.
@@ -295,20 +297,8 @@ def main():
     data will be minimally changed, with only a small amount of data
     missing at any given time.  In this mode, any objectives or courses
     which disappear in the new XML files will not be removed from the
-    database.""")
-    parser.add_argument('--purge', action='store_true',
-                        help='Remove existing data first')
-    parser.add_argument('top', nargs=1, help='Directory root or file')
-    parser.add_argument('command', nargs=1, choices=('check', 'import'),
-                        help='"check" or "import"')
-    args = parser.parse_args()
-
-    top = args.top[0]
-    mode = args.command[0]
+    database.
+    """
     assert os.path.exists(top)
-    assert not (mode == 'check' and args.purge)
-    start_import(top, mode, purge=args.purge)
-
-if __name__ == '__main__':
-    django.setup()
-    sys.exit(main())
+    assert not (mode == 'check' and purge)
+    start_import(top, mode, purge=purge)
