@@ -3,7 +3,7 @@
 *.pyc
 db.sqlite3
 README.html
-envs/edurepo/
+src/ansible/deploy.retry
 src/edurepo/.idea/
 src/webapp/css/bootstrap*.css
 src/webapp/lib/angular
