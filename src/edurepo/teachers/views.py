@@ -17,7 +17,7 @@ day_letters = ['M', 'T', 'W', 'R', 'F']
 def get_dashboard_emails(request):
     """does request.user refer to a teacher with a dashboard?
     return link if so"""
-    if not request.user or not request.user.is_authenticated():
+    if not request.user or not request.user.is_authenticated:
         return None
     user = User.objects.get(username=request.user)
     try:
