@@ -1,14 +1,10 @@
-import argparse
-import json
-import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'edurepo.settings')
-
-import sys
-sys.path.append('.')
-
 import datetime
-import django
+import json
+import sys
+
 from django.contrib.auth.models import User
+import djclick as click
+
 from teachers.models import Entry, Teacher, TeacherClass
 
 
@@ -38,23 +34,18 @@ def create_pretend_teacher(base_api_url, noisy=True):
         cur_day += datetime.timedelta(days=1)
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('--from-json', type=argparse.FileType('r'), default=None,
-                       help='name of file with JSON-formatted base API URL')
-    group.add_argument('base_api_url', type=str, default=None,
-                       nargs='?',
-                       help='base API URL')
-    args = parser.parse_args()
+@click.command()
+@click.option('--from-json', type=click.File('r'),
+              help='name of file with JSON-formatted base API URL')
+@click.argument('base_api_url', type=str, default=None, required=False)
+def main(from_json, base_api_url):
+    if bool(from_json) == bool(base_api_url):
+        click.echo('Either JSON file or API URL is required')
+        sys.exit(1)
 
-    if args.from_json:
-        url = json.load(args.from_json)['base_api_url']
-        args.from_json.close()
+    if from_json:
+        url = json.load(from_json)['base_api_url']
+        from_json.close()
     else:
-        url = args.base_api_url
+        url = base_api_url
     create_pretend_teacher(url)
-
-if __name__ == '__main__':
-    django.setup()
-    main()

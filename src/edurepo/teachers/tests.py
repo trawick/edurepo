@@ -3,12 +3,13 @@ import json
 import os
 import unittest
 
-from django.core.exceptions import ValidationError
-from django.test import LiveServerTestCase
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.test import LiveServerTestCase
+
 from models import Entry, Teacher, TeacherClass
-from pretend_teacher import create_pretend_teacher
+from teachers.management.commands.pretend_teacher import create_pretend_teacher
 
 
 class BasicTests(LiveServerTestCase):
