@@ -14,6 +14,6 @@ urlpatterns = [
      url(r'^resources/', include('resources.urls')),
      url(r'^admin/', admin.site.urls),
      url(r'^logout/', repo_views.logout, name='logout'),
-     url('', include('social.apps.django_app.urls', namespace='social')),
+     url('', include('social_django.urls', namespace='social')),
      url(r'^$', edurepo_views.welcome, name='top.index'),
 ]

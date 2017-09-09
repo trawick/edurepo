@@ -17,12 +17,12 @@ django-tastypie==0.14.0
     six==1.10.0
   python-mimeparse==0.1.4
 psycopg2==2.7.3.1
-python-social-auth==0.2.19
-  oauthlib==1.1.2
-  PyJWT==1.4.1
+social-auth-core==1.4.0
+  oauthlib==2.0.3
+  PyJWT==1.5.3
   python-openid==2.2.5
   requests==2.18.4
-    certifi==14.5.14
+    certifi==2017.7.27.1
     chardet==3.0.4
     idna==2.6
     urllib3==1.22
@@ -30,4 +30,5 @@ python-social-auth==0.2.19
   requests-oauthlib==0.8.0
     # oauthlib
     # requests
+social-auth-app-django==1.2.0
 uWSGI==2.0.15
