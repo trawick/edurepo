@@ -151,21 +151,24 @@
       notify:
       - load-resource-data
 
-    - name: Define server_validation cron job
-      cron: name="server_validation" hour="*/2" minute="11" job="{{ django_src }}/resources/server_validation.sh"
+#   - name: Define server_validation cron job
+#     cron: name="server_validation" hour="*/2" minute="11" job="{{ django_src }}/resources/server_validation.sh"
 
-    - name: Define server_purge cron job
-      cron: name="server_purge" hour="1" minute="11" job="{{ django_src }}/resources/server_purge.sh"
+#   - name: Define server_purge cron job
+#     cron: name="server_purge" hour="1" minute="11" job="{{ django_src }}/resources/server_purge.sh"
 
-    - name: Define maintain_pretend_teacher cron job
-      cron: name="maintain_pretend_teacher" hour="0" minute="30" job="{{ django_src }}/teachers/pretend_teacher.sh --from-json={{ remote_checkout }}/src/webapp/resources/config.json"
+#   - name: Define maintain_pretend_teacher cron job
+#     cron: name="maintain_pretend_teacher" hour="0" minute="30" job="{{ django_src }}/teachers/pretend_teacher.sh --from-json={{ remote_checkout }}/src/webapp/resources/config.json"
 
     - name: Define nightly_archive cron job
       cron: name="nightly_archive" hour="1" minute="20" job="{{ django_src }}/backup.sh /home/{{ remote_user }}/backups"
       when: nightly_archive != "no"
 
     - name: Set up pretend teacher immediately, so that the demo works without waiting for the cron job.
-      command: "{{ django_src }}/teachers/pretend_teacher.sh {{canonical_base_url }}ed/"
+      django_manage: >
+          app_path={{ django_src }}
+          command="pretend_teacher {{canonical_base_url }}ed/"
+          virtualenv={{ virtualenv_dir }}
 
     - name: Configure supervisord to run celery worker
       template: src={{ project_name }}-celery-worker.conf.j2 dest=/etc/supervisor/conf.d/{{ project_name }}-celery-worker.conf
