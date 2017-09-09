@@ -3,7 +3,7 @@
 {% block title %}Register as a teacher{% endblock %}
 {% block content %}
     <h1>Register as a teacher</h1>
-    <form action="{% url 'teachers.views.register_teacher' %}" method="post">
+    <form action="{% url 'register-teacher' %}" method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
         {% buttons %}

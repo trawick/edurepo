@@ -4,7 +4,7 @@
 {% block content %}
     <h1>Remove objective {{ objective }} from {{ date }}</h1>
 
-    <form action="{% url 'teachers.views.remove_objective'  teacher_email=teacher_email teacher_class_id=teacher_class_id date=date objective=objective %}" method="post">
+    <form action="{% url 'remove-objective'  teacher_email=teacher_email teacher_class_id=teacher_class_id date=date objective=objective %}" method="post">
         {% csrf_token %}
         <button type="submit" class="btn btn-primary">
             <span class="glyphicon glyphicon-star"></span> Remove
