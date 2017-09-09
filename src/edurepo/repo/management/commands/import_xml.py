@@ -284,8 +284,8 @@ def start_import(top, mode, purge=False, spew=None):
 
 
 @click.option('--purge', default=False, help='Remove existing data first')
-@click.argument('top')  # 'Directory root or file'
 @click.argument('mode', type=click.Choice(['check', 'import']))
+@click.argument('top')  # 'Directory root or file'
 @click.command()
 def main(purge, top, mode):
     """
