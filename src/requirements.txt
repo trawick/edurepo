@@ -6,7 +6,7 @@ celery==3.1.23
     anyjson==0.3.3
   pytz==2017.2
 coverage==4.4.1
-Django==1.11.5
+Django==1.11.19
 django-bootstrap3==8.2.3
 django-click==2.0.0
   click==6.7
@@ -21,11 +21,11 @@ social-auth-core==1.4.0
   oauthlib==2.0.3
   PyJWT==1.5.3
   python-openid==2.2.5
-  requests==2.18.4
+  requests==2.20.0
     certifi==2017.7.27.1
     chardet==3.0.4
     idna==2.6
-    urllib3==1.22
+    urllib3==1.23
     # six
   requests-oauthlib==0.8.0
     # oauthlib
