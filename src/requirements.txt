@@ -1,34 +1,34 @@
-beautifulsoup4==4.6.0
-celery==3.1.23
-  billiard==3.3.0.23
-  kombu==3.0.35
-    amqp==1.4.9
-    anyjson==0.3.3
-  pytz==2017.2
-coverage==4.4.1
-Django==1.11.21
-django-bootstrap3==8.2.3
-django-click==2.0.0
-  click==6.7
-django-nose==1.4.5
-  nose==1.3.7
-django-tastypie==0.14.0
-  python-dateutil==2.6.1
-    six==1.10.0
-  python-mimeparse==0.1.4
-psycopg2==2.7.3.1
-social-auth-core==1.4.0
-  oauthlib==2.0.3
-  PyJWT==1.5.3
-  python-openid==2.2.5
-  requests==2.20.0
-    certifi==2017.7.27.1
-    chardet==3.0.4
-    idna==2.6
-    urllib3==1.24.2
+beautifulsoup4
+celery
+  billiard
+  kombu
+    amqp
+    anyjson
+  pytz
+coverage
+Django
+django-bootstrap3
+django-click
+  click
+django-nose
+  nose
+django-tastypie
+  python-dateutil
+    six
+  python-mimeparse
+psycopg2
+social-auth-core
+  oauthlib
+  PyJWT
+  python-openid
+  requests
+    certifi
+    chardet
+    idna
+    urllib3
     # six
-  requests-oauthlib==0.8.0
+  requests-oauthlib
     # oauthlib
     # requests
-social-auth-app-django==1.2.0
-uWSGI==2.0.15
+social-auth-app-django
+uWSGI
